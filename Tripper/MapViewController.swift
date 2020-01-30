@@ -17,6 +17,8 @@ class MapViewController: UIViewController {
     
     var currentRouteNumber = 1
     
+    var routePoints = [RoutePoint]()
+    
     
     // MARK: - View's Methods
     
@@ -53,12 +55,54 @@ class MapViewController: UIViewController {
         annotation.title = "Route point #\(currentRouteNumber)"
         currentRouteNumber += 1
         
-        //mapView.removeAnnotations(mapView.annotations)
+        routePoints.append(RoutePoint(from: annotation))
+        
         mapView.addAnnotation(annotation)
     }
 
     @IBAction func cancelRouteCreation(_ sender: UIBarButtonItem) {
         mapView.removeAnnotations(mapView.annotations)
+        routePoints.removeAll()
         currentRouteNumber = 1
+    }
+    
+    @IBAction func createRoute(_ sender: UIButton) {
+        if routePoints.count > 1 {
+            let directionsRequest = MKDirections.Request()
+            
+            directionsRequest.source = routePoints[0].mapItem
+            directionsRequest.destination = routePoints[1].mapItem
+            directionsRequest.transportType = .automobile
+            
+            let directions = MKDirections(request: directionsRequest)
+            directions.calculate(completionHandler: { response, error in
+                guard let directionResponse = response else {
+                    if let error = error {
+                        throwAn(error: error)
+                    }
+                    
+                    return
+                }
+                
+                let route = directionResponse.routes[0]
+                
+                self.mapView.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
+                
+                let rect = route.polyline.boundingMapRect
+                self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+            })
+        }
+        
+        print("*** Route created.")
+    }
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = UIColor.red
+        renderer.lineWidth = 4.0
+        
+        return renderer
     }
 }

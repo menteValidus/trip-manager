@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tiI-aq-OAF">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -23,13 +24,22 @@
                                     <outletCollection property="gestureRecognizers" destination="5hy-dQ-Dn6" appends="YES" id="j8q-jS-zMr"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6TL-c6-BV9">
+                                <rect key="frame" x="273" y="92" width="86" height="30"/>
+                                <state key="normal" title="Create route"/>
+                                <connections>
+                                    <action selector="createRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hhU-Rj-qzy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6TL-c6-BV9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="48" id="8p5-iu-7wG"/>
                             <constraint firstItem="A0a-IB-foe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="J0e-Xw-0Ne"/>
                             <constraint firstItem="A0a-IB-foe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qjq-f2-OgJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0a-IB-foe" secondAttribute="trailing" id="R0K-U8-epN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="A0a-IB-foe" secondAttribute="bottom" id="Tff-f3-WG7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6TL-c6-BV9" secondAttribute="trailing" constant="16" id="zNk-Ph-H5Z"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
