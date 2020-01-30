@@ -34,4 +34,8 @@ class RoutePoint {
         title = annotation.title ?? ""
         subtitle = annotation.subtitle ?? ""
     }
+    
+    init(coordinate: CLLocationCoordinate2D, title: String = "", subtitle: String = "") {
+        self.coordinate = coordinate
+    }
 }
