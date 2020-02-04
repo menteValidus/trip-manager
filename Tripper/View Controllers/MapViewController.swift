@@ -29,7 +29,7 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         
         if !route.points.isEmpty {
-            createRoute(createRouteButton)
+            restoreLayout()
         }
         
         routeLengthView.isHidden = true
@@ -81,20 +81,7 @@ class MapViewController: UIViewController {
     }
     
     @IBAction func createRoute(_ sender: UIButton) {
-        if route.points.count > 0 {
-            var sourceMapItem = MKMapItem(placemark: MKPlacemark(coordinate: mapView.userLocation.coordinate))
-            calculateRoute(from: sourceMapItem, to: route.points[0].mapItem)
-            
-            for routePoint in route.points {
-                calculateRoute(from: sourceMapItem, to: routePoint.mapItem)
-                sourceMapItem = routePoint.mapItem
-            }
-        }
-        var routes = route.points
-        routes.insert(RoutePoint(coordinate: mapView.userLocation.coordinate), at: 0)
-        
-        mapView.setRegion(region(for: route.points), animated: true)
-        print("*** Route created.")
+        createRoute()
     }
     
     // MARK: - Navigation
@@ -117,7 +104,19 @@ class MapViewController: UIViewController {
     
         // MARK: Route Creation
     
-    private func calculateRoute(from source: MKMapItem, to destination: MKMapItem) {
+    private func createRoute() {
+        if route.points.count > 0 {
+            let secondToLastIndex = (route.points.count - 1) - 1
+            for i in 0...secondToLastIndex {
+                calculateAndLayoutRoute(from: route.points[i].mapItem, to: route.points[i + 1].mapItem)
+            }
+        }
+        
+        centerAtRoute()
+        print("*** Route created.")
+    }
+    
+    private func calculateAndLayoutRoute(from source: MKMapItem, to destination: MKMapItem) {
         let directionsRequest = MKDirections.Request()
         
         directionsRequest.source = source
@@ -151,6 +150,29 @@ class MapViewController: UIViewController {
                 self.updateUI()
             }
         }
+    }
+    
+    private func restoreLayout() {
+        let secondToLastIndex = (route.points.count - 1) - 1
+        for i in 0...secondToLastIndex {
+            calculateAndLayoutRoute(from: route.points[i].mapItem, to: route.points[i + 1].mapItem)
+            setPin(at: route.points[i])
+        }
+        
+        setPin(at: route.points.last!)
+    }
+    
+    private func setPin(at routePoint: RoutePoint) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = routePoint.coordinate
+        // TODO: set title and description
+        mapView.addAnnotation(annotation)
+    }
+    
+        // MARK: Map Zooming
+    
+    private func centerAtRoute() {
+        mapView.setRegion(region(for: route.points), animated: true)
     }
 
     private func region(for routePoints: [RoutePoint]) -> MKCoordinateRegion {
