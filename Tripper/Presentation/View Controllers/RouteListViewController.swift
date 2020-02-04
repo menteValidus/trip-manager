@@ -14,13 +14,20 @@ class RouteListViewController: UITableViewController {
     
     struct TableView {
         struct CellIdentifiers {
-            static let subrouteCell = "SubrouteCell"
+            static let roadCell = "RoadCell"
+            static let routePointCell = "RoutePointCell"
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        var cellNib = UINib(nibName: TableView.CellIdentifiers.roadCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.roadCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.routePointCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.routePointCell)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -35,16 +42,27 @@ class RouteListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return route.points.count
+        // This formula calculate overall number of route points and roads.
+        return route.points.count * 2 - 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SubrouteCell")!
+        if indexPath.row % 2 == 0 { // Route Stop Point
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.routePointCell, for: indexPath) as! RoutePointCell
+            
+            // We divide indexPath.row by 2 to conform index of route point in route.points array.
+            cell.configure(for: route.points[indexPath.row / 2])
+            
+            return cell
+        } else { // Road
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.roadCell, for: indexPath) as! RoadCell
+            
+            let currentRoutePointIndex = indexPath.row / 2
+            cell.configureRoad(from: route.points[currentRoutePointIndex], to: route.points[currentRoutePointIndex + 1])
+            
+            return cell
+        }
         
-        cell.textLabel?.text = String(route.points[indexPath.row].latitude)
-        
-        return cell
     }
 
     /*

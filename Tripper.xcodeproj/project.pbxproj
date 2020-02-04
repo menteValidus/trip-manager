@@ -17,6 +17,10 @@
 		0B042A7623E3001B00E9136F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7523E3001B00E9136F /* Util.swift */; };
 		0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7723E836B300E9136F /* RouteDataModel.swift */; };
 		0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7C23E85EE900E9136F /* RouteListViewController.swift */; };
+		0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A8623E98DBA00E9136F /* RoadCell.swift */; };
+		0B042A8A23E990FA00E9136F /* RoadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A8923E990FA00E9136F /* RoadCell.xib */; };
+		0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A8B23E9931500E9136F /* RoutePointCell.swift */; };
+		0B042A8E23E9931500E9136F /* RoutePointCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A8C23E9931500E9136F /* RoutePointCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		0B042A7523E3001B00E9136F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
 		0B042A7723E836B300E9136F /* RouteDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDataModel.swift; sourceTree = "<group>"; };
 		0B042A7C23E85EE900E9136F /* RouteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListViewController.swift; sourceTree = "<group>"; };
+		0B042A8623E98DBA00E9136F /* RoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadCell.swift; sourceTree = "<group>"; };
+		0B042A8923E990FA00E9136F /* RoadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoadCell.xib; sourceTree = "<group>"; };
+		0B042A8B23E9931500E9136F /* RoutePointCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointCell.swift; sourceTree = "<group>"; };
+		0B042A8C23E9931500E9136F /* RoutePointCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoutePointCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +121,8 @@
 		0B042A8323E98CB000E9136F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A8523E98D7D00E9136F /* Table Cells */,
+				0B042A8823E990DE00E9136F /* xib */,
 				0B042A8423E98CC800E9136F /* Storyboards */,
 				0B042A7B23E85EBF00E9136F /* View Controllers */,
 			);
@@ -126,6 +136,24 @@
 				0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		0B042A8523E98D7D00E9136F /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A8623E98DBA00E9136F /* RoadCell.swift */,
+				0B042A8B23E9931500E9136F /* RoutePointCell.swift */,
+			);
+			path = "Table Cells";
+			sourceTree = "<group>";
+		};
+		0B042A8823E990DE00E9136F /* xib */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A8923E990FA00E9136F /* RoadCell.xib */,
+				0B042A8C23E9931500E9136F /* RoutePointCell.xib */,
+			);
+			path = xib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +215,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B042A6623E2D02200E9136F /* LaunchScreen.storyboard in Resources */,
+				0B042A8A23E990FA00E9136F /* RoadCell.xib in Resources */,
+				0B042A8E23E9931500E9136F /* RoutePointCell.xib in Resources */,
 				0B042A6323E2D02200E9136F /* Assets.xcassets in Resources */,
 				0B042A6123E2D02100E9136F /* Main.storyboard in Resources */,
 			);
@@ -199,9 +229,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
+				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */,
 				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,
 				0B042A6E23E2D21800E9136F /* MapViewController.swift in Sources */,

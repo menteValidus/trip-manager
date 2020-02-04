@@ -132,6 +132,10 @@
                                         <constraint firstItem="WKx-m9-pjn" firstAttribute="top" secondItem="wBs-I7-him" secondAttribute="top" constant="10" id="xQn-8Q-czj"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="timeLabel" destination="WKx-m9-pjn" id="P3o-L2-rf1"/>
+                                    <outlet property="titleLabel" destination="als-O3-ggF" id="KOb-KT-3le"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
