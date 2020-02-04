@@ -11,6 +11,12 @@ import UIKit
 class RouteListViewController: UITableViewController {
     
     var route: RouteDataModel!
+    
+    struct TableView {
+        struct CellIdentifiers {
+            static let subrouteCell = "SubrouteCell"
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +31,20 @@ class RouteListViewController: UITableViewController {
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return route.points.count
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return route.points.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SubrouteCell")!
+        
+        cell.textLabel?.text = String(route.points[indexPath.row].latitude)
+        
+        return cell
     }
 
     /*

@@ -66,12 +66,13 @@
 		0B042A5823E2D02100E9136F /* Tripper */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A6723E2D02200E9136F /* Info.plist */,
 				0B042A6223E2D02200E9136F /* Assets.xcassets */,
-				0B042A7B23E85EBF00E9136F /* View Controllers */,
-				0B042A7923E85E8700E9136F /* Resources */,
 				0B042A7423E2F99D00E9136F /* Data Models */,
+				0B042A6723E2D02200E9136F /* Info.plist */,
+				0B042A7923E85E8700E9136F /* Resources */,
 				0B042A7523E3001B00E9136F /* Util.swift */,
+				0B042A7B23E85EBF00E9136F /* View Controllers */,
+				0B042A8023E980E100E9136F /* xib */,
 			);
 			path = Tripper;
 			sourceTree = "<group>";
@@ -110,6 +111,13 @@
 				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		0B042A8023E980E100E9136F /* xib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = xib;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
