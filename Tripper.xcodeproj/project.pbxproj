@@ -66,13 +66,11 @@
 		0B042A5823E2D02100E9136F /* Tripper */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A8323E98CB000E9136F /* Presentation */,
+				0B042A8223E98CA200E9136F /* Domain */,
+				0B042A8123E98C9500E9136F /* Data */,
 				0B042A6223E2D02200E9136F /* Assets.xcassets */,
-				0B042A7423E2F99D00E9136F /* Data Models */,
 				0B042A6723E2D02200E9136F /* Info.plist */,
-				0B042A7923E85E8700E9136F /* Resources */,
-				0B042A7523E3001B00E9136F /* Util.swift */,
-				0B042A7B23E85EBF00E9136F /* View Controllers */,
-				0B042A8023E980E100E9136F /* xib */,
 			);
 			path = Tripper;
 			sourceTree = "<group>";
@@ -85,25 +83,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0B042A7423E2F99D00E9136F /* Data Models */ = {
-			isa = PBXGroup;
-			children = (
-				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
-				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
-			);
-			path = "Data Models";
-			sourceTree = "<group>";
-		};
-		0B042A7923E85E8700E9136F /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
-				0B042A5F23E2D02100E9136F /* Main.storyboard */,
-				0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		0B042A7B23E85EBF00E9136F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -113,11 +92,40 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		0B042A8023E980E100E9136F /* xib */ = {
+		0B042A8123E98C9500E9136F /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
+				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
 			);
-			path = xib;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		0B042A8223E98CA200E9136F /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
+				0B042A7523E3001B00E9136F /* Util.swift */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		0B042A8323E98CB000E9136F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A8423E98CC800E9136F /* Storyboards */,
+				0B042A7B23E85EBF00E9136F /* View Controllers */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		0B042A8423E98CC800E9136F /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A5F23E2D02100E9136F /* Main.storyboard */,
+				0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

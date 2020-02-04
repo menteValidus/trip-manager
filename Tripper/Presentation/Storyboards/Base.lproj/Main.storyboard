@@ -104,11 +104,33 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SubrouteCell" id="3kR-UZ-hgH">
-                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3kR-UZ-hgH" id="wBs-I7-him">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San-Francisco" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="als-O3-ggF">
+                                            <rect key="frame" x="16" y="8" width="138" height="24.5"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 days" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WKx-m9-pjn">
+                                            <rect key="frame" x="308.5" y="10" width="50.5" height="24.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="WKx-m9-pjn" secondAttribute="trailing" constant="16" id="1h8-pa-cS0"/>
+                                        <constraint firstItem="als-O3-ggF" firstAttribute="top" secondItem="wBs-I7-him" secondAttribute="top" constant="8" id="U7n-AF-dWU"/>
+                                        <constraint firstItem="als-O3-ggF" firstAttribute="leading" secondItem="wBs-I7-him" secondAttribute="leading" constant="16" id="Ykw-Gb-weJ"/>
+                                        <constraint firstAttribute="bottom" secondItem="WKx-m9-pjn" secondAttribute="bottom" constant="10" id="ZW3-cA-VLZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="als-O3-ggF" secondAttribute="bottom" constant="12" id="xI8-fJ-xfK"/>
+                                        <constraint firstItem="WKx-m9-pjn" firstAttribute="top" secondItem="wBs-I7-him" secondAttribute="top" constant="10" id="xQn-8Q-czj"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -122,7 +144,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnI-ZB-Iz4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="137"/>
+            <point key="canvasLocation" x="1949.5999999999999" y="136.28185907046478"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b1d-eY-cWo">
