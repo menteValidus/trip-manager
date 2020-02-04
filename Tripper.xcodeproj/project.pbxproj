@@ -14,7 +14,9 @@
 		0B042A6E23E2D21800E9136F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A6D23E2D21800E9136F /* MapViewController.swift */; };
 		0B042A7123E2E1B600E9136F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B042A7023E2E1B600E9136F /* MapKit.framework */; };
 		0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7223E2EFFF00E9136F /* RoutePoint.swift */; };
-		0B042A7623E3001B00E9136F /* ErrorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7523E3001B00E9136F /* ErrorUtil.swift */; };
+		0B042A7623E3001B00E9136F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7523E3001B00E9136F /* Util.swift */; };
+		0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7723E836B300E9136F /* RouteDataModel.swift */; };
+		0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7C23E85EE900E9136F /* RouteListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +29,9 @@
 		0B042A6D23E2D21800E9136F /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		0B042A7023E2E1B600E9136F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0B042A7223E2EFFF00E9136F /* RoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
-		0B042A7523E3001B00E9136F /* ErrorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorUtil.swift; sourceTree = "<group>"; };
+		0B042A7523E3001B00E9136F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		0B042A7723E836B300E9136F /* RouteDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDataModel.swift; sourceTree = "<group>"; };
+		0B042A7C23E85EE900E9136F /* RouteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,14 +66,12 @@
 		0B042A5823E2D02100E9136F /* Tripper */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A7423E2F99D00E9136F /* Data */,
-				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
-				0B042A5F23E2D02100E9136F /* Main.storyboard */,
-				0B042A6223E2D02200E9136F /* Assets.xcassets */,
-				0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */,
 				0B042A6723E2D02200E9136F /* Info.plist */,
-				0B042A6D23E2D21800E9136F /* MapViewController.swift */,
-				0B042A7523E3001B00E9136F /* ErrorUtil.swift */,
+				0B042A6223E2D02200E9136F /* Assets.xcassets */,
+				0B042A7B23E85EBF00E9136F /* View Controllers */,
+				0B042A7923E85E8700E9136F /* Resources */,
+				0B042A7423E2F99D00E9136F /* Data Models */,
+				0B042A7523E3001B00E9136F /* Util.swift */,
 			);
 			path = Tripper;
 			sourceTree = "<group>";
@@ -82,12 +84,32 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		0B042A7423E2F99D00E9136F /* Data */ = {
+		0B042A7423E2F99D00E9136F /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
+				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
 			);
-			path = Data;
+			path = "Data Models";
+			sourceTree = "<group>";
+		};
+		0B042A7923E85E8700E9136F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
+				0B042A5F23E2D02100E9136F /* Main.storyboard */,
+				0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		0B042A7B23E85EBF00E9136F /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A6D23E2D21800E9136F /* MapViewController.swift */,
+				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,7 +185,9 @@
 			files = (
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
-				0B042A7623E3001B00E9136F /* ErrorUtil.swift in Sources */,
+				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
+				0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */,
+				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,
 				0B042A6E23E2D21800E9136F /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

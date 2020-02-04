@@ -9,33 +9,33 @@
 import Foundation
 import MapKit
 
-class RoutePoint {
-    let coordinate: CLLocationCoordinate2D
+class RoutePoint: Codable {
     var title: String?
     var subtitle: String?
+    var latitude: Double
+    var longitude: Double
     
     var placemark: MKPlacemark {
         return MKPlacemark(coordinate: coordinate)
     }
+    
     var mapItem: MKMapItem {
         return MKMapItem(placemark: placemark)
     }
     
-    var longitude: Double {
-        return coordinate.longitude
-    }
-    
-    var latitude: Double {
-        return coordinate.latitude
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
     init(from annotation: MKAnnotation) {
-        coordinate = annotation.coordinate
+        latitude = annotation.coordinate.latitude
+        longitude = annotation.coordinate.longitude
         title = annotation.title ?? ""
         subtitle = annotation.subtitle ?? ""
     }
     
     init(coordinate: CLLocationCoordinate2D, title: String = "", subtitle: String = "") {
-        self.coordinate = coordinate
+        latitude = coordinate.latitude
+        longitude = coordinate.longitude
     }
 }

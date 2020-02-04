@@ -11,10 +11,24 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    var dataModel = RouteDataModel()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let navigationController = window!.rootViewController as! UINavigationController
+        let controller = navigationController.viewControllers[0] as! MapViewController
+        controller.route = dataModel
+        
         return true
+    }
+    
+    // MARK: Application Methods
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        dataModel.saveInDocuments()
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        dataModel.saveInDocuments()
     }
 
     // MARK: UISceneSession Lifecycle

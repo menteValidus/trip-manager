@@ -1,5 +1,5 @@
 //
-//  ErrorUtil.swift
+//  Util.swift
 //  Tripper
 //
 //  Created by Denis Cherniy on 30.01.2020.
@@ -9,5 +9,9 @@
 import Foundation
 
 func throwAn(error: Error) {
-    print("***Error: \(error)")
+    print("*** Error: \(error)")
+}
+
+func display(message: String) {
+    print("*** \(message)")
 }
