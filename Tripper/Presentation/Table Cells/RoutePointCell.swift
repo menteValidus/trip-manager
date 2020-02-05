@@ -25,8 +25,9 @@ class RoutePointCell: UITableViewCell {
     
     // MARK: - Helper Methods
     
-    func configure(for routePoint: RoutePoint) {
-        timeLabel.text = "22 hours"
+    func configure(for routePoint: Staying) {
+        timeLabel.text = String(routePoint.title)
+        timeLabel.text = String(routePoint.timeInMinutes)
     }
     
 }

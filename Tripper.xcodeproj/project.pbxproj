@@ -21,6 +21,9 @@
 		0B042A8A23E990FA00E9136F /* RoadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A8923E990FA00E9136F /* RoadCell.xib */; };
 		0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A8B23E9931500E9136F /* RoutePointCell.swift */; };
 		0B042A8E23E9931500E9136F /* RoutePointCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A8C23E9931500E9136F /* RoutePointCell.xib */; };
+		0B042A9123EA9C1400E9136F /* Staying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9023EA9C1400E9136F /* Staying.swift */; };
+		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
+		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		0B042A8923E990FA00E9136F /* RoadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoadCell.xib; sourceTree = "<group>"; };
 		0B042A8B23E9931500E9136F /* RoutePointCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointCell.swift; sourceTree = "<group>"; };
 		0B042A8C23E9931500E9136F /* RoutePointCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoutePointCell.xib; sourceTree = "<group>"; };
+		0B042A9023EA9C1400E9136F /* Staying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staying.swift; sourceTree = "<group>"; };
+		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
+		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,7 @@
 		0B042A8123E98C9500E9136F /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A8F23EA9B9100E9136F /* Subroutes */,
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
 				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
 			);
@@ -154,6 +161,16 @@
 				0B042A8C23E9931500E9136F /* RoutePointCell.xib */,
 			);
 			path = xib;
+			sourceTree = "<group>";
+		};
+		0B042A8F23EA9B9100E9136F /* Subroutes */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A9023EA9C1400E9136F /* Staying.swift */,
+				0B042A9223EA9C2E00E9136F /* Subroute.swift */,
+				0B042A9423EA9E7300E9136F /* InRoad.swift */,
+			);
+			path = Subroutes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,9 +246,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
+				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
+				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */,

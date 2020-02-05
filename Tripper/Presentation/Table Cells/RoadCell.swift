@@ -24,9 +24,9 @@ class RoadCell: UITableViewCell {
     
     // MARK: - Helper Methods
     
-    func configureRoad(from startPoint: RoutePoint, to endPoint: RoutePoint) {
-        titleLabel.text = String(startPoint.latitude)
-        timeLabel.text = String(endPoint.latitude)
+    func configure(for inRoadSubroute: InRoad) {
+        titleLabel.text = inRoadSubroute.title
+        timeLabel.text = String(inRoadSubroute.timeInMinutes)
     }
 
 }

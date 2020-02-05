@@ -23,6 +23,10 @@ class MapViewController: UIViewController {
     var route: RouteDataModel!
     var wholeRouteLength = 0.0
     
+    struct SeguesIdentifiers {
+        static let showRouteList = "ShowRouteList"
+    }
+    
     // MARK:- View's Methods
     
     override func viewDidLoad() {
@@ -71,6 +75,7 @@ class MapViewController: UIViewController {
     }
 
     @IBAction func cancelRouteCreation(_ sender: UIBarButtonItem) {
+//        performSegue(withIdentifier: "ShowAnnotationDetail", sender: sender)
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         route.clear()
@@ -87,7 +92,7 @@ class MapViewController: UIViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ShowRouteList" {
+        if segue.identifier == SeguesIdentifiers.showRouteList {
             let controller = segue.destination as! RouteListViewController
             controller.route = route
         }
@@ -105,7 +110,7 @@ class MapViewController: UIViewController {
         // MARK: Route Creation
     
     private func createRoute() {
-        if route.points.count > 0 {
+        if route.points.count > 1 {
             let secondToLastIndex = (route.points.count - 1) - 1
             for i in 0...secondToLastIndex {
                 calculateAndLayoutRoute(from: route.points[i].mapItem, to: route.points[i + 1].mapItem)

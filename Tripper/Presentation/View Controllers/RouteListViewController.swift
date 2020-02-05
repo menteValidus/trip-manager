@@ -42,25 +42,34 @@ class RouteListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // This formula calculate overall number of route points and roads.
-        return route.points.count * 2 - 1
+        return route.countSubroutes
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row % 2 == 0 { // Route Stop Point
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.routePointCell, for: indexPath) as! RoutePointCell
-            
-            // We divide indexPath.row by 2 to conform index of route point in route.points array.
-            cell.configure(for: route.points[indexPath.row / 2])
-            
-            return cell
-        } else { // Road
+        let anotherSubroute = route.getSubroute(at: indexPath.row)
+        
+        switch anotherSubroute {
+        case is InRoad:
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.roadCell, for: indexPath) as! RoadCell
             
-            let currentRoutePointIndex = indexPath.row / 2
-            cell.configureRoad(from: route.points[currentRoutePointIndex], to: route.points[currentRoutePointIndex + 1])
+            cell.configure(for: anotherSubroute as! InRoad)
             
             return cell
+            
+        case is Staying:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.routePointCell, for: indexPath) as! RoutePointCell
+            
+            cell.configure(for: anotherSubroute as! Staying)
+            
+            return cell
+            
+        default:
+            display(message: "*** It's impossible to be here!")
+            return UITableViewCell()
         }
         
     }

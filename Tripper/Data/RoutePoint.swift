@@ -14,6 +14,10 @@ class RoutePoint: Codable {
     var subtitle: String?
     var latitude: Double
     var longitude: Double
+    // Nullable in case it's the end of trip.
+    var timeToGetToNextPointInMinutes: Int? = 60
+    // Nullable in case it's the start of trip.
+    var residenceTimeInMinutes: Int? = 120
     
     var placemark: MKPlacemark {
         return MKPlacemark(coordinate: coordinate)
