@@ -69,7 +69,7 @@
                     <navigationItem key="navigationItem" title="Map" id="SCI-Be-zLs">
                         <barButtonItem key="leftBarButtonItem" title="Clear" id="UoB-xE-UPb">
                             <connections>
-                                <action selector="cancelRouteCreation:" destination="BYZ-38-t0r" id="MpB-Ja-2kg"/>
+                                <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="CwU-Nt-C6O"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Route" id="5Au-Xc-bPL">
@@ -93,6 +93,21 @@
                 </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1077.5999999999999" y="137.18140929535232"/>
+        </scene>
+        <!--Annotation Detail View Controller-->
+        <scene sceneID="y9b-BA-uiU">
+            <objects>
+                <viewController id="Bjg-T4-fhS" customClass="AnnotationDetailViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GGm-jG-eD2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="0C2-fP-eBO"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k3h-z7-obX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1948" y="137"/>
         </scene>
         <!--Route-->
         <scene sceneID="fPz-AV-oOg">
@@ -148,7 +163,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnI-ZB-Iz4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1940" y="-510"/>
+            <point key="canvasLocation" x="1948" y="-581"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b1d-eY-cWo">

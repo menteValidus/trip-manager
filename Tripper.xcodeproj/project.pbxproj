@@ -24,6 +24,9 @@
 		0B042A9123EA9C1400E9136F /* Staying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9023EA9C1400E9136F /* Staying.swift */; };
 		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
+		0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */; };
+		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
+		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +49,9 @@
 		0B042A9023EA9C1400E9136F /* Staying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staying.swift; sourceTree = "<group>"; };
 		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
+		0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
+		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
+		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +108,7 @@
 			children = (
 				0B042A6D23E2D21800E9136F /* MapViewController.swift */,
 				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
+				0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -128,6 +135,8 @@
 		0B042A8323E98CB000E9136F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				0B6CD84023EC2420006DCDDC /* Controllers */,
+				0B6CD83B23EC0F11006DCDDC /* Managers */,
 				0B042A8523E98D7D00E9136F /* Table Cells */,
 				0B042A8823E990DE00E9136F /* xib */,
 				0B042A8423E98CC800E9136F /* Storyboards */,
@@ -171,6 +180,22 @@
 				0B042A9423EA9E7300E9136F /* InRoad.swift */,
 			);
 			path = Subroutes;
+			sourceTree = "<group>";
+		};
+		0B6CD83B23EC0F11006DCDDC /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		0B6CD84023EC2420006DCDDC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,10 +275,13 @@
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
+				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
+				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
+				0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */,
 				0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */,
 				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,
 				0B042A6E23E2D21800E9136F /* MapViewController.swift in Sources */,

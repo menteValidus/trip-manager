@@ -23,8 +23,11 @@ class MapViewController: UIViewController {
     var route: RouteDataModel!
     var wholeRouteLength = 0.0
     
+    lazy var slideInTransitioningDelegate = SlideInPresentationManager()
+    
     struct SeguesIdentifiers {
         static let showRouteList = "ShowRouteList"
+        static let showAnnotationDetail = "ShowAnnotationDetail"
     }
     
     // MARK:- View's Methods
@@ -95,6 +98,13 @@ class MapViewController: UIViewController {
         if segue.identifier == SeguesIdentifiers.showRouteList {
             let controller = segue.destination as! RouteListViewController
             controller.route = route
+        }
+        
+        if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
+            let controller = segue.destination as! AnnotationDetailViewController
+            slideInTransitioningDelegate.direction = .bottom
+            controller.transitioningDelegate = slideInTransitioningDelegate
+            controller.modalPresentationStyle = .custom
         }
     }
     
