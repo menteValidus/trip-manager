@@ -95,6 +95,7 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SeguesIdentifiers.showRouteList {
             let controller = segue.destination as! RouteListViewController
+            // MARK: TODO convert to array of subroutes.
             controller.route = route
         }
         

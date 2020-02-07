@@ -7,15 +7,23 @@
 //
 
 import Foundation
-import MapKit
 
 class RouteDataModel {
     private(set) var points: [RoutePoint] = []
-    var overlays: [MKPolyline] = []
     
     private(set) var length = 0.0
     
     private let plistDAO = PropertyListDAO()
+    
+    var subroutes: [Subroute] {
+        var subroutes = [Subroute]()
+        for index in 0..<points.count {
+            let point = points[index]
+            
+            subroutes.append(Staying(title: point.title ?? "Staying #\(index)", minutes: point.residenceTimeInMinutes!))
+            subroutes.append(InRoad(minutes: point.timeToGetToNextPointInMinutes!))
+        }
+    }
     
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours.
     var countSubroutes: Int {
@@ -37,7 +45,6 @@ class RouteDataModel {
     
     func clear() {
         points.removeAll()
-        overlays.removeAll()
     }
     
     func add(point: RoutePoint) {
