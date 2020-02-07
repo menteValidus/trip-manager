@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     var currentRouteNumber = 1
     
     var route: RouteDataModel!
+    var overlays = [MKOverlay]()
     var wholeRouteLength = 0.0
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
@@ -96,7 +97,7 @@ class MapViewController: UIViewController {
         if segue.identifier == SeguesIdentifiers.showRouteList {
             let controller = segue.destination as! RouteListViewController
             // MARK: TODO convert to array of subroutes.
-            controller.route = route
+            controller.subroutes = route.subroutes
         }
         
         if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
@@ -157,10 +158,10 @@ class MapViewController: UIViewController {
     
     private func layout(route: MKRoute) {
         self.mapView.addOverlay(route.polyline, level: MKOverlayLevel.aboveRoads)
-        self.route.overlays.append(route.polyline)
+        overlays.append(route.polyline)
 
         // This statement determines whether the end of route creation or not.
-        if self.route.overlays.count == self.route.points.count {
+        if overlays.count == self.route.points.count {
             DispatchQueue.main.async {
                 self.updateUI()
             }
@@ -260,7 +261,4 @@ extension MapViewController: MKMapViewDelegate {
         return renderer
     }
     
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        <#code#>
-    }
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class RouteListViewController: UITableViewController {
     
-    var route: RouteDataModel!
+    var subroutes: [Subroute]!
     
     struct TableView {
         struct CellIdentifiers {
@@ -36,7 +36,7 @@ class RouteListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return route.countSubroutes
+        return subroutes.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -44,7 +44,7 @@ class RouteListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let anotherSubroute = route.getSubroute(at: indexPath.row)
+        let anotherSubroute = subroutes[indexPath.row]
         
         switch anotherSubroute {
         case is InRoad:

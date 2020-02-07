@@ -23,6 +23,7 @@ class RouteDataModel {
             subroutes.append(Staying(title: point.title ?? "Staying #\(index)", minutes: point.residenceTimeInMinutes!))
             subroutes.append(InRoad(minutes: point.timeToGetToNextPointInMinutes!))
         }
+        return subroutes
     }
     
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours.
