@@ -8,7 +8,6 @@
 
 import UIKit
 import MapKit
-import CoreData
 
 class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
@@ -78,7 +77,6 @@ class MapViewController: UIViewController {
     }
 
     @IBAction func cancelRouteCreation(_ sender: UIBarButtonItem) {
-//        performSegue(withIdentifier: "ShowAnnotationDetail", sender: sender)
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         route.clear()
@@ -259,5 +257,9 @@ extension MapViewController: MKMapViewDelegate {
         renderer.lineWidth = 4.0
         
         return renderer
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        <#code#>
     }
 }
