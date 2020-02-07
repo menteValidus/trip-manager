@@ -27,6 +27,7 @@
 		0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
+		0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
+		0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListDAO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		0B042A8123E98C9500E9136F /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0B6CD84323ED7630006DCDDC /* DAO */,
 				0B042A8F23EA9B9100E9136F /* Subroutes */,
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
 				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
@@ -198,6 +201,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		0B6CD84323ED7630006DCDDC /* DAO */ = {
+			isa = PBXGroup;
+			children = (
+				0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */,
+			);
+			path = DAO;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -277,6 +288,7 @@
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
+				0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,

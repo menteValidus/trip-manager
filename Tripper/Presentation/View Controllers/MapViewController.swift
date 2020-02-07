@@ -102,6 +102,7 @@ class MapViewController: UIViewController {
         
         if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
             let controller = segue.destination as! AnnotationDetailViewController
+            controller.routePoint = route.points[(sender as! IndexPath).row]
             slideInTransitioningDelegate.direction = .bottom
             controller.transitioningDelegate = slideInTransitioningDelegate
             controller.modalPresentationStyle = .custom

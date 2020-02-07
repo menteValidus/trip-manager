@@ -48,39 +48,5 @@ class RouteDataModel {
         }
     }
     
-    // MARK: - Save/Load Utility
     
-    func saveInDocuments() {
-        let encoder = PropertyListEncoder()
-        
-        do {
-            let data = try encoder.encode(points)
-            try data.write(to: dataFilePath(), options: .atomic)
-        } catch {
-            display(message: "Error encoding item array: \(error.localizedDescription)")
-        }
-    }
-    
-    func loadFromDocuments() {
-        let path = dataFilePath()
-        
-        if let data = try? Data(contentsOf: path) {
-            let decoder = PropertyListDecoder()
-            do {
-                points = try decoder.decode([RoutePoint].self, from: data)
-            } catch {
-                display(message: "Error decoding item array: \(error.localizedDescription)")
-            }
-            
-        }
-    }
-    
-    private func dataFilePath() -> URL {
-        return documentsDirectory().appendingPathComponent("Route.plist")
-    }
-    
-    private func documentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
-    }
 }
