@@ -15,14 +15,22 @@ class RouteDataModel {
     
     private(set) var length = 0.0
     
+    private let plistDAO = PropertyListDAO()
+    
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours.
     var countSubroutes: Int {
         // This formula calculate overall number of route points and roads.
         return points.count * 2 - 1
     }
     
-    init() {
-        loadFromDocuments()
+    // MARK: - Save/Load Utility
+    
+    func save() {
+        plistDAO.save(points)
+    }
+    
+    func load() {
+        points = plistDAO.load()
     }
     
     // MARK: - Helper Methods

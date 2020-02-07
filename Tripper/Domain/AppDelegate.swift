@@ -24,11 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Application Methods
     
     func applicationWillTerminate(_ application: UIApplication) {
-        dataModel.saveInDocuments()
+        dataModel.save()
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        dataModel.saveInDocuments()
+        dataModel.save()
     }
 
     // MARK: UISceneSession Lifecycle

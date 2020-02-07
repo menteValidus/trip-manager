@@ -11,8 +11,12 @@ import Foundation
 class PropertyListDAO {
     let plistName: String
     
-    init(plistName: String) {
-        self.plistName = plistName
+    struct Names {
+        static let PlistName = "Route"
+    }
+    
+    init() {
+        plistName = "\(Names.PlistName).plist"
     }
     
     // MARK: - Save/Load Utility

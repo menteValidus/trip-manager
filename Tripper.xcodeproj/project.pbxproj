@@ -118,10 +118,9 @@
 		0B042A8123E98C9500E9136F /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				0B6CD84723ED7903006DCDDC /* Data Models */,
+				0B6CD84623ED78EC006DCDDC /* Models */,
 				0B6CD84323ED7630006DCDDC /* DAO */,
-				0B042A8F23EA9B9100E9136F /* Subroutes */,
-				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
-				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -207,6 +206,23 @@
 				0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */,
 			);
 			path = DAO;
+			sourceTree = "<group>";
+		};
+		0B6CD84623ED78EC006DCDDC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A8F23EA9B9100E9136F /* Subroutes */,
+				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		0B6CD84723ED7903006DCDDC /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
+			);
+			path = "Data Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
