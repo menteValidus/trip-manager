@@ -28,6 +28,9 @@
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
 		0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */; };
+		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
+		0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */; };
+		0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +57,9 @@
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
 		0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListDAO.swift; sourceTree = "<group>"; };
+		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataClass.swift"; path = "DB/RoutePointEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataProperties.swift"; path = "DB/RoutePointEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +217,7 @@
 		0B6CD84623ED78EC006DCDDC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0B6CD85323F2D957006DCDDC /* DB */,
 				0B042A8F23EA9B9100E9136F /* Subroutes */,
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
 			);
@@ -221,8 +228,18 @@
 			isa = PBXGroup;
 			children = (
 				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
+				0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */,
 			);
 			path = "Data Models";
+			sourceTree = "<group>";
+		};
+		0B6CD85323F2D957006DCDDC /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */,
+				0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */,
+			);
+			name = DB;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,12 +318,15 @@
 				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
+				0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
+				0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */,
+				0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
 				0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */,
@@ -512,6 +532,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */,
+			);
+			currentVersion = 0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0B042A4E23E2D02100E9136F /* Project object */;
 }
