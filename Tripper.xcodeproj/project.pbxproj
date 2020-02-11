@@ -28,6 +28,7 @@
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
 		0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */; };
+		0B6CD84A23F2B993006DCDDC /* MKAnnotation+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84923F2B993006DCDDC /* MKAnnotation+Equatable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
 		0B6CD84423ED765A006DCDDC /* PropertyListDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListDAO.swift; sourceTree = "<group>"; };
+		0B6CD84923F2B993006DCDDC /* MKAnnotation+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKAnnotation+Equatable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		0B042A8223E98CA200E9136F /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				0B6CD84823F2B95F006DCDDC /* Extensions */,
 				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
 				0B042A7523E3001B00E9136F /* Util.swift */,
 			);
@@ -225,6 +228,14 @@
 			path = "Data Models";
 			sourceTree = "<group>";
 		};
+		0B6CD84823F2B95F006DCDDC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0B6CD84923F2B993006DCDDC /* MKAnnotation+Equatable.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -307,6 +318,7 @@
 				0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
+				0B6CD84A23F2B993006DCDDC /* MKAnnotation+Equatable.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
 				0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */,

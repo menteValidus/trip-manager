@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol MapRouteDelegate: class {
+    func mapRoute(didChanged staying: Staying, id: Int)
+}
+
 class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var routeLengthLabel: UILabel!
@@ -21,7 +25,10 @@ class MapViewController: UIViewController {
     
     var route: RouteDataModel!
     var overlays = [MKOverlay]()
-    var wholeRouteLength = 0.0
+    private var annotations = [MKAnnotation]()
+    private var wholeRouteLength = 0.0
+    
+//    private var annotationToEdit: MKAnnotation?
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     
@@ -73,6 +80,7 @@ class MapViewController: UIViewController {
         currentRouteNumber += 1
         
         route.add(point: RoutePoint(from: annotation))
+        annotations.append(annotation)
         
         mapView.addAnnotation(annotation)
     }
@@ -96,13 +104,12 @@ class MapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SeguesIdentifiers.showRouteList {
             let controller = segue.destination as! RouteListViewController
-            // MARK: TODO convert to array of subroutes.
             controller.subroutes = route.subroutes
         }
         
         if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
             let controller = segue.destination as! AnnotationDetailViewController
-            controller.routePoint = route.points[(sender as! IndexPath).row]
+            controller.routePoint = route.points[(sender as! UIButton).tag]
             slideInTransitioningDelegate.direction = .bottom
             controller.transitioningDelegate = slideInTransitioningDelegate
             controller.modalPresentationStyle = .custom
@@ -250,7 +257,6 @@ class MapViewController: UIViewController {
 }
 
 extension MapViewController: MKMapViewDelegate {
-    
     // MARK: - MapView Delegates
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -261,4 +267,58 @@ extension MapViewController: MKMapViewDelegate {
         return renderer
     }
     
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKind(of: MKUserLocation.self) {
+            return nil
+        }
+        
+        let identifier = "Staying"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        if annotationView == nil {
+          let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+          pinView.isEnabled = true
+          pinView.canShowCallout = true
+          pinView.animatesDrop = false
+          pinView.pinTintColor = UIColor(red: 0.32, green: 0.82, blue: 0.4, alpha: 1)
+          let rightButton = UIButton(type: .detailDisclosure)
+          rightButton.addTarget(self, action: #selector(showDetails), for: .touchUpInside)
+          pinView.rightCalloutAccessoryView = rightButton
+          annotationView = pinView
+        }
+        if let annotationView = annotationView {
+          annotationView.annotation = annotation
+          let button = annotationView.rightCalloutAccessoryView as! UIButton
+          if let index = getRoutePointIndex(from: annotation) {
+            button.tag = index
+          }
+        }
+        return annotationView
+    }
+    
+    // MARK: - Helper Methods
+    
+    @objc func showDetails(_ sender: UIButton) {
+        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: sender)
+    }
+    
+    func getRoutePointIndex(from annotation: MKAnnotation) -> Int? {
+        for index in 0..<annotations.count {
+            if annotations[index].isEqual(annotation) {
+                return index
+            }
+        }
+        
+        return nil
+    }
+    
+}
+
+extension MapViewController: MapRouteDelegate {
+    // MARK: - Map Routes Delegates
+    
+    func mapRoute(didChanged staying: Staying, id: Int) {
+        if let routePoint = route.findRoutePoint(with: id) {
+            print(routePoint)
+        }
+    }
 }

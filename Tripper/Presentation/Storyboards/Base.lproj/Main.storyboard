@@ -67,9 +67,9 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="SCI-Be-zLs">
-                        <barButtonItem key="leftBarButtonItem" title="Clear" id="UoB-xE-UPb">
+                        <barButtonItem key="leftBarButtonItem" title="User" id="UoB-xE-UPb">
                             <connections>
-                                <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="jte-jU-8pS"/>
+                                <action selector="showUser" destination="BYZ-38-t0r" id="gA3-bn-M0k"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Route" id="5Au-Xc-bPL">
@@ -83,6 +83,7 @@
                         <outlet property="mapView" destination="A0a-IB-foe" id="Jsb-P4-SA8"/>
                         <outlet property="routeLengthLabel" destination="6cE-y5-j4Y" id="UIm-oI-rhD"/>
                         <outlet property="routeLengthView" destination="fOH-LN-ZFU" id="SmB-j0-oEf"/>
+                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="wZI-Uz-8qn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

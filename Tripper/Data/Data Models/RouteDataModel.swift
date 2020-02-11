@@ -64,5 +64,12 @@ class RouteDataModel {
         }
     }
     
+    func findRoutePoint(with id: Int) -> RoutePoint? {
+        guard points.isEmpty else {
+            return points[0]
+        }
+        
+        return nil
+    }
     
 }
