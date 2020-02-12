@@ -9,7 +9,8 @@
 import Foundation
 import MapKit
 
-class RoutePoint: Codable {
+class RoutePoint {
+    let id: String
     var title: String?
     var subtitle: String?
     var latitude: Double
@@ -18,6 +19,8 @@ class RoutePoint: Codable {
     var timeToGetToNextPointInMinutes: Int? = 60
     // Nullable in case it's the start of trip.
     var residenceTimeInMinutes: Int? = 120
+    
+    let idGenerator = NSUUID()
     
     var placemark: MKPlacemark {
         return MKPlacemark(coordinate: coordinate)
@@ -32,6 +35,7 @@ class RoutePoint: Codable {
     }
     
     init(from annotation: MKAnnotation) {
+        id = idGenerator.uuidString
         latitude = annotation.coordinate.latitude
         longitude = annotation.coordinate.longitude
         title = annotation.title ?? ""
@@ -39,11 +43,15 @@ class RoutePoint: Codable {
     }
     
     init(coordinate: CLLocationCoordinate2D, title: String = "", subtitle: String = "") {
+        id = idGenerator.uuidString
         latitude = coordinate.latitude
         longitude = coordinate.longitude
+        self.title = title
+        self.subtitle = subtitle
     }
     
     init(longitude: Double, latitude: Double, title: String, subtitle: String) {
+        id = idGenerator.uuidString
         self.latitude = latitude
         self.longitude = longitude
         self.title = title

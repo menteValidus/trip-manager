@@ -22,30 +22,30 @@ class PropertyListDAO {
     // MARK: - Save/Load Utility
     
     func save(_ points: [RoutePoint]) {
-        let encoder = PropertyListEncoder()
-        
-        do {
-            let data = try encoder.encode(points)
-            try data.write(to: dataFilePath(), options: .atomic)
-        } catch {
-            display(message: "Error encoding item array: \(error.localizedDescription)")
-        }
+//        let encoder = PropertyListEncoder()
+//
+//        do {
+//            let data = try encoder.encode(points)
+//            try data.write(to: dataFilePath(), options: .atomic)
+//        } catch {
+//            display(message: "Error encoding item array: \(error.localizedDescription)")
+//        }
     }
     
     func load() -> [RoutePoint] {
-        let path = dataFilePath()
-        
-        if let data = try? Data(contentsOf: path) {
-            let decoder = PropertyListDecoder()
-            do {
-                let points = try decoder.decode([RoutePoint].self, from: data)
-                return points
-            } catch {
-                display(message: "Error decoding item array: \(error.localizedDescription)")
-            }
-            
-        }
-        
+//        let path = dataFilePath()
+//        
+//        if let data = try? Data(contentsOf: path) {
+//            let decoder = PropertyListDecoder()
+//            do {
+//                let points = try decoder.decode([RoutePoint].self, from: data)
+//                return points
+//            } catch {
+//                display(message: "Error decoding item array: \(error.localizedDescription)")
+//            }
+//            
+//        }
+//        
         return []
     }
     

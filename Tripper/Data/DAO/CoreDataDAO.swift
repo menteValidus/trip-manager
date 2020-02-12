@@ -33,6 +33,7 @@ class CoreDataDAO: RoutePointDAO {
                 static let Name = "RoutePointEntity"
                 
                 struct KeyPathNames {
+                    static let ID = "id"
                     static let Longitude = "longitude"
                     static let Latitude = "latitude"
                     static let TimeInMinutes = "timeInMinutes"
@@ -45,7 +46,7 @@ class CoreDataDAO: RoutePointDAO {
     
     // MARK: - Database's Queries
     
-    func selectAll() -> [RoutePoint] {
+    func fetchAll() -> [RoutePoint] {
         let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.Name)
         let fetchedPoints: [RoutePointEntity]
         do {
@@ -67,13 +68,15 @@ class CoreDataDAO: RoutePointDAO {
     func insert(_ point: RoutePoint) {
         let entity = NSEntityDescription.entity(forEntityName: DataModelDB.Entities.RoutePointEntity.Name, in: managedObjectContext)!
         
-        let routePointObject = NSManagedObject(entity: entity, insertInto: managedObjectContext)
+        let routePointObject = NSManagedObject(entity: entity, insertInto: managedObjectContext) as! RoutePointEntity
+        routePointObject.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
         routePointObject.setValue(point.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
         routePointObject.setValue(point.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
         routePointObject.setValue(point.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
         routePointObject.setValue(point.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
         routePointObject.setValue(point.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
 
+        
         do {
             try managedObjectContext.save()
         } catch {
@@ -83,11 +86,42 @@ class CoreDataDAO: RoutePointDAO {
     }
     
     func update(_ point: RoutePoint) {
-        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
+            NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.Name)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", point.id)
+        do {
+            let fetchResult = try managedObjectContext.fetch(fetchRequest)
+            
+            let pointToUpdate = fetchResult.first as! RoutePointEntity
+            pointToUpdate.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
+            pointToUpdate.setValue(point.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
+            pointToUpdate.setValue(point.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
+            pointToUpdate.setValue(point.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
+            pointToUpdate.setValue(point.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
+            pointToUpdate.setValue(point.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
+            
+            try managedObjectContext.save()
+        } catch {
+            throwAn(error: error)
+        }
     }
     
     func delete(_ point: RoutePoint) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
+            NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.Name)
+        fetchRequest.predicate = NSPredicate(format: "id = %@", point.id)
         
+        do {
+            let fetchResult = try managedObjectContext.fetch(fetchRequest)
+            
+            let pointToDelete = fetchResult.first as! RoutePointEntity
+            managedObjectContext.delete(pointToDelete)
+            
+            try managedObjectContext.save()
+            
+        } catch {
+            throwAn(error: error)
+        }
     }
     
     // MARK: - Converters

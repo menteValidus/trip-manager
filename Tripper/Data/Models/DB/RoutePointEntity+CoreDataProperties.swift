@@ -22,5 +22,6 @@ extension RoutePointEntity {
     @NSManaged public var timeInMinutes: Int32
     @NSManaged public var title: String?
     @NSManaged public var subtitle: String?
+    @NSManaged public var id: String?
 
 }

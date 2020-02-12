@@ -34,7 +34,7 @@ class RouteDataModel {
     }
     
     init() {
-        points = dbGateway.selectAll()
+        points = dbGateway.fetchAll()
     }
     
     // MARK: - Save/Load Utility
