@@ -14,6 +14,7 @@ class RouteDataModel {
     private(set) var length = 0.0
     
     private let plistDAO = PropertyListDAO()
+    private let dbGateway = CoreDataDAO()
     
     var subroutes: [Subroute] {
         var subroutes = [Subroute]()
@@ -30,6 +31,10 @@ class RouteDataModel {
     var countSubroutes: Int {
         // This formula calculate overall number of route points and roads.
         return points.count * 2 - 1
+    }
+    
+    init() {
+        points = dbGateway.selectAll()
     }
     
     // MARK: - Save/Load Utility
@@ -50,6 +55,7 @@ class RouteDataModel {
     
     func add(point: RoutePoint) {
         points.append(point)
+        dbGateway.insert(point)
     }
     
     func getSubroute(at index: Int) -> Subroute {

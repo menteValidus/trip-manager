@@ -179,10 +179,12 @@ class MapViewController: UIViewController {
     }
     
     private func restoreLayout() {
-        let secondToLastIndex = (route.points.count - 1) - 1
-        for i in 0...secondToLastIndex {
-            calculateAndLayoutRoute(from: route.points[i].mapItem, to: route.points[i + 1].mapItem)
-            setPin(at: route.points[i])
+        if route.points.count > 1 {
+            let secondToLastIndex = (route.points.count - 1) - 1
+            for i in 0...secondToLastIndex {
+                calculateAndLayoutRoute(from: route.points[i].mapItem, to: route.points[i + 1].mapItem)
+                setPin(at: route.points[i])
+            }
         }
         
         setPin(at: route.points.last!)
