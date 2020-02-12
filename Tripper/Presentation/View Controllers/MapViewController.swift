@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 protocol MapRouteDelegate: class {
     func mapRoute(didChanged staying: Staying, id: Int)
@@ -22,6 +23,8 @@ class MapViewController: UIViewController {
     let locationManager = CLLocationManager()
     
     var currentRouteNumber = 1
+    
+    var managedObjectContext: NSManagedObjectContext!
     
     var route: RouteDataModel!
     var overlays = [MKOverlay]()

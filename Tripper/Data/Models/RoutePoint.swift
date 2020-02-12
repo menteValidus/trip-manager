@@ -42,4 +42,11 @@ class RoutePoint: Codable {
         latitude = coordinate.latitude
         longitude = coordinate.longitude
     }
+    
+    init(longitude: Double, latitude: Double, title: String, subtitle: String) {
+        self.latitude = latitude
+        self.longitude = longitude
+        self.title = title
+        self.subtitle = subtitle
+    }
 }
