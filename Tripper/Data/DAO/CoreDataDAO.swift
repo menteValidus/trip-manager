@@ -130,7 +130,7 @@ class CoreDataDAO: RoutePointDAO {
     // MARK: - Converters
     
     private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
-        let point = RoutePoint(longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
+        let point = RoutePoint(id: entity.id!, longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
         return point
     }
 //

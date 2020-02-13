@@ -50,8 +50,8 @@ class RoutePoint {
         self.subtitle = subtitle
     }
     
-    init(longitude: Double, latitude: Double, title: String, subtitle: String) {
-        id = idGenerator.uuidString
+    init(id: String, longitude: Double, latitude: Double, title: String, subtitle: String) {
+        self.id = id
         self.latitude = latitude
         self.longitude = longitude
         self.title = title

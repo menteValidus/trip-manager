@@ -50,12 +50,21 @@
                                     <action selector="createRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hhU-Rj-qzy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1cf-6s-iH9">
+                                <rect key="frame" x="312" y="196" width="47" height="38"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                <state key="normal" title="User"/>
+                                <connections>
+                                    <action selector="showUser" destination="BYZ-38-t0r" eventType="touchUpInside" id="cru-Q3-AVa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="fOH-LN-ZFU" firstAttribute="leading" relation="lessThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="120" id="03C-UP-5kC"/>
                             <constraint firstItem="A0a-IB-foe" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="J0e-Xw-0Ne"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="6TL-c6-BV9" secondAttribute="bottom" constant="20" id="Jhy-0L-xPc"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1cf-6s-iH9" secondAttribute="trailing" constant="16" id="LIE-Ay-h1h"/>
                             <constraint firstItem="6TL-c6-BV9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="128" id="OsB-zw-0P1"/>
                             <constraint firstItem="A0a-IB-foe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Qjq-f2-OgJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="A0a-IB-foe" secondAttribute="trailing" id="R0K-U8-epN"/>
@@ -63,15 +72,11 @@
                             <constraint firstItem="fOH-LN-ZFU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="Tn0-wl-8c8"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="fOH-LN-ZFU" secondAttribute="trailing" constant="120" id="VPT-mi-mXl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6TL-c6-BV9" secondAttribute="trailing" constant="128" id="Vrd-vU-RdT"/>
+                            <constraint firstItem="1cf-6s-iH9" firstAttribute="top" secondItem="fOH-LN-ZFU" secondAttribute="bottom" constant="75" id="gUT-Tr-CW6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="SCI-Be-zLs">
-                        <barButtonItem key="leftBarButtonItem" title="User" id="UoB-xE-UPb">
-                            <connections>
-                                <action selector="showUser" destination="BYZ-38-t0r" id="gA3-bn-M0k"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Route" id="5Au-Xc-bPL">
                             <connections>
                                 <segue destination="OXZ-HK-1RU" kind="show" identifier="ShowRouteList" id="Ko3-G2-tGB"/>
@@ -130,15 +135,24 @@
                                     <action selector="save:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="p9H-ZV-shj"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isx-VI-OL0">
+                                <rect key="frame" x="306" y="12" width="45" height="30"/>
+                                <state key="normal" title="Delete"/>
+                                <connections>
+                                    <action selector="deletePoint:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="Wrs-9v-XJS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="lYJ-lm-dUu" firstAttribute="centerY" secondItem="9yV-B1-bmF" secondAttribute="centerY" id="7NX-xv-osr"/>
                             <constraint firstItem="Rwy-Bq-VX3" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="12" id="FWE-if-Bce"/>
+                            <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="isx-VI-OL0" secondAttribute="trailing" constant="24" id="IXn-Sc-MwG"/>
                             <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="9yV-B1-bmF" secondAttribute="trailing" constant="16" id="PEF-h6-VKu"/>
                             <constraint firstItem="lYJ-lm-dUu" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="80" id="Rkf-oV-8zI"/>
                             <constraint firstItem="MHW-vQ-MbK" firstAttribute="centerX" secondItem="0C2-fP-eBO" secondAttribute="centerX" id="aKZ-nE-odL"/>
                             <constraint firstItem="Rwy-Bq-VX3" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="24" id="juE-rO-Rpd"/>
+                            <constraint firstItem="isx-VI-OL0" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="12" id="jzq-mY-6g7"/>
                             <constraint firstItem="MHW-vQ-MbK" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="16" id="kXk-fo-2Df"/>
                             <constraint firstItem="lYJ-lm-dUu" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="16" id="nic-Ry-XCZ"/>
                         </constraints>

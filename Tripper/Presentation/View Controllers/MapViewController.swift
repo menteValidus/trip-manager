@@ -12,6 +12,7 @@ import CoreData
 
 protocol MapRouteDelegate: class {
     func mapRoute(didChanged routePoint: RoutePoint)
+    func mapRoute(didDeleted routePoint: RoutePoint)
 }
 
 class MapViewController: UIViewController {
@@ -44,6 +45,8 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        currentRouteNumber = route.points.count + 1
         
         if !route.points.isEmpty {
             restoreLayout()
@@ -87,6 +90,9 @@ class MapViewController: UIViewController {
         annotations.append(annotation)
         
         mapView.addAnnotation(annotation)
+        
+        let annotationRegion = region(for: [RoutePoint(from: annotation)])
+        mapView.setRegion(annotationRegion, animated: true)
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: newPoint)
     }
 
@@ -322,6 +328,8 @@ extension MapViewController: MKMapViewDelegate {
     // MARK: - Helper Methods
     
     @objc func showDetails(_ sender: UIButton) {
+        let annotationRegion = region(for: [RoutePoint(from: selectedAnnotation!)])
+        mapView.setRegion(annotationRegion, animated: true)
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: route.points[sender.tag])
     }
     
@@ -347,6 +355,14 @@ extension MapViewController: MapRouteDelegate {
         if let annotation = selectedAnnotation {
             mapView.removeAnnotation(annotation)
             setPin(at: routePoint)
+        }
+    }
+    
+    func mapRoute(didDeleted routePoint: RoutePoint) {
+        route.delete(routePoint: routePoint)
+        if let annotation = selectedAnnotation {
+            mapView.removeAnnotation(annotation)
+            selectedAnnotation = nil
         }
     }
 }

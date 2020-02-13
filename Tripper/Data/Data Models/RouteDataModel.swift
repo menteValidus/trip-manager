@@ -27,7 +27,7 @@ class RouteDataModel {
         return subroutes
     }
     
-    // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours.
+    // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours, etc.
     var countSubroutes: Int {
         if points.count > 0 {
             // This formula calculate overall number of route points and roads.
@@ -39,16 +39,6 @@ class RouteDataModel {
     
     init() {
         points = dbGateway.fetchAll()
-    }
-    
-    // MARK: - Save/Load Utility
-    
-    func save() {
-        plistDAO.save(points)
-    }
-    
-    func load() {
-        points = plistDAO.load()
     }
     
     // MARK: - Helper Methods
@@ -66,10 +56,23 @@ class RouteDataModel {
         for index in 0..<points.count {
             if points[index].id == routePoint.id {
                 points[index] = routePoint
+                break
             }
         }
         
         dbGateway.update(routePoint)
+    }
+    
+    func delete(routePoint: RoutePoint) {
+        for index in 0..<points.count {
+            if points[index].id == routePoint.id {
+                let pointPosition = index + 1
+                points.remove(at: pointPosition)
+                break
+            }
+        }
+        
+        dbGateway.delete(routePoint)
     }
     
     func getSubroute(at index: Int) -> Subroute {

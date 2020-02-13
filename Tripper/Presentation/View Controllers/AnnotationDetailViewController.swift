@@ -30,4 +30,8 @@ class AnnotationDetailViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @IBAction func deletePoint(_ sender: Any) {
+        delegate.mapRoute(didDeleted: routePoint)
+        dismiss(animated: true)
+    }
 }
