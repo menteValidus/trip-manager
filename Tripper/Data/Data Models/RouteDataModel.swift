@@ -9,7 +9,7 @@
 import Foundation
 
 class RouteDataModel {
-    private(set) var points: [RoutePoint] = []
+    private(set) var points: [RoutePoint]
     
     private(set) var length = 0.0
     
@@ -29,8 +29,12 @@ class RouteDataModel {
     
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours.
     var countSubroutes: Int {
-        // This formula calculate overall number of route points and roads.
-        return points.count * 2 - 1
+        if points.count > 0 {
+            // This formula calculate overall number of route points and roads.
+            return points.count * 2 - 1
+        } else {
+            return 0
+        }
     }
     
     init() {
@@ -56,6 +60,16 @@ class RouteDataModel {
     func add(point: RoutePoint) {
         points.append(point)
         dbGateway.insert(point)
+    }
+    
+    func update(routePoint: RoutePoint) {
+        for index in 0..<points.count {
+            if points[index].id == routePoint.id {
+                points[index] = routePoint
+            }
+        }
+        
+        dbGateway.update(routePoint)
     }
     
     func getSubroute(at index: Int) -> Subroute {

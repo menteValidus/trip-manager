@@ -16,7 +16,12 @@ let applicationDocumentsDirectory: URL = {
 
 func throwAn(error: Error) {
     print("*** Error: \(error)")
-    fatalError("Could not load data store: \(error)")
+    fatalError("Error: \(error)")
+}
+
+func throwAn(errorMessage: String) {
+    print("*** \(errorMessage)")
+    fatalError(errorMessage)
 }
 
 func display(message: String) {

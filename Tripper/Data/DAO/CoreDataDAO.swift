@@ -92,15 +92,18 @@ class CoreDataDAO: RoutePointDAO {
         do {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
             
-            let pointToUpdate = fetchResult.first as! RoutePointEntity
-            pointToUpdate.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
-            pointToUpdate.setValue(point.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
-            pointToUpdate.setValue(point.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
-            pointToUpdate.setValue(point.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
-            pointToUpdate.setValue(point.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
-            pointToUpdate.setValue(point.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
-            
-            try managedObjectContext.save()
+            if let pointToUpdate = fetchResult.first as? RoutePointEntity {
+                pointToUpdate.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
+                pointToUpdate.setValue(point.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
+                pointToUpdate.setValue(point.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
+                pointToUpdate.setValue(point.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
+                pointToUpdate.setValue(point.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
+                pointToUpdate.setValue(point.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
+                
+                try managedObjectContext.save()
+            } else {
+                throwAn(errorMessage: "There is no way we can be here!!!")
+            }
         } catch {
             throwAn(error: error)
         }

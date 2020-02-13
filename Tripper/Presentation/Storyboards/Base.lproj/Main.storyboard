@@ -123,13 +123,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwy-Bq-VX3">
+                                <rect key="frame" x="24" y="12" width="34" height="30"/>
+                                <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="save:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="p9H-ZV-shj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="lYJ-lm-dUu" firstAttribute="centerY" secondItem="9yV-B1-bmF" secondAttribute="centerY" id="7NX-xv-osr"/>
+                            <constraint firstItem="Rwy-Bq-VX3" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="12" id="FWE-if-Bce"/>
                             <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="9yV-B1-bmF" secondAttribute="trailing" constant="16" id="PEF-h6-VKu"/>
                             <constraint firstItem="lYJ-lm-dUu" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="80" id="Rkf-oV-8zI"/>
                             <constraint firstItem="MHW-vQ-MbK" firstAttribute="centerX" secondItem="0C2-fP-eBO" secondAttribute="centerX" id="aKZ-nE-odL"/>
+                            <constraint firstItem="Rwy-Bq-VX3" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="24" id="juE-rO-Rpd"/>
                             <constraint firstItem="MHW-vQ-MbK" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="16" id="kXk-fo-2Df"/>
                             <constraint firstItem="lYJ-lm-dUu" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="16" id="nic-Ry-XCZ"/>
                         </constraints>

@@ -26,13 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Application Methods
     
-    func applicationWillTerminate(_ application: UIApplication) {
-        dataModel.save()
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        dataModel.save()
-    }
+//    func applicationWillTerminate(_ application: UIApplication) {
+//        dataModel.save()
+//    }
+//    
+//    func applicationDidEnterBackground(_ application: UIApplication) {
+//        dataModel.save()
+//    }
 
     // MARK: UISceneSession Lifecycle
 

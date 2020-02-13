@@ -13,11 +13,21 @@ class AnnotationDetailViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     
     var routePoint: RoutePoint!
+    var delegate: MapRouteDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         titleLabel.text = routePoint.title ?? "Title"
+        titleTextField.text = routePoint.title
     }
 
+    // MARK: - Actions
+    
+    @IBAction func save(_ sender: UIButton) {
+        routePoint.title = titleTextField.text
+        delegate.mapRoute(didChanged: routePoint)
+        dismiss(animated: true)
+    }
+    
 }

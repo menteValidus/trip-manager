@@ -11,7 +11,7 @@ import MapKit
 import CoreData
 
 protocol MapRouteDelegate: class {
-    func mapRoute(didChanged staying: Staying, id: Int)
+    func mapRoute(didChanged routePoint: RoutePoint)
 }
 
 class MapViewController: UIViewController {
@@ -31,7 +31,7 @@ class MapViewController: UIViewController {
     private var annotations = [MKAnnotation]()
     private var wholeRouteLength = 0.0
     
-//    private var annotationToEdit: MKAnnotation?
+    private var selectedAnnotation: MKAnnotation?
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     
@@ -82,10 +82,12 @@ class MapViewController: UIViewController {
         annotation.title = "Route point #\(currentRouteNumber)"
         currentRouteNumber += 1
         
-        route.add(point: RoutePoint(from: annotation))
+        let newPoint = RoutePoint(from: annotation)
+        route.add(point: newPoint)
         annotations.append(annotation)
         
         mapView.addAnnotation(annotation)
+        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: newPoint)
     }
 
     @IBAction func cancelRouteCreation(_ sender: UIBarButtonItem) {
@@ -112,7 +114,9 @@ class MapViewController: UIViewController {
         
         if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
             let controller = segue.destination as! AnnotationDetailViewController
-            controller.routePoint = route.points[(sender as! UIButton).tag]
+            
+            controller.routePoint = (sender as! RoutePoint)
+            controller.delegate = self
             slideInTransitioningDelegate.direction = .bottom
             controller.transitioningDelegate = slideInTransitioningDelegate
             controller.modalPresentationStyle = .custom
@@ -153,7 +157,9 @@ class MapViewController: UIViewController {
         directions.calculate(completionHandler: { response, error in
             guard let directionResponse = response else {
                 if let error = error {
-                    throwAn(error: error)
+                    // The most frequent error is error of creatig route in the country that is different from user's country.
+                    // That's why this error is commented. In future we have to deal with this problem.
+                    //throwAn(error: error)
                 }
                 
                 return
@@ -192,8 +198,10 @@ class MapViewController: UIViewController {
     
     private func setPin(at routePoint: RoutePoint) {
         let annotation = MKPointAnnotation()
+        annotation.title = routePoint.title
         annotation.coordinate = routePoint.coordinate
         // TODO: set title and description
+        annotations.append(annotation)
         mapView.addAnnotation(annotation)
     }
     
@@ -293,20 +301,33 @@ extension MapViewController: MKMapViewDelegate {
         if let annotationView = annotationView {
           annotationView.annotation = annotation
           let button = annotationView.rightCalloutAccessoryView as! UIButton
-          if let index = getRoutePointIndex(from: annotation) {
+          if let index = findID(of: annotation) {
             button.tag = index
           }
         }
+        
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        selectedAnnotation = view.annotation
+        print("*** Selected.")
+    }
+    
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        selectedAnnotation = nil
+        print("*** Deselected.")
     }
     
     // MARK: - Helper Methods
     
     @objc func showDetails(_ sender: UIButton) {
-        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: sender)
+        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: route.points[sender.tag])
     }
     
-    func getRoutePointIndex(from annotation: MKAnnotation) -> Int? {
+    
+    
+    func findID(of annotation: MKAnnotation) -> Int? {
         for index in 0..<annotations.count {
             if annotations[index].isEqual(annotation) {
                 return index
@@ -321,9 +342,11 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: MapRouteDelegate {
     // MARK: - Map Routes Delegates
     
-    func mapRoute(didChanged staying: Staying, id: Int) {
-        if let routePoint = route.findRoutePoint(with: id) {
-            print(routePoint)
+    func mapRoute(didChanged routePoint: RoutePoint) {
+        route.update(routePoint: routePoint)
+        if let annotation = selectedAnnotation {
+            mapView.removeAnnotation(annotation)
+            setPin(at: routePoint)
         }
     }
 }
