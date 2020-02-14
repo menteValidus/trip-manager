@@ -64,10 +64,9 @@ class RouteDataModel {
     }
     
     func delete(routePoint: RoutePoint) {
-        for index in 0..<points.count {
-            if points[index].id == routePoint.id {
-                let pointPosition = index + 1
-                points.remove(at: pointPosition)
+        for (index, point) in points.enumerated() {
+            if point.id == routePoint.id {
+                points.remove(at: index)
                 break
             }
         }

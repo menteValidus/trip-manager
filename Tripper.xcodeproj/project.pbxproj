@@ -24,6 +24,7 @@
 		0B042A9123EA9C1400E9136F /* Staying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9023EA9C1400E9136F /* Staying.swift */; };
 		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
+		0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */; };
 		0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
@@ -55,6 +56,7 @@
 		0B042A9023EA9C1400E9136F /* Staying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staying.swift; sourceTree = "<group>"; };
 		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
+		0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				0B042A6D23E2D21800E9136F /* MapViewController.swift */,
 				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
 				0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */,
+				0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
+				0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */,
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */,
