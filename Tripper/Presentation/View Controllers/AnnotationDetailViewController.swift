@@ -58,7 +58,7 @@ class AnnotationDetailViewController: UIViewController {
             case 101:
                 isArrivalEditing = false
             default:
-                throwAn(errorMessage: "It is impossible to be here!!!")
+                throwAn(errorMessage: "AnnotationDetailViewController.prepare: switch - default. It is impossible to be here!!!")
             }
             
             controller.delegate = self

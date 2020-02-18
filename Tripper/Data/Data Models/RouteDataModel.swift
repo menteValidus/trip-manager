@@ -27,6 +27,10 @@ class RouteDataModel {
         return subroutes
     }
     
+    private var nextRoutePointNumber: Int {
+        return points.count
+    }
+    
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours, etc.
     var countSubroutes: Int {
         if points.count > 0 {
@@ -92,6 +96,12 @@ class RouteDataModel {
         }
         
         return nil
+    }
+    
+    func createRoutePointWithoutAppending() -> RoutePoint {
+        let point = RoutePoint()
+        point.title = "Route point #\(nextRoutePointNumber)"
+        return point
     }
     
 }

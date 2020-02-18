@@ -34,6 +34,12 @@ class RoutePoint {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
+    init() {
+        id = idGenerator.uuidString
+        latitude = 0
+        longitude = 0
+    }
+    
     init(from annotation: MKAnnotation) {
         id = idGenerator.uuidString
         latitude = annotation.coordinate.latitude

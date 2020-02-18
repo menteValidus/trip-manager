@@ -25,14 +25,12 @@ class MapViewController: UIViewController {
     
     var currentRouteNumber = 1
     
-    var managedObjectContext: NSManagedObjectContext!
-    
     var route: RouteDataModel!
     var overlays = [MKOverlay]()
-    private var annotations = [MKAnnotation]()
+    private var annotations = [RoutePointAnnotation]()
     private var wholeRouteLength = 0.0
     
-    private var selectedAnnotation: MKAnnotation?
+    private var selectedAnnotation: RoutePointAnnotation?
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     
@@ -78,6 +76,7 @@ class MapViewController: UIViewController {
         
         let location = sender.location(in: mapView)
         let locationCoord = mapView.convert(location, toCoordinateFrom: mapView)
+        let newPoint = RoutePoint(coordinate: locationCoord)
         
         let annotation = MKPointAnnotation()
         
@@ -85,9 +84,8 @@ class MapViewController: UIViewController {
         annotation.title = "Route point #\(currentRouteNumber)"
         currentRouteNumber += 1
         
-        let newPoint = RoutePoint(from: annotation)
         route.add(point: newPoint)
-        annotations.append(annotation)
+//        annotations.append(annotation)
         
         mapView.addAnnotation(annotation)
         
@@ -203,12 +201,16 @@ class MapViewController: UIViewController {
     }
     
     private func setPin(at routePoint: RoutePoint) {
+        let annotation = createAnnotation(from: routePoint)
+//        annotations.append(annotation)
+        mapView.addAnnotation(annotation)
+    }
+    
+    private func createAnnotation(from routePoint: RoutePoint) -> MKPointAnnotation {
         let annotation = MKPointAnnotation()
         annotation.title = routePoint.title
         annotation.coordinate = routePoint.coordinate
-        // TODO: set title and description
-        annotations.append(annotation)
-        mapView.addAnnotation(annotation)
+        return annotation
     }
     
         // MARK: Map Zooming
@@ -316,7 +318,7 @@ extension MapViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        selectedAnnotation = view.annotation
+//        selectedAnnotation = view.annotation
         print("*** Selected.")
     }
     
@@ -354,7 +356,7 @@ extension MapViewController: MapRouteDelegate {
         route.update(routePoint: routePoint)
         if let annotation = selectedAnnotation {
             mapView.removeAnnotation(annotation)
-            setPin(at: routePoint)
+            mapView.addAnnotation(createAnnotation(from: routePoint))
         }
     }
     

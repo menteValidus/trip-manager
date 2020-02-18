@@ -25,6 +25,7 @@
 		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
 		0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */; };
+		0B66C00223F6E0BA000CF975 /* RoutePointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */; };
 		0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
@@ -34,6 +35,8 @@
 		0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */; };
 		0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85423F2E85F006DCDDC /* DAO.swift */; };
 		0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */; };
+		0B88891123FC00EA00580A2A /* GMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88891023FC00EA00580A2A /* GMapViewController.swift */; };
+		A06113B9F4C7945F8C6A8AD3 /* libPods-Tripper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,7 @@
 		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
 		0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
+		0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointAnnotation.swift; sourceTree = "<group>"; };
 		0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
@@ -66,6 +70,10 @@
 		0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataProperties.swift"; path = "DB/RoutePointEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0B6CD85423F2E85F006DCDDC /* DAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 		0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDAO.swift; sourceTree = "<group>"; };
+		0B88891023FC00EA00580A2A /* GMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMapViewController.swift; sourceTree = "<group>"; };
+		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
+		9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tripper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B042A7123E2E1B600E9136F /* MapKit.framework in Frameworks */,
+				A06113B9F4C7945F8C6A8AD3 /* libPods-Tripper.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -86,6 +95,7 @@
 				0B042A5823E2D02100E9136F /* Tripper */,
 				0B042A5723E2D02100E9136F /* Products */,
 				0B042A6F23E2E1B600E9136F /* Frameworks */,
+				574CE712F5A59AC5937EF361 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				0B042A7023E2E1B600E9136F /* MapKit.framework */,
+				9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -124,6 +135,7 @@
 				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
 				0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */,
 				0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */,
+				0B88891023FC00EA00580A2A /* GMapViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -229,6 +241,7 @@
 				0B6CD85323F2D957006DCDDC /* DB */,
 				0B042A8F23EA9B9100E9136F /* Subroutes */,
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
+				0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -259,6 +272,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		574CE712F5A59AC5937EF361 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */,
+				D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -266,9 +288,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B042A6A23E2D02200E9136F /* Build configuration list for PBXNativeTarget "Tripper" */;
 			buildPhases = (
+				6FD4A90B10BC1996CB3FFCFC /* [CP] Check Pods Manifest.lock */,
 				0B042A5223E2D02100E9136F /* Sources */,
 				0B042A5323E2D02100E9136F /* Frameworks */,
 				0B042A5423E2D02100E9136F /* Resources */,
+				CCEE24E8965DB7B54B857F5B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -327,6 +351,47 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6FD4A90B10BC1996CB3FFCFC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Tripper-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CCEE24E8965DB7B54B857F5B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0B042A5223E2D02100E9136F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -340,6 +405,7 @@
 				0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */,
+				0B88891123FC00EA00580A2A /* GMapViewController.swift in Sources */,
 				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */,
@@ -347,6 +413,7 @@
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */,
 				0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */,
+				0B66C00223F6E0BA000CF975 /* RoutePointAnnotation.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
 				0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */,
@@ -494,6 +561,7 @@
 		};
 		0B042A6B23E2D02200E9136F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -513,6 +581,7 @@
 		};
 		0B042A6C23E2D02200E9136F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
