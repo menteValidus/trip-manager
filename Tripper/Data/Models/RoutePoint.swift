@@ -13,8 +13,8 @@ class RoutePoint {
     let id: String
     var title: String?
     var subtitle: String?
-    var latitude: Double
-    var longitude: Double
+    var latitude: Double = 0
+    var longitude: Double = 0
     // Nullable in case it's the end of trip.
     var timeToGetToNextPointInMinutes: Int? = 60
     // Nullable in case it's the start of trip.
@@ -31,7 +31,13 @@ class RoutePoint {
     }
     
     var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        get {
+            return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        set {
+            latitude = newValue.latitude
+            longitude = newValue.longitude
+        }
     }
     
     init() {
@@ -50,10 +56,9 @@ class RoutePoint {
     
     init(coordinate: CLLocationCoordinate2D, title: String = "", subtitle: String = "") {
         id = idGenerator.uuidString
-        latitude = coordinate.latitude
-        longitude = coordinate.longitude
         self.title = title
         self.subtitle = subtitle
+        self.coordinate = coordinate
     }
     
     init(id: String, longitude: Double, latitude: Double, title: String, subtitle: String) {

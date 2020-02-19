@@ -14,9 +14,6 @@ class GMapViewController: UIViewController {
     @IBOutlet weak var mapView: GMSMapView!
     
     var locationManager = CLLocationManager()
-    var currentLocation: CLLocation?
-    var placesClient: GMSPlacesClient!
-    var zoomLevel: Float = 15.0
     
     var route: RouteDataModel!
     
@@ -41,7 +38,11 @@ class GMapViewController: UIViewController {
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
         
-        placesClient = GMSPlacesClient.shared()
+        if route.isNotEmpty() {
+            for point in route.points {
+                setMarker(at: point)
+            }
+        }
     }
 
 }
@@ -51,9 +52,22 @@ extension GMapViewController: CLLocationManagerDelegate {
 }
 
 extension GMapViewController: GMSMapViewDelegate {
+    // MARK: - GMS Map View's Delegate
+    
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        let marker = GMSMarker(position: coordinate)
-        marker.title = "hey"
+        var newRoutePoint = RoutePoint()
+        newRoutePoint.coordinate = coordinate
+        
+        setMarker(at: newRoutePoint)
+        
+        route.add(point: newRoutePoint)
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func setMarker(at routePoint: RoutePoint) {
+        let marker = GMSMarker(position: routePoint.coordinate)
+        marker.title = routePoint.title
         marker.map = mapView
     }
 }
