@@ -8,10 +8,10 @@
 
 import CoreData
 
-class CoreDataDAO: RoutePointDAO {
+class CoreDataRoutePointDAO: RoutePointDAO {
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: DataModelDB.Name)
+        let container = NSPersistentContainer(name: DataModelDB.name)
         container.loadPersistentStores(completionHandler: { storeDescription, error in
             if let error = error {
                 throwAn(error: error)
@@ -24,13 +24,13 @@ class CoreDataDAO: RoutePointDAO {
     lazy var managedObjectContext: NSManagedObjectContext = persistentContainer.viewContext
     
     
-    struct DataModelDB {
-        static let Name = "DataModel"
+    private struct DataModelDB {
+        static let name = "DataModel"
         
         struct Entities {
             
             struct RoutePointEntity {
-                static let Name = "RoutePointEntity"
+                static let name = "RoutePointEntity"
                 
                 struct KeyPathNames {
                     static let ID = "id"
@@ -47,7 +47,7 @@ class CoreDataDAO: RoutePointDAO {
     // MARK: - Database's Queries
     
     func fetchAll() -> [RoutePoint] {
-        let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.Name)
+        let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
         let fetchedPoints: [RoutePointEntity]
         do {
             fetchedPoints = try managedObjectContext.fetch(pointsFetch) as! [RoutePointEntity]
@@ -66,7 +66,7 @@ class CoreDataDAO: RoutePointDAO {
     }
     
     func insert(_ point: RoutePoint) {
-        let entity = NSEntityDescription.entity(forEntityName: DataModelDB.Entities.RoutePointEntity.Name, in: managedObjectContext)!
+        let entity = NSEntityDescription.entity(forEntityName: DataModelDB.Entities.RoutePointEntity.name, in: managedObjectContext)!
         
         let routePointObject = NSManagedObject(entity: entity, insertInto: managedObjectContext) as! RoutePointEntity
         routePointObject.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
@@ -87,7 +87,7 @@ class CoreDataDAO: RoutePointDAO {
     
     func update(_ point: RoutePoint) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
-            NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.Name)
+            NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.name)
         fetchRequest.predicate = NSPredicate(format: "id = %@", point.id)
         do {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
@@ -111,7 +111,7 @@ class CoreDataDAO: RoutePointDAO {
     
     func delete(_ point: RoutePoint) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
-            NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.Name)
+            NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.name)
         fetchRequest.predicate = NSPredicate(format: "id = %@", point.id)
         
         do {
@@ -124,6 +124,18 @@ class CoreDataDAO: RoutePointDAO {
             
         } catch {
             throwAn(error: error)
+        }
+    }
+    
+    func deleteAll() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
+        
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try managedObjectContext.execute(batchDeleteRequest)
+        } catch {
+            throwAn(errorMessage: "CoreDataDAO.clearRoutePointEntity error: \(error)")
         }
     }
     

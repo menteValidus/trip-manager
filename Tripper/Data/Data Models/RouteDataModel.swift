@@ -12,9 +12,7 @@ class RouteDataModel {
     private(set) var points: [RoutePoint]
     
     private(set) var length = 0.0
-    
-    private let plistDAO = PropertyListDAO()
-    private let dbGateway = CoreDataDAO()
+    private let routePointGateway = CoreDataRoutePointDAO()
     
     var subroutes: [Subroute] {
         var subroutes = [Subroute]()
@@ -42,7 +40,7 @@ class RouteDataModel {
     }
     
     init() {
-        points = dbGateway.fetchAll()
+        points = routePointGateway.fetchAll()
     }
     
     // MARK: - Helper Methods
@@ -53,7 +51,7 @@ class RouteDataModel {
     
     func add(point: RoutePoint) {
         points.append(point)
-        dbGateway.insert(point)
+        routePointGateway.insert(point)
     }
     
     func update(routePoint: RoutePoint) {
@@ -64,7 +62,7 @@ class RouteDataModel {
             }
         }
         
-        dbGateway.update(routePoint)
+        routePointGateway.update(routePoint)
     }
     
     func delete(routePoint: RoutePoint) {
@@ -75,7 +73,11 @@ class RouteDataModel {
             }
         }
         
-        dbGateway.delete(routePoint)
+        routePointGateway.delete(routePoint)
+    }
+    
+    func deleteAll() {
+        routePointGateway.deleteAll()
     }
     
     func getSubroute(at index: Int) -> Subroute {

@@ -36,6 +36,7 @@
 		0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85423F2E85F006DCDDC /* DAO.swift */; };
 		0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */; };
 		0B88891123FC00EA00580A2A /* GMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88891023FC00EA00580A2A /* GMapViewController.swift */; };
+		0B88891823FD468A00580A2A /* RoutePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88891723FD468A00580A2A /* RoutePin.swift */; };
 		A06113B9F4C7945F8C6A8AD3 /* libPods-Tripper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		0B6CD85423F2E85F006DCDDC /* DAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 		0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDAO.swift; sourceTree = "<group>"; };
 		0B88891023FC00EA00580A2A /* GMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMapViewController.swift; sourceTree = "<group>"; };
+		0B88891723FD468A00580A2A /* RoutePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePin.swift; sourceTree = "<group>"; };
 		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
 		9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tripper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		0B6CD84623ED78EC006DCDDC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0B88891623FD467000580A2A /* GMap */,
 				0B6CD85323F2D957006DCDDC /* DB */,
 				0B042A8F23EA9B9100E9136F /* Subroutes */,
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
@@ -258,8 +261,7 @@
 		0B6CD85323F2D957006DCDDC /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */,
-				0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */,
+				0B88891523FD465A00580A2A /* Core Data */,
 			);
 			name = DB;
 			sourceTree = "<group>";
@@ -270,6 +272,23 @@
 				0B6CD85423F2E85F006DCDDC /* DAO.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		0B88891523FD465A00580A2A /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */,
+				0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
+		0B88891623FD467000580A2A /* GMap */ = {
+			isa = PBXGroup;
+			children = (
+				0B88891723FD468A00580A2A /* RoutePin.swift */,
+			);
+			path = GMap;
 			sourceTree = "<group>";
 		};
 		574CE712F5A59AC5937EF361 /* Pods */ = {
@@ -404,6 +423,7 @@
 				0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */,
 				0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
+				0B88891823FD468A00580A2A /* RoutePin.swift in Sources */,
 				0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */,
 				0B88891123FC00EA00580A2A /* GMapViewController.swift in Sources */,
 				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,

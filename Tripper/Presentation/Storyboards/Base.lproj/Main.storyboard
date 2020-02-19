@@ -11,6 +11,12 @@
         <!--Map-->
         <scene sceneID="tne-QT-ifu">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="5hy-dQ-Dn6">
+                    <connections>
+                        <action selector="setPin:" destination="BYZ-38-t0r" id="dOd-Pw-7WC"/>
+                    </connections>
+                </pongPressGestureRecognizer>
                 <viewController id="BYZ-38-t0r" customClass="GMapViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -70,26 +76,15 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="SCI-Be-zLs">
-                        <barButtonItem key="rightBarButtonItem" title="Route" id="5Au-Xc-bPL">
-                            <connections>
-                                <segue destination="OXZ-HK-1RU" kind="show" identifier="ShowRouteList" id="Ko3-G2-tGB"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Route" id="5Au-Xc-bPL"/>
                     </navigationItem>
                     <connections>
                         <outlet property="createRouteButton" destination="6TL-c6-BV9" id="W49-q4-9Tt"/>
                         <outlet property="mapView" destination="ne9-X6-AZG" id="D8W-HR-d4s"/>
                         <outlet property="routeLengthLabel" destination="6cE-y5-j4Y" id="UIm-oI-rhD"/>
                         <outlet property="routeLengthView" destination="fOH-LN-ZFU" id="SmB-j0-oEf"/>
-                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="wZI-Uz-8qn"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="5hy-dQ-Dn6">
-                    <connections>
-                        <action selector="setPin:" destination="BYZ-38-t0r" id="dOd-Pw-7WC"/>
-                    </connections>
-                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1077.5999999999999" y="137.18140929535232"/>
         </scene>
@@ -320,9 +315,21 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TYc-YJ-yxD"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Map" id="77p-pC-YL3"/>
+                    <navigationItem key="navigationItem" title="Map" id="77p-pC-YL3">
+                        <barButtonItem key="leftBarButtonItem" title="Clear All" id="65q-MP-JMs">
+                            <connections>
+                                <action selector="clearAll:" destination="Xgj-eY-YXd" id="Rry-Oz-8tb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Route" id="Ykf-de-B0P">
+                            <connections>
+                                <segue destination="OXZ-HK-1RU" kind="show" id="jgt-o6-38G"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="v7A-bT-BaC" id="qGG-Eh-E55"/>
+                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="IxF-J1-Fcc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vpk-N6-rDL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -334,7 +341,7 @@
             <objects>
                 <tableViewController id="OXZ-HK-1RU" customClass="RouteListViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cAW-hY-HVJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -401,7 +408,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SA4-bV-yv5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="138.40000000000001" y="137.18140929535232"/>
+            <point key="canvasLocation" x="225" y="-582"/>
         </scene>
     </scenes>
 </document>

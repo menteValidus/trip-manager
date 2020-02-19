@@ -16,6 +16,7 @@ class GMapViewController: UIViewController {
     var locationManager = CLLocationManager()
     
     var route: RouteDataModel!
+    var markers: [GMSMarker] = []
     
     
     // MARK: - View's Methods
@@ -28,6 +29,15 @@ class GMapViewController: UIViewController {
         setupMap()
         // Do any additional setup after loading the view.
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func clearAll(_ sender: Any) {
+        route.deleteAll()
+        
+    }
+    
+    
     // MARK: - UI
     
     private func setupMap() {
@@ -55,7 +65,7 @@ extension GMapViewController: GMSMapViewDelegate {
     // MARK: - GMS Map View's Delegate
     
     func mapView(_ mapView: GMSMapView, didLongPressAt coordinate: CLLocationCoordinate2D) {
-        var newRoutePoint = RoutePoint()
+        let newRoutePoint = route.createRoutePointWithoutAppending()
         newRoutePoint.coordinate = coordinate
         
         setMarker(at: newRoutePoint)
@@ -69,5 +79,7 @@ extension GMapViewController: GMSMapViewDelegate {
         let marker = GMSMarker(position: routePoint.coordinate)
         marker.title = routePoint.title
         marker.map = mapView
+        
+        markers.append(marker)
     }
 }
