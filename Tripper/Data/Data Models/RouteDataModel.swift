@@ -105,7 +105,7 @@ class RouteDataModel {
     }
     
     func isNotEmpty() -> Bool {
-        return points.count == 0
+        return points.count != 0
     }
     
 }
