@@ -93,8 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				0B042A5823E2D02100E9136F /* Tripper */,
-				0B042A5723E2D02100E9136F /* Products */,
 				0B042A6F23E2E1B600E9136F /* Frameworks */,
+				0B042A5723E2D02100E9136F /* Products */,
 				574CE712F5A59AC5937EF361 /* Pods */,
 			);
 			sourceTree = "<group>";

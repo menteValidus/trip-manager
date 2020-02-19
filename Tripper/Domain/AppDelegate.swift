@@ -16,16 +16,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var dataModel = RouteDataModel()
     
-    struct APIKeys {
+    private struct APIKeys {
         static let GMaps = "AIzaSyA53BgLa8gZcYkfXYaZvt4qBPU5wnZPY0Y"
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         GMSServices.provideAPIKey(APIKeys.GMaps)
         GMSPlacesClient.provideAPIKey(APIKeys.GMaps)
-//        let navigationController = window!.rootViewController as! UINavigationController
-//        let controller = navigationController.viewControllers[0] as! MapViewController
-//        controller.route = dataModel
+        let navigationController = window!.rootViewController as! UINavigationController
+        let controller = navigationController.viewControllers[0] as! GMapViewController
+        controller.route = dataModel
         
         return true
     }
