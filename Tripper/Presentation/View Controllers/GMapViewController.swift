@@ -10,13 +10,26 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 
+enum MapViewStatus {
+    case start
+    case pinning
+    case routing
+}
+
 class GMapViewController: UIViewController {
     @IBOutlet weak var mapView: GMSMapView!
+    @IBOutlet weak var routeLengthView: UIView!
+    @IBOutlet weak var routeLengthLabel: UILabel!
+    @IBOutlet weak var createRouteButton: UIButton!
+    @IBOutlet weak var clearAllItem: UIBarButtonItem!
     
     var locationManager = CLLocationManager()
     
     var route: RouteDataModel!
     var markers: [GMSMarker] = []
+    var routePolyline = GMSPolyline()
+    
+    private var status = MapViewStatus.start
     
     
     // MARK: - View's Methods
@@ -24,10 +37,8 @@ class GMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
-        
+        setupHUD()
         setupMap()
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - Actions
@@ -35,12 +46,24 @@ class GMapViewController: UIViewController {
     @IBAction func clearAll(_ sender: Any) {
         route.deleteAll()
         
+        for marker in markers {
+            marker.map = nil
+        }
+        markers.removeAll()
+        routePolyline.map = nil
     }
     
     
     // MARK: - UI
     
+    private func setupHUD() {
+        createRouteButton.isHidden = true
+        routeLengthView.isHidden = true
+        clearAllItem.isEnabled = false
+    }
+    
     private func setupMap() {
+        mapView.delegate = self
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
@@ -49,9 +72,46 @@ class GMapViewController: UIViewController {
         locationManager.delegate = self
         
         if route.isNotEmpty() {
-            for point in route.points {
-                setMarker(at: point)
+            let path = GMSMutablePath()
+            
+            for routePoint in route.points {
+                setMarker(at: routePoint)
+                path.add(routePoint.coordinate)
             }
+            
+            if route.isProperForRouteCreation() {
+                routePolyline = GMSPolyline(path: path)
+                routePolyline.map = mapView
+                status = .routing
+            } else {
+                status = .pinning
+            }
+            
+        }
+        
+        configureUIAppearance()
+    }
+    
+    private func configureUIAppearance() {
+        let animationDuration = 0.3
+        
+        switch status {
+        case .start:
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.createRouteButton.isHidden = true
+                self.routeLengthView.isHidden = true
+                self.clearAllItem.isEnabled = false
+            })
+        case .pinning:
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.createRouteButton.isHidden = false
+                self.clearAllItem.isEnabled = true
+            })
+        case .routing:
+            UIView.animate(withDuration: animationDuration, animations: {
+                self.routeLengthView.isHidden = false
+                self.clearAllItem.isEnabled = true
+            })
         }
     }
 
@@ -76,7 +136,7 @@ extension GMapViewController: GMSMapViewDelegate {
     // MARK: - Helper Methods
     
     private func setMarker(at routePoint: RoutePoint) {
-        let marker = GMSMarker(position: routePoint.coordinate)
+        let marker = RoutePin(routeID: routePoint.id, position: routePoint.coordinate)
         marker.title = routePoint.title
         marker.map = mapView
         

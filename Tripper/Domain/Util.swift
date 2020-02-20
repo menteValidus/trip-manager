@@ -27,3 +27,8 @@ func throwAn(errorMessage: String) {
 func display(message: String) {
     print("*** \(message)")
 }
+
+func display(message: String, log: String) {
+    
+    print("*** \(log)")
+}

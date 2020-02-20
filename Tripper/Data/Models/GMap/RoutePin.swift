@@ -12,8 +12,10 @@ import GoogleMaps
 class RoutePin: GMSMarker {
     let id: String
     
-    init(id: String) {
-        self.id = id
+    init(routeID: String, position: CLLocationCoordinate2D) {
+        self.id = routeID
+    
         super.init()
+        self.position = position
     }
 }

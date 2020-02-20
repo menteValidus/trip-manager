@@ -25,7 +25,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ne9-X6-AZG" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="separatorColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fOH-LN-ZFU">
                                 <rect key="frame" x="120" y="16" width="135" height="61"/>
@@ -303,14 +303,50 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7A-bT-BaC" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alC-bV-ts6">
+                                        <rect key="frame" x="128" y="571" width="119" height="36"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Create route"/>
+                                        <connections>
+                                            <action selector="createRoute:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uxE-7z-Mek"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="alC-bV-ts6" firstAttribute="leading" secondItem="v7A-bT-BaC" secondAttribute="leading" constant="128" id="Sfe-SM-SH8"/>
+                                    <constraint firstAttribute="trailing" secondItem="alC-bV-ts6" secondAttribute="trailing" constant="128" id="nfg-Fg-a0m"/>
+                                    <constraint firstAttribute="bottom" secondItem="alC-bV-ts6" secondAttribute="bottom" constant="16" id="vHW-DF-Wjg"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-r1-Q1F">
+                                <rect key="frame" x="120" y="60" width="135" height="61"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXL-aA-aye">
+                                        <rect key="frame" x="12" y="20" width="111" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ZXL-aA-aye" secondAttribute="bottom" constant="20" id="G6f-cr-cre"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZXL-aA-aye" secondAttribute="trailing" constant="12" id="a4u-ru-cDn"/>
+                                    <constraint firstItem="ZXL-aA-aye" firstAttribute="leading" secondItem="0V7-r1-Q1F" secondAttribute="leading" constant="12" id="ltc-0l-Byu"/>
+                                    <constraint firstItem="ZXL-aA-aye" firstAttribute="top" secondItem="0V7-r1-Q1F" secondAttribute="top" constant="20" id="veH-Jy-8Oy"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="0V7-r1-Q1F" firstAttribute="top" secondItem="TYc-YJ-yxD" secondAttribute="top" constant="16" id="7yA-nv-cbT"/>
                             <constraint firstAttribute="trailing" secondItem="v7A-bT-BaC" secondAttribute="trailing" id="Fb6-eo-PNt"/>
                             <constraint firstItem="v7A-bT-BaC" firstAttribute="top" secondItem="TYc-YJ-yxD" secondAttribute="top" id="Gdf-8f-2gz"/>
                             <constraint firstItem="v7A-bT-BaC" firstAttribute="bottom" secondItem="TYc-YJ-yxD" secondAttribute="bottom" id="VXd-Nz-Z8p"/>
+                            <constraint firstItem="TYc-YJ-yxD" firstAttribute="trailing" secondItem="0V7-r1-Q1F" secondAttribute="trailing" constant="120" id="XBF-Tn-H3U"/>
+                            <constraint firstItem="0V7-r1-Q1F" firstAttribute="leading" secondItem="TYc-YJ-yxD" secondAttribute="leading" constant="120" id="jj1-rJ-hhS"/>
                             <constraint firstItem="v7A-bT-BaC" firstAttribute="leading" secondItem="TYc-YJ-yxD" secondAttribute="leading" id="zYE-Gv-A6X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TYc-YJ-yxD"/>
@@ -328,7 +364,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="clearAllItem" destination="65q-MP-JMs" id="MZw-UI-vJM"/>
+                        <outlet property="createRouteButton" destination="alC-bV-ts6" id="NrK-jp-jHS"/>
                         <outlet property="mapView" destination="v7A-bT-BaC" id="qGG-Eh-E55"/>
+                        <outlet property="routeLengthView" destination="0V7-r1-Q1F" id="Jdf-yP-HTO"/>
                         <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="IxF-J1-Fcc"/>
                     </connections>
                 </viewController>
