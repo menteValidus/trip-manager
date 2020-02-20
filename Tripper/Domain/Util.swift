@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 let applicationDocumentsDirectory: URL = {
     let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -26,9 +27,4 @@ func throwAn(errorMessage: String) {
 
 func display(message: String) {
     print("*** \(message)")
-}
-
-func display(message: String, log: String) {
-    
-    print("*** \(log)")
 }

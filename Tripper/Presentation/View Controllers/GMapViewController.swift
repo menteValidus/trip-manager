@@ -11,9 +11,14 @@ import GoogleMaps
 import GooglePlaces
 
 enum MapViewStatus {
+    // First launch/New route creation
     case start
+    // Stage of pins setting
     case pinning
+    // Stage of route creation, waiting for API response.
     case routing
+    // Stage of route's mapping
+    case routeMapping
 }
 
 class GMapViewController: UIViewController {
@@ -24,10 +29,11 @@ class GMapViewController: UIViewController {
     @IBOutlet weak var clearAllItem: UIBarButtonItem!
     
     var locationManager = CLLocationManager()
+    let gmapApiRepository = GMapApiRepository()
     
     var route: RouteDataModel!
     var markers: [GMSMarker] = []
-    var routePolyline = GMSPolyline()
+    var routePolylines: [GMSPolyline] = []
     
     private var status = MapViewStatus.start
     
@@ -44,15 +50,31 @@ class GMapViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func clearAll(_ sender: Any) {
+        setUIStatus(.pinning)
+        
         route.deleteAll()
         
-        for marker in markers {
-            marker.map = nil
+        markers.forEach {
+            $0.map = nil
         }
         markers.removeAll()
-        routePolyline.map = nil
+        
+        routePolylines.forEach {
+            $0.map = nil
+        }
+        routePolylines.removeAll()
     }
     
+    @IBAction func createRoute(_ sender: Any?) {
+        for i in 0..<(route.points.count - 1) {
+            let sourceCoord = route.points[i].coordinate
+            let destinationCoord = route.points[i + 1].coordinate
+            gmapApiRepository.fetchDirection(sourceCoord: sourceCoord, destinationCoord: destinationCoord) { polylineString in
+                self.drawPolyline(from: polylineString)
+                self.setUIStatus(.routeMapping)
+            }
+        }
+    }
     
     // MARK: - UI
     
@@ -71,24 +93,19 @@ class GMapViewController: UIViewController {
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
         
-        if route.isNotEmpty() {
-            let path = GMSMutablePath()
-            
-            for routePoint in route.points {
-                setMarker(at: routePoint)
-                path.add(routePoint.coordinate)
-            }
-            
-            if route.isProperForRouteCreation() {
-                routePolyline = GMSPolyline(path: path)
-                routePolyline.map = mapView
-                status = .routing
-            } else {
-                status = .pinning
-            }
-            
+        for routePoint in route.points {
+            setMarker(at: routePoint)
         }
         
+        if route.isProperForRouteCreation() {
+            setUIStatus(.routing)
+        } else {
+            setUIStatus(.pinning)
+        }
+    }
+    
+    private func setUIStatus(_ newStatus: MapViewStatus) {
+        status = newStatus
         configureUIAppearance()
     }
     
@@ -108,10 +125,12 @@ class GMapViewController: UIViewController {
                 self.clearAllItem.isEnabled = true
             })
         case .routing:
-            UIView.animate(withDuration: animationDuration, animations: {
-                self.routeLengthView.isHidden = false
-                self.clearAllItem.isEnabled = true
-            })
+            createRoute(nil)
+            // TODO: Show isLoading view.
+            break
+        case .routeMapping:
+            routeLengthView.isHidden = false
+            clearAllItem.isEnabled = true
         }
     }
 
@@ -141,5 +160,13 @@ extension GMapViewController: GMSMapViewDelegate {
         marker.map = mapView
         
         markers.append(marker)
+    }
+    
+    private func drawPolyline(from polylineString: String) {
+        let path = GMSPath(fromEncodedPath: polylineString)
+        let polyline = GMSPolyline(path: path)
+        polyline.strokeWidth = 3.0
+        polyline.map = mapView
+        routePolylines.append(polyline)
     }
 }
