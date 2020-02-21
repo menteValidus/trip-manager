@@ -8,6 +8,37 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--View Controller-->
+        <scene sceneID="wNa-ef-LbL">
+            <objects>
+                <viewController id="4Cc-Fh-swH" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kbD-OJ-czS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-8K-ctK" customClass="MGLMapView">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="xLl-8K-ctK" firstAttribute="top" secondItem="GF8-cM-mMC" secondAttribute="top" id="MdB-d7-P8L"/>
+                            <constraint firstItem="GF8-cM-mMC" firstAttribute="trailing" secondItem="xLl-8K-ctK" secondAttribute="trailing" id="Quv-C1-v5v"/>
+                            <constraint firstItem="GF8-cM-mMC" firstAttribute="bottom" secondItem="xLl-8K-ctK" secondAttribute="bottom" id="RrO-2i-vbn"/>
+                            <constraint firstItem="xLl-8K-ctK" firstAttribute="leading" secondItem="GF8-cM-mMC" secondAttribute="leading" id="fcD-Ly-ql5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="GF8-cM-mMC"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QkS-8f-1If"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1078" y="136"/>
+        </scene>
         <!--Annotation Detail View Controller-->
         <scene sceneID="y9b-BA-uiU">
             <objects>
@@ -222,10 +253,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7A-bT-BaC" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alC-bV-ts6">
-                                        <rect key="frame" x="128" y="571" width="119" height="36"/>
+                                        <rect key="frame" x="128" y="615" width="119" height="36"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                         <state key="normal" title="Create route"/>
                                         <connections>
@@ -241,7 +272,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-r1-Q1F">
-                                <rect key="frame" x="120" y="60" width="135" height="61"/>
+                                <rect key="frame" x="120" y="16" width="135" height="61"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXL-aA-aye">
                                         <rect key="frame" x="12" y="20" width="111" height="21"/>
@@ -300,7 +331,7 @@
             <objects>
                 <tableViewController id="OXZ-HK-1RU" customClass="RouteListViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cAW-hY-HVJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -362,7 +393,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Xgj-eY-YXd" kind="relationship" relationship="rootViewController" id="PjH-gM-r4y"/>
+                        <segue destination="4Cc-Fh-swH" kind="relationship" relationship="rootViewController" id="2Fo-gY-m66"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SA4-bV-yv5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
