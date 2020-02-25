@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03D898D9AA78FF706874225D /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB186E5885882F91480E9807 /* Pods_Tripper.framework */; };
 		0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A5923E2D02100E9136F /* AppDelegate.swift */; };
 		0B042A6123E2D02100E9136F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A5F23E2D02100E9136F /* Main.storyboard */; };
 		0B042A6323E2D02200E9136F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A6223E2D02200E9136F /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
 		0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */; };
 		0B66C00223F6E0BA000CF975 /* RoutePointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */; };
+		0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */; };
 		0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
@@ -35,10 +37,7 @@
 		0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */; };
 		0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85423F2E85F006DCDDC /* DAO.swift */; };
 		0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */; };
-		0B88891123FC00EA00580A2A /* GMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88891023FC00EA00580A2A /* GMapViewController.swift */; };
-		0B88891823FD468A00580A2A /* RoutePin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88891723FD468A00580A2A /* RoutePin.swift */; };
 		0B88891B23FD6E8100580A2A /* GMapApiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88891A23FD6E8100580A2A /* GMapApiRepository.swift */; };
-		A06113B9F4C7945F8C6A8AD3 /* libPods-Tripper.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +62,7 @@
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
 		0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointAnnotation.swift; sourceTree = "<group>"; };
+		0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
 		0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
@@ -72,11 +72,11 @@
 		0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataProperties.swift"; path = "DB/RoutePointEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0B6CD85423F2E85F006DCDDC /* DAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 		0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDAO.swift; sourceTree = "<group>"; };
-		0B88891023FC00EA00580A2A /* GMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMapViewController.swift; sourceTree = "<group>"; };
-		0B88891723FD468A00580A2A /* RoutePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePin.swift; sourceTree = "<group>"; };
 		0B88891A23FD6E8100580A2A /* GMapApiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMapApiRepository.swift; sourceTree = "<group>"; };
+		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
-		9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tripper.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB186E5885882F91480E9807 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,7 +86,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B042A7123E2E1B600E9136F /* MapKit.framework in Frameworks */,
-				A06113B9F4C7945F8C6A8AD3 /* libPods-Tripper.a in Frameworks */,
+				03D898D9AA78FF706874225D /* Pods_Tripper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,8 +126,10 @@
 		0B042A6F23E2E1B600E9136F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */,
+				0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */,
 				0B042A7023E2E1B600E9136F /* MapKit.framework */,
-				9B5315820EDDB915B20F9C68 /* libPods-Tripper.a */,
+				BB186E5885882F91480E9807 /* Pods_Tripper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -139,7 +141,7 @@
 				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
 				0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */,
 				0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */,
-				0B88891023FC00EA00580A2A /* GMapViewController.swift */,
+				0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -243,7 +245,6 @@
 		0B6CD84623ED78EC006DCDDC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0B88891623FD467000580A2A /* GMap */,
 				0B6CD85323F2D957006DCDDC /* DB */,
 				0B042A8F23EA9B9100E9136F /* Subroutes */,
 				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
@@ -286,14 +287,6 @@
 			name = "Core Data";
 			sourceTree = "<group>";
 		};
-		0B88891623FD467000580A2A /* GMap */ = {
-			isa = PBXGroup;
-			children = (
-				0B88891723FD468A00580A2A /* RoutePin.swift */,
-			);
-			path = GMap;
-			sourceTree = "<group>";
-		};
 		0B88891923FD6E5500580A2A /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,7 +315,6 @@
 				0B042A5223E2D02100E9136F /* Sources */,
 				0B042A5323E2D02100E9136F /* Frameworks */,
 				0B042A5423E2D02100E9136F /* Resources */,
-				CCEE24E8965DB7B54B857F5B /* [CP] Copy Pods Resources */,
 				787BF5EF9B2D3C015EC4D8C4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
@@ -410,37 +402,35 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks.sh",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
+				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework",
+				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
+				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
+				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
+				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/MapboxNavigationNative.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CCEE24E8965DB7B54B857F5B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-resources.sh",
-				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
-				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
-				"${PODS_ROOT}/MapboxMobileEvents/MapboxMobileEvents/Resources/logger.html",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMaps.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GooglePlaces.bundle",
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/logger.html",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -451,15 +441,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
+				0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */,
 				0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */,
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */,
 				0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
-				0B88891823FD468A00580A2A /* RoutePin.swift in Sources */,
 				0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */,
-				0B88891123FC00EA00580A2A /* GMapViewController.swift in Sources */,
 				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B6CD84523ED765A006DCDDC /* PropertyListDAO.swift in Sources */,
