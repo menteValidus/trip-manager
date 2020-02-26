@@ -97,7 +97,7 @@ class MapViewController: UIViewController {
     @IBAction func cancelRouteCreation(_ sender: UIBarButtonItem) {
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
-        route.clear()
+        route.deleteAll()
         currentRouteNumber = 1
         
         hideUI()

@@ -35,6 +35,8 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     var route: RouteDataModel!
     private var status = MapViewStatus.start
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
+    var directionsRoute: Route?
+
     
     // MARK: - View's Methods
     
@@ -42,6 +44,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         mapView.delegate = self
+        mapView.showsUserLocation = true
         
         registerGestureRecognizers()
         
@@ -76,13 +79,12 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func createRoute(_ sender: Any?) {
         for i in 0..<(route.points.count - 1) {
+            let identifier = route.points[i].id + route.points[i + 1].id
             let sourceCoord = route.points[i].coordinate
             let destinationCoord = route.points[i + 1].coordinate
-        
-//            gmapApiRepository.fetchDirection(sourceCoord: sourceCoord, destinationCoord: destinationCoord) { polylineString in
-//                self.drawPolyline(from: polylineString)
-//                self.setUIStatus(.routeMapping)
-//            }
+            calculateRoute(from: sourceCoord, to: destinationCoord, drawHandler: { route in
+                self.drawRoute(route: route!, identifier: identifier)
+            })
         }
     }
     
@@ -151,11 +153,11 @@ extension MapBoxViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
-        
+        print("*** Selected annotation")
     }
     
     func mapView(_ mapView: MGLMapView, didDeselect annotation: MGLAnnotation) {
-        
+        print("*** Deselected annotation")
     }
     
     // MARK: - Actions
@@ -183,11 +185,34 @@ extension MapBoxViewController: MGLMapViewDelegate {
         mapView.addAnnotation(annotation)
     }
     
-    private func drawPolyline(from polylineString: String) {
-//        let path = GMSPath(fromEncodedPath: polylineString)
-//        let polyline = GMSPolyline(path: path)
-//        polyline.strokeWidth = 3.0
-//        polyline.map = mapView
-//        routePolylines.append(polyline)
+    private func calculateRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, drawHandler: @escaping (Route?) -> Void) {
+        // Coordinate accuracy is the maximum distance away from the waypoint that the route may still be considered viable, measured in meters. Negative values indicate that a indefinite number of meters away from the route and still be considered viable.
+        let sourceWaypoint = Waypoint(coordinate: source, coordinateAccuracy: -1, name: "Start")
+        let destinationWaypoint = Waypoint(coordinate: destination, coordinateAccuracy: -1, name: "Finish")
+        
+        let options = NavigationRouteOptions(waypoints: [sourceWaypoint, destinationWaypoint], profileIdentifier: .automobileAvoidingTraffic)
+        
+        Directions.shared.calculate(options, completionHandler: { [unowned self] (waypoints, routes, error) in
+            self.directionsRoute = routes?.first
+            
+            drawHandler(self.directionsRoute)
+        })
+    }
+    
+    private func drawRoute(route: Route, identifier: String) {
+        guard let shape = route.shape, shape.coordinates.count > 0 else { return }
+        
+        let routeCoordinates = shape.coordinates
+        let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
+        
+        let source = MGLShapeSource(identifier: identifier, features: [polyline], options: nil)
+        
+        // Customize the route line color and width
+        let lineStyle = MGLLineStyleLayer(identifier: identifier, source: source)
+        lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        lineStyle.lineWidth = NSExpression(forConstantValue: 3)
+        
+        mapView.style?.addSource(source)
+        mapView.style?.addLayer(lineStyle)
     }
 }

@@ -43,11 +43,7 @@ class RouteDataModel {
         points = routePointGateway.fetchAll()
     }
     
-    // MARK: - Helper Methods
-    
-    func clear() {
-        points.removeAll()
-    }
+    // MARK: - DB Communication Methods
     
     func add(point: RoutePoint) {
         points.append(point)
@@ -77,8 +73,11 @@ class RouteDataModel {
     }
     
     func deleteAll() {
+        points.removeAll()
         routePointGateway.deleteAll()
     }
+    
+    // MARK: - Helper Methods
     
     func getSubroute(at index: Int) -> Subroute {
         // We divide index by 2 to conform index of route point in points array.
