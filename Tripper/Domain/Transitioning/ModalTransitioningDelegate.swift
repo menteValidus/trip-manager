@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ModalTransitionigDelegate: NSObject, UIViewControllerTransitioningDelegate {
+class ModalTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
     var viewController: UIViewController
     var presentingViewController: UIViewController
     var interactionController: ModalInteractiveTransition
@@ -24,6 +24,18 @@ class ModalTransitionigDelegate: NSObject, UIViewControllerTransitioningDelegate
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return
+        return ModalTransitionAnimator(type: .dismiss)
+    }
+    
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return ModalPresentationController(presentedViewController: presented, presenting: presenting)
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        if interactiveDismiss {
+            return self.interactionController
+        }
+        
+        return nil
     }
 }

@@ -38,6 +38,7 @@
 		0B72F37F2407D91E00EFCD3C /* ModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F37E2407D91E00EFCD3C /* ModalTransitioningDelegate.swift */; };
 		0B72F3812407D9A900EFCD3C /* ModalInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F3802407D9A900EFCD3C /* ModalInteractiveTransition.swift */; };
 		0B72F3832407DCC100EFCD3C /* ModalTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F3822407DCC100EFCD3C /* ModalTransitionAnimator.swift */; };
+		0B72F3852407DFA000EFCD3C /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F3842407DFA000EFCD3C /* ModalPresentationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 		0B72F37E2407D91E00EFCD3C /* ModalTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTransitioningDelegate.swift; sourceTree = "<group>"; };
 		0B72F3802407D9A900EFCD3C /* ModalInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalInteractiveTransition.swift; sourceTree = "<group>"; };
 		0B72F3822407DCC100EFCD3C /* ModalTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTransitionAnimator.swift; sourceTree = "<group>"; };
+		0B72F3842407DFA000EFCD3C /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */,
+				0B72F3842407DFA000EFCD3C /* ModalPresentationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				0B72F3812407D9A900EFCD3C /* ModalInteractiveTransition.swift in Sources */,
 				0B72F37F2407D91E00EFCD3C /* ModalTransitioningDelegate.swift in Sources */,
 				0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */,
+				0B72F3852407DFA000EFCD3C /* ModalPresentationController.swift in Sources */,
 				0B72F3832407DCC100EFCD3C /* ModalTransitionAnimator.swift in Sources */,
 				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,

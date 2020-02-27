@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum ModalScaleState {
+enum SlideModalScaleState {
     case adjustedOnce
     case normal
 }

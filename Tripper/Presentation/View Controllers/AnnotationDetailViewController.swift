@@ -12,7 +12,7 @@ protocol AnnotationDetailDelegate {
     func annotationDetail(didSet time: Date)
 }
 
-class AnnotationDetailViewController: UIViewController {
+class AnnotationDetailViewController: UIViewController, ModalPresentable {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var arrivalDateLabel: UILabel!
@@ -93,5 +93,5 @@ extension AnnotationDetailViewController: AnnotationDetailDelegate {
         }
     }
     
-    
 }
+
