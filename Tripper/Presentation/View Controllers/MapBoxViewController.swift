@@ -23,6 +23,11 @@ fileprivate enum MapViewStatus {
     case routeMapping
 }
 
+protocol MapRouteDelegate: class {
+    func mapRoute(didChanged routePoint: RoutePoint)
+    func mapRoute(didDeleted routePoint: RoutePoint)
+}
+
 class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var routeLengthView: UIView!
@@ -37,6 +42,11 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     var directionsRoute: Route?
 
+    struct SeguesIdentifiers {
+        /** You should assign RoutePoint object as sender to this segue. */
+        static let showAnnotationDetail = "ShowAnnotationDetail"
+        static let showRoute = "ShowRoute"
+    }
     
     // MARK: - View's Methods
     
@@ -49,7 +59,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         registerGestureRecognizers()
         
         for routePoint in route.points {
-            setMarker(at: routePoint)
+            setAnnotation(at: routePoint)
         }
     }
     
@@ -88,6 +98,23 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    @IBAction func centerAtUser(_ sender: Any) {
+        if let userLocation = mapView.userLocation?.coordinate {
+            mapView.setCenter(userLocation, animated: true)
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
+            let controller = segue.destination as! AnnotationDetailViewController
+            controller.delegate = self
+            controller.routePoint = (sender as! RoutePoint)
+            controller.modalPresentationStyle = .custom
+        }
+    }
+    
     // MARK: - UI
     
     private func setupHUD() {
@@ -106,7 +133,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         
         for routePoint in route.points {
-            setMarker(at: routePoint)
+            setAnnotation(at: routePoint)
         }
         
         if route.isProperForRouteCreation() {
@@ -151,9 +178,11 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
 
 extension MapBoxViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
-    
+
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
-        print("*** Selected annotation")
+        let id = annotationsID[annotation as! MGLPointAnnotation]!
+        let selectedRoutePoint = route.findRoutePointBy(id: id)
+        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: selectedRoutePoint)
     }
     
     func mapView(_ mapView: MGLMapView, didDeselect annotation: MGLAnnotation) {
@@ -174,14 +203,16 @@ extension MapBoxViewController: MGLMapViewDelegate {
         let newRoutePoint = route.createRoutePointWithoutAppending()
         newRoutePoint.coordinate = coordinate
         route.add(point: newRoutePoint)
-        setMarker(at: newRoutePoint)
+        setAnnotation(at: newRoutePoint)
+        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: newRoutePoint)
     }
     
     // MARK: - Helper Methods
     
-    private func setMarker(at routePoint: RoutePoint) {
+    private func setAnnotation(at routePoint: RoutePoint) {
         let annotation = MGLPointAnnotation()
         annotation.coordinate = routePoint.coordinate
+        annotationsID[annotation] = routePoint.id
         mapView.addAnnotation(annotation)
     }
     
@@ -214,5 +245,17 @@ extension MapBoxViewController: MGLMapViewDelegate {
         
         mapView.style?.addSource(source)
         mapView.style?.addLayer(lineStyle)
+    }
+}
+
+extension MapBoxViewController: MapRouteDelegate {
+    // MARK: - Map Route Delegate
+    
+    func mapRoute(didChanged routePoint: RoutePoint) {
+        print("*** Did changed: \(routePoint)")
+    }
+    
+    func mapRoute(didDeleted routePoint: RoutePoint) {
+        print("*** Did deleted: \(routePoint)")
     }
 }

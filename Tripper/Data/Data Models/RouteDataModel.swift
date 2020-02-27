@@ -91,12 +91,10 @@ class RouteDataModel {
         }
     }
     
-    func findRoutePoint(with id: Int) -> RoutePoint? {
-        guard points.isEmpty else {
-            return points[0]
-        }
-        
-        return nil
+    func findRoutePointBy(id: String) -> RoutePoint? {
+        return points.first(where: { routePoint in
+            return routePoint.id == id
+        })
     }
     
     func createRoutePointWithoutAppending() -> RoutePoint {

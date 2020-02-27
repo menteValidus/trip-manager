@@ -36,15 +36,38 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showsUserLocation" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowsZooming" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="showsScale" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLC-aH-rfK">
+                                <rect key="frame" x="147" y="54" width="81.5" height="61"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tq2-Fz-S8N">
+                                        <rect key="frame" x="12" y="20" width="57.5" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="tq2-Fz-S8N" secondAttribute="trailing" constant="12" id="Iky-PZ-UMz"/>
+                                    <constraint firstAttribute="bottom" secondItem="tq2-Fz-S8N" secondAttribute="bottom" constant="20" id="bVd-YV-cQb"/>
+                                    <constraint firstItem="tq2-Fz-S8N" firstAttribute="leading" secondItem="XLC-aH-rfK" secondAttribute="leading" constant="12" id="dDh-A4-1mH"/>
+                                    <constraint firstItem="tq2-Fz-S8N" firstAttribute="top" secondItem="XLC-aH-rfK" secondAttribute="top" constant="20" id="kuZ-Fc-I6V"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="xLl-8K-ctK" firstAttribute="top" secondItem="GF8-cM-mMC" secondAttribute="top" id="MdB-d7-P8L"/>
+                            <constraint firstItem="XLC-aH-rfK" firstAttribute="centerX" secondItem="kbD-OJ-czS" secondAttribute="centerX" id="NCX-Ml-rrD"/>
                             <constraint firstItem="GF8-cM-mMC" firstAttribute="trailing" secondItem="xLl-8K-ctK" secondAttribute="trailing" id="Quv-C1-v5v"/>
                             <constraint firstItem="GF8-cM-mMC" firstAttribute="bottom" secondItem="xLl-8K-ctK" secondAttribute="bottom" id="RrO-2i-vbn"/>
                             <constraint firstItem="xLl-8K-ctK" firstAttribute="leading" secondItem="GF8-cM-mMC" secondAttribute="leading" id="fcD-Ly-ql5"/>
+                            <constraint firstItem="XLC-aH-rfK" firstAttribute="top" secondItem="GF8-cM-mMC" secondAttribute="top" constant="10" id="wop-WW-rin"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GF8-cM-mMC"/>
                     </view>
@@ -59,6 +82,7 @@
                         <outlet property="clearAllItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
                         <outlet property="createRouteButton" destination="rOr-U2-Mk9" id="b9S-dB-QGf"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="gX8-yR-d53"/>
+                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="O0R-W1-0k3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -270,94 +294,12 @@
             </objects>
             <point key="canvasLocation" x="2821.5999999999999" y="136.28185907046478"/>
         </scene>
-        <!--Map-->
-        <scene sceneID="rPY-ri-xGa">
-            <objects>
-                <viewController id="Xgj-eY-YXd" customClass="GMapViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="LPu-Ir-EA7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v7A-bT-BaC" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="alC-bV-ts6">
-                                        <rect key="frame" x="128" y="615" width="119" height="36"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <state key="normal" title="Create route"/>
-                                        <connections>
-                                            <action selector="createRoute:" destination="Xgj-eY-YXd" eventType="touchUpInside" id="Enk-QS-1Kp"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="alC-bV-ts6" firstAttribute="leading" secondItem="v7A-bT-BaC" secondAttribute="leading" constant="128" id="Sfe-SM-SH8"/>
-                                    <constraint firstAttribute="trailing" secondItem="alC-bV-ts6" secondAttribute="trailing" constant="128" id="nfg-Fg-a0m"/>
-                                    <constraint firstAttribute="bottom" secondItem="alC-bV-ts6" secondAttribute="bottom" constant="16" id="vHW-DF-Wjg"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0V7-r1-Q1F">
-                                <rect key="frame" x="120" y="16" width="135" height="61"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXL-aA-aye">
-                                        <rect key="frame" x="12" y="20" width="111" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="ZXL-aA-aye" secondAttribute="bottom" constant="20" id="G6f-cr-cre"/>
-                                    <constraint firstAttribute="trailing" secondItem="ZXL-aA-aye" secondAttribute="trailing" constant="12" id="a4u-ru-cDn"/>
-                                    <constraint firstItem="ZXL-aA-aye" firstAttribute="leading" secondItem="0V7-r1-Q1F" secondAttribute="leading" constant="12" id="ltc-0l-Byu"/>
-                                    <constraint firstItem="ZXL-aA-aye" firstAttribute="top" secondItem="0V7-r1-Q1F" secondAttribute="top" constant="20" id="veH-Jy-8Oy"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="0V7-r1-Q1F" firstAttribute="top" secondItem="TYc-YJ-yxD" secondAttribute="top" constant="16" id="7yA-nv-cbT"/>
-                            <constraint firstAttribute="trailing" secondItem="v7A-bT-BaC" secondAttribute="trailing" id="Fb6-eo-PNt"/>
-                            <constraint firstItem="v7A-bT-BaC" firstAttribute="top" secondItem="TYc-YJ-yxD" secondAttribute="top" id="Gdf-8f-2gz"/>
-                            <constraint firstItem="v7A-bT-BaC" firstAttribute="bottom" secondItem="TYc-YJ-yxD" secondAttribute="bottom" id="VXd-Nz-Z8p"/>
-                            <constraint firstItem="TYc-YJ-yxD" firstAttribute="trailing" secondItem="0V7-r1-Q1F" secondAttribute="trailing" constant="120" id="XBF-Tn-H3U"/>
-                            <constraint firstItem="0V7-r1-Q1F" firstAttribute="leading" secondItem="TYc-YJ-yxD" secondAttribute="leading" constant="120" id="jj1-rJ-hhS"/>
-                            <constraint firstItem="v7A-bT-BaC" firstAttribute="leading" secondItem="TYc-YJ-yxD" secondAttribute="leading" id="zYE-Gv-A6X"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="TYc-YJ-yxD"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Map" id="77p-pC-YL3">
-                        <barButtonItem key="leftBarButtonItem" title="Clear All" id="65q-MP-JMs">
-                            <connections>
-                                <action selector="clearAll:" destination="Xgj-eY-YXd" id="Rry-Oz-8tb"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Route" id="Ykf-de-B0P">
-                            <connections>
-                                <segue destination="OXZ-HK-1RU" kind="show" id="jgt-o6-38G"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="clearAllItem" destination="65q-MP-JMs" id="MZw-UI-vJM"/>
-                        <outlet property="createRouteButton" destination="alC-bV-ts6" id="NrK-jp-jHS"/>
-                        <outlet property="mapView" destination="v7A-bT-BaC" id="qGG-Eh-E55"/>
-                        <outlet property="routeLengthView" destination="0V7-r1-Q1F" id="Jdf-yP-HTO"/>
-                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="IxF-J1-Fcc"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vpk-N6-rDL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1078" y="-582"/>
-        </scene>
         <!--Route-->
         <scene sceneID="fPz-AV-oOg">
             <objects>
                 <tableViewController id="OXZ-HK-1RU" customClass="RouteListViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cAW-hY-HVJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>

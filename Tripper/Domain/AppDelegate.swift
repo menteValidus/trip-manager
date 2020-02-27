@@ -8,8 +8,6 @@
 
 import UIKit
 import CoreData
-//import GoogleMaps
-//import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,25 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-//        GMSServices.provideAPIKey(APIKeys.GMaps)
-//        GMSPlacesClient.provideAPIKey(APIKeys.GMaps)
         let navigationController = window!.rootViewController as! UINavigationController
         let controller = navigationController.viewControllers[0] as! MapBoxViewController
         controller.route = dataModel
         
         return true
     }
-    
-    // MARK: Application Methods
-    
-//    func applicationWillTerminate(_ application: UIApplication) {
-//        dataModel.save()
-//    }
-//    
-//    func applicationDidEnterBackground(_ application: UIApplication) {
-//        dataModel.save()
-//    }
-
     // MARK: UISceneSession Lifecycle
 
     @available(iOS 13.0, *)
