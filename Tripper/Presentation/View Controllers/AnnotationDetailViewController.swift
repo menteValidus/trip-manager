@@ -18,6 +18,10 @@ class AnnotationDetailViewController: UIViewController, ModalPresentable {
     @IBOutlet weak var arrivalDateLabel: UILabel!
     @IBOutlet weak var departureDateLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var leftTopButton: UIButton!
+    @IBOutlet weak var rightTopButton: UIButton!
+    
+    var isEdit = false
     
     var routePoint: RoutePoint!
     var delegate: MapRouteDelegate!
@@ -67,13 +71,27 @@ class AnnotationDetailViewController: UIViewController, ModalPresentable {
 
     // MARK: - Actions
     
-    @IBAction func save(_ sender: UIButton) {
+    @IBAction handleLeftTopButton(_ sender: UIButton) {
+        if isEdit {
+            <#code#>
+        }
+    }
+    
+    @IBAction handleRightTopButton(_ sender: UIButton) {
+        
+    }
+    
+    func save(_ sender: UIButton) {
         routePoint.title = titleTextField.text
         delegate.mapRoute(didChanged: routePoint)
         dismiss(animated: true)
     }
     
-    @IBAction func deletePoint(_ sender: UIButton) {
+    func edit(_ sender: UIButton) {
+        
+    }
+    
+    func delete(_ sender: UIButton) {
         delegate.mapRoute(didDeleted: routePoint)
         dismiss(animated: true)
     }
