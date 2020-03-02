@@ -24,8 +24,12 @@ fileprivate enum MapViewStatus {
 }
 
 protocol MapRouteDelegate: class {
-    func mapRoute(didChanged routePoint: RoutePoint)
+    func mapRoute(performEditFor routePoint: RoutePoint)
     func mapRoute(didDeleted routePoint: RoutePoint)
+}
+
+protocol RoutePointEditDelegate: class {
+    func route(pointEdited routePoint: RoutePoint)
 }
 
 class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
@@ -48,6 +52,8 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         /** You should assign RoutePoint object as sender to this segue. */
         static let showAnnotationDetail = "ShowAnnotationDetail"
         static let showRoute = "ShowRoute"
+        /** You should assign RoutePoint object as sender to this segue. */
+        static let showAnnotationEdit = "ShowAnnotationEdit"
     }
     
     // MARK: - View's Methods
@@ -109,16 +115,26 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == SeguesIdentifiers.showAnnotationDetail {
+        switch segue.identifier {
+        case SeguesIdentifiers.showAnnotationDetail:
+            let controller = segue.destination as! UINavigationController
             
-            let presentingController = segue.destination as! AnnotationDetailViewController
+            let presentingController = controller.viewControllers[0] as! AnnotationDetailViewController
+            presentingController.delegate = self
+            presentingController.routePoint = (sender as! RoutePoint)
+            
+            modalTransitioningDelegate = ModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+            presentingController.modalPresentationStyle = .custom
+            presentingController.transitioningDelegate = modalTransitioningDelegate
+            
+        case SeguesIdentifiers.showAnnotationEdit:
+            let presentingController = segue.destination as! AnnotationEditViewController
             
             presentingController.delegate = self
             presentingController.routePoint = (sender as! RoutePoint)
             
-            modalTransitioningDelegate = ModalTransitioningDelegate(viewController: self, presentingViewController: presentingController)
-            presentingController.modalPresentationStyle = .custom
-            presentingController.transitioningDelegate = modalTransitioningDelegate
+        default:
+            break
         }
     }
     
@@ -258,11 +274,20 @@ extension MapBoxViewController: MGLMapViewDelegate {
 extension MapBoxViewController: MapRouteDelegate {
     // MARK: - Map Route Delegate
     
-    func mapRoute(didChanged routePoint: RoutePoint) {
-        print("*** Did changed: \(routePoint)")
+    func mapRoute(performEditFor routePoint: RoutePoint) {
+        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: routePoint)
     }
     
     func mapRoute(didDeleted routePoint: RoutePoint) {
-        print("*** Did deleted: \(routePoint)")
+        route.delete(routePoint: routePoint)
+    }
+}
+
+extension MapBoxViewController: RoutePointEditDelegate {
+    // MARK: - Route's Point Edit Delegate
+    
+    func route(pointEdited routePoint: RoutePoint) {
+        route.update(routePoint: routePoint)
+        print("*** Did edited: \(routePoint)")
     }
 }

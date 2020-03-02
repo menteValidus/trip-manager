@@ -31,29 +31,33 @@ class ModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
         
         self.panGestureRecognizer.addTarget(self, action: #selector(onPan))
         view.addGestureRecognizer(panGestureRecognizer)
+        display(message: "ModalInteractiveTransition inited")
     }
     
     override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         super.startInteractiveTransition(transitionContext)
         
-        print("*** Start interactive.")
+        print("*** ModalInteractiveTransition.Start interactive.")
     }
     
     // MARK: - Actions
     
     @objc func onPan(pan: UIPanGestureRecognizer) {
+        display(message: "ModalInteractiveTransition.OnPan")
         let translation = pan.translation(in: pan.view?.superview)
         
         switch pan.state {
         case .began:
             self.presentingViewController?.dismiss(animated: true, completion: nil)
             
+            break
+            
         case .changed:
             let screenHeight = UIScreen.main.bounds.size.height - 50
             let dragAmount = screenHeight
             let threshold: Float = 0.2
-            var percent = Float(translation.y) / Float(dragAmount)
-            
+            var percent: Float = Float(translation.y) / Float(dragAmount)
+
             percent = fmaxf(percent, 0.0)
             percent = fminf(percent, 1.0)
             
@@ -61,19 +65,25 @@ class ModalInteractiveTransition: UIPercentDrivenInteractiveTransition {
             
             shouldComplete = percent > threshold
             
+            break
+            
         case .ended, .cancelled:
             if pan.state == .cancelled || !shouldComplete {
                 cancel()
                 
-                print("*** Cancel transition.")
-            } else {
+                print("cancel transition")
+            }
+            else {
                 finish()
                 
-                print("*** Finished transition.")
+                print("finished transition")
             }
+            
+            break
             
         default:
             cancel()
+            
             break
         }
     }

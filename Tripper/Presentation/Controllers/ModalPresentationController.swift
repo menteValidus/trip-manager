@@ -43,15 +43,19 @@ class ModalPresentationController: UIPresentationController {
            blurEffectView.contentView.addSubview(vibrancyEffectView)
            
            _dimmingView = view
+        
+        display(message: "ModalPresentationController.dimmingView")
            
            return view
     }
     
     override var frameOfPresentedViewInContainerView: CGRect {
+        display(message: "ModalPresentationController.frameOfPresentedViewInContainerView")
         return CGRect(x: 0, y: containerView!.bounds.height / 2, width: containerView!.bounds.width, height: containerView!.bounds.height / 2)
     }
     
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
+        display(message: "ModalPresentationController inited")
         self.panGestureRecognizer = UIPanGestureRecognizer()
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
         panGestureRecognizer.addTarget(self, action: #selector(onPan(pan:)))
@@ -59,14 +63,15 @@ class ModalPresentationController: UIPresentationController {
     }
     
     @objc func onPan(pan: UIPanGestureRecognizer) {
+        display(message: "ModalPresentationController.onPan")
         let endPoint = pan.translation(in: pan.view?.superview)
         
         switch pan.state {
         case .began:
-            presentedView!.frame.size.height = containerView!.frame.height / 2
+            presentedView!.frame.size.height = containerView!.frame.height
         case .changed:
             let velocity = pan.velocity(in: pan.view?.superview)
-            print("*** ModalPresentationController.onPan: velocity \(velocity.y)")
+            print(velocity.y)
             switch state {
             case .normal:
                 presentedView!.frame.origin.y = endPoint.y + containerView!.frame.height / 2
@@ -74,6 +79,8 @@ class ModalPresentationController: UIPresentationController {
                 presentedView!.frame.origin.y = endPoint.y
             }
             direction = velocity.y
+            
+            break
         case .ended:
             if direction < 0 {
                 changeScale(to: .adjustedOnce)
@@ -81,18 +88,22 @@ class ModalPresentationController: UIPresentationController {
                 if state == .adjustedOnce {
                     changeScale(to: .normal)
                 } else {
-                    presentingViewController.dismiss(animated: true, completion: nil)
+                    presentedViewController.dismiss(animated: true, completion: nil)
                 }
             }
-            print("*** ModalPresentationController.onPan: Finished transition.")
+            
+            print("finished transition")
+            
+            break
         default:
             break
         }
     }
     
     func changeScale(to state: ModalScaleState) {
+        display(message: "ModalPresentationController.changeScale")
         if let presentedView = presentedView, let containerView = self.containerView {
-            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: { () -> Void in
                 presentedView.frame = containerView.frame
                 let containerFrame = containerView.frame
                 let halfFrame = CGRect(origin: CGPoint(x: 0, y: containerFrame.height / 2),
@@ -100,6 +111,16 @@ class ModalPresentationController: UIPresentationController {
                 let frame = state == .adjustedOnce ? containerView.frame : halfFrame
                 
                 presentedView.frame = frame
+                
+                if let navController = self.presentedViewController as? UINavigationController {
+                    self.isMaximized = true
+                    
+                    navController.setNeedsStatusBarAppearanceUpdate()
+                    
+                    // Force the navigation bar to update its size
+                    navController.isNavigationBarHidden = true
+                    navController.isNavigationBarHidden = false
+                }
             }, completion: { (isFinished) in
                 self.state = state
             })
@@ -107,14 +128,16 @@ class ModalPresentationController: UIPresentationController {
     }
     
     override func presentationTransitionWillBegin() {
+        display(message: "ModalPresentationController.presentationTransitionWillBegin")
         let dimmedView = dimmingView
         
         if let containerView = self.containerView, let coordinator = presentingViewController.transitionCoordinator {
-            dimmingView.alpha = 0
+            
+            dimmedView.alpha = 0
             containerView.addSubview(dimmedView)
             dimmedView.addSubview(presentedViewController.view)
             
-            coordinator.animate(alongsideTransition: { context in
+            coordinator.animate(alongsideTransition: { (context) -> Void in
                 dimmedView.alpha = 1
                 self.presentingViewController.view.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             }, completion: nil)
@@ -122,17 +145,22 @@ class ModalPresentationController: UIPresentationController {
     }
     
     override func dismissalTransitionWillBegin() {
-        if let coordinator = presentedViewController.transitionCoordinator {
-            coordinator.animate(alongsideTransition: { context in
+        display(message: "ModalPresentationController.dismissalTransitionWillBegin")
+        if let coordinator = presentingViewController.transitionCoordinator {
+            
+            coordinator.animate(alongsideTransition: { (context) -> Void in
                 self.dimmingView.alpha = 0
-                self.presentedViewController.view.transform = CGAffineTransform.identity
-            }, completion: { completed in
-                print("*** Done dismiss animation")
+                self.presentingViewController.view.transform = CGAffineTransform.identity
+            }, completion: { (completed) -> Void in
+                print("done dismiss animation")
             })
+            
         }
+
     }
     
     override func dismissalTransitionDidEnd(_ completed: Bool) {
+        display(message: "ModalPresentationController.dismissalTransitionDidEnd")
         print("*** Dismissal did end: \(completed)")
         
         if completed {

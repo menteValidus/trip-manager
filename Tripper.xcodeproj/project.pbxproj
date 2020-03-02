@@ -141,11 +141,11 @@
 		0B042A7B23E85EBF00E9136F /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
 				0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */,
-				0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */,
-				0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */,
 				0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */,
+				0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */,
+				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
+				0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";

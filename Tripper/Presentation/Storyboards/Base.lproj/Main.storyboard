@@ -82,8 +82,8 @@
                         <outlet property="clearAllItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
                         <outlet property="createRouteButton" destination="rOr-U2-Mk9" id="b9S-dB-QGf"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="gX8-yR-d53"/>
-                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="O0R-W1-0k3"/>
-                        <segue destination="CC2-X3-ZR1" kind="show" id="nRI-RB-1uU"/>
+                        <segue destination="7C0-0F-VrB" kind="presentation" identifier="ShowAnnotationDetail" id="O0R-W1-0k3"/>
+                        <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -99,51 +99,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHW-vQ-MbK">
-                                <rect key="frame" x="164.5" y="16" width="46" height="27"/>
+                                <rect key="frame" x="164.5" y="72" width="46" height="27"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwy-Bq-VX3">
-                                <rect key="frame" x="24" y="12" width="30" height="30"/>
+                                <rect key="frame" x="24" y="68" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
+                                <connections>
+                                    <action selector="editPoint:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="MCB-P4-mY3"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isx-VI-OL0">
-                                <rect key="frame" x="306" y="12" width="45" height="30"/>
+                                <rect key="frame" x="306" y="68" width="45" height="30"/>
                                 <state key="normal" title="Delete"/>
+                                <connections>
+                                    <action selector="deletePoint:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="Zt8-fo-0pk"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arrival Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ys4-89-eSf">
-                                <rect key="frame" x="16" y="82" width="94" height="21"/>
+                                <rect key="frame" x="16" y="138" width="94" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Departure Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DO3-h1-v6K">
-                                <rect key="frame" x="16" y="135" width="123" height="21"/>
+                                <rect key="frame" x="16" y="191" width="123" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(None)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmT-GR-YBy">
-                                <rect key="frame" x="306" y="82" width="53" height="21"/>
+                                <rect key="frame" x="306" y="138" width="53" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(None)" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbi-qO-sck">
-                                <rect key="frame" x="306" y="135" width="53" height="21"/>
+                                <rect key="frame" x="306" y="191" width="53" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8C6-zn-JHc">
-                                <rect key="frame" x="16" y="188" width="92.5" height="21"/>
+                                <rect key="frame" x="16" y="244" width="92.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="(Description goes here)" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bsW-lJ-8cQ">
-                                <rect key="frame" x="24" y="217" width="327" height="128"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="(Description goes here)" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bsW-lJ-8cQ">
+                                <rect key="frame" x="24" y="273" width="327" height="128"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="Kjv-NJ-oEe"/>
@@ -182,20 +188,18 @@
                     <connections>
                         <outlet property="arrivalDateLabel" destination="nmT-GR-YBy" id="qhs-pm-x4B"/>
                         <outlet property="departureDateLabel" destination="Cbi-qO-sck" id="QhC-gv-BAR"/>
-                        <outlet property="leftTopButton" destination="Rwy-Bq-VX3" id="95T-Gg-a07"/>
-                        <outlet property="rightTopButton" destination="isx-VI-OL0" id="qEM-BE-M1q"/>
                         <outlet property="titleLabel" destination="MHW-vQ-MbK" id="omj-w8-nXt"/>
                         <segue destination="FVo-Qo-VpD" kind="presentation" identifier="ShowDatePicker" id="keZ-1T-FDe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3h-z7-obX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1948" y="136.28185907046478"/>
+            <point key="canvasLocation" x="2887.1999999999998" y="136.28185907046478"/>
         </scene>
         <!--Edit-->
         <scene sceneID="Zyu-tu-Wmh">
             <objects>
-                <tableViewController id="CC2-X3-ZR1" sceneMemberID="viewController">
+                <tableViewController id="CC2-X3-ZR1" customClass="AnnotationEditViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bBu-Lb-dae">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -312,8 +316,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit" id="9yP-FM-o6c">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC"/>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci"/>
+                        <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC">
+                            <connections>
+                                <action selector="save:" destination="CC2-X3-ZR1" id="ud6-XK-h66"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci">
+                            <connections>
+                                <action selector="cancel:" destination="CC2-X3-ZR1" id="HIu-47-O2I"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Pk-bw-zvl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -379,7 +391,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TPa-OD-jkK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2821.5999999999999" y="136.28185907046478"/>
+            <point key="canvasLocation" x="3760.8000000000002" y="136.28185907046478"/>
         </scene>
         <!--Route-->
         <scene sceneID="fPz-AV-oOg">
@@ -454,6 +466,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SA4-bV-yv5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="225" y="-582"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6Xj-qZ-F5f">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7C0-0F-VrB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="eLR-4n-9CI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bjg-T4-fhS" kind="relationship" relationship="rootViewController" id="Zmr-Sl-CRw"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hje-BM-feP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1948" y="136.28185907046478"/>
         </scene>
     </scenes>
 </document>

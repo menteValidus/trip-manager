@@ -18,24 +18,29 @@ class ModalTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     init(type: ModalTransitionAnimatorType) {
         self.type = type
+        display(message: "ModalTransitionAnimator inited")
     }
     
     @objc func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-//        let to = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
+        display(message: "ModalTransitionAnimator.animateTransition")
+        let _ = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         let from = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
         
-        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations:  { () -> Void in
+        UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: { () -> Void in
+            
             from!.view.frame.origin.y = 800
             
-            print("*** Animating...")
-        }, completion: { (completed) -> Void in
-            print("*** Animation completed")
+            print("animating...")
+            
+        }) { (completed) -> Void in
+            print("animate completed")
             
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        })
+        }
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        display(message: "ModalTransitionAnimator.transitionDuration")
         return 0.4
     }
 }
