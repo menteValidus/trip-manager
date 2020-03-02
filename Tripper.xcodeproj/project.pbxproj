@@ -28,18 +28,12 @@
 		0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */; };
 		0B66C00223F6E0BA000CF975 /* RoutePointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */; };
 		0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */; };
-		0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
-		0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */; };
 		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
 		0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */; };
 		0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */; };
 		0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85423F2E85F006DCDDC /* DAO.swift */; };
 		0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */; };
-		0B72F37F2407D91E00EFCD3C /* ModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F37E2407D91E00EFCD3C /* ModalTransitioningDelegate.swift */; };
-		0B72F3812407D9A900EFCD3C /* ModalInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F3802407D9A900EFCD3C /* ModalInteractiveTransition.swift */; };
-		0B72F3832407DCC100EFCD3C /* ModalTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F3822407DCC100EFCD3C /* ModalTransitionAnimator.swift */; };
-		0B72F3852407DFA000EFCD3C /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B72F3842407DFA000EFCD3C /* ModalPresentationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,18 +59,12 @@
 		0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointAnnotation.swift; sourceTree = "<group>"; };
 		0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
-		0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
-		0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
 		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataClass.swift"; path = "DB/RoutePointEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataProperties.swift"; path = "DB/RoutePointEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0B6CD85423F2E85F006DCDDC /* DAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 		0B6CD85623F2E8CA006DCDDC /* CoreDataDAO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataDAO.swift; sourceTree = "<group>"; };
-		0B72F37E2407D91E00EFCD3C /* ModalTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTransitioningDelegate.swift; sourceTree = "<group>"; };
-		0B72F3802407D9A900EFCD3C /* ModalInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalInteractiveTransition.swift; sourceTree = "<group>"; };
-		0B72F3822407DCC100EFCD3C /* ModalTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTransitionAnimator.swift; sourceTree = "<group>"; };
-		0B72F3842407DFA000EFCD3C /* ModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -163,7 +151,6 @@
 		0B042A8223E98CA200E9136F /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				0B72F37D2407D8E900EFCD3C /* Transitioning */,
 				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
 				0B042A7523E3001B00E9136F /* Util.swift */,
 			);
@@ -173,8 +160,6 @@
 		0B042A8323E98CB000E9136F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				0B6CD84023EC2420006DCDDC /* Controllers */,
-				0B6CD83B23EC0F11006DCDDC /* Managers */,
 				0B042A8523E98D7D00E9136F /* Table Cells */,
 				0B042A8823E990DE00E9136F /* xib */,
 				0B042A8423E98CC800E9136F /* Storyboards */,
@@ -220,23 +205,6 @@
 			path = Subroutes;
 			sourceTree = "<group>";
 		};
-		0B6CD83B23EC0F11006DCDDC /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				0B6CD83C23EC0F36006DCDDC /* SlideInPresentationManager.swift */,
-			);
-			path = Managers;
-			sourceTree = "<group>";
-		};
-		0B6CD84023EC2420006DCDDC /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				0B6CD84123EC2457006DCDDC /* SlideInPresentationController.swift */,
-				0B72F3842407DFA000EFCD3C /* ModalPresentationController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
 		0B6CD84323ED7630006DCDDC /* DAO */ = {
 			isa = PBXGroup;
 			children = (
@@ -280,16 +248,6 @@
 				0B6CD85423F2E85F006DCDDC /* DAO.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		0B72F37D2407D8E900EFCD3C /* Transitioning */ = {
-			isa = PBXGroup;
-			children = (
-				0B72F37E2407D91E00EFCD3C /* ModalTransitioningDelegate.swift */,
-				0B72F3802407D9A900EFCD3C /* ModalInteractiveTransition.swift */,
-				0B72F3822407DCC100EFCD3C /* ModalTransitionAnimator.swift */,
-			);
-			path = Transitioning;
 			sourceTree = "<group>";
 		};
 		0B88891523FD465A00580A2A /* Core Data */ = {
@@ -454,12 +412,7 @@
 				0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */,
 				0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
-				0B72F3812407D9A900EFCD3C /* ModalInteractiveTransition.swift in Sources */,
-				0B72F37F2407D91E00EFCD3C /* ModalTransitioningDelegate.swift in Sources */,
 				0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */,
-				0B72F3852407DFA000EFCD3C /* ModalPresentationController.swift in Sources */,
-				0B72F3832407DCC100EFCD3C /* ModalTransitionAnimator.swift in Sources */,
-				0B6CD83D23EC0F36006DCDDC /* SlideInPresentationManager.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
@@ -469,7 +422,6 @@
 				0B66C00223F6E0BA000CF975 /* RoutePointAnnotation.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
-				0B6CD84223EC2457006DCDDC /* SlideInPresentationController.swift in Sources */,
 				0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */,
 				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,
 			);

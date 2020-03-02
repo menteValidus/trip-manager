@@ -12,7 +12,7 @@ protocol AnnotationDetailDelegate {
     func annotationDetail(didSet time: Date)
 }
 
-class AnnotationDetailViewController: UIViewController, ModalPresentable {
+class AnnotationDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var arrivalDateLabel: UILabel!
     @IBOutlet weak var departureDateLabel: UILabel!
@@ -44,14 +44,7 @@ class AnnotationDetailViewController: UIViewController, ModalPresentable {
     // MARK: - Actions
     
     @IBAction func editPoint(_ sender: UIButton) {
-//        self.delegate.mapRoute(performEditFor: self.routePoint)
-        if let delegate = navigationController?.transitioningDelegate as? ModalTransitioningDelegate {
-            delegate.interactiveDismiss = false
-        }
         dismiss(animated: true, completion: nil)
-//        dismiss(animated: true) {
-//            self.delegate.mapRoute(performEditFor: self.routePoint)
-//        }
     }
     
     @IBAction func deletePoint(_ sender: UIButton) {

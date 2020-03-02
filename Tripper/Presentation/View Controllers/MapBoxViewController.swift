@@ -46,7 +46,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     var directionsRoute: Route?
     
-    var modalTransitioningDelegate: ModalTransitioningDelegate?
+//    var modalTransitioningDelegate: ModalTransitioningDelegate?
 
     struct SeguesIdentifiers {
         /** You should assign RoutePoint object as sender to this segue. */
@@ -123,9 +123,9 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             presentingController.delegate = self
             presentingController.routePoint = (sender as! RoutePoint)
             
-            modalTransitioningDelegate = ModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
-            presentingController.modalPresentationStyle = .custom
-            presentingController.transitioningDelegate = modalTransitioningDelegate
+//            modalTransitioningDelegate = ModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+//            presentingController.modalPresentationStyle = .custom
+//            presentingController.transitioningDelegate = modalTransitioningDelegate
             
         case SeguesIdentifiers.showAnnotationEdit:
             let presentingController = segue.destination as! AnnotationEditViewController
