@@ -15,6 +15,10 @@ class RoutePoint {
     var subtitle: String?
     var latitude: Double = 0
     var longitude: Double = 0
+    
+    var arrivalDate: Date?
+    var departureDate: Date?
+    
     // Nullable in case it's the end of trip.
     var timeToGetToNextPointInMinutes: Int? = 60
     // Nullable in case it's the start of trip.

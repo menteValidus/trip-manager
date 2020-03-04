@@ -1,9 +1,8 @@
 //
 //  RoutePointEntity+CoreDataProperties.swift
-//  Tripper
+//  
 //
-//  Created by Denis Cherniy on 13.02.2020.
-//  Copyright © 2020 Denis Cherniy. All rights reserved.
+//  Created by Denis Cherniy on 04.03.2020.
 //
 //
 
@@ -23,5 +22,7 @@ extension RoutePointEntity {
     @NSManaged public var subtitle: String?
     @NSManaged public var timeInMinutes: Int32
     @NSManaged public var title: String?
+    @NSManaged public var arrivalDate: Date?
+    @NSManaged public var departureDate: Date?
 
 }

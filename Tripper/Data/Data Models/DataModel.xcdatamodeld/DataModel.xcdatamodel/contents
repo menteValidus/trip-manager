@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="RoutePointEntity" representedClassName="RoutePointEntity" syncable="YES">
+        <attribute name="arrivalDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="departureDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="String"/>
         <attribute name="latitude" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="longitude" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
@@ -9,6 +11,6 @@
         <attribute name="title" attributeType="String" defaultValueString=""/>
     </entity>
     <elements>
-        <element name="RoutePointEntity" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="RoutePointEntity" positionX="-63" positionY="-18" width="128" height="163"/>
     </elements>
 </model>

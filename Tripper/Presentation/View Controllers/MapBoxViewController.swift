@@ -46,7 +46,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     var directionsRoute: Route?
     
-//    var modalTransitioningDelegate: ModalTransitioningDelegate?
+    private var detailsTransitioningDelegate: RoutePointDetailsModalTransitioningDelegate!
 
     struct SeguesIdentifiers {
         /** You should assign RoutePoint object as sender to this segue. */
@@ -117,15 +117,14 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case SeguesIdentifiers.showAnnotationDetail:
-            let controller = segue.destination as! UINavigationController
-            
-            let presentingController = controller.viewControllers[0] as! AnnotationDetailViewController
+            let presentingController = segue.destination as! AnnotationDetailViewController
             presentingController.delegate = self
             presentingController.routePoint = (sender as! RoutePoint)
             
-//            modalTransitioningDelegate = ModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
-//            presentingController.modalPresentationStyle = .custom
-//            presentingController.transitioningDelegate = modalTransitioningDelegate
+            detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
+            presentingController.modalPresentationStyle = .custom
+            presentingController.transitioningDelegate = detailsTransitioningDelegate
+            
             
         case SeguesIdentifiers.showAnnotationEdit:
             let presentingController = segue.destination as! AnnotationEditViewController
@@ -206,6 +205,35 @@ extension MapBoxViewController: MGLMapViewDelegate {
         let id = annotationsID[annotation as! MGLPointAnnotation]!
         let selectedRoutePoint = route.findRoutePointBy(id: id)
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: selectedRoutePoint)
+//        guard let presentingController = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? AnnotationDetailViewController else { return }
+//        presentingController.delegate = self
+//        presentingController.routePoint = selectedRoutePoint
+//        detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
+//        presentingController.modalPresentationStyle = .custom
+//        presentingController.transitioningDelegate = detailsTransitioningDelegate
+//
+//        self.addChild(presentingController)
+//        self.view.addSubview(presentingController.view)
+//        let height = view.frame.height
+//        let width  = view.frame.width
+//        let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
+//
+//        presentingController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+//        presentingController.didMove(toParent: self)
+//
+//        let yCoordinate = view.frame.height * 0.75
+//        UIView.animate(withDuration: 0.3) {
+//            presentingController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+//        }
+
+
+//        let presentingController = AnnotationDetailViewController()
+//        presentingController.delegate = self
+//        presentingController.routePoint = selectedRoutePoint
+//        detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
+//        presentingController.modalPresentationStyle = .custom
+//        presentingController.transitioningDelegate = detailsTransitioningDelegate
+//        present(presentingController, animated: true, completion: nil)
     }
     
     func mapView(_ mapView: MGLMapView, didDeselect annotation: MGLAnnotation) {

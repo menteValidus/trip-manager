@@ -27,6 +27,8 @@
 		0B05D4B72409286F006E344A /* AnnotationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */; };
 		0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */; };
 		0B66C00223F6E0BA000CF975 /* RoutePointAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */; };
+		0B6BB0E5240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */; };
+		0B6BB0E9240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */; };
 		0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
@@ -58,6 +60,8 @@
 		0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationEditViewController.swift; sourceTree = "<group>"; };
 		0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		0B66C00123F6E0BA000CF975 /* RoutePointAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointAnnotation.swift; sourceTree = "<group>"; };
+		0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointDetailsModalTransitioningDelegate.swift; sourceTree = "<group>"; };
+		0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointDetailsModalPresentationController.swift; sourceTree = "<group>"; };
 		0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 		0B042A8223E98CA200E9136F /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				0B6BB0E7240E64850002D1DB /* Presentation Controllers */,
+				0B6BB0E3240E617D0002D1DB /* Transitioning */,
 				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
 				0B042A7523E3001B00E9136F /* Util.swift */,
 			);
@@ -203,6 +209,22 @@
 				0B042A9423EA9E7300E9136F /* InRoad.swift */,
 			);
 			path = Subroutes;
+			sourceTree = "<group>";
+		};
+		0B6BB0E3240E617D0002D1DB /* Transitioning */ = {
+			isa = PBXGroup;
+			children = (
+				0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */,
+			);
+			path = Transitioning;
+			sourceTree = "<group>";
+		};
+		0B6BB0E7240E64850002D1DB /* Presentation Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */,
+			);
+			path = "Presentation Controllers";
 			sourceTree = "<group>";
 		};
 		0B6CD84323ED7630006DCDDC /* DAO */ = {
@@ -407,6 +429,7 @@
 				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
 				0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */,
 				0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */,
+				0B6BB0E5240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift in Sources */,
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B6CD85723F2E8CA006DCDDC /* CoreDataDAO.swift in Sources */,
@@ -414,6 +437,7 @@
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B6CD85523F2E85F006DCDDC /* DAO.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
+				0B6BB0E9240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B05D4B72409286F006E344A /* AnnotationEditViewController.swift in Sources */,

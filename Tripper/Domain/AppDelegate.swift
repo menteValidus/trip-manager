@@ -19,9 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let navigationController = window!.rootViewController as! UINavigationController
-        let controller = navigationController.viewControllers[0] as! MapBoxViewController
-        controller.route = dataModel
+        if let navigationController = window!.rootViewController as? UINavigationController {
+            let controller = navigationController.viewControllers[0] as! MapBoxViewController
+            controller.route = dataModel
+        }
         
         return true
     }

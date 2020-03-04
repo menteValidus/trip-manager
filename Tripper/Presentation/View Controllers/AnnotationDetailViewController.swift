@@ -38,13 +38,17 @@ class AnnotationDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = routePoint.title ?? "Title"
+//        titleLabel.text = routePoint.title ?? "Title"
     }
 
     // MARK: - Actions
     
     @IBAction func editPoint(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        
+        dismiss(animated: true, completion: { [weak self] in
+            guard let self = self else { return }
+            self.delegate.mapRoute(performEditFor: self.routePoint)
+        })
     }
     
     @IBAction func deletePoint(_ sender: UIButton) {
