@@ -22,8 +22,8 @@ class AnnotationEditViewController: UITableViewController {
     @IBOutlet weak var datePickerCell: UITableViewCell!
     @IBOutlet weak var datePicker: UIDatePicker!
     
-    var delegate: RoutePointEditDelegate! = MapBoxViewController()
-    var routePoint: RoutePoint = RoutePoint()
+    var delegate: RoutePointEditDelegate!
+    var routePoint: RoutePoint!
     
     private var state: AnnotationEditState = .normal
     private var arrivalDate: Date?

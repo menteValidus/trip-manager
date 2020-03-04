@@ -48,6 +48,7 @@ class RoutePoint {
         id = idGenerator.uuidString
         latitude = 0
         longitude = 0
+        arrivalDate = Date()
     }
     
     init(from annotation: MKAnnotation) {
@@ -56,6 +57,7 @@ class RoutePoint {
         longitude = annotation.coordinate.longitude
         title = annotation.title ?? ""
         subtitle = annotation.subtitle ?? ""
+        arrivalDate = Date()
     }
     
     init(coordinate: CLLocationCoordinate2D, title: String = "", subtitle: String = "") {
@@ -63,6 +65,7 @@ class RoutePoint {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
+        arrivalDate = Date()
     }
     
     init(id: String, longitude: Double, latitude: Double, title: String, subtitle: String) {
@@ -71,5 +74,6 @@ class RoutePoint {
         self.longitude = longitude
         self.title = title
         self.subtitle = subtitle
+        arrivalDate = Date()
     }
 }

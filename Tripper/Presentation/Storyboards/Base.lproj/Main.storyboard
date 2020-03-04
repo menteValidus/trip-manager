@@ -188,6 +188,7 @@
                     <connections>
                         <outlet property="arrivalDateLabel" destination="nmT-GR-YBy" id="qhs-pm-x4B"/>
                         <outlet property="departureDateLabel" destination="Cbi-qO-sck" id="QhC-gv-BAR"/>
+                        <outlet property="descriptionTextView" destination="bsW-lJ-8cQ" id="QCr-WA-fUh"/>
                         <outlet property="titleLabel" destination="MHW-vQ-MbK" id="omj-w8-nXt"/>
                     </connections>
                 </viewController>

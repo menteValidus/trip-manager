@@ -39,6 +39,8 @@ class CoreDataRoutePointDAO: RoutePointDAO {
                     static let TimeInMinutes = "timeInMinutes"
                     static let Title = "title"
                     static let Subtitle = "subtitle"
+                    static let arrivalDate = "arrivalDate"
+                    static let departureDate = "departureDate"
                 }
             }
         }
@@ -69,13 +71,7 @@ class CoreDataRoutePointDAO: RoutePointDAO {
         let entity = NSEntityDescription.entity(forEntityName: DataModelDB.Entities.RoutePointEntity.name, in: managedObjectContext)!
         
         let routePointObject = NSManagedObject(entity: entity, insertInto: managedObjectContext) as! RoutePointEntity
-        routePointObject.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
-        routePointObject.setValue(point.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
-        routePointObject.setValue(point.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
-        routePointObject.setValue(point.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
-        routePointObject.setValue(point.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
-        routePointObject.setValue(point.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
-
+        configure(entity: routePointObject, with: point)
         
         do {
             try managedObjectContext.save()
@@ -93,13 +89,7 @@ class CoreDataRoutePointDAO: RoutePointDAO {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
             
             if let pointToUpdate = fetchResult.first as? RoutePointEntity {
-                pointToUpdate.setValue(point.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
-                pointToUpdate.setValue(point.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
-                pointToUpdate.setValue(point.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
-                pointToUpdate.setValue(point.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
-                pointToUpdate.setValue(point.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
-                pointToUpdate.setValue(point.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
-                
+                configure(entity: pointToUpdate, with: point)
                 try managedObjectContext.save()
             } else {
                 throwAn(errorMessage: "There is no way we can be here!!!")
@@ -146,6 +136,18 @@ class CoreDataRoutePointDAO: RoutePointDAO {
         point.arrivalDate = entity.arrivalDate
         point.departureDate = entity.departureDate
         return point
+    }
+    
+    private func configure(entity: RoutePointEntity, with routePoint: RoutePoint) {
+        entity.setValue(routePoint.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
+        entity.setValue(routePoint.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
+        entity.setValue(routePoint.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
+        entity.setValue(routePoint.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
+        entity.setValue(routePoint.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
+        entity.setValue(routePoint.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
+        entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
+        entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
+//        return entity
     }
 //
 //    private func convertRoutePointToEntity(_ routePoint: RoutePoint) -> RoutePointEntity {

@@ -14,6 +14,7 @@ protocol AnnotationDetailDelegate {
 
 class AnnotationDetailViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var arrivalDateLabel: UILabel!
     @IBOutlet weak var departureDateLabel: UILabel!
     
@@ -38,7 +39,16 @@ class AnnotationDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        titleLabel.text = routePoint.title ?? "Title"
+        titleLabel.text = routePoint.title ?? ""
+        descriptionTextView.text = routePoint.subtitle ?? ""
+        
+        if let arrivalDate = routePoint.arrivalDate, let departureDate = routePoint.departureDate {
+            arrivalDateLabel.text = dateFormatter.string(from: arrivalDate)
+            departureDateLabel.text = dateFormatter.string(from: departureDate)
+        } else {
+            arrivalDateLabel.text = "(None)"
+            departureDateLabel.text = "(None)"
+        }
     }
 
     // MARK: - Actions
