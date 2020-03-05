@@ -7,10 +7,12 @@
 //
 
 import Foundation
-import MapKit
+import CoreLocation
 
 class RoutePoint {
     let id: String
+    var orderNumber: Int
+    
     var title: String?
     var subtitle: String?
     var latitude: Double = 0
@@ -24,14 +26,10 @@ class RoutePoint {
     // Nullable in case it's the start of trip.
     var residenceTimeInMinutes: Int? = 120
     
-    let idGenerator = NSUUID()
+    private let idGenerator = NSUUID()
     
-    var placemark: MKPlacemark {
-        return MKPlacemark(coordinate: coordinate)
-    }
-    
-    var mapItem: MKMapItem {
-        return MKMapItem(placemark: placemark)
+    struct UserDefaultsKeys {
+        static let lastAssignedOrderNumber = "lastOrderNumber"
     }
     
     var coordinate: CLLocationCoordinate2D {
@@ -45,35 +43,22 @@ class RoutePoint {
     }
     
     init() {
-        id = idGenerator.uuidString
-        latitude = 0
-        longitude = 0
-        arrivalDate = Date()
+        self.id = idGenerator.uuidString
+        let orderNumber = UserDefaults.standard.integer(forKey: UserDefaultsKeys.lastAssignedOrderNumber) + 1
+        self.orderNumber = orderNumber
+        UserDefaults.standard.set(orderNumber, forKey: UserDefaultsKeys.lastAssignedOrderNumber)
+        
+        self.latitude = 0
+        self.longitude = 0
     }
     
-    init(from annotation: MKAnnotation) {
-        id = idGenerator.uuidString
-        latitude = annotation.coordinate.latitude
-        longitude = annotation.coordinate.longitude
-        title = annotation.title ?? ""
-        subtitle = annotation.subtitle ?? ""
-        arrivalDate = Date()
-    }
-    
-    init(coordinate: CLLocationCoordinate2D, title: String = "", subtitle: String = "") {
-        id = idGenerator.uuidString
-        self.title = title
-        self.subtitle = subtitle
-        self.coordinate = coordinate
-        arrivalDate = Date()
-    }
-    
-    init(id: String, longitude: Double, latitude: Double, title: String, subtitle: String) {
+    init(id: String, orderNumber: Int, longitude: Double, latitude: Double, title: String, subtitle: String) {
         self.id = id
+        self.orderNumber = orderNumber
+        
         self.latitude = latitude
         self.longitude = longitude
         self.title = title
         self.subtitle = subtitle
-        arrivalDate = Date()
     }
 }

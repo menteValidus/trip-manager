@@ -132,7 +132,7 @@ class CoreDataRoutePointDAO: RoutePointDAO {
     // MARK: - Converters
     
     private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
-        let point = RoutePoint(id: entity.id!, longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
+        let point = RoutePoint(id: entity.id!, orderNumber: Int(entity.orderNumber), longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
         point.arrivalDate = entity.arrivalDate
         point.departureDate = entity.departureDate
         return point

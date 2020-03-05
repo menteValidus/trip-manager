@@ -44,9 +44,23 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     var route: RouteDataModel!
     private var status = MapViewStatus.start
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
-    var directionsRoute: Route?
+    private var shapeSources: [MGLShapeSource] = []
+    private var shapeLineStyles: [MGLLineStyleLayer] = []
+    private var remainingRouteSegments = 0
     
     private var detailsTransitioningDelegate: RoutePointDetailsModalTransitioningDelegate!
+    
+    private lazy var dimmingView = { () -> UIView in
+        let dimmingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        
+        // Blur Effect
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = dimmingView.bounds
+        dimmingView.addSubview(blurEffectView)
+        
+        return dimmingView
+    }()
 
     struct SeguesIdentifiers {
         /** You should assign RoutePoint object as sender to this segue. */
@@ -68,6 +82,11 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         for routePoint in route.points {
             setAnnotation(at: routePoint)
+        }
+        
+        if route.isProperForRouteCreation() {
+            setUIStatus(.routing)
+            createRoute()
         }
     }
     
@@ -91,18 +110,18 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         annotationsID.removeAll()
         
         // Clear all button should always be disabled while no annotations are placed.
-        mapView.removeAnnotations(mapView.annotations!)
-        mapView.removeOverlays(mapView.overlays)
-    }
-    
-    @IBAction func createRoute(_ sender: Any?) {
-        for i in 0..<(route.points.count - 1) {
-            let identifier = route.points[i].id + route.points[i + 1].id
-            let sourceCoord = route.points[i].coordinate
-            let destinationCoord = route.points[i + 1].coordinate
-            calculateRoute(from: sourceCoord, to: destinationCoord, drawHandler: { route in
-                self.drawRoute(route: route!, identifier: identifier)
-            })
+        if let annotations = mapView.annotations {
+            for annotation in annotations {
+                mapView.removeAnnotation(annotation)
+            }
+        }
+        
+        for source in shapeSources {
+            mapView.style?.removeSource(source)
+        }
+        
+        for style in shapeLineStyles {
+            mapView.style?.removeLayer(style)
         }
     }
     
@@ -180,21 +199,59 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
                 self.routeLengthView.isHidden = true
                 self.clearAllItem.isEnabled = false
             })
+            
         case .pinning:
             UIView.animate(withDuration: animationDuration, animations: {
                 self.createRouteButton.isHidden = false
                 self.clearAllItem.isEnabled = true
             })
+            
         case .routing:
-            createRoute(nil)
-            // TODO: Show isLoading view.
-            break
+            showSpinner()
+            
         case .routeMapping:
-            routeLengthView.isHidden = false
-            clearAllItem.isEnabled = true
+            hideSpinner()
+//            routeLengthView.isHidden = false
+//            clearAllItem.isEnabled = true
+        }
+    }
+    
+    /**
+     Method which handles route creation and mapping.
+     Automatically switch UI status to .routeMapping in the end of creation.
+     */
+    private func createRoute() {
+        remainingRouteSegments = route.points.count - 1
+        
+        let lastIndex = route.points.count - 1
+        for i in 0..<lastIndex {
+            let identifier = route.points[i].id + route.points[i + 1].id
+            let sourceCoord = route.points[i].coordinate
+            let destinationCoord = route.points[i + 1].coordinate
+            calculateRoute(from: sourceCoord, to: destinationCoord, drawHandler: { route in
+                self.drawRoute(route: route!, identifier: identifier)
+                self.remainingRouteSegments -= 1
+                if self.remainingRouteSegments == 0 {
+                    self.setUIStatus(.routeMapping)
+                }
+            })
         }
     }
 
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = CGPoint(x: dimmingView.bounds.midX + 0.5, y: dimmingView.bounds.midY + 0.5)
+        spinner.tag = 1000
+        dimmingView.addSubview(spinner)
+        
+        
+        view.addSubview(dimmingView)
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        dimmingView.removeFromSuperview()
+    }
 
 }
 
@@ -205,35 +262,6 @@ extension MapBoxViewController: MGLMapViewDelegate {
         let id = annotationsID[annotation as! MGLPointAnnotation]!
         let selectedRoutePoint = route.findRoutePointBy(id: id)
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: selectedRoutePoint)
-//        guard let presentingController = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? AnnotationDetailViewController else { return }
-//        presentingController.delegate = self
-//        presentingController.routePoint = selectedRoutePoint
-//        detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
-//        presentingController.modalPresentationStyle = .custom
-//        presentingController.transitioningDelegate = detailsTransitioningDelegate
-//
-//        self.addChild(presentingController)
-//        self.view.addSubview(presentingController.view)
-//        let height = view.frame.height
-//        let width  = view.frame.width
-//        let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
-//
-//        presentingController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
-//        presentingController.didMove(toParent: self)
-//
-//        let yCoordinate = view.frame.height * 0.75
-//        UIView.animate(withDuration: 0.3) {
-//            presentingController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
-//        }
-
-
-//        let presentingController = AnnotationDetailViewController()
-//        presentingController.delegate = self
-//        presentingController.routePoint = selectedRoutePoint
-//        detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
-//        presentingController.modalPresentationStyle = .custom
-//        presentingController.transitioningDelegate = detailsTransitioningDelegate
-//        present(presentingController, animated: true, completion: nil)
     }
     
     func mapView(_ mapView: MGLMapView, didDeselect annotation: MGLAnnotation) {
@@ -255,16 +283,42 @@ extension MapBoxViewController: MGLMapViewDelegate {
         newRoutePoint.coordinate = coordinate
         route.add(point: newRoutePoint)
         setAnnotation(at: newRoutePoint)
-        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: newRoutePoint)
+        
+        if route.isProperForRouteCreation() {
+            let indexOfCreatedRoutePoint = route.points.count - 1
+            let indexOfPreviousPoint = indexOfCreatedRoutePoint - 1
+            
+            //setMapCameraAt(coordinates: [])
+            
+            layoutRoute(from: route.points[indexOfPreviousPoint], to: route.points[indexOfCreatedRoutePoint], completionHandler: {
+                // TODO: Improve logic
+                self.setUIStatus(.routeMapping)
+                self.performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: newRoutePoint)
+            })
+        } else {
+            setMapCameraAt(coordinates: [newRoutePoint.coordinate])
+        }
     }
     
     // MARK: - Helper Methods
     
     private func setAnnotation(at routePoint: RoutePoint) {
         let annotation = MGLPointAnnotation()
+        annotation.title = routePoint.title
+        annotation.subtitle = routePoint.subtitle
         annotation.coordinate = routePoint.coordinate
         annotationsID[annotation] = routePoint.id
         mapView.addAnnotation(annotation)
+    }
+    
+    private func layoutRoute(from source: RoutePoint, to destination: RoutePoint, completionHandler: @escaping () -> Void) {
+        self.setUIStatus(.routing)
+        calculateRoute(from: source.coordinate, to: destination.coordinate, drawHandler: { route in
+            if let route = route {
+                self.drawRoute(route: route, identifier: source.id + destination.id)
+            }
+            completionHandler()
+        })
     }
     
     private func calculateRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, drawHandler: @escaping (Route?) -> Void) {
@@ -274,10 +328,8 @@ extension MapBoxViewController: MGLMapViewDelegate {
         
         let options = NavigationRouteOptions(waypoints: [sourceWaypoint, destinationWaypoint], profileIdentifier: .automobileAvoidingTraffic)
         
-        Directions.shared.calculate(options, completionHandler: { [unowned self] (waypoints, routes, error) in
-            self.directionsRoute = routes?.first
-            
-            drawHandler(self.directionsRoute)
+        Directions.shared.calculate(options, completionHandler: { (_, routes, _) in
+            drawHandler(routes?.first)
         })
     }
     
@@ -295,7 +347,114 @@ extension MapBoxViewController: MGLMapViewDelegate {
         lineStyle.lineWidth = NSExpression(forConstantValue: 3)
         
         mapView.style?.addSource(source)
+        shapeSources.append(source)
         mapView.style?.addLayer(lineStyle)
+        shapeLineStyles.append(lineStyle)
+        
+    }
+    
+    private func deleteRoutePointWithRouteCorrection(routePoint: RoutePoint) {
+        for (annotation, id) in annotationsID {
+            if id == routePoint.id {
+                mapView.removeAnnotation(annotation)
+                annotationsID.removeValue(forKey: annotation)
+                break
+            }
+        }
+        
+        if route.isProperForRouteCreation() {
+            guard let indexOfDeletingPoint = route.getIndex(of: routePoint) else { return }
+            
+            switch indexOfDeletingPoint {
+            case 0:
+                let indexOfOverlayAfterDeletingPoint = indexOfDeletingPoint
+                // Remove overlay lines after deleting point.
+                let shapeSourceAfterDeletingPoint = shapeSources[indexOfOverlayAfterDeletingPoint]
+                mapView.style?.removeSource(shapeSourceAfterDeletingPoint)
+                
+                let lineStyleAfterDeletingPoint = shapeLineStyles[indexOfOverlayAfterDeletingPoint]
+                mapView.style?.removeLayer(lineStyleAfterDeletingPoint)
+                
+                shapeSources.remove(at: indexOfOverlayAfterDeletingPoint)
+                shapeLineStyles.remove(at: indexOfOverlayAfterDeletingPoint)
+                
+            case route.points.count - 1: // Last index
+                let indexOfOverlayBeforeDeletingPoint = indexOfDeletingPoint - 1
+                // Remove overlay lines before deleting point.
+                let shapeSourceBeforeDeletingPoint = shapeSources[indexOfOverlayBeforeDeletingPoint]
+                mapView.style?.removeSource(shapeSourceBeforeDeletingPoint)
+                
+                let lineStyleBeforeDeletingPoint = shapeLineStyles[indexOfOverlayBeforeDeletingPoint]
+                mapView.style?.removeLayer(lineStyleBeforeDeletingPoint)
+                
+                shapeSources.remove(at: indexOfOverlayBeforeDeletingPoint)
+                shapeLineStyles.remove(at: indexOfOverlayBeforeDeletingPoint)
+                
+            default:
+                let indexOfOverlayBeforeDeletingPoint = indexOfDeletingPoint - 1
+                // Remove overlay lines before deleting point.
+                let shapeSourceBeforeDeletingPoint = shapeSources[indexOfOverlayBeforeDeletingPoint]
+                mapView.style?.removeSource(shapeSourceBeforeDeletingPoint)
+//                shapeSources.remove(at: indexOfOverlayBeforeDeletingPoint)
+                let lineStyleBeforeDeletingPoint = shapeLineStyles[indexOfOverlayBeforeDeletingPoint]
+//                shapeLineStyles.remove(at: indexOfOverlayBeforeDeletingPoint)
+                mapView.style?.removeLayer(lineStyleBeforeDeletingPoint)
+                
+                let indexOfOverlayAfterDeletingPoint = indexOfDeletingPoint
+                // Remove overlay lines after deleting point.
+                let shapeSourceAfterDeletingPoint = shapeSources[indexOfOverlayAfterDeletingPoint]
+//                shapeSources.remove(at: indexOfOverlayAfterDeletingPoint)
+                mapView.style?.removeSource(shapeSourceAfterDeletingPoint)
+                let lineStyleAfterDeletingPoint = shapeLineStyles[indexOfOverlayAfterDeletingPoint]
+//                shapeLineStyles.remove(at: indexOfOverlayAfterDeletingPoint)
+                mapView.style?.removeLayer(lineStyleAfterDeletingPoint)
+                
+                shapeSources.removeAll(where: { shapeSource in
+                    if shapeSource == shapeSourceAfterDeletingPoint || shapeSource == shapeSourceBeforeDeletingPoint {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                
+                shapeLineStyles.removeAll(where: { lineStyle in
+                    if lineStyle == lineStyleBeforeDeletingPoint || lineStyle == lineStyleAfterDeletingPoint {
+                        return true
+                    } else {
+                        return false
+                    }
+                })
+                
+                // Create new route fragment into gap
+                layoutRoute(from: route.points[indexOfDeletingPoint - 1], to: route.points[indexOfDeletingPoint + 1], completionHandler: {
+                    self.setUIStatus(.routeMapping)
+                })
+                
+            }
+            
+        }
+        
+        route.delete(routePoint: routePoint)
+    }
+    
+    private func setMapCameraAt(coordinates: [CLLocationCoordinate2D]) {
+        switch coordinates.count {
+        case 0:
+            return
+            
+        case 1:
+            mapView.setCenter(coordinates[0], animated: true)
+            break
+            
+        default: // > 1
+            // TODO: Implement
+            //mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: , ne: ), edgePadding: )
+            break
+        }
+    }
+    
+    private func setMapCameraAt(shape: MGLShape) {
+        // TODO: Implement
     }
 }
 
@@ -307,7 +466,7 @@ extension MapBoxViewController: MapRouteDelegate {
     }
     
     func mapRoute(didDeleted routePoint: RoutePoint) {
-        route.delete(routePoint: routePoint)
+        deleteRoutePointWithRouteCorrection(routePoint: routePoint)
     }
 }
 

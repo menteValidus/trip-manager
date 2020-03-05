@@ -97,6 +97,16 @@ class RouteDataModel {
         })
     }
     
+    func getIndex(of routePoint: RoutePoint) -> Int? {
+        for (index, point) in points.enumerated() {
+            if routePoint.id == point.id {
+                return index
+            }
+        }
+        
+        return nil
+    }
+    
     func createRoutePointWithoutAppending() -> RoutePoint {
         let point = RoutePoint()
         point.title = "Route point #\(nextRoutePointNumber)"
