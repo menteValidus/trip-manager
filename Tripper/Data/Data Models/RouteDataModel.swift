@@ -9,35 +9,80 @@
 import Foundation
 
 class RouteDataModel {
-    private(set) var points: [RoutePoint]
-    
-    private(set) var length = 0.0
     private let routePointGateway = CoreDataRoutePointDAO()
+
+    private(set) var points: [RoutePoint]
+//    var inRoadList: [InRoad] = []
     
-    var subroutes: [Subroute] {
-        var subroutes = [Subroute]()
-        for index in 0..<points.count {
-            let point = points[index]
-            
-            subroutes.append(Staying(title: point.title ?? "Staying #\(index)", minutes: point.residenceTimeInMinutes!))
-            subroutes.append(InRoad(minutes: point.timeToGetToNextPointInMinutes!))
+    var totalLengthInMeters: Int {
+        var length = 0
+        for point in points {
+            length += point.distanceToNextPointInMeters ?? 0
         }
-        return subroutes
+        return length
     }
+    
+    var totalTimeInMinutes: Int {
+        var minutes = 0
+        
+        for point in points {
+            minutes += point.residenceTimeInMinutes ?? 0
+            minutes += point.timeToNextPointInMinutes ?? 0
+        }
+        
+        return minutes
+    }
+        
+//    private var _subroutes: [Subroute]?
+//    var subroutes: [Subroute] {
+//        guard let subroutes = _subroutes else {
+//            if points.isEmpty {
+//                _subroutes = []
+//                return _subroutes!
+//            } else {
+//                _subroutes = [Subroute]()
+//                let firstPoint = points[0]
+//                var residenceTimeInSeconds = 0
+//                if let arrivalDate = firstPoint.arrivalDate, let departureDate = firstPoint.departureDate {
+//                    residenceTimeInSeconds = Int(arrivalDate.timeIntervalSince(departureDate))
+//                }
+//
+//                _subroutes!.append(Staying(title: firstPoint.title ?? "Staying #1", minutes: residenceTimeInSeconds))
+//                for index in 1..<points.count {
+//                    _subroutes!.append(inRoadList[index - 1])
+//
+//                    let point = points[index]
+//                    var residenceTimeInSeconds = 0
+//                    if let arrivalDate = point.arrivalDate, let departureDate = point.departureDate {
+//                        residenceTimeInSeconds = Int(arrivalDate.timeIntervalSince(departureDate))
+//                    }
+//                    _subroutes!.append(Staying(title: point.title ?? "Staying #\(index + 1)", minutes: residenceTimeInSeconds))
+//                }
+//
+//                return _subroutes!
+//            }
+//
+//
+//        }
+//
+//        return subroutes
+//    }
+    
+    
     
     private var nextRoutePointNumber: Int {
         return points.count + 1
     }
     
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours, etc.
-    var countSubroutes: Int {
-        if points.count > 0 {
-            // This formula calculate overall number of route points and roads.
-            return points.count * 2 - 1
-        } else {
-            return 0
-        }
-    }
+//    var countSubroutes: Int {
+//        if points.count > 0 {
+//            // This formula calculate overall number of route points and roads.
+//            return points.count * 2 - 1
+//        } else {
+//            return 0
+//        }
+//    }
     
     init() {
         points = routePointGateway.fetchAll()
@@ -78,18 +123,6 @@ class RouteDataModel {
     }
     
     // MARK: - Helper Methods
-    
-    func getSubroute(at index: Int) -> Subroute {
-        // We divide index by 2 to conform index of route point in points array.
-        let i = index / 2
-        let point = points[i]
-        
-        if index % 2 == 0 {
-            return Staying(title: point.title ?? "Staying #\(i)", minutes: point.residenceTimeInMinutes!)
-        } else {
-            return InRoad(minutes: point.timeToGetToNextPointInMinutes!)
-        }
-    }
     
     func findRoutePointBy(id: String) -> RoutePoint? {
         return points.first(where: { routePoint in

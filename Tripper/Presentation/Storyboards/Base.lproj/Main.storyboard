@@ -18,22 +18,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-8K-ctK" customClass="MGLMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rOr-U2-Mk9">
-                                        <rect key="frame" x="128" y="571" width="119" height="36"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                        <state key="normal" title="Create route"/>
-                                        <connections>
-                                            <action selector="createRoute:" destination="4Cc-Fh-swH" eventType="touchUpInside" id="fDU-gH-hlf"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="rOr-U2-Mk9" secondAttribute="bottom" constant="16" id="0r2-h9-CRR"/>
-                                    <constraint firstAttribute="trailing" secondItem="rOr-U2-Mk9" secondAttribute="trailing" constant="128" id="bZl-s3-XGH"/>
-                                    <constraint firstItem="rOr-U2-Mk9" firstAttribute="leading" secondItem="xLl-8K-ctK" secondAttribute="leading" constant="128" id="uJr-NM-sbu"/>
-                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showsUserLocation" value="YES"/>
@@ -80,8 +65,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="clearAllItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
-                        <outlet property="createRouteButton" destination="rOr-U2-Mk9" id="b9S-dB-QGf"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="gX8-yR-d53"/>
+                        <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="v57-14-cOn"/>
+                        <outlet property="routeLengthView" destination="XLC-aH-rfK" id="lCq-mf-mMU"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                         <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="fOZ-Fm-641"/>
                     </connections>

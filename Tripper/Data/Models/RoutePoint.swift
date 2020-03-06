@@ -18,13 +18,23 @@ class RoutePoint {
     var latitude: Double = 0
     var longitude: Double = 0
     
+    // Nullable in case it's the start of trip.
     var arrivalDate: Date?
+    // Nullable in case it's the end of trip.
     var departureDate: Date?
     
+    var residenceTimeInMinutes: Int? {
+        if let departureDate = departureDate, let arrivalDate = arrivalDate {
+            return Int(departureDate.timeIntervalSince(arrivalDate)) / 60
+        } else {
+            return nil
+        }
+    }
+    
     // Nullable in case it's the end of trip.
-    var timeToGetToNextPointInMinutes: Int? = 60
+    var timeToNextPointInMinutes: Int?
     // Nullable in case it's the start of trip.
-    var residenceTimeInMinutes: Int? = 120
+    var distanceToNextPointInMeters: Int?
     
     private let idGenerator = NSUUID()
     

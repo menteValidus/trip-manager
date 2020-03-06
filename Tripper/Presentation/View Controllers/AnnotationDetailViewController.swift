@@ -54,7 +54,6 @@ class AnnotationDetailViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func editPoint(_ sender: UIButton) {
-        
         dismiss(animated: true, completion: { [weak self] in
             guard let self = self else { return }
             self.delegate.mapRoute(performEditFor: self.routePoint)

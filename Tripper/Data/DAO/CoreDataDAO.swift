@@ -33,14 +33,16 @@ class CoreDataRoutePointDAO: RoutePointDAO {
                 static let name = "RoutePointEntity"
                 
                 struct KeyPathNames {
-                    static let ID = "id"
-                    static let Longitude = "longitude"
-                    static let Latitude = "latitude"
-                    static let TimeInMinutes = "timeInMinutes"
-                    static let Title = "title"
-                    static let Subtitle = "subtitle"
+                    static let id = "id"
+                    static let longitude = "longitude"
+                    static let latitude = "latitude"
+                    static let orderNumber = "orderNumber"
+                    static let title = "title"
+                    static let subtitle = "subtitle"
                     static let arrivalDate = "arrivalDate"
                     static let departureDate = "departureDate"
+                    static let distanceToNextPointInMeters = "distanceToNextPointInMeters"
+                    static let timeToNextPointInSeconds = "timeToNextPointInSeconds"
                 }
             }
         }
@@ -135,23 +137,21 @@ class CoreDataRoutePointDAO: RoutePointDAO {
         let point = RoutePoint(id: entity.id!, orderNumber: Int(entity.orderNumber), longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
         point.arrivalDate = entity.arrivalDate
         point.departureDate = entity.departureDate
+        point.timeToNextPointInMinutes = Int(entity.timeToNextPointInSeconds / 60)
+        point.distanceToNextPointInMeters = Int(entity.distanceToNextPointInMeters)
         return point
     }
     
     private func configure(entity: RoutePointEntity, with routePoint: RoutePoint) {
-        entity.setValue(routePoint.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.ID)
-        entity.setValue(routePoint.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Longitude)
-        entity.setValue(routePoint.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Latitude)
-        entity.setValue(routePoint.residenceTimeInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.TimeInMinutes)
-        entity.setValue(routePoint.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Title)
-        entity.setValue(routePoint.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.Subtitle)
+        entity.setValue(routePoint.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.id)
+        entity.setValue(routePoint.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.longitude)
+        entity.setValue(routePoint.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.latitude)
+        entity.setValue(routePoint.orderNumber, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber)
+        entity.setValue(routePoint.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.title)
+        entity.setValue(routePoint.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
         entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
-//        return entity
+        entity.setValue(routePoint.timeToNextPointInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.timeToNextPointInSeconds)
+        entity.setValue(routePoint.distanceToNextPointInMeters, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.distanceToNextPointInMeters)
     }
-//
-//    private func convertRoutePointToEntity(_ routePoint: RoutePoint) -> RoutePointEntity {
-//        let entity = RoutePointEntity(context: managedObjectContext)
-//
-//    }
 }

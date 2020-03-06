@@ -17,4 +17,9 @@ class Staying: Subroute {
         self.title = title
         timeInMinutes = minutes
     }
+    
+    init(title: String, seconds: Int) {
+        self.title = title
+        timeInMinutes = seconds / 60
+    }
 }
