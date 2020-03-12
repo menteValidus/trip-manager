@@ -23,16 +23,41 @@ class RoutePoint {
     // Nullable in case it's the end of trip.
     var departureDate: Date?
     
-    var residenceTimeInMinutes: Int? {
+    var residenceTimeInSeconds: Int? {
         if let departureDate = departureDate, let arrivalDate = arrivalDate {
-            return Int(departureDate.timeIntervalSince(arrivalDate)) / 60
+            return Int(departureDate.timeIntervalSince(arrivalDate))
         } else {
             return nil
         }
     }
     
+    var residenceTimeInMinutes: Int? {
+        if let time = residenceTimeInSeconds {
+            return time / 60
+        } else {
+            return nil
+        }
+    }
+    
+    var timeToNextPointInMinutes: Int? {
+        get {
+            if let time = timeToNextPointInSeconds {
+                return time / 60
+            } else {
+                return nil
+            }
+        }
+        set {
+            if let time = newValue {
+                timeToNextPointInSeconds = time * 60
+            } else {
+                timeToNextPointInSeconds = newValue
+            }
+        }
+    }
+    
     // Nullable in case it's the end of trip.
-    var timeToNextPointInMinutes: Int?
+    var timeToNextPointInSeconds: Int?
     // Nullable in case it's the start of trip.
     var distanceToNextPointInMeters: Int?
     

@@ -42,11 +42,15 @@ class AnnotationDetailViewController: UIViewController {
         titleLabel.text = routePoint.title ?? ""
         descriptionTextView.text = routePoint.subtitle ?? ""
         
-        if let arrivalDate = routePoint.arrivalDate, let departureDate = routePoint.departureDate {
+        if let arrivalDate = routePoint.arrivalDate {
             arrivalDateLabel.text = dateFormatter.string(from: arrivalDate)
-            departureDateLabel.text = dateFormatter.string(from: departureDate)
         } else {
             arrivalDateLabel.text = "(None)"
+        }
+        
+        if let departureDate = routePoint.departureDate {
+            departureDateLabel.text = dateFormatter.string(from: departureDate)
+        } else {
             departureDateLabel.text = "(None)"
         }
     }

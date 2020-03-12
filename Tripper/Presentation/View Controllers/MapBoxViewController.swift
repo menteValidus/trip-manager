@@ -34,8 +34,9 @@ protocol RoutePointEditDelegate: class {
 
 class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapView: MGLMapView!
-    @IBOutlet weak var routeLengthView: UIView!
+    @IBOutlet weak var routeEstimationView: UIView!
     @IBOutlet weak var routeLengthLabel: UILabel!
+    @IBOutlet weak var routeTimeLabel: UILabel!
     @IBOutlet weak var clearAllItem: UIBarButtonItem!
     
     var locationManager = CLLocationManager()
@@ -68,12 +69,15 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         static let showRoute = "ShowRoute"
         /** You should assign RoutePoint object as sender to this segue. */
         static let showAnnotationEdit = "ShowAnnotationEdit"
+        static let showRouteList = "ShowRouteList"
     }
     
     // MARK: - View's Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        routeEstimationView.layer.cornerRadius = 16
         
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -155,13 +159,18 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             presentingController.delegate = self
             presentingController.routePoint = (sender as! RoutePoint)
             
+        case SeguesIdentifiers.showRouteList:
+            let presentingController = segue.destination as! RouteListViewController
+            
+            presentingController.subroutes = route.subroutes
+            
         default:
             break
         }
     }
     
     // MARK: - UI
-    
+
     private func setUIStatus(_ newStatus: MapViewStatus) {
         status = newStatus
         configureUIAppearance()
@@ -171,7 +180,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         switch status {
         case .start:
-            self.routeLengthView.isHidden = true
+            self.routeEstimationView.isHidden = true
             self.clearAllItem.isEnabled = false
             
         case .pinning:
@@ -182,10 +191,17 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             
         case .routeMapping:
             hideSpinner()
-            routeLengthView.isHidden = false
-            let time = route.totalTimeInMinutes
+            
+            routeEstimationView.isHidden = false
+            let timeInMin = route.totalTimeInMinutes
             let length = route.totalLengthInMeters
-            routeLengthLabel.text = time < 60 ? "\(length) m" : "\(time / 60) h \(time % 60) min"
+            
+            let lengthText = length < 1000 ? "\(length) m" : "\(length / 1000) km \(length % 1000) m"
+            routeLengthLabel.text = lengthText
+            
+            let timeText = timeInMin < 60 ? "\(timeInMin) min" : "\(timeInMin / 60) h \(timeInMin % 60) min"
+            routeTimeLabel.text = timeText
+            
         }
     }
     
@@ -195,7 +211,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
      */
     private func createRoute() {
         remainingRouteSegmentsToCalculate = route.points.count - 1
-        
+                // TODO: Odd one
         let lastIndex = route.points.count - 1
         for i in 0..<lastIndex {
             let identifier = route.points[i].id + route.points[i + 1].id
@@ -250,7 +266,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
     
     // MARK: - Actions
     
-    @objc @IBAction func handleMapLongPress(sender: UILongPressGestureRecognizer) {
+    @objc func handleMapLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else {
             return
         }
@@ -273,8 +289,13 @@ extension MapBoxViewController: MGLMapViewDelegate {
                         completionHandler: { time, distance in
                             
                 let firstPointInRouteFragment = self.route.points[indexOfPreviousPoint]
-                firstPointInRouteFragment.timeToNextPointInMinutes = time
+                firstPointInRouteFragment.timeToNextPointInSeconds = time
                 firstPointInRouteFragment.distanceToNextPointInMeters = distance
+                         
+                // Update departure date of new point according on time to get there.
+                let lastPointInRouteFragment = self.route.points[indexOfCreatedRoutePoint]
+                let timeIntervalBetweenPoints = TimeInterval(integerLiteral: Int64((firstPointInRouteFragment.timeToNextPointInSeconds ?? 0)))
+                lastPointInRouteFragment.arrivalDate = firstPointInRouteFragment.departureDate?.addingTimeInterval(timeIntervalBetweenPoints)
                 self.route.update(routePoint: firstPointInRouteFragment)
                             
                 self.setUIStatus(.routeMapping)
@@ -297,13 +318,29 @@ extension MapBoxViewController: MGLMapViewDelegate {
         mapView.addAnnotation(annotation)
     }
     
-    private func centerAt(location coordinate: CLLocationCoordinate2D) {
-        let zoomLevel = 5.0
+    private func centerAt(location coordinate: CLLocationCoordinate2D, at zoomLevel: Double = 5.0) {
         mapView.setCenter(coordinate, zoomLevel: zoomLevel, animated: true)
     }
     
+    private func createRoute(from source: RoutePoint, to destination: RoutePoint) {
+        layoutRoute(from: source, to: destination, completionHandler: { time, distance in
+            
+            source.timeToNextPointInSeconds = time
+            source.distanceToNextPointInMeters = distance
+            
+            // Update departure date of new point according on time to get there.
+            
+            let timeIntervalBetweenPoints = TimeInterval(integerLiteral: Int64((source.timeToNextPointInSeconds ?? 0)))
+            destination.arrivalDate = source.departureDate?.addingTimeInterval(timeIntervalBetweenPoints)
+            self.route.update(routePoint: source)
+            self.route.update(routePoint: destination)
+                        
+            self.setUIStatus(.routeMapping)
+        })
+    }
+    
     /**
-     Arguments of completion hander are:
+     Arguments of completion handler are:
      1. Expected time to get to next route point.
      2. Distance between two route points.
      */
@@ -323,7 +360,6 @@ extension MapBoxViewController: MGLMapViewDelegate {
         let destinationWaypoint = Waypoint(coordinate: destination, coordinateAccuracy: -1, name: "Finish")
         
         let options = NavigationRouteOptions(waypoints: [sourceWaypoint, destinationWaypoint], profileIdentifier: .automobileAvoidingTraffic)
-        
         Directions.shared.calculate(options, completionHandler: { (_, routes, _) in
             drawHandler(routes?.first)
         })
@@ -358,13 +394,15 @@ extension MapBoxViewController: MGLMapViewDelegate {
             }
         }
         
-        if route.isProperForRouteCreation() {
-            guard let indexOfDeletingPoint = route.getIndex(of: routePoint) else { return }
+        guard let indexOfDeletedPoint = route.getIndex(of: routePoint) else { return }
+        route.delete(routePoint: routePoint)
+        
+        if !route.points.isEmpty {
             
-            switch indexOfDeletingPoint {
+            switch indexOfDeletedPoint {
             case 0:
-                let indexOfOverlayAfterDeletingPoint = indexOfDeletingPoint
-                // Remove overlay lines after deleting point.
+                let indexOfOverlayAfterDeletingPoint = indexOfDeletedPoint
+                // Remove overlay line after deleting point.
                 let shapeSourceAfterDeletingPoint = shapeSources[indexOfOverlayAfterDeletingPoint]
                 mapView.style?.removeSource(shapeSourceAfterDeletingPoint)
                 
@@ -374,8 +412,10 @@ extension MapBoxViewController: MGLMapViewDelegate {
                 shapeSources.remove(at: indexOfOverlayAfterDeletingPoint)
                 shapeLineStyles.remove(at: indexOfOverlayAfterDeletingPoint)
                 
-            case route.points.count - 1: // Last index
-                let indexOfOverlayBeforeDeletingPoint = indexOfDeletingPoint - 1
+                self.setUIStatus(.routeMapping)
+                
+            case route.points.count: // Last index. It's not (...count - 1) because point is already deleted from array.
+                let indexOfOverlayBeforeDeletingPoint = indexOfDeletedPoint - 1
                 // Remove overlay lines before deleting point.
                 let shapeSourceBeforeDeletingPoint = shapeSources[indexOfOverlayBeforeDeletingPoint]
                 mapView.style?.removeSource(shapeSourceBeforeDeletingPoint)
@@ -386,15 +426,17 @@ extension MapBoxViewController: MGLMapViewDelegate {
                 shapeSources.remove(at: indexOfOverlayBeforeDeletingPoint)
                 shapeLineStyles.remove(at: indexOfOverlayBeforeDeletingPoint)
                 
+                self.setUIStatus(.routeMapping)
+                
             default:
-                let indexOfOverlayBeforeDeletingPoint = indexOfDeletingPoint - 1
+                let indexOfOverlayBeforeDeletingPoint = indexOfDeletedPoint - 1
                 // Remove overlay lines before deleting point.
                 let shapeSourceBeforeDeletingPoint = shapeSources[indexOfOverlayBeforeDeletingPoint]
                 mapView.style?.removeSource(shapeSourceBeforeDeletingPoint)
                 let lineStyleBeforeDeletingPoint = shapeLineStyles[indexOfOverlayBeforeDeletingPoint]
                 mapView.style?.removeLayer(lineStyleBeforeDeletingPoint)
                 
-                let indexOfOverlayAfterDeletingPoint = indexOfDeletingPoint
+                let indexOfOverlayAfterDeletingPoint = indexOfDeletedPoint
                 // Remove overlay lines after deleting point.
                 let shapeSourceAfterDeletingPoint = shapeSources[indexOfOverlayAfterDeletingPoint]
                 mapView.style?.removeSource(shapeSourceAfterDeletingPoint)
@@ -417,16 +459,15 @@ extension MapBoxViewController: MGLMapViewDelegate {
                     }
                 })
                 
+                let sourceRoutePoint = route.points[indexOfDeletedPoint - 1]
+                let newDestinationRoutePoint = route.points[indexOfDeletedPoint]
+                
                 // Create new route fragment into gap
-                layoutRoute(from: route.points[indexOfDeletingPoint - 1], to: route.points[indexOfDeletingPoint + 1], completionHandler: {_,_ in
-                    self.setUIStatus(.routeMapping)
-                })
+                createRoute(from: sourceRoutePoint, to: newDestinationRoutePoint)
                 
             }
             
         }
-        
-        route.delete(routePoint: routePoint)
     }
     
     private func setMapCameraAt(coordinates: [CLLocationCoordinate2D]) {

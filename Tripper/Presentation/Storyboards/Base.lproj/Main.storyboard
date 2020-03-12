@@ -27,7 +27,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLC-aH-rfK">
-                                <rect key="frame" x="147" y="54" width="81.5" height="61"/>
+                                <rect key="frame" x="147" y="54" width="81.5" height="86"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tq2-Fz-S8N">
                                         <rect key="frame" x="12" y="20" width="57.5" height="21"/>
@@ -35,13 +35,22 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 min" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zke-0f-ISY">
+                                        <rect key="frame" x="12" y="45" width="57.5" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Zke-0f-ISY" secondAttribute="bottom" constant="20" id="GYo-Vm-RYj"/>
                                     <constraint firstAttribute="trailing" secondItem="tq2-Fz-S8N" secondAttribute="trailing" constant="12" id="Iky-PZ-UMz"/>
-                                    <constraint firstAttribute="bottom" secondItem="tq2-Fz-S8N" secondAttribute="bottom" constant="20" id="bVd-YV-cQb"/>
                                     <constraint firstItem="tq2-Fz-S8N" firstAttribute="leading" secondItem="XLC-aH-rfK" secondAttribute="leading" constant="12" id="dDh-A4-1mH"/>
+                                    <constraint firstItem="Zke-0f-ISY" firstAttribute="top" secondItem="tq2-Fz-S8N" secondAttribute="bottom" constant="4" id="dqa-dJ-v4Q"/>
+                                    <constraint firstItem="Zke-0f-ISY" firstAttribute="leading" secondItem="XLC-aH-rfK" secondAttribute="leading" constant="12" id="kGv-cH-UEL"/>
                                     <constraint firstItem="tq2-Fz-S8N" firstAttribute="top" secondItem="XLC-aH-rfK" secondAttribute="top" constant="20" id="kuZ-Fc-I6V"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zke-0f-ISY" secondAttribute="trailing" constant="12" id="zGp-p4-zrX"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -62,12 +71,18 @@
                                 <action selector="clearAll:" destination="4Cc-Fh-swH" id="mgv-dk-BgA"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Route" id="3YU-Yf-sPd">
+                            <connections>
+                                <segue destination="OXZ-HK-1RU" kind="show" identifier="ShowRouteList" id="FzE-9f-Hug"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="clearAllItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="gX8-yR-d53"/>
+                        <outlet property="routeEstimationView" destination="XLC-aH-rfK" id="CDi-ft-Oc0"/>
                         <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="v57-14-cOn"/>
-                        <outlet property="routeLengthView" destination="XLC-aH-rfK" id="lCq-mf-mMU"/>
+                        <outlet property="routeTimeLabel" destination="Zke-0f-ISY" id="JvY-F6-FCr"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                         <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="fOZ-Fm-641"/>
                     </connections>
@@ -180,7 +195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3h-z7-obX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1102" y="137"/>
+            <point key="canvasLocation" x="1102" y="191"/>
         </scene>
         <!--Edit-->
         <scene sceneID="Zyu-tu-Wmh">
@@ -406,7 +421,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnI-ZB-Iz4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1942" y="136"/>
+            <point key="canvasLocation" x="1942" y="191"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b1d-eY-cWo">

@@ -12,7 +12,6 @@ class RouteDataModel {
     private let routePointGateway = CoreDataRoutePointDAO()
 
     private(set) var points: [RoutePoint]
-//    var inRoadList: [InRoad] = []
     
     var totalLengthInMeters: Int {
         var length = 0
@@ -34,39 +33,22 @@ class RouteDataModel {
     }
         
 //    private var _subroutes: [Subroute]?
-//    var subroutes: [Subroute] {
-//        guard let subroutes = _subroutes else {
-//            if points.isEmpty {
-//                _subroutes = []
-//                return _subroutes!
-//            } else {
-//                _subroutes = [Subroute]()
-//                let firstPoint = points[0]
-//                var residenceTimeInSeconds = 0
-//                if let arrivalDate = firstPoint.arrivalDate, let departureDate = firstPoint.departureDate {
-//                    residenceTimeInSeconds = Int(arrivalDate.timeIntervalSince(departureDate))
-//                }
-//
-//                _subroutes!.append(Staying(title: firstPoint.title ?? "Staying #1", minutes: residenceTimeInSeconds))
-//                for index in 1..<points.count {
-//                    _subroutes!.append(inRoadList[index - 1])
-//
-//                    let point = points[index]
-//                    var residenceTimeInSeconds = 0
-//                    if let arrivalDate = point.arrivalDate, let departureDate = point.departureDate {
-//                        residenceTimeInSeconds = Int(arrivalDate.timeIntervalSince(departureDate))
-//                    }
-//                    _subroutes!.append(Staying(title: point.title ?? "Staying #\(index + 1)", minutes: residenceTimeInSeconds))
-//                }
-//
-//                return _subroutes!
-//            }
-//
-//
-//        }
-//
-//        return subroutes
-//    }
+    var subroutes: [Subroute] {
+        switch countSubroutes {
+        case 0:
+            return []
+        case 1:
+            let routePoint = points[0]
+            let stayingPoint = Staying(title: routePoint.title ?? "Staying #1", seconds: routePoint.timeToNextPointInSeconds ?? 0)
+            return [stayingPoint]
+        default:
+            var subroutes = [Subroute]()
+            for subrouteIndex in 0..<countSubroutes {
+                subroutes.append(getSubroute(at: subrouteIndex))
+            }
+            return subroutes
+        }
+    }
     
     
     
@@ -75,17 +57,27 @@ class RouteDataModel {
     }
     
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours, etc.
-//    var countSubroutes: Int {
-//        if points.count > 0 {
-//            // This formula calculate overall number of route points and roads.
-//            return points.count * 2 - 1
-//        } else {
-//            return 0
-//        }
-//    }
+    var countSubroutes: Int {
+        switch points.count {
+        case 0:
+            return 0
+        case 1:
+            return 1
+        default:
+            // This formula calculate overall number of route points and roads.
+            return points.count * 2 - 1
+        }
+    }
     
     init() {
-        points = routePointGateway.fetchAll()
+        let fetchedPoints = routePointGateway.fetchAll()
+        points = fetchedPoints.sorted(by: { el1, el2 in
+            if (el1.orderNumber < el2.orderNumber) {
+                return true
+            } else {
+                return false
+            }
+        })
     }
     
     // MARK: - DB Communication Methods
@@ -138,6 +130,18 @@ class RouteDataModel {
         }
         
         return nil
+    }
+    
+    func getSubroute(at index: Int) -> Subroute {
+        // We divide index by 2 to conform index of route point in points array.
+        let i = index / 2
+        let point = points[i]
+        
+        if index % 2 == 0 {
+            return Staying(title: point.title ?? "Staying #\(i)", minutes: point.residenceTimeInMinutes ?? 0)
+        } else {
+            return InRoad(minutes: point.timeToNextPointInMinutes ?? 0, metres: point.distanceToNextPointInMeters!)
+        }
     }
     
     func createRoutePointWithoutAppending() -> RoutePoint {
