@@ -10,6 +10,7 @@ import Foundation
 
 class RouteDataModel {
     private let routePointGateway = CoreDataRoutePointDAO()
+    private let routeCreator: MapBoxRouteCreator
 
     private(set) var points: [RoutePoint]
     
@@ -31,8 +32,7 @@ class RouteDataModel {
         
         return minutes
     }
-        
-//    private var _subroutes: [Subroute]?
+    
     var subroutes: [Subroute] {
         switch countSubroutes {
         case 0:
@@ -49,8 +49,6 @@ class RouteDataModel {
             return subroutes
         }
     }
-    
-    
     
     private var nextRoutePointNumber: Int {
         return points.count + 1
@@ -78,6 +76,13 @@ class RouteDataModel {
                 return false
             }
         })
+        
+        var coordinatesDictionary: CoordinatesDictionary = Dictionary()
+        for point in points {
+            coordinatesDictionary[point.id] = point.coordinate
+        }
+        
+        routeCreator = MapBoxRouteCreator(coordinates: coordinatesDictionary)
     }
     
     // MARK: - DB Communication Methods
@@ -112,6 +117,22 @@ class RouteDataModel {
     func deleteAll() {
         points.removeAll()
         routePointGateway.deleteAll()
+    }
+    
+    // MARK: - Route mapping
+    
+    /**
+     Arguments of completion handler are:
+     1. Expected time to get to next route point.
+     2. Distance between two route points.
+     */
+    func layout(from source: RoutePoint, to destination: RoutePoint, completionHandler: @escaping (RouteInformation) -> Void) {
+        
+        routeCreator.calculateRoute(from: source.coordinate, to: destination.coordinate, drawHandler: { route in
+            if let route = route, let shape = route.shape {
+                completionHandler(RouteInformation(coordinates: shape.coordinates, timeInSeconds: Int(route.expectedTravelTime), distanceInMeters: Int(route.distance)))
+            }
+        })
     }
     
     // MARK: - Helper Methods

@@ -218,7 +218,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             let sourceCoord = route.points[i].coordinate
             let destinationCoord = route.points[i + 1].coordinate
             calculateRoute(from: sourceCoord, to: destinationCoord, drawHandler: { route in
-                self.drawRoute(route: route!, identifier: identifier)
+                self.drawRoute(routeCoordinates: route!.shape!.coordinates, identifier: identifier)
                 self.remainingRouteSegmentsToCalculate -= 1
                 
                 // Assign time and distance of the route to the source route point.
@@ -285,12 +285,12 @@ extension MapBoxViewController: MGLMapViewDelegate {
             let indexOfCreatedRoutePoint = route.points.count - 1
             let indexOfPreviousPoint = indexOfCreatedRoutePoint - 1
             
-            layoutRoute(from: route.points[indexOfPreviousPoint], to: route.points[indexOfCreatedRoutePoint],
-                        completionHandler: { time, distance in
+            route.layout(from: route.points[indexOfPreviousPoint], to: route.points[indexOfCreatedRoutePoint],
+                        completionHandler: { routeInformation in
                             
                 let firstPointInRouteFragment = self.route.points[indexOfPreviousPoint]
-                firstPointInRouteFragment.timeToNextPointInSeconds = time
-                firstPointInRouteFragment.distanceToNextPointInMeters = distance
+                            firstPointInRouteFragment.timeToNextPointInSeconds = routeInformation.travelTimeInSeconds
+                            firstPointInRouteFragment.distanceToNextPointInMeters = routeInformation.travelDistanceInMeters
                          
                 // Update departure date of new point according on time to get there.
                 let lastPointInRouteFragment = self.route.points[indexOfCreatedRoutePoint]
@@ -323,10 +323,11 @@ extension MapBoxViewController: MGLMapViewDelegate {
     }
     
     private func createRoute(from source: RoutePoint, to destination: RoutePoint) {
-        layoutRoute(from: source, to: destination, completionHandler: { time, distance in
-            
-            source.timeToNextPointInSeconds = time
-            source.distanceToNextPointInMeters = distance
+        self.setUIStatus(.routing)
+        route.layout(from: source, to: destination, completionHandler: { routeInformation in
+            self.drawRoute(routeCoordinates: routeInformation.coordinates, identifier: source.id + destination.id)
+            source.timeToNextPointInSeconds = routeInformation.travelTimeInSeconds
+            source.distanceToNextPointInMeters = routeInformation.travelDistanceInMeters
             
             // Update departure date of new point according on time to get there.
             
@@ -339,20 +340,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
         })
     }
     
-    /**
-     Arguments of completion handler are:
-     1. Expected time to get to next route point.
-     2. Distance between two route points.
-     */
-    private func layoutRoute(from source: RoutePoint, to destination: RoutePoint, completionHandler: @escaping (Int, Int) -> Void) {
-        self.setUIStatus(.routing)
-        calculateRoute(from: source.coordinate, to: destination.coordinate, drawHandler: { route in
-            if let route = route {
-                self.drawRoute(route: route, identifier: source.id + destination.id)
-                completionHandler(Int(route.expectedTravelTime), Int(route.distance))
-            }
-        })
-    }
+    
     
     private func calculateRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, drawHandler: @escaping (Route?) -> Void) {
         // Coordinate accuracy is the maximum distance away from the waypoint that the route may still be considered viable, measured in meters. Negative values indicate that a indefinite number of meters away from the route and still be considered viable.
@@ -365,10 +353,9 @@ extension MapBoxViewController: MGLMapViewDelegate {
         })
     }
     
-    private func drawRoute(route: Route, identifier: String) {
-        guard let shape = route.shape, shape.coordinates.count > 0 else { return }
+    private func drawRoute(routeCoordinates: [CLLocationCoordinate2D], identifier: String) {
+        guard routeCoordinates.count > 0 else { return }
         
-        let routeCoordinates = shape.coordinates
         let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
         
         let source = MGLShapeSource(identifier: identifier, features: [polyline], options: nil)
