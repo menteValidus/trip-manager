@@ -151,6 +151,28 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    private func showDetail(of routePoint: RoutePoint) {
+        let height = view.frame.height
+        let width  = view.frame.width
+        let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
+        
+        guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? AnnotationDetailViewController else { return }
+        
+        detailVC.routePoint = routePoint
+        
+        self.addChild(detailVC)
+        self.view.addSubview(detailVC.view)
+        detailVC.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+        detailVC.didMove(toParent: self)
+        
+        let yCoordinate = view.frame.height * 0.75
+        UIView.animate(withDuration: 0.3) {
+            detailVC.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+        }
+        
+        detailVC.delegate = self
+    }
+    
     // MARK: - UI
 
     private func setUIStatus(_ newStatus: MapViewStatus) {
@@ -211,7 +233,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
         print("*** Selected annotation")
         let id = annotationsID[annotation as! MGLPointAnnotation]!
         let selectedRoutePoint = route.findRoutePointBy(id: id)
-        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationDetail, sender: selectedRoutePoint)
+        showDetail(of: selectedRoutePoint!)
         mapView.deselectAnnotation(annotation, animated: false)
     }
     
