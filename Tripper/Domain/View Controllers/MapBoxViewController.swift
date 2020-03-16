@@ -41,6 +41,9 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()
     
+    private var lineSources = [MGLShapeSource]()
+    private var lineStyles = [MGLLineStyleLayer]()
+    
     var route: RouteController!
     private var status = MapViewStatus.start
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
@@ -330,16 +333,12 @@ extension MapBoxViewController: RouteControllerDelegate {
             }
         }
         
-        if let sources = mapView.style?.sources {
-            for source in sources {
-                mapView.style?.removeSource(source)
-            }
+        for source in lineSources {
+            mapView.style?.removeSource(source)
         }
         
-        if let layers = mapView.style?.layers {
-            for layer in layers {
-                mapView.style?.removeLayer(layer)
-            }
+        for style in lineStyles {
+            mapView.style?.removeLayer(style)
         }
         
     }
@@ -369,6 +368,8 @@ extension MapBoxViewController: RouteControllerDelegate {
         lineStyle.lineWidth = NSExpression(forConstantValue: 3)
         
         mapView.style?.addSource(source)
+        lineSources.append(source)
         mapView.style?.addLayer(lineStyle)
+        lineStyles.append(lineStyle)
     }
 }
