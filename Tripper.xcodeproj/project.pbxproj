@@ -15,7 +15,7 @@
 		0B042A7123E2E1B600E9136F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B042A7023E2E1B600E9136F /* MapKit.framework */; };
 		0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7223E2EFFF00E9136F /* RoutePoint.swift */; };
 		0B042A7623E3001B00E9136F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7523E3001B00E9136F /* Util.swift */; };
-		0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7723E836B300E9136F /* RouteDataModel.swift */; };
+		0B042A7823E836B300E9136F /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7723E836B300E9136F /* RouteController.swift */; };
 		0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7C23E85EE900E9136F /* RouteListViewController.swift */; };
 		0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A8623E98DBA00E9136F /* RoadCell.swift */; };
 		0B042A8A23E990FA00E9136F /* RoadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A8923E990FA00E9136F /* RoadCell.xib */; };
@@ -25,7 +25,6 @@
 		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
 		0B05D4B72409286F006E344A /* AnnotationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */; };
-		0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */; };
 		0B6BB0E5240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */; };
 		0B6BB0E9240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */; };
 		0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */; };
@@ -38,6 +37,7 @@
 		0BD662F4241A457A0034B1D6 /* MapBoxRouteCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */; };
 		0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */; };
 		0BD662FC241A65500034B1D6 /* RouteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteInformation.swift */; };
+		0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +50,7 @@
 		0B042A7023E2E1B600E9136F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0B042A7223E2EFFF00E9136F /* RoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
 		0B042A7523E3001B00E9136F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		0B042A7723E836B300E9136F /* RouteDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDataModel.swift; sourceTree = "<group>"; };
+		0B042A7723E836B300E9136F /* RouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteController.swift; sourceTree = "<group>"; };
 		0B042A7C23E85EE900E9136F /* RouteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListViewController.swift; sourceTree = "<group>"; };
 		0B042A8623E98DBA00E9136F /* RoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadCell.swift; sourceTree = "<group>"; };
 		0B042A8923E990FA00E9136F /* RoadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoadCell.xib; sourceTree = "<group>"; };
@@ -60,7 +60,6 @@
 		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
 		0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationEditViewController.swift; sourceTree = "<group>"; };
-		0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerViewController.swift; sourceTree = "<group>"; };
 		0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointDetailsModalTransitioningDelegate.swift; sourceTree = "<group>"; };
 		0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointDetailsModalPresentationController.swift; sourceTree = "<group>"; };
 		0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreation.swift; sourceTree = "<group>"; };
 		0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCreationProtocol.swift; sourceTree = "<group>"; };
 		0BD662FB241A65500034B1D6 /* RouteInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInformation.swift; sourceTree = "<group>"; };
+		0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteControllerDelegate.swift; sourceTree = "<group>"; };
 		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
 		BB186E5885882F91480E9807 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
@@ -141,7 +141,6 @@
 				0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */,
 				0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */,
 				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
-				0B66BFFC23F57B08000CF975 /* TimePickerViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -159,6 +158,8 @@
 		0B042A8223E98CA200E9136F /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A8523E98D7D00E9136F /* Table Cells */,
+				0B042A7B23E85EBF00E9136F /* View Controllers */,
 				0BD662F2241A45600034B1D6 /* Util */,
 				0B6BB0E7240E64850002D1DB /* Presentation Controllers */,
 				0B6BB0E3240E617D0002D1DB /* Transitioning */,
@@ -171,10 +172,8 @@
 		0B042A8323E98CB000E9136F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A8523E98D7D00E9136F /* Table Cells */,
 				0B042A8823E990DE00E9136F /* xib */,
 				0B042A8423E98CC800E9136F /* Storyboards */,
-				0B042A7B23E85EBF00E9136F /* View Controllers */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -254,7 +253,8 @@
 		0B6CD84723ED7903006DCDDC /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A7723E836B300E9136F /* RouteDataModel.swift */,
+				0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */,
+				0B042A7723E836B300E9136F /* RouteController.swift */,
 				0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */,
 			);
 			path = "Data Models";
@@ -458,7 +458,6 @@
 			files = (
 				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
 				0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */,
-				0B66BFFD23F57B08000CF975 /* TimePickerViewController.swift in Sources */,
 				0B6BB0E5240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift in Sources */,
 				0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */,
 				0B042A8D23E9931500E9136F /* RoutePointCell.swift in Sources */,
@@ -476,8 +475,9 @@
 				0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */,
 				0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
+				0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */,
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
-				0B042A7823E836B300E9136F /* RouteDataModel.swift in Sources */,
+				0B042A7823E836B300E9136F /* RouteController.swift in Sources */,
 				0BD662FC241A65500034B1D6 /* RouteInformation.swift in Sources */,
 				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,
 			);

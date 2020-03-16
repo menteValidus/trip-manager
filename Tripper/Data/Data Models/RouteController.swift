@@ -1,5 +1,5 @@
 //
-//  RouteDataModel.swift
+//  RouteController.swift
 //  Tripper
 //
 //  Created by Denis Cherniy on 03.02.2020.
@@ -7,12 +7,24 @@
 //
 
 import Foundation
+import CoreLocation
 
-class RouteDataModel {
+class RouteController {
+    var routeControllerDelegate: RouteControllerDelegate
+    
     private let routePointGateway = CoreDataRoutePointDAO()
     private let routeCreator: MapBoxRouteCreator
 
     private(set) var points: [RoutePoint]
+    private var remainingRouteSegmentsToCalculate = 0
+    
+    var isProperForRouteCreation: Bool {
+        return points.count > 1
+    }
+    
+    private var isNotCalculating: Bool {
+        return remainingRouteSegmentsToCalculate == 0
+    }
     
     var totalLengthInMeters: Int {
         var length = 0
@@ -67,7 +79,9 @@ class RouteDataModel {
         }
     }
     
-    init() {
+    init(delegate routeControllerDelegate: RouteControllerDelegate) {
+        self.routeControllerDelegate = routeControllerDelegate
+        
         let fetchedPoints = routePointGateway.fetchAll()
         points = fetchedPoints.sorted(by: { el1, el2 in
             if (el1.orderNumber < el2.orderNumber) {
@@ -83,6 +97,8 @@ class RouteDataModel {
         }
         
         routeCreator = MapBoxRouteCreator(coordinates: coordinatesDictionary)
+        
+        recreateRoute()
     }
     
     // MARK: - DB Communication Methods
@@ -104,9 +120,12 @@ class RouteDataModel {
     }
     
     func delete(routePoint: RoutePoint) {
+        var indexOfDeletingRoutePoint: Int? = nil
+        
         for (index, point) in points.enumerated() {
             if point.id == routePoint.id {
-                points.remove(at: index)
+                indexOfDeletingRoutePoint = index
+                handleRouteFixing(withRemovingRPAt: indexOfDeletingRoutePoint!)
                 break
             }
         }
@@ -117,22 +136,73 @@ class RouteDataModel {
     func deleteAll() {
         points.removeAll()
         routePointGateway.deleteAll()
+        
+        routeControllerDelegate.routeControllerCleared()
     }
     
     // MARK: - Route mapping
+    
+    private func recreateRoute() {
+        guard isProperForRouteCreation else { return }
+        
+        for index in 0..<(points.count - 1) {
+            createRouteFragment(from: points[index], to: points[index + 1])
+        }
+    }
     
     /**
      Arguments of completion handler are:
      1. Expected time to get to next route point.
      2. Distance between two route points.
      */
-    func layout(from source: RoutePoint, to destination: RoutePoint, completionHandler: @escaping (RouteInformation) -> Void) {
+    private func createRouteFragment(from source: RoutePoint, to destination: RoutePoint) {
+        remainingRouteSegmentsToCalculate += 1
+        routeControllerDelegate.routeControllerIsStartedRouting()
         
         routeCreator.calculateRoute(from: source.coordinate, to: destination.coordinate, drawHandler: { route in
             if let route = route, let shape = route.shape {
-                completionHandler(RouteInformation(coordinates: shape.coordinates, timeInSeconds: Int(route.expectedTravelTime), distanceInMeters: Int(route.distance)))
+                let routeFragmentId = source.id + destination.id
+                let createdRouteFragment = RouteFragment(identifier: routeFragmentId, coordinates: shape.coordinates, timeInSeconds: Int(route.expectedTravelTime), distanceInMeters: Int(route.distance))
+                
+                self.routeControllerDelegate.routeController(didCalculated: createdRouteFragment)
+                self.remainingRouteSegmentsToCalculate -= 1
+                
+                if self.isNotCalculating {
+                    self.routeControllerDelegate.routeControllerIsFinishedRouting()
+                }
             }
         })
+    }
+    
+    private func handleRouteFixing(withRemovingRPAt index: Int) {
+        guard isProperForRouteCreation else {
+            points.remove(at: index)
+            return
+        }
+        
+        switch index {
+        case 0: // First point
+            let identifier = points[index].id + points[index + 1].id
+            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            
+        case points.count - 1: // Last point
+            let identifier = points[index - 1].id + points[index].id
+            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            
+        default: // Other points in middle of route.
+            let indexOfPreviousRP = index - 1
+            var identifier = points[indexOfPreviousRP].id + points[index].id
+            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            
+            let indexOfNextRP = index + 1
+            identifier = points[index].id + points[indexOfNextRP].id
+            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            
+            createRouteFragment(from: points[indexOfPreviousRP], to: points[indexOfNextRP])
+            
+        }
+        
+        points.remove(at: index)
     }
     
     // MARK: - Helper Methods
@@ -165,18 +235,22 @@ class RouteDataModel {
         }
     }
     
-    func createRoutePointWithoutAppending() -> RoutePoint {
+    func createNextRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePoint {
         let point = RoutePoint()
+        point.coordinate = coordinate
         point.title = "Route point #\(nextRoutePointNumber)"
+        add(point: point)
+        
+        if isProperForRouteCreation {
+            let indexOfCreatedPoint = points.count - 1
+            createRouteFragment(from: points[indexOfCreatedPoint - 1], to: points[indexOfCreatedPoint])
+        }
+        
         return point
     }
     
     func isNotEmpty() -> Bool {
         return points.count != 0
-    }
-    
-    func isProperForRouteCreation() -> Bool {
-        return points.count > 1
     }
     
 }

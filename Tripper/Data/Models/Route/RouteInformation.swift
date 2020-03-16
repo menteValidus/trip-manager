@@ -1,5 +1,5 @@
 //
-//  RouteInformation.swift
+//  RouteFragment.swift
 //  Tripper
 //
 //  Created by Denis Cherniy on 12.03.2020.
@@ -9,18 +9,14 @@
 import Foundation
 import CoreLocation
 
-class RouteInformation {
+class RouteFragment {
+    var identifier: String
     var coordinates: [CLLocationCoordinate2D]
     var travelTimeInSeconds: Int
     var travelDistanceInMeters: Int
     
-    init() {
-        coordinates = []
-        travelTimeInSeconds = 0
-        travelDistanceInMeters = 0
-    }
-    
-    init(coordinates: [CLLocationCoordinate2D], timeInSeconds: Int, distanceInMeters: Int) {
+    init(identifier: String, coordinates: [CLLocationCoordinate2D], timeInSeconds: Int, distanceInMeters: Int) {
+        self.identifier = identifier
         self.coordinates = coordinates
         travelTimeInSeconds = timeInSeconds
         travelDistanceInMeters = distanceInMeters

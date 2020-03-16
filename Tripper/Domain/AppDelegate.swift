@@ -12,18 +12,8 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    var dataModel = RouteDataModel()
-    
-    private struct APIKeys {
-        static let GMaps = "AIzaSyA53BgLa8gZcYkfXYaZvt4qBPU5wnZPY0Y"
-    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if let navigationController = window!.rootViewController as? UINavigationController {
-            let controller = navigationController.viewControllers[0] as! MapBoxViewController
-            controller.route = dataModel
-        }
-        
         return true
     }
     // MARK: UISceneSession Lifecycle
