@@ -48,7 +48,9 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     private var status = MapViewStatus.start
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     
-    private var detailsTransitioningDelegate: RoutePointDetailsModalTransitioningDelegate!
+    private var detailViewController: AnnotationDetailViewController!
+    
+//    private var detailsTransitioningDelegate: RoutePointDetailsModalTransitioningDelegate!
     
     private lazy var dimmingView = { () -> UIView in
         let dimmingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
@@ -125,14 +127,14 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-        case SeguesIdentifiers.showAnnotationDetail:
-            let presentingController = segue.destination as! AnnotationDetailViewController
-            presentingController.delegate = self
-            presentingController.routePoint = (sender as! RoutePoint)
+//        case SeguesIdentifiers.showAnnotationDetail:
+//            let presentingController = segue.destination as! AnnotationDetailViewController
+//            presentingController.delegate = self
+//            presentingController.routePoint = (sender as! RoutePoint)
             
-            detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
-            presentingController.modalPresentationStyle = .custom
-            presentingController.transitioningDelegate = detailsTransitioningDelegate
+//            detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
+//            presentingController.modalPresentationStyle = .custom
+//            presentingController.transitioningDelegate = detailsTransitioningDelegate
             
             
         case SeguesIdentifiers.showAnnotationEdit:
@@ -158,19 +160,33 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? AnnotationDetailViewController else { return }
         
-        detailVC.routePoint = routePoint
         
-        self.addChild(detailVC)
-        self.view.addSubview(detailVC.view)
-        detailVC.view.frame = CGRect(x: 0, y: height, width: width, height: height)
-        detailVC.didMove(toParent: self)
+        detailViewController = detailVC
+        detailViewController.routePoint = routePoint
+        
+        self.view.addSubview(detailViewController.view)
+        detailViewController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+        detailViewController.didMove(toParent: self)
         
         let yCoordinate = view.frame.height * 0.75
         UIView.animate(withDuration: 0.3) {
-            detailVC.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+            self.detailViewController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
         }
         
-        detailVC.delegate = self
+        detailViewController.delegate = self
+        
+    }
+    
+    private func dismissDetail() {
+        detailViewController.removeFromParent()
+        UIView.animate(withDuration: 0.3, animations: {
+            self.detailViewController.view.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.detailViewController.view.frame.height)
+        }, completion: { [weak self] _ in
+            if let self = self {
+                self.detailViewController.view.removeFromSuperview()
+            }
+        })
+        
     }
     
     // MARK: - UI
@@ -301,10 +317,12 @@ extension MapBoxViewController: MapRouteDelegate {
     // MARK: - Map Route Delegate
     
     func mapRoute(performEditFor routePoint: RoutePoint) {
+        dismissDetail()
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: routePoint)
     }
     
     func mapRoute(didDeleted routePoint: RoutePoint) {
+        dismissDetail()
         for (annotation, id) in annotationsID {
             if id == routePoint.id {
                 mapView.removeAnnotation(annotation)

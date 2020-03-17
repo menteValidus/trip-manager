@@ -231,7 +231,7 @@ class RouteController {
         if index % 2 == 0 {
             return Staying(title: point.title ?? "Staying #\(i)", minutes: point.residenceTimeInMinutes ?? 0)
         } else {
-            return InRoad(minutes: point.timeToNextPointInMinutes ?? 0, metres: point.distanceToNextPointInMeters!)
+            return InRoad(minutes: point.timeToNextPointInMinutes ?? 0, metres: point.distanceToNextPointInMeters ?? 0)
         }
     }
     

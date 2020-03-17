@@ -11,6 +11,7 @@ import UIKit
 class RouteListViewController: UITableViewController {
     
     var subroutes: [Subroute]!
+    private var expandedStayingCellRowNumber: Int?
     
     struct TableView {
         struct CellIdentifiers {
@@ -40,6 +41,17 @@ class RouteListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row % 2 == 0 {
+            tableView.beginUpdates()
+            
+            if expandedStayingCellRowNumber == indexPath.row {
+                expandedStayingCellRowNumber = nil
+            } else {
+                expandedStayingCellRowNumber = indexPath.row
+            }
+            
+            tableView.endUpdates()
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -66,6 +78,16 @@ class RouteListViewController: UITableViewController {
             return UITableViewCell()
         }
         
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        if let expandedRowNumber = expandedStayingCellRowNumber {
+            if indexPath.row == expandedStayingCellRowNumber {
+                return 88.0
+            }
+//        }
+        
+        return super.tableView(tableView, heightForRowAt: indexPath)
     }
 
 }

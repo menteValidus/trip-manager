@@ -32,13 +32,16 @@ class AnnotationDetailViewController: UIViewController {
       return formatter
     }()
     
-    struct SeguesIdentifiers {
-        static let showDatePicker = "ShowDatePicker"
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initUI()
+        initGestureRecognizers()
+    }
+    
+    // MARK: - Initializators
+    
+    private func initUI() {
         titleLabel.text = routePoint.title ?? ""
         descriptionTextView.text = routePoint.subtitle ?? ""
         
@@ -53,23 +56,25 @@ class AnnotationDetailViewController: UIViewController {
         } else {
             departureDateLabel.text = "(None)"
         }
-        
+    }
+    
+    private func initGestureRecognizers() {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(onPan(recognizer:)))
-        self.view.addGestureRecognizer(gesture)
+        view.addGestureRecognizer(gesture)
     }
 
     // MARK: - Actions
     
     @IBAction func editPoint(_ sender: UIButton) {
-        dismiss(animated: true, completion: { [weak self] in
-            guard let self = self else { return }
+//        dismiss(animated: true, completion: { [weak self] in
+//            guard let self = self else { return }
             self.delegate.mapRoute(performEditFor: self.routePoint)
-        })
+//        })
     }
     
     @IBAction func deletePoint(_ sender: UIButton) {
         delegate.mapRoute(didDeleted: routePoint)
-        dismiss(animated: true)
+//        dismiss(animated: true)
     }
     
     // MARK: - Gesture Actions
@@ -87,10 +92,12 @@ class AnnotationDetailViewController: UIViewController {
             recognizer.setTranslation(.zero, in: self.view)
             
         case .cancelled, .ended:
-            if view.frame.origin.y > view.frame.height / 2 {
-                toogleCard(multiplier: 0.75, toTop: false)
+            if view.frame.origin.y > view.frame.height * 2 / 3 {
+                toggleCard(multiplier: 0.75, toTop: false)
+            } else if view.frame.origin.y > view.frame.height * 1 / 3 {
+                toggleCard(multiplier: 0.25, toTop: true)
             } else {
-                toogleCard(multiplier: 0.25, toTop: true)
+                dismiss(animated: true, completion: nil)
             }
             
         default:
@@ -98,7 +105,7 @@ class AnnotationDetailViewController: UIViewController {
         }
     }
     
-    func toogleCard(multiplier: CGFloat, toTop: Bool) {
+    func toggleCard(multiplier: CGFloat, toTop: Bool) {
         UIView.animate(withDuration: 0.3) {
             let height = self.view.frame.height
             let width  = self.view.frame.width

@@ -84,7 +84,6 @@
                         <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="v57-14-cOn"/>
                         <outlet property="routeTimeLabel" destination="Zke-0f-ISY" id="JvY-F6-FCr"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
-                        <segue destination="Bjg-T4-fhS" kind="presentation" identifier="ShowAnnotationDetail" id="fOZ-Fm-641"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -96,7 +95,7 @@
             <objects>
                 <viewController storyboardIdentifier="DetailViewController" id="Bjg-T4-fhS" customClass="AnnotationDetailViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GGm-jG-eD2">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MHW-vQ-MbK">
@@ -195,7 +194,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3h-z7-obX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1102" y="191"/>
+            <point key="canvasLocation" x="1102" y="-1281"/>
         </scene>
         <!--Edit-->
         <scene sceneID="Zyu-tu-Wmh">
@@ -365,7 +364,7 @@
                     </tableViewCellContentView>
                 </tableViewCell>
             </objects>
-            <point key="canvasLocation" x="1943" y="-582"/>
+            <point key="canvasLocation" x="1942" y="-1281"/>
         </scene>
         <!--Route-->
         <scene sceneID="fPz-AV-oOg">
@@ -421,7 +420,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tnI-ZB-Iz4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1942" y="191"/>
+            <point key="canvasLocation" x="1942" y="-582"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b1d-eY-cWo">
