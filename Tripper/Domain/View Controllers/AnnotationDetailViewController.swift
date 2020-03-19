@@ -42,20 +42,7 @@ class AnnotationDetailViewController: UIViewController {
     // MARK: - Initializators
     
     private func initUI() {
-        titleLabel.text = routePoint.title ?? ""
-        descriptionTextView.text = routePoint.subtitle ?? ""
-        
-        if let arrivalDate = routePoint.arrivalDate {
-            arrivalDateLabel.text = dateFormatter.string(from: arrivalDate)
-        } else {
-            arrivalDateLabel.text = "(None)"
-        }
-        
-        if let departureDate = routePoint.departureDate {
-            departureDateLabel.text = dateFormatter.string(from: departureDate)
-        } else {
-            departureDateLabel.text = "(None)"
-        }
+        configureUI()
     }
     
     private func initGestureRecognizers() {
@@ -93,9 +80,9 @@ class AnnotationDetailViewController: UIViewController {
             
         case .cancelled, .ended:
             if view.frame.origin.y > view.frame.height * 2 / 3 {
-                toggleCard(multiplier: 0.75, toTop: false)
+                toggleView(screenCoverage: 0.75)
             } else if view.frame.origin.y > view.frame.height * 1 / 3 {
-                toggleCard(multiplier: 0.25, toTop: true)
+                toggleView(screenCoverage: 0.25)
             } else {
                 dismiss(animated: true, completion: nil)
             }
@@ -105,13 +92,31 @@ class AnnotationDetailViewController: UIViewController {
         }
     }
     
-    func toggleCard(multiplier: CGFloat, toTop: Bool) {
+    func toggleView(screenCoverage percent: CGFloat) {
         UIView.animate(withDuration: 0.3) {
             let height = self.view.frame.height
             let width  = self.view.frame.width
-            let yCoordinate = self.view.frame.height * multiplier
+            let yCoordinate = self.view.frame.height * percent
             print(Float(yCoordinate))
             self.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height)
+        }
+    }
+    
+    // MARK: - Helper Methods
+    func configureUI() {
+        titleLabel.text = routePoint.title ?? ""
+        descriptionTextView.text = routePoint.subtitle ?? ""
+        
+        if let arrivalDate = routePoint.arrivalDate {
+            arrivalDateLabel.text = dateFormatter.string(from: arrivalDate)
+        } else {
+            arrivalDateLabel.text = "(None)"
+        }
+        
+        if let departureDate = routePoint.departureDate {
+            departureDateLabel.text = dateFormatter.string(from: departureDate)
+        } else {
+            departureDateLabel.text = "(None)"
         }
     }
     

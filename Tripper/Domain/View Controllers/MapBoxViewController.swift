@@ -30,6 +30,7 @@ protocol MapRouteDelegate: class {
 
 protocol RoutePointEditDelegate: class {
     func route(pointEdited routePoint: RoutePoint)
+    func routePointCreationDidCancelled()
 }
 
 class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
@@ -48,7 +49,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     private var status = MapViewStatus.start
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     
-    private var detailViewController: AnnotationDetailViewController!
+    private var detailViewController: AnnotationDetailViewController? = nil
     
 //    private var detailsTransitioningDelegate: RoutePointDetailsModalTransitioningDelegate!
     
@@ -121,6 +122,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func clearAll(_ sender: Any) {
         route.deleteAll()
+        dismissDetail()
     }
     
     // MARK: - Navigation
@@ -158,35 +160,45 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         let width  = view.frame.width
         let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
         
-        guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? AnnotationDetailViewController else { return }
-        
-        
-        detailViewController = detailVC
-        detailViewController.routePoint = routePoint
-        
-        self.view.addSubview(detailViewController.view)
-        detailViewController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
-        detailViewController.didMove(toParent: self)
-        
-        let yCoordinate = view.frame.height * 0.75
-        UIView.animate(withDuration: 0.3) {
-            self.detailViewController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+        if let detailViewController = detailViewController {
+            detailViewController.routePoint = routePoint
+            detailViewController.configureUI()
+        } else {
+            guard let detailVC = storyboard?.instantiateViewController(withIdentifier: "DetailViewController") as? AnnotationDetailViewController else { return }
+            
+            
+            detailViewController = detailVC
+            if let detailViewController = detailViewController {
+                detailViewController.routePoint = routePoint
+                
+                self.view.addSubview(detailViewController.view)
+                detailViewController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+                detailViewController.didMove(toParent: self)
+                
+                let yCoordinate = view.frame.height * 0.75
+                UIView.animate(withDuration: 0.3) {
+                    detailViewController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+                }
+                
+                detailViewController.delegate = self
+            }
+            
         }
         
-        detailViewController.delegate = self
         
     }
     
     private func dismissDetail() {
-        detailViewController.removeFromParent()
-        UIView.animate(withDuration: 0.3, animations: {
-            self.detailViewController.view.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: self.detailViewController.view.frame.height)
-        }, completion: { [weak self] _ in
-            if let self = self {
-                self.detailViewController.view.removeFromSuperview()
-            }
-        })
+        if let detailViewController = detailViewController {
+            detailViewController.removeFromParent()
+            UIView.animate(withDuration: 0.3, animations: {
+                detailViewController.view.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.frame.width, height: detailViewController.view.frame.height)
+            }, completion: { _ in
+                detailViewController.view.removeFromSuperview()
+            })
+        }
         
+        detailViewController = nil
     }
     
     // MARK: - UI
@@ -213,14 +225,9 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             hideSpinner()
             
             routeEstimationView.isHidden = false
-            let timeInMin = route.totalTimeInMinutes
-            let length = route.totalLengthInMeters
             
-            let lengthText = length < 1000 ? "\(length) m" : "\(length / 1000) km \(length % 1000) m"
-            routeLengthLabel.text = lengthText
-            
-            let timeText = timeInMin < 60 ? "\(timeInMin) min" : "\(timeInMin / 60) h \(timeInMin % 60) min"
-            routeTimeLabel.text = timeText
+            routeLengthLabel.text = format(metres: route.totalLengthInMeters)
+            routeTimeLabel.text = format(minutes: route.totalTimeInMinutes)
             
         }
     }
@@ -323,11 +330,6 @@ extension MapBoxViewController: MapRouteDelegate {
     
     func mapRoute(didDeleted routePoint: RoutePoint) {
         dismissDetail()
-        for (annotation, id) in annotationsID {
-            if id == routePoint.id {
-                mapView.removeAnnotation(annotation)
-            }
-        }
         route.delete(routePoint: routePoint)
     }
 }
@@ -339,10 +341,22 @@ extension MapBoxViewController: RoutePointEditDelegate {
         route.update(routePoint: routePoint)
         print("*** Did edited: \(routePoint)")
     }
+    
+    func routePointCreationDidCancelled() {
+        <#code#>
+    }
 }
 
 extension MapBoxViewController: RouteControllerDelegate {
     // MARK: - Route Controller's Delegate
+    
+    func routeController(didDeleted routePoint: RoutePoint) {
+        for (annotation, id) in annotationsID {
+            if id == routePoint.id {
+                mapView.removeAnnotation(annotation)
+            }
+        }
+    }
     
     func routeController(didCalculated routeFragment: RouteFragment) {
         drawRoute(routeCoordinates: routeFragment.coordinates, identifier: routeFragment.identifier)
@@ -383,6 +397,10 @@ extension MapBoxViewController: RouteControllerDelegate {
         
     }
     
+    func routeControllerDidUpdated() {
+        setUIStatus(.routeMapping)
+    }
+    
     func routeControllerIsStartedRouting() {
         if status != .routing {
             setUIStatus(.routing)
@@ -391,6 +409,16 @@ extension MapBoxViewController: RouteControllerDelegate {
     
     func routeControllerIsFinishedRouting() {
         setUIStatus(.routeMapping)
+    }
+    
+    func routeControllerError(with routePoint: RoutePoint) {
+        setUIStatus(.routeMapping)
+        
+        let alert = UIAlertController(title: "Route Creation Error", message: "Route to this point can not be created!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+        
+        route.delete(routePoint: routePoint)
     }
     
     // MARK: - Helper Methods

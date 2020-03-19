@@ -39,7 +39,7 @@ class MapBoxRouteCreator: RouteCreator {
         let destinationWaypoint = Waypoint(coordinate: destination, coordinateAccuracy: -1, name: "Finish")
         
         let options = NavigationRouteOptions(waypoints: [sourceWaypoint, destinationWaypoint], profileIdentifier: .automobileAvoidingTraffic)
-        Directions.shared.calculate(options, completionHandler: { (_, routes, _) in
+        Directions.shared.calculate(options, completionHandler: { (_, routes, error) in
             drawHandler(routes?.first)
         })
     }

@@ -28,3 +28,24 @@ func throwAn(errorMessage: String) {
 func display(message: String) {
     print("*** \(message)")
 }
+
+func format(minutes: Int) -> String {
+    
+    if minutes % 60 == 0 {
+        return "\(minutes / 60) h"
+    } else if minutes < 60 {
+        return "\(minutes) min"
+    } else  {
+        return "\(minutes / 60) h \(minutes % 60) min"
+    }
+}
+
+func format(metres: Int) -> String {
+    if metres % 1000 == 0 {
+        return "\(metres / 1000) km"
+    } else if metres < 1000 {
+        return "\(metres) m"
+    } else {
+        return "\(metres / 1000) km \(metres % 1000) m"
+    }
+}

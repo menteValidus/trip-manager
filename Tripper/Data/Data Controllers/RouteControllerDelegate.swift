@@ -9,9 +9,12 @@
 import Foundation
 
 protocol RouteControllerDelegate {
+    func routeController(didDeleted routePoint: RoutePoint)
     func routeController(didCalculated routeFragment: RouteFragment)
     func routeController(identifierOfDeletedRouteFragment: String)
     func routeControllerCleared()
+    func routeControllerDidUpdated()
     func routeControllerIsStartedRouting()
     func routeControllerIsFinishedRouting()
+    func routeControllerError(with routePoint: RoutePoint)
 }

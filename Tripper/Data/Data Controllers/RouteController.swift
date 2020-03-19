@@ -51,7 +51,7 @@ class RouteController {
             return []
         case 1:
             let routePoint = points[0]
-            let stayingPoint = Staying(title: routePoint.title ?? "Staying #1", seconds: routePoint.timeToNextPointInSeconds ?? 0)
+            let stayingPoint = Staying.Factory.create(from: routePoint)
             return [stayingPoint]
         default:
             var subroutes = [Subroute]()
@@ -103,22 +103,10 @@ class RouteController {
     
     // MARK: - DB Communication Methods
     
-    func add(point: RoutePoint) {
+    private func add(point: RoutePoint) {
         points.append(point)
         routePointGateway.insert(point)
     }
-    
-    func update(routePoint: RoutePoint) {
-        for index in 0..<points.count {
-            if points[index].id == routePoint.id {
-                points[index] = routePoint
-                break
-            }
-        }
-        
-        routePointGateway.update(routePoint)
-    }
-    
     func delete(routePoint: RoutePoint) {
         var indexOfDeletingRoutePoint: Int? = nil
         
@@ -131,6 +119,7 @@ class RouteController {
         }
         
         routePointGateway.delete(routePoint)
+        routeControllerDelegate.routeController(didDeleted: routePoint)
     }
     
     func deleteAll() {
@@ -138,6 +127,77 @@ class RouteController {
         routePointGateway.deleteAll()
         
         routeControllerDelegate.routeControllerCleared()
+    }
+    
+    func update(routePoint: RoutePoint) {
+        for index in 0..<points.count {
+            if points[index].id == routePoint.id {
+                
+                updateWholeRouteDates(with: routePoint, at: index)
+                break
+            }
+        }
+        
+        routePointGateway.update(routePoint)
+        routeControllerDelegate.routeControllerDidUpdated()
+    }
+    
+    private func updateWholeRouteDates(with routePoint: RoutePoint, at index: Int) {
+        if isProperForRouteCreation {
+            switch index {
+            case points.count - 1: // Last item.
+                updateDateBefore(index: index, with: routePoint)
+                
+            case 0: // First item.
+                updateDateAfter(index: index, with: routePoint)
+                
+            default:
+                updateDateAfter(index: index, with: routePoint)
+                updateDateBefore(index: index, with: routePoint)
+                
+            }
+            
+        }
+    }
+    
+    // MARK: Update's Helper Methods
+
+    /**
+     Doesn't handle cases when accesed beyound the bounds of list.
+     */
+    private func updateDateAfter(index: Int, with newRoutePoint: RoutePoint) {
+        let oldValueOfRP = points[index]
+        
+        if oldValueOfRP.departureDate != newRoutePoint.departureDate {
+            let nextRP = points[index + 1]
+            if let arrivalDateOfNextRP = nextRP.arrivalDate {
+                let timeInterval = arrivalDateOfNextRP.timeIntervalSince(newRoutePoint.departureDate!)
+                newRoutePoint.timeToNextPointInSeconds = Int(timeInterval)
+            }else {
+                throwAn(errorMessage: "RouteController.updateWholeRouteDates: When the second point exists it should alreade have initialized arrivalDate.")
+            }
+        }
+        
+        points[index] = newRoutePoint
+    }
+    
+    /**
+    Doesn't handle cases when accesed beyound the bounds of list.
+    */
+    private func updateDateBefore(index: Int, with newRoutePoint: RoutePoint) {
+        let oldValueOfRP = points[index]
+        
+        if (oldValueOfRP.arrivalDate != newRoutePoint.arrivalDate) {
+            let previousRP = points[index - 1]
+            if let departureDateOfPreviousRP = previousRP.departureDate { // By this point all dates should be already initialized.
+                let timeInterval = newRoutePoint.arrivalDate!.timeIntervalSince(departureDateOfPreviousRP)
+                previousRP.timeToNextPointInSeconds = Int(timeInterval)
+            } else {
+                throwAn(errorMessage: "RouteController.updateWholeRouteDates: When the second point exists first point should alreade have initialized departureDate.")
+            }
+        }
+        
+        points[index] = newRoutePoint
     }
     
     // MARK: - Route mapping
@@ -162,7 +222,12 @@ class RouteController {
         routeCreator.calculateRoute(from: source.coordinate, to: destination.coordinate, drawHandler: { route in
             if let route = route, let shape = route.shape {
                 let routeFragmentId = source.id + destination.id
-                let createdRouteFragment = RouteFragment(identifier: routeFragmentId, coordinates: shape.coordinates, timeInSeconds: Int(route.expectedTravelTime), distanceInMeters: Int(route.distance))
+                source.timeToNextPointInSeconds = Int(route.expectedTravelTime)
+                source.distanceToNextPointInMeters = Int(route.distance)
+                
+                let createdRouteFragment = RouteFragment(identifier: routeFragmentId, coordinates: shape.coordinates, timeInSeconds: source.timeToNextPointInSeconds!, distanceInMeters: source.distanceToNextPointInMeters!)
+                
+                self.configureDates(for: destination, with: source, using: route.expectedTravelTime)
                 
                 self.routeControllerDelegate.routeController(didCalculated: createdRouteFragment)
                 self.remainingRouteSegmentsToCalculate -= 1
@@ -170,6 +235,8 @@ class RouteController {
                 if self.isNotCalculating {
                     self.routeControllerDelegate.routeControllerIsFinishedRouting()
                 }
+            } else {
+                self.routeControllerDelegate.routeControllerError(with: destination)
             }
         })
     }
@@ -229,9 +296,9 @@ class RouteController {
         let point = points[i]
         
         if index % 2 == 0 {
-            return Staying(title: point.title ?? "Staying #\(i)", minutes: point.residenceTimeInMinutes ?? 0)
-        } else {
-            return InRoad(minutes: point.timeToNextPointInMinutes ?? 0, metres: point.distanceToNextPointInMeters ?? 0)
+            return Staying.Factory.create(from: point)
+        } else {            
+            return InRoad.Factory.create(from: point)
         }
     }
     
@@ -251,6 +318,23 @@ class RouteController {
     
     func isNotEmpty() -> Bool {
         return points.count != 0
+    }
+    
+    private func configureDates(for routePoint: RoutePoint, with sourceRoutePoint: RoutePoint, using routeTimeLength: TimeInterval) {
+        if let sourceDepartureDate = sourceRoutePoint.departureDate {
+            routePoint.arrivalDate = sourceDepartureDate.addingTimeInterval(routeTimeLength)
+        } else {
+            if let sourceArrivalDate = sourceRoutePoint.arrivalDate {
+                // Now this branch never accessed. Because arrivalDate and departureDate are both nil until they simultaneously
+                // get their defaults. But in future logic of date assigning can be changed.
+                sourceRoutePoint.departureDate = sourceArrivalDate
+            } else {
+                sourceRoutePoint.arrivalDate = Date()
+                sourceRoutePoint.departureDate = Date()
+            }
+            
+            routePoint.arrivalDate = sourceRoutePoint.departureDate!.addingTimeInterval(routeTimeLength)
+        }
     }
     
 }

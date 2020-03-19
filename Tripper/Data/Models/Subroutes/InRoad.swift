@@ -14,15 +14,18 @@ class InRoad: Subroute {
     var timeInMinutes: Int
     var metres: Int
     
-    init(title: String = defaultTitle, minutes: Int, metres: Int) {
-        self.title = title
-        timeInMinutes = minutes
-        self.metres = metres
-    }
-    
     init(title: String = defaultTitle, seconds: Int, metres: Int) {
         self.title = title
         timeInMinutes = seconds / 60
         self.metres = metres
+    }
+    
+    // MARK: - Factory
+    
+    struct Factory {
+        static func create(from sourceRoutePoint: RoutePoint) -> InRoad {
+            return InRoad(title: "Road", seconds: sourceRoutePoint.timeToNextPointInSeconds ?? 0,
+                          metres: sourceRoutePoint.distanceToNextPointInMeters ?? 0)
+        }
     }
 }

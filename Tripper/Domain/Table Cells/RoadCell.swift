@@ -8,25 +8,14 @@
 
 import UIKit
 
-class RoadCell: UITableViewCell {
+class RoadCell: UITableViewCell, SubrouteCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
     
     // MARK: - Helper Methods
     
-    func configure(for inRoadSubroute: InRoad) {
-        titleLabel.text = inRoadSubroute.title
-        timeLabel.text = String(inRoadSubroute.timeInMinutes)
+    func configure(for subroute: Subroute) {
+        titleLabel.text = subroute.title
+        timeLabel.text = format(minutes: subroute.timeInMinutes)
     }
-
 }

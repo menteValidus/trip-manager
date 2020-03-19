@@ -22,8 +22,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Xi-nJ-cPb">
-                        <rect key="frame" x="307" y="10" width="52" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="173 km in 3 hours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Xi-nJ-cPb">
+                        <rect key="frame" x="238" y="14.5" width="121" height="18"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -31,12 +31,10 @@
                 </subviews>
                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.25" colorSpace="custom" customColorSpace="calibratedRGB"/>
                 <constraints>
-                    <constraint firstItem="4Xi-nJ-cPb" firstAttribute="top" secondItem="NyN-9I-XAC" secondAttribute="top" constant="10" id="96A-IW-K6W"/>
                     <constraint firstAttribute="trailing" secondItem="4Xi-nJ-cPb" secondAttribute="trailing" constant="16" id="VDF-51-jOd"/>
                     <constraint firstItem="K1y-fw-M3q" firstAttribute="top" secondItem="NyN-9I-XAC" secondAttribute="top" constant="10" id="ZQ5-E3-vAp"/>
                     <constraint firstItem="K1y-fw-M3q" firstAttribute="leading" secondItem="NyN-9I-XAC" secondAttribute="leading" constant="16" id="Zmn-FS-JJn"/>
-                    <constraint firstAttribute="bottom" secondItem="4Xi-nJ-cPb" secondAttribute="bottom" constant="10" id="aVn-s6-bG9"/>
-                    <constraint firstAttribute="bottom" secondItem="K1y-fw-M3q" secondAttribute="bottom" constant="10" id="r5g-ui-3eU"/>
+                    <constraint firstItem="4Xi-nJ-cPb" firstAttribute="firstBaseline" secondItem="K1y-fw-M3q" secondAttribute="firstBaseline" id="zbY-ND-15j"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -16,7 +16,7 @@ class RouteListViewController: UITableViewController {
     struct TableView {
         struct CellIdentifiers {
             static let roadCell = "RoadCell"
-            static let routePointCell = "RoutePointCell"
+            static let stayingCell = "StayingCell"
         }
     }
 
@@ -26,15 +26,11 @@ class RouteListViewController: UITableViewController {
         var cellNib = UINib(nibName: TableView.CellIdentifiers.roadCell, bundle: nil)
         tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.roadCell)
         
-        cellNib = UINib(nibName: TableView.CellIdentifiers.routePointCell, bundle: nil)
-        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.routePointCell)
+        cellNib = UINib(nibName: TableView.CellIdentifiers.stayingCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.stayingCell)
     }
 
     // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return subroutes.count
@@ -43,11 +39,14 @@ class RouteListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row % 2 == 0 {
             tableView.beginUpdates()
-            
+
+            let selectedCell = tableView.cellForRow(at: indexPath) as! StayingCell
             if expandedStayingCellRowNumber == indexPath.row {
                 expandedStayingCellRowNumber = nil
+                selectedCell.isExpanded = false
             } else {
                 expandedStayingCellRowNumber = indexPath.row
+                selectedCell.isExpanded = true
             }
             
             tableView.endUpdates()
@@ -67,10 +66,16 @@ class RouteListViewController: UITableViewController {
             return cell
             
         case is Staying:
-            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.routePointCell, for: indexPath) as! RoutePointCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.stayingCell, for: indexPath) as! StayingCell
             
             cell.configure(for: anotherSubroute as! Staying)
             
+//            if expandedStayingCellRowNumber == indexPath.row {
+//                cell.isExpanded = true
+//            } else if expandedStayingCellRowNumber != indexPath.row && cell.isExpanded {
+//                cell.isExpanded = false
+//            }
+//
             return cell
             
         default:
@@ -81,13 +86,16 @@ class RouteListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if let expandedRowNumber = expandedStayingCellRowNumber {
-            if indexPath.row == expandedStayingCellRowNumber {
-                return 88.0
+        if indexPath.row == expandedStayingCellRowNumber {
+            return 132.0
+        } else if indexPath.row % 2 == 0 {
+            if let cell = tableView.cellForRow(at: indexPath) as? StayingCell {
+                if cell.isExpanded {
+                    cell.isExpanded = false
+                }
             }
-//        }
+        }
         
         return super.tableView(tableView, heightForRowAt: indexPath)
     }
-
 }

@@ -26,8 +26,8 @@ class AnnotationEditViewController: UITableViewController {
     var routePoint: RoutePoint!
     
     private var state: AnnotationEditState = .normal
-    private var arrivalDate: Date?
-    private var departureDate: Date?
+    private var arrivalDate: Date!
+    private var departureDate: Date!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +38,7 @@ class AnnotationEditViewController: UITableViewController {
         descriptionTextView.delegate = self
         
         arrivalDate = routePoint.arrivalDate ?? Date()
-        departureDate = routePoint.departureDate ?? Date()
+        departureDate = routePoint.departureDate ?? arrivalDate
         
         updateDateLabel(in: state)
     }
@@ -46,12 +46,16 @@ class AnnotationEditViewController: UITableViewController {
     // MARK: - Actions
     
     @IBAction func save(_ sender: Any) {
-        routePoint.title = titleTextField.text!
-        routePoint.subtitle = descriptionTextView.text!
-        routePoint.arrivalDate = arrivalDate
-        routePoint.departureDate = departureDate
-        delegate.route(pointEdited: routePoint)
-        navigationController?.popViewController(animated: true)
+        if departureDate < arrivalDate {
+            alertWrongDates()
+        } else {
+            routePoint.title = titleTextField.text!
+            routePoint.subtitle = descriptionTextView.text!
+            routePoint.arrivalDate = arrivalDate
+            routePoint.departureDate = departureDate
+            delegate.route(pointEdited: routePoint)
+            navigationController?.popViewController(animated: true)
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -217,12 +221,12 @@ class AnnotationEditViewController: UITableViewController {
         case .arrivalDateEditing:
             indexPathDateRow = IndexPath(row: 0, section: 2)
             indexPathDatePicker = IndexPath(row: 1, section: 2)
-            dateToSet = arrivalDate ?? Date()
+            dateToSet = arrivalDate
             
         case .departureDateEditing:
             indexPathDateRow = IndexPath(row: 0, section: 3)
             indexPathDatePicker = IndexPath(row: 1, section: 3)
-            dateToSet = departureDate ?? Date()
+            dateToSet = departureDate
         }
         
         if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
@@ -272,16 +276,22 @@ class AnnotationEditViewController: UITableViewController {
         
         switch state {
         case .arrivalDateEditing:
-            arrivalDateLabel.text = formatter.string(from: arrivalDate!)
+            arrivalDateLabel.text = formatter.string(from: arrivalDate)
             
         case .departureDateEditing:
-            departureDateLabel.text = formatter.string(from: departureDate!)
+            departureDateLabel.text = formatter.string(from: departureDate)
             
         case .normal:
-            arrivalDateLabel.text = formatter.string(from: arrivalDate!)
-            departureDateLabel.text = formatter.string(from: departureDate!)
+            arrivalDateLabel.text = formatter.string(from: arrivalDate)
+            departureDateLabel.text = formatter.string(from: departureDate)
             
         }
+    }
+    
+    private func alertWrongDates() {
+        let alert = UIAlertController(title: "Date Mismatch", message: "Date of arrival can't be later than date of departure!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
     }
 
 }
