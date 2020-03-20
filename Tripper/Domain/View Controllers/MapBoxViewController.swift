@@ -30,7 +30,9 @@ protocol MapRouteDelegate: class {
 
 protocol RoutePointEditDelegate: class {
     func route(pointEdited routePoint: RoutePoint)
+    func route(pointCreated routePoint: RoutePoint)
     func routePointCreationDidCancelled()
+//    func routePointInstanceIsRequested() -> RoutePoint
 }
 
 class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
@@ -40,14 +42,16 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var routeTimeLabel: UILabel!
     @IBOutlet weak var clearAllItem: UIBarButtonItem!
     
-    var locationManager = CLLocationManager()
+    private var locationManager = CLLocationManager()
+//    private var longPressedCoordinateForAnnotation: CLLocationCoordinate2D? = nil
     
     private var lineSources = [MGLShapeSource]()
     private var lineStyles = [MGLLineStyleLayer]()
     
-    var route: RouteController!
+    private var routeController: RouteController!
     private var status = MapViewStatus.start
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
+    private var newCreatedRP: RoutePoint? = nil
     
     private var detailViewController: AnnotationDetailViewController? = nil
     
@@ -79,18 +83,18 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        route = RouteController(delegate: self)
+        routeController = RouteController(delegate: self)
         
         routeEstimationView.layer.cornerRadius = 16
         
         initMap()
         registerGestureRecognizers()
         
-        route.routeControllerDelegate = self
+        routeController.routeControllerDelegate = self
         
-        if route.isProperForRouteCreation {
-            setUIStatus(.routing)
-        }
+//        if routeController.isProperForRouteCreation {
+//            setUIStatus(.routing)
+//        }
         
     }
     
@@ -109,19 +113,19 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         mapView.delegate = self
         mapView.showsUserLocation = true
         
-        for routePoint in route.points {
+        for routePoint in routeController.points {
             setAnnotation(at: routePoint)
         }
         
-        if route.points.count != 0 {
-            centerAt(location: route.points[0].coordinate)
+        if routeController.points.count != 0 {
+            centerAt(location: routeController.points[0].coordinate)
         }
     }
     
     // MARK: - Actions
     
     @IBAction func clearAll(_ sender: Any) {
-        route.deleteAll()
+        routeController.deleteAll()
         dismissDetail()
     }
     
@@ -143,12 +147,17 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             let presentingController = segue.destination as! AnnotationEditViewController
             
             presentingController.delegate = self
-            presentingController.routePoint = (sender as! RoutePoint)
+            if let createdRoutePoint = newCreatedRP {
+                presentingController.routePoint = createdRoutePoint
+                presentingController.isEdit = false
+            } else {
+                presentingController.routePoint = (sender as! RoutePoint)
+            }
             
         case SeguesIdentifiers.showRouteList:
             let presentingController = segue.destination as! RouteListViewController
             
-            presentingController.subroutes = route.subroutes
+            presentingController.subroutes = routeController.subroutes
             
         default:
             break
@@ -226,8 +235,8 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             
             routeEstimationView.isHidden = false
             
-            routeLengthLabel.text = format(metres: route.totalLengthInMeters)
-            routeTimeLabel.text = format(minutes: route.totalTimeInMinutes)
+            routeLengthLabel.text = format(metres: routeController.totalLengthInMeters)
+            routeTimeLabel.text = format(minutes: routeController.totalTimeInMinutes)
             
         }
     }
@@ -255,7 +264,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
         print("*** Selected annotation")
         let id = annotationsID[annotation as! MGLPointAnnotation]!
-        let selectedRoutePoint = route.findRoutePointBy(id: id)
+        let selectedRoutePoint = routeController.findRoutePointBy(id: id)
         showDetail(of: selectedRoutePoint!)
         mapView.deselectAnnotation(annotation, animated: false)
     }
@@ -276,12 +285,13 @@ extension MapBoxViewController: MGLMapViewDelegate {
         
         print("*** Long pressed on the map.")
         
-        let newRoutePoint = route.createNextRoutePoint(at: coordinate)
-        if route.isProperForRouteCreation {
-            setUIStatus(.routing)
+//        longPressedCoordinateForAnnotation = coordinate
+        newCreatedRP = routeController.createNextRoutePoint(at: coordinate)
+        if !routeController.isProperForRouteCreation {
+            // TODO: Rebuild system of adding first point. Because some fields which will be added after edit won't be saved.
+            setAnnotation(at: newCreatedRP!)
         }
-        
-        setAnnotation(at: newRoutePoint)
+//        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
     }
     
     // MARK: - Helper Methods
@@ -330,7 +340,7 @@ extension MapBoxViewController: MapRouteDelegate {
     
     func mapRoute(didDeleted routePoint: RoutePoint) {
         dismissDetail()
-        route.delete(routePoint: routePoint)
+        routeController.delete(routePoint: routePoint)
     }
 }
 
@@ -338,12 +348,26 @@ extension MapBoxViewController: RoutePointEditDelegate {
     // MARK: - Route's Point Edit Delegate
     
     func route(pointEdited routePoint: RoutePoint) {
-        route.update(routePoint: routePoint)
+        routeController.update(routePoint: routePoint)
         print("*** Did edited: \(routePoint)")
     }
     
     func routePointCreationDidCancelled() {
-        <#code#>
+        if let newCreatedRoutePoint = newCreatedRP {
+            routeController.delete(routePoint: newCreatedRoutePoint)
+            
+            newCreatedRP = nil
+        }
+    }
+//
+//    func routePointInstanceIsRequested() -> RoutePoint {
+//        return routeController.getNextRoutePointInstance()
+//    }
+    
+    func route(pointCreated routePoint: RoutePoint) {
+        routeController.update(routePoint: routePoint)
+//        routeController.setNextRoutePoint(routePoint: routePoint)
+        setAnnotation(at: routePoint)
     }
 }
 
@@ -360,6 +384,9 @@ extension MapBoxViewController: RouteControllerDelegate {
     
     func routeController(didCalculated routeFragment: RouteFragment) {
         drawRoute(routeCoordinates: routeFragment.coordinates, identifier: routeFragment.identifier)
+        if let newCreatedPoint = newCreatedRP {
+            performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: newCreatedPoint)
+        }
     }
     
     func routeController(identifierOfDeletedRouteFragment: String) {
@@ -402,9 +429,9 @@ extension MapBoxViewController: RouteControllerDelegate {
     }
     
     func routeControllerIsStartedRouting() {
-        if status != .routing {
+//        if status != .routing {
             setUIStatus(.routing)
-        }
+//        }
     }
     
     func routeControllerIsFinishedRouting() {
@@ -418,7 +445,7 @@ extension MapBoxViewController: RouteControllerDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true)
         
-        route.delete(routePoint: routePoint)
+        routeController.delete(routePoint: routePoint)
     }
     
     // MARK: - Helper Methods

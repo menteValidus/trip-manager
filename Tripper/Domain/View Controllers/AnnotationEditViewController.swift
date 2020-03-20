@@ -24,6 +24,7 @@ class AnnotationEditViewController: UITableViewController {
     
     var delegate: RoutePointEditDelegate!
     var routePoint: RoutePoint!
+    var isEdit = false
     
     private var state: AnnotationEditState = .normal
     private var arrivalDate: Date!
@@ -32,10 +33,19 @@ class AnnotationEditViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        descriptionTextView.text = routePoint.subtitle ?? ""
-        titleTextField.text = routePoint.title ?? ""
-        titleTextField.delegate = self
-        descriptionTextView.delegate = self
+        if isEdit {
+//            isEdit = true
+            descriptionTextView.text = routePoint.subtitle ?? ""
+            titleTextField.text = routePoint.title ?? ""
+            titleTextField.delegate = self
+            descriptionTextView.delegate = self
+        } else {
+//            isEdit = false
+            descriptionTextView.text = routePoint.subtitle ?? ""
+            titleTextField.text = routePoint.title ?? ""
+            titleTextField.delegate = self
+            descriptionTextView.delegate = self
+        }
         
         arrivalDate = routePoint.arrivalDate ?? Date()
         departureDate = routePoint.departureDate ?? arrivalDate
@@ -49,16 +59,25 @@ class AnnotationEditViewController: UITableViewController {
         if departureDate < arrivalDate {
             alertWrongDates()
         } else {
-            routePoint.title = titleTextField.text!
-            routePoint.subtitle = descriptionTextView.text!
-            routePoint.arrivalDate = arrivalDate
-            routePoint.departureDate = departureDate
-            delegate.route(pointEdited: routePoint)
+            if isEdit {
+                routePoint.title = titleTextField.text!
+                routePoint.subtitle = descriptionTextView.text!
+                routePoint.arrivalDate = arrivalDate
+                routePoint.departureDate = departureDate
+                delegate.route(pointEdited: routePoint)
+            } else {
+                routePoint.title = titleTextField.text!
+                routePoint.subtitle = descriptionTextView.text!
+                routePoint.arrivalDate = arrivalDate
+                routePoint.departureDate = departureDate
+                delegate.route(pointCreated: routePoint)
+            }
             navigationController?.popViewController(animated: true)
         }
     }
     
     @IBAction func cancel(_ sender: Any) {
+        delegate.routePointCreationDidCancelled()
         navigationController?.popViewController(animated: true)
     }
 

@@ -29,15 +29,38 @@ func display(message: String) {
     print("*** \(message)")
 }
 
+let MINUTE = 1
+let MINUTES_IN_HOUR = 60 * MINUTE
+let MINUTES_IN_DAY = 24 * MINUTES_IN_HOUR
+
 func format(minutes: Int) -> String {
+    var formattedTime = ""
+    let days = minutes / MINUTES_IN_DAY
     
-    if minutes % 60 == 0 {
-        return "\(minutes / 60) h"
-    } else if minutes < 60 {
-        return "\(minutes) min"
-    } else  {
-        return "\(minutes / 60) h \(minutes % 60) min"
+    if days > 0 {
+        formattedTime.append("\(days) d")
     }
+    
+    var remainedMinutes = minutes % MINUTES_IN_DAY
+    let hours = remainedMinutes / MINUTES_IN_HOUR
+    
+    if hours > 0 {
+        if !formattedTime.isEmpty {
+            formattedTime.append(" ")
+        }
+        formattedTime.append("\(hours) h")
+    }
+    
+    remainedMinutes %= MINUTES_IN_HOUR
+    
+    if remainedMinutes > 0 {
+        if !formattedTime.isEmpty {
+            formattedTime.append(" ")
+        }
+        formattedTime.append("\(remainedMinutes) min")
+    }
+    
+    return formattedTime
 }
 
 func format(metres: Int) -> String {

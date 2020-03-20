@@ -23,6 +23,28 @@ class RoutePoint {
     // Nullable in case it's the end of trip.
     var departureDate: Date?
     
+    // Nullable in case it's the end of trip.
+    var timeToNextPointInSeconds: Int?
+    // Nullable in case it's the start of trip.
+    var distanceToNextPointInMeters: Int?
+    
+    private let idGenerator = NSUUID()
+    
+    struct Factory {
+        static func createNew(with id: String) -> RoutePoint {
+            let orderNumber = nextOrderNumber
+            let newRoutePoint = RoutePoint(id: id, orderNumber: orderNumber, longitude: 0, latitude: 0, title: "", subtitle: "")
+            newRoutePoint.title = "Route Point #\(orderNumber)"
+            return newRoutePoint
+        }
+    }
+    
+    static var nextOrderNumber: Int {
+        let orderNumber = UserDefaults.standard.integer(forKey: UserDefaultsKeys.lastAssignedOrderNumber) + 1
+        UserDefaults.standard.set(orderNumber, forKey: UserDefaultsKeys.lastAssignedOrderNumber)
+        return orderNumber
+    }
+    
     var residenceTimeInSeconds: Int? {
         if let departureDate = departureDate, let arrivalDate = arrivalDate {
             return Int(departureDate.timeIntervalSince(arrivalDate))
@@ -56,17 +78,6 @@ class RoutePoint {
         }
     }
     
-    // Nullable in case it's the end of trip.
-    var timeToNextPointInSeconds: Int?
-    // Nullable in case it's the start of trip.
-    var distanceToNextPointInMeters: Int?
-    
-    private let idGenerator = NSUUID()
-    
-    struct UserDefaultsKeys {
-        static let lastAssignedOrderNumber = "lastOrderNumber"
-    }
-    
     var coordinate: CLLocationCoordinate2D {
         get {
             return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
@@ -77,11 +88,14 @@ class RoutePoint {
         }
     }
     
+    struct UserDefaultsKeys {
+        static let lastAssignedOrderNumber = "lastOrderNumber"
+    }
+    
     init() {
         self.id = idGenerator.uuidString
-        let orderNumber = UserDefaults.standard.integer(forKey: UserDefaultsKeys.lastAssignedOrderNumber) + 1
-        self.orderNumber = orderNumber
-        UserDefaults.standard.set(orderNumber, forKey: UserDefaultsKeys.lastAssignedOrderNumber)
+        
+        self.orderNumber = RoutePoint.nextOrderNumber
         
         self.latitude = 0
         self.longitude = 0

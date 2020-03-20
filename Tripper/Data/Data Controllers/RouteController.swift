@@ -303,17 +303,25 @@ class RouteController {
     }
     
     func createNextRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePoint {
-        let point = RoutePoint()
-        point.coordinate = coordinate
-        point.title = "Route point #\(nextRoutePointNumber)"
-        add(point: point)
+        let newRoutePoint = getNextRoutePointInstance()
+        newRoutePoint.coordinate = coordinate
+        setNextRoutePoint(routePoint: newRoutePoint)
+        return newRoutePoint
+    }
+    
+    func getNextRoutePointInstance() -> RoutePoint {
+        let newRoutePoint = RoutePoint()
+        newRoutePoint.title = "Route point #\(nextRoutePointNumber)"
+        return newRoutePoint
+    }
+    
+    func setNextRoutePoint(routePoint: RoutePoint) {
+        add(point: routePoint)
         
         if isProperForRouteCreation {
             let indexOfCreatedPoint = points.count - 1
             createRouteFragment(from: points[indexOfCreatedPoint - 1], to: points[indexOfCreatedPoint])
         }
-        
-        return point
     }
     
     func isNotEmpty() -> Bool {
