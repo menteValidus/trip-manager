@@ -288,7 +288,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
 //        longPressedCoordinateForAnnotation = coordinate
         newCreatedRP = routeController.createNextRoutePoint(at: coordinate)
         if !routeController.isProperForRouteCreation {
-            // TODO: Rebuild system of adding first point. Because some fields which will be added after edit won't be saved.
+            // TODO: Rebuild system of adding first point. Because some fields which will be modified after AnnotationEdit won't be saved.
             setAnnotation(at: newCreatedRP!)
         }
 //        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
