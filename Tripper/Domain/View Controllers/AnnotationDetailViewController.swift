@@ -26,15 +26,15 @@ class AnnotationDetailViewController: UIViewController {
     private var date: Date = Date()
     
     private let dateFormatter: DateFormatter = {
-      let formatter = DateFormatter()
-      formatter.dateStyle = .medium
-      formatter.timeStyle = .short
-      return formatter
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initUI()
         initGestureRecognizers()
     }
@@ -53,15 +53,11 @@ class AnnotationDetailViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func editPoint(_ sender: UIButton) {
-//        dismiss(animated: true, completion: { [weak self] in
-//            guard let self = self else { return }
-            self.delegate.mapRoute(performEditFor: self.routePoint)
-//        })
+        self.delegate.mapRoute(performEditFor: self.routePoint)
     }
     
     @IBAction func deletePoint(_ sender: UIButton) {
         delegate.mapRoute(didDeleted: routePoint)
-//        dismiss(animated: true)
     }
     
     // MARK: - Gesture Actions

@@ -107,6 +107,7 @@ class RouteController {
         points.append(point)
         routePointGateway.insert(point)
     }
+    
     func delete(routePoint: RoutePoint) {
         var indexOfDeletingRoutePoint: Int? = nil
         
@@ -309,23 +310,49 @@ class RouteController {
         return newRoutePoint
     }
     
-    func getNextRoutePointInstance() -> RoutePoint {
+    private func getNextRoutePointInstance() -> RoutePoint {
         let newRoutePoint = RoutePoint()
         newRoutePoint.title = "Route point #\(nextRoutePointNumber)"
         return newRoutePoint
     }
     
-    func setNextRoutePoint(routePoint: RoutePoint) {
+    private func setNextRoutePoint(routePoint: RoutePoint) {
         add(point: routePoint)
         
         if isProperForRouteCreation {
             let indexOfCreatedPoint = points.count - 1
             createRouteFragment(from: points[indexOfCreatedPoint - 1], to: points[indexOfCreatedPoint])
+        } else {
+            
         }
     }
     
-    func isNotEmpty() -> Bool {
-        return points.count != 0
+    func leftLimitOf(_ routePoint: RoutePoint) -> Date? {
+        let index = getIndex(of: routePoint)
+        
+        if let index = index {
+            if isProperForRouteCreation {
+                if index != 0 {
+                    return points[index - 1].departureDate
+                }
+            }
+        }
+        
+        return nil
+    }
+    
+    func rightLimitOf(_ routePoint: RoutePoint) -> Date? {
+        let index = getIndex(of: routePoint)
+        
+        if let index = index {
+            if isProperForRouteCreation {
+                if index != points.count - 1 {
+                    return points[index + 1].arrivalDate
+                }
+            }
+        }
+        
+        return nil
     }
     
     private func configureDates(for routePoint: RoutePoint, with sourceRoutePoint: RoutePoint, using routeTimeLength: TimeInterval) {

@@ -27,28 +27,37 @@ class AnnotationEditViewController: UITableViewController {
     var isEdit = false
     
     private var state: AnnotationEditState = .normal
+    var leftDateLimit: Date?
+    var rightDateLimit: Date?
     private var arrivalDate: Date!
     private var departureDate: Date!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initUI()
+    }
+    
+    // MARK: - Initializators
+    
+    private func initUI() {
         if isEdit {
-//            isEdit = true
             descriptionTextView.text = routePoint.subtitle ?? ""
             titleTextField.text = routePoint.title ?? ""
             titleTextField.delegate = self
             descriptionTextView.delegate = self
         } else {
-//            isEdit = false
             descriptionTextView.text = routePoint.subtitle ?? ""
             titleTextField.text = routePoint.title ?? ""
             titleTextField.delegate = self
             descriptionTextView.delegate = self
         }
         
-        arrivalDate = routePoint.arrivalDate ?? Date()
-        departureDate = routePoint.departureDate ?? arrivalDate
+        let unpreparedArrivalDate = routePoint.arrivalDate ?? Date()
+        let unpreparedDepartureDate = routePoint.departureDate ?? unpreparedArrivalDate
+        
+        arrivalDate = Calendar.current.date(bySetting: .second, value: 0, of: unpreparedArrivalDate)!
+        departureDate = Calendar.current.date(bySetting: .second, value: 0, of: unpreparedDepartureDate)!
         
         updateDateLabel(in: state)
     }
@@ -59,17 +68,34 @@ class AnnotationEditViewController: UITableViewController {
         if departureDate < arrivalDate {
             alertWrongDates()
         } else {
-            if isEdit {
-                routePoint.title = titleTextField.text!
-                routePoint.subtitle = descriptionTextView.text!
+            
+            routePoint.title = titleTextField.text!
+            routePoint.subtitle = descriptionTextView.text!
+            if let leftLimit = leftDateLimit {
+                if arrivalDate > leftLimit {
+                    routePoint.arrivalDate = arrivalDate
+                } else {
+                    alertLimitsError(message: "Arrival date of current route point can't be before departure date of previous route point (\(leftLimit)).")
+                    return
+                }
+            } else {
                 routePoint.arrivalDate = arrivalDate
+            }
+            
+            if let rightLimit = rightDateLimit {
+                if departureDate < rightLimit {
+                    routePoint.arrivalDate = arrivalDate
+                } else {
+                    alertLimitsError(message: "Departure date of current route point can't be after arrival date of next route point (\(rightLimit)).")
+                    return
+                }
+            } else {
                 routePoint.departureDate = departureDate
+            }
+            
+            if isEdit {
                 delegate.route(pointEdited: routePoint)
             } else {
-                routePoint.title = titleTextField.text!
-                routePoint.subtitle = descriptionTextView.text!
-                routePoint.arrivalDate = arrivalDate
-                routePoint.departureDate = departureDate
                 delegate.route(pointCreated: routePoint)
             }
             navigationController?.popViewController(animated: true)
@@ -82,11 +108,14 @@ class AnnotationEditViewController: UITableViewController {
     }
 
     @IBAction func dataChanged(_ sender: UIDatePicker) {
+        // This date has zero seconds to better date comparing.
         switch state {
         case .arrivalDateEditing:
             arrivalDate = sender.date
+            
         case .departureDateEditing:
             departureDate = sender.date
+            
         default:
             return
         }
@@ -307,8 +336,16 @@ class AnnotationEditViewController: UITableViewController {
         }
     }
     
+    private func alertLimitsError(message: String) {
+        alert(with: "Date Mismatch", and: message)
+    }
+    
     private func alertWrongDates() {
-        let alert = UIAlertController(title: "Date Mismatch", message: "Date of arrival can't be later than date of departure!", preferredStyle: .alert)
+        alert(with: "Date Mismatch", and: "Date of arrival can't be later than date of departure!")
+    }
+    
+    private func alert(with title: String, and message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true)
     }
@@ -321,6 +358,21 @@ extension AnnotationEditViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         hideDatePicker(in: state)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case titleTextField:
+            textField.resignFirstResponder()
+            descriptionTextView.becomeFirstResponder()
+            return false
+            
+        default:
+            throwAn(errorMessage: "AnnotationEditViewController.textFieldShouldReturn (default branch): No behaviour for \(textField).")
+            return false
+        }
+        
+    }
+    
 }
 
 extension AnnotationEditViewController: UITextViewDelegate {
@@ -329,5 +381,6 @@ extension AnnotationEditViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         hideDatePicker(in: state)
     }
+    
 }
 

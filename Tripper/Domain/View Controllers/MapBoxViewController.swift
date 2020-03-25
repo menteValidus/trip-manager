@@ -15,7 +15,7 @@ import MapboxDirections
 fileprivate enum MapViewStatus {
     // First launch/New route creation
     case start
-    // Stage of pins setting
+    // Stage of map with only one pin
     case pinning
     // Stage of route creation, waiting for API response.
     case routing
@@ -32,7 +32,6 @@ protocol RoutePointEditDelegate: class {
     func route(pointEdited routePoint: RoutePoint)
     func route(pointCreated routePoint: RoutePoint)
     func routePointCreationDidCancelled()
-//    func routePointInstanceIsRequested() -> RoutePoint
 }
 
 class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
@@ -40,22 +39,20 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var routeEstimationView: UIView!
     @IBOutlet weak var routeLengthLabel: UILabel!
     @IBOutlet weak var routeTimeLabel: UILabel!
-    @IBOutlet weak var clearAllItem: UIBarButtonItem!
+    @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
+    @IBOutlet weak var routeListBarItem: UIBarButtonItem!
     
     private var locationManager = CLLocationManager()
-//    private var longPressedCoordinateForAnnotation: CLLocationCoordinate2D? = nil
     
     private var lineSources = [MGLShapeSource]()
     private var lineStyles = [MGLLineStyleLayer]()
     
     private var routeController: RouteController!
-    private var status = MapViewStatus.start
+    private var status: MapViewStatus!
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     private var newCreatedRP: RoutePoint? = nil
     
     private var detailViewController: AnnotationDetailViewController? = nil
-    
-//    private var detailsTransitioningDelegate: RoutePointDetailsModalTransitioningDelegate!
     
     private lazy var dimmingView = { () -> UIView in
         let dimmingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
@@ -72,7 +69,6 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     struct SeguesIdentifiers {
         /** You should assign RoutePoint object as sender to this segue. */
         static let showAnnotationDetail = "ShowAnnotationDetail"
-        static let showRoute = "ShowRoute"
         /** You should assign RoutePoint object as sender to this segue. */
         static let showAnnotationEdit = "ShowAnnotationEdit"
         static let showRouteList = "ShowRouteList"
@@ -89,12 +85,6 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         initMap()
         registerGestureRecognizers()
-        
-        routeController.routeControllerDelegate = self
-        
-//        if routeController.isProperForRouteCreation {
-//            setUIStatus(.routing)
-//        }
         
     }
     
@@ -119,6 +109,13 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         if routeController.points.count != 0 {
             centerAt(location: routeController.points[0].coordinate)
+            if routeController.isProperForRouteCreation {
+                setUIStatus(.routeMapping)
+            } else {
+                setUIStatus(.pinning)
+            }
+        } else {
+            setUIStatus(.start)
         }
     }
     
@@ -127,31 +124,31 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func clearAll(_ sender: Any) {
         routeController.deleteAll()
         dismissDetail()
+        setUIStatus(.start)
     }
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-//        case SeguesIdentifiers.showAnnotationDetail:
-//            let presentingController = segue.destination as! AnnotationDetailViewController
-//            presentingController.delegate = self
-//            presentingController.routePoint = (sender as! RoutePoint)
-            
-//            detailsTransitioningDelegate = RoutePointDetailsModalTransitioningDelegate(from: self, to: presentingController)
-//            presentingController.modalPresentationStyle = .custom
-//            presentingController.transitioningDelegate = detailsTransitioningDelegate
-            
             
         case SeguesIdentifiers.showAnnotationEdit:
             let presentingController = segue.destination as! AnnotationEditViewController
             
             presentingController.delegate = self
             if let createdRoutePoint = newCreatedRP {
+                let leftDateLimit = routeController.leftLimitOf(createdRoutePoint)
+                presentingController.leftDateLimit = leftDateLimit
                 presentingController.routePoint = createdRoutePoint
                 presentingController.isEdit = false
             } else {
-                presentingController.routePoint = (sender as! RoutePoint)
+                let routePoint = (sender as! RoutePoint)
+                let leftDateLimit = routeController.leftLimitOf(routePoint)
+                presentingController.leftDateLimit = leftDateLimit
+                let rightDateLimit = routeController.rightLimitOf(routePoint)
+                presentingController.rightDateLimit = rightDateLimit
+                presentingController.routePoint = routePoint
+                presentingController.isEdit = true
             }
             
         case SeguesIdentifiers.showRouteList:
@@ -221,23 +218,31 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         switch status {
         case .start:
-            self.routeEstimationView.isHidden = true
-            self.clearAllItem.isEnabled = false
+            routeEstimationView.isHidden = true
+            clearAllBarItem.isEnabled = false
             
         case .pinning:
-            self.clearAllItem.isEnabled = true
+            clearAllBarItem.isEnabled = true
+            routeEstimationView.isHidden = true
             
         case .routing:
+            clearAllBarItem.isEnabled = false
+            routeListBarItem.isEnabled = false
+            
             showSpinner()
             
         case .routeMapping:
             hideSpinner()
             
             routeEstimationView.isHidden = false
+            clearAllBarItem.isEnabled = true
+            routeListBarItem.isEnabled = true
             
             routeLengthLabel.text = format(metres: routeController.totalLengthInMeters)
             routeTimeLabel.text = format(minutes: routeController.totalTimeInMinutes)
             
+        case .none:
+            return
         }
     }
 
@@ -285,13 +290,12 @@ extension MapBoxViewController: MGLMapViewDelegate {
         
         print("*** Long pressed on the map.")
         
-//        longPressedCoordinateForAnnotation = coordinate
         newCreatedRP = routeController.createNextRoutePoint(at: coordinate)
-        if !routeController.isProperForRouteCreation {
-            // TODO: Rebuild system of adding first point. Because some fields which will be modified after AnnotationEdit won't be saved.
-            setAnnotation(at: newCreatedRP!)
+        
+        // TODO: It's a crutch. Segue to Annotation Edit is performed only after creation of route fragment in RouteController.
+        if routeController.points.count == 1 {
+            performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
         }
-//        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
     }
     
     // MARK: - Helper Methods
@@ -347,6 +351,17 @@ extension MapBoxViewController: MapRouteDelegate {
 extension MapBoxViewController: RoutePointEditDelegate {
     // MARK: - Route's Point Edit Delegate
     
+    func route(pointCreated routePoint: RoutePoint) {
+        routeController.update(routePoint: routePoint)
+        setAnnotation(at: routePoint)
+        
+        if routeController.isProperForRouteCreation {
+            setUIStatus(.routeMapping)
+        } else {
+            setUIStatus(.pinning)
+        }
+    }
+    
     func route(pointEdited routePoint: RoutePoint) {
         routeController.update(routePoint: routePoint)
         print("*** Did edited: \(routePoint)")
@@ -359,16 +374,7 @@ extension MapBoxViewController: RoutePointEditDelegate {
             newCreatedRP = nil
         }
     }
-//
-//    func routePointInstanceIsRequested() -> RoutePoint {
-//        return routeController.getNextRoutePointInstance()
-//    }
     
-    func route(pointCreated routePoint: RoutePoint) {
-        routeController.update(routePoint: routePoint)
-//        routeController.setNextRoutePoint(routePoint: routePoint)
-        setAnnotation(at: routePoint)
-    }
 }
 
 extension MapBoxViewController: RouteControllerDelegate {
@@ -429,9 +435,7 @@ extension MapBoxViewController: RouteControllerDelegate {
     }
     
     func routeControllerIsStartedRouting() {
-//        if status != .routing {
-            setUIStatus(.routing)
-//        }
+        setUIStatus(.routing)
     }
     
     func routeControllerIsFinishedRouting() {

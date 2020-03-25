@@ -47,7 +47,9 @@ class RoutePoint {
     
     var residenceTimeInSeconds: Int? {
         if let departureDate = departureDate, let arrivalDate = arrivalDate {
-            return Int(departureDate.timeIntervalSince(arrivalDate))
+            let roundedDepartureDate = Calendar.current.date(bySetting: .second, value: 0, of: departureDate)!
+            let roundedArrivalDate = Calendar.current.date(bySetting: .second, value: 0, of: arrivalDate)!
+            return Int(roundedDepartureDate.timeIntervalSince(roundedArrivalDate))
         } else {
             return nil
         }

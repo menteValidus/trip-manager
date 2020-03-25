@@ -63,12 +63,25 @@ func format(minutes: Int) -> String {
     return formattedTime
 }
 
+let METER = 1
+let KILOMETER = 1000 * METER
+
 func format(metres: Int) -> String {
-    if metres % 1000 == 0 {
-        return "\(metres / 1000) km"
-    } else if metres < 1000 {
-        return "\(metres) m"
-    } else {
-        return "\(metres / 1000) km \(metres % 1000) m"
+    var formattedDistance = ""
+    let kilometers = metres / KILOMETER
+    
+    if kilometers > 0 {
+        formattedDistance.append("\(kilometers) km")
     }
+    
+    let remainedMeters = metres % KILOMETER
+    
+    if remainedMeters > 0 {
+        if !formattedDistance.isEmpty {
+            formattedDistance.append(" ")
+        }
+        formattedDistance.append("\(remainedMeters) m")
+    }
+    
+    return formattedDistance
 }

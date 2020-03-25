@@ -25,6 +25,7 @@
 		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
 		0B05D4B72409286F006E344A /* AnnotationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */; };
+		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
 		0B219307242228D2008C9224 /* SubrouteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B219306242228D2008C9224 /* SubrouteCell.swift */; };
 		0B6BB0E5240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */; };
 		0B6BB0E9240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */; };
@@ -40,6 +41,16 @@
 		0BD662FC241A65500034B1D6 /* RouteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteInformation.swift */; };
 		0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0B0F4134242A4DCD00C769C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0B042A4E23E2D02100E9136F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0B042A5523E2D02100E9136F;
+			remoteInfo = Tripper;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0B042A5623E2D02100E9136F /* Tripper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripper.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +72,9 @@
 		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
 		0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationEditViewController.swift; sourceTree = "<group>"; };
+		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B0F4131242A4DCD00C769C9 /* UtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
+		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B219306242228D2008C9224 /* SubrouteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubrouteCell.swift; sourceTree = "<group>"; };
 		0B6BB0E4240E61C10002D1DB /* RoutePointDetailsModalTransitioningDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointDetailsModalTransitioningDelegate.swift; sourceTree = "<group>"; };
 		0B6BB0E8240E64BC0002D1DB /* RoutePointDetailsModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointDetailsModalPresentationController.swift; sourceTree = "<group>"; };
@@ -92,6 +106,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0B0F412C242A4DCD00C769C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -99,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				0B042A5823E2D02100E9136F /* Tripper */,
+				0B0F4130242A4DCD00C769C9 /* UtilTests */,
 				0B042A6F23E2E1B600E9136F /* Frameworks */,
 				0B042A5723E2D02100E9136F /* Products */,
 				574CE712F5A59AC5937EF361 /* Pods */,
@@ -109,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				0B042A5623E2D02100E9136F /* Tripper.app */,
+				0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,6 +240,15 @@
 				0B042A9423EA9E7300E9136F /* InRoad.swift */,
 			);
 			path = Subroutes;
+			sourceTree = "<group>";
+		};
+		0B0F4130242A4DCD00C769C9 /* UtilTests */ = {
+			isa = PBXGroup;
+			children = (
+				0B0F4131242A4DCD00C769C9 /* UtilTests.swift */,
+				0B0F4133242A4DCD00C769C9 /* Info.plist */,
+			);
+			path = UtilTests;
 			sourceTree = "<group>";
 		};
 		0B1C843324211445000C9757 /* Data Controllers */ = {
@@ -353,6 +385,24 @@
 			productReference = 0B042A5623E2D02100E9136F /* Tripper.app */;
 			productType = "com.apple.product-type.application";
 		};
+		0B0F412E242A4DCD00C769C9 /* UtilTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0B0F4136242A4DCD00C769C9 /* Build configuration list for PBXNativeTarget "UtilTests" */;
+			buildPhases = (
+				0B0F412B242A4DCD00C769C9 /* Sources */,
+				0B0F412C242A4DCD00C769C9 /* Frameworks */,
+				0B0F412D242A4DCD00C769C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0B0F4135242A4DCD00C769C9 /* PBXTargetDependency */,
+			);
+			name = UtilTests;
+			productName = UtilTests;
+			productReference = 0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -365,6 +415,10 @@
 				TargetAttributes = {
 					0B042A5523E2D02100E9136F = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					0B0F412E242A4DCD00C769C9 = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 0B042A5523E2D02100E9136F;
 					};
 				};
 			};
@@ -382,6 +436,7 @@
 			projectRoot = "";
 			targets = (
 				0B042A5523E2D02100E9136F /* Tripper */,
+				0B0F412E242A4DCD00C769C9 /* UtilTests */,
 			);
 		};
 /* End PBXProject section */
@@ -396,6 +451,13 @@
 				0B042A8E23E9931500E9136F /* StayingCell.xib in Resources */,
 				0B042A6323E2D02200E9136F /* Assets.xcassets in Resources */,
 				0B042A6123E2D02100E9136F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0B0F412D242A4DCD00C769C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,7 +557,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0B0F412B242A4DCD00C769C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0B0F4135242A4DCD00C769C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0B042A5523E2D02100E9136F /* Tripper */;
+			targetProxy = 0B0F4134242A4DCD00C769C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		0B042A5F23E2D02100E9136F /* Main.storyboard */ = {
@@ -671,6 +749,46 @@
 			};
 			name = Release;
 		};
+		0B0F4137242A4DCD00C769C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9YM5R94GQF;
+				INFOPLIST_FILE = UtilTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.UtilTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripper.app/Tripper";
+			};
+			name = Debug;
+		};
+		0B0F4138242A4DCD00C769C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9YM5R94GQF;
+				INFOPLIST_FILE = UtilTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.UtilTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripper.app/Tripper";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -688,6 +806,15 @@
 			buildConfigurations = (
 				0B042A6B23E2D02200E9136F /* Debug */,
 				0B042A6C23E2D02200E9136F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0B0F4136242A4DCD00C769C9 /* Build configuration list for PBXNativeTarget "UtilTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0B0F4137242A4DCD00C769C9 /* Debug */,
+				0B0F4138242A4DCD00C769C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

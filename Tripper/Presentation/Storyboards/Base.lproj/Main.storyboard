@@ -78,10 +78,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="clearAllItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
+                        <outlet property="clearAllBarItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="gX8-yR-d53"/>
                         <outlet property="routeEstimationView" destination="XLC-aH-rfK" id="CDi-ft-Oc0"/>
                         <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="v57-14-cOn"/>
+                        <outlet property="routeListBarItem" destination="3YU-Yf-sPd" id="fYl-SI-56g"/>
                         <outlet property="routeTimeLabel" destination="Zke-0f-ISY" id="JvY-F6-FCr"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                     </connections>
