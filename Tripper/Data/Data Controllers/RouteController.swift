@@ -221,12 +221,12 @@ class RouteController {
         routeControllerDelegate.routeControllerIsStartedRouting()
         
         routeCreator.calculateRoute(from: source.coordinate, to: destination.coordinate, drawHandler: { route in
-            if let route = route, let shape = route.shape {
+            if let route = route {
                 let routeFragmentId = source.id + destination.id
                 source.timeToNextPointInSeconds = Int(route.expectedTravelTime)
                 source.distanceToNextPointInMeters = Int(route.distance)
                 
-                let createdRouteFragment = RouteFragment(identifier: routeFragmentId, coordinates: shape.coordinates, timeInSeconds: source.timeToNextPointInSeconds!, distanceInMeters: source.distanceToNextPointInMeters!)
+                let createdRouteFragment = RouteFragment(identifier: routeFragmentId, coordinates: route.coordinates!, timeInSeconds: source.timeToNextPointInSeconds!, distanceInMeters: source.distanceToNextPointInMeters!)
                 
                 self.configureDates(for: destination, with: source, using: route.expectedTravelTime)
                 

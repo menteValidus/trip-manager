@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03D898D9AA78FF706874225D /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB186E5885882F91480E9807 /* Pods_Tripper.framework */; };
 		0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A5923E2D02100E9136F /* AppDelegate.swift */; };
 		0B042A6123E2D02100E9136F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A5F23E2D02100E9136F /* Main.storyboard */; };
 		0B042A6323E2D02200E9136F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A6223E2D02200E9136F /* Assets.xcassets */; };
 		0B042A6623E2D02200E9136F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */; };
-		0B042A7123E2E1B600E9136F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B042A7023E2E1B600E9136F /* MapKit.framework */; };
 		0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7223E2EFFF00E9136F /* RoutePoint.swift */; };
 		0B042A7623E3001B00E9136F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7523E3001B00E9136F /* Util.swift */; };
 		0B042A7823E836B300E9136F /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7723E836B300E9136F /* RouteController.swift */; };
@@ -40,6 +38,7 @@
 		0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */; };
 		0BD662FC241A65500034B1D6 /* RouteInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteInformation.swift */; };
 		0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */; };
+		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,9 +90,9 @@
 		0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCreationProtocol.swift; sourceTree = "<group>"; };
 		0BD662FB241A65500034B1D6 /* RouteInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteInformation.swift; sourceTree = "<group>"; };
 		0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteControllerDelegate.swift; sourceTree = "<group>"; };
-		697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
-		BB186E5885882F91480E9807 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
+		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
+		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B042A7123E2E1B600E9136F /* MapKit.framework in Frameworks */,
-				03D898D9AA78FF706874225D /* Pods_Tripper.framework in Frameworks */,
+				B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,7 +121,7 @@
 				0B0F4130242A4DCD00C769C9 /* UtilTests */,
 				0B042A6F23E2E1B600E9136F /* Frameworks */,
 				0B042A5723E2D02100E9136F /* Products */,
-				574CE712F5A59AC5937EF361 /* Pods */,
+				C5FAC7082B4FBEA6769A9AF7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,7 +152,7 @@
 				0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */,
 				0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */,
 				0B042A7023E2E1B600E9136F /* MapKit.framework */,
-				BB186E5885882F91480E9807 /* Pods_Tripper.framework */,
+				EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -354,11 +352,11 @@
 			path = Route;
 			sourceTree = "<group>";
 		};
-		574CE712F5A59AC5937EF361 /* Pods */ = {
+		C5FAC7082B4FBEA6769A9AF7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */,
-				D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */,
+				FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */,
+				BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -370,11 +368,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B042A6A23E2D02200E9136F /* Build configuration list for PBXNativeTarget "Tripper" */;
 			buildPhases = (
-				6FD4A90B10BC1996CB3FFCFC /* [CP] Check Pods Manifest.lock */,
+				18C40930BB8EC0BC6D8FBA40 /* [CP] Check Pods Manifest.lock */,
 				0B042A5223E2D02100E9136F /* Sources */,
 				0B042A5323E2D02100E9136F /* Frameworks */,
 				0B042A5423E2D02100E9136F /* Resources */,
-				787BF5EF9B2D3C015EC4D8C4 /* [CP] Embed Pods Frameworks */,
+				99A9BB15F9212663D65D5B99 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -464,7 +462,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6FD4A90B10BC1996CB3FFCFC /* [CP] Check Pods Manifest.lock */ = {
+		18C40930BB8EC0BC6D8FBA40 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -482,7 +480,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		787BF5EF9B2D3C015EC4D8C4 /* [CP] Embed Pods Frameworks */ = {
+		99A9BB15F9212663D65D5B99 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -492,7 +490,7 @@
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections/MapboxDirections.framework",
+				"${BUILT_PRODUCTS_DIR}/MapboxDirections.swift/MapboxDirections.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
 				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
 				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework",
@@ -711,7 +709,7 @@
 		};
 		0B042A6B23E2D02200E9136F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 697D8341094C4D424BA44E65 /* Pods-Tripper.debug.xcconfig */;
+			baseConfigurationReference = FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -731,7 +729,7 @@
 		};
 		0B042A6C23E2D02200E9136F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D0812AE72311CCCC1948D802 /* Pods-Tripper.release.xcconfig */;
+			baseConfigurationReference = BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
