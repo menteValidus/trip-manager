@@ -15,8 +15,6 @@ import MapboxDirections
 fileprivate enum MapViewStatus {
     // First launch/New route creation
     case start
-    // Stage of map with only one pin
-    case pinning
     // Stage of route creation, waiting for API response.
     case routing
     // Stage of route's mapping
@@ -109,11 +107,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
         if routeController.points.count != 0 {
             centerAt(location: routeController.points[0].coordinate)
-            if routeController.isProperForRouteCreation {
-                setUIStatus(.routeMapping)
-            } else {
-                setUIStatus(.pinning)
-            }
+            setUIStatus(.routeMapping)
         } else {
             setUIStatus(.start)
         }
@@ -220,11 +214,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         case .start:
             routeEstimationView.isHidden = true
             clearAllBarItem.isEnabled = false
-            
-        case .pinning:
-            clearAllBarItem.isEnabled = true
-            routeEstimationView.isHidden = true
-            
+    
         case .routing:
             clearAllBarItem.isEnabled = false
             routeListBarItem.isEnabled = false
@@ -234,12 +224,18 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         case .routeMapping:
             hideSpinner()
             
-            routeEstimationView.isHidden = false
-            clearAllBarItem.isEnabled = true
-            routeListBarItem.isEnabled = true
+            if routeController.isProperForRouteCreation {
+                routeEstimationView.isHidden = false
+                clearAllBarItem.isEnabled = true
+                routeListBarItem.isEnabled = true
+                
+                routeLengthLabel.text = format(metres: routeController.totalLengthInMeters)
+                routeTimeLabel.text = format(minutes: routeController.totalTimeInMinutes)
+            } else {
+                clearAllBarItem.isEnabled = true
+                routeEstimationView.isHidden = true
+            }
             
-            routeLengthLabel.text = format(metres: routeController.totalLengthInMeters)
-            routeTimeLabel.text = format(minutes: routeController.totalTimeInMinutes)
             
         case .none:
             return
@@ -355,11 +351,7 @@ extension MapBoxViewController: RoutePointEditDelegate {
         routeController.update(routePoint: routePoint)
         setAnnotation(at: routePoint)
         
-        if routeController.isProperForRouteCreation {
-            setUIStatus(.routeMapping)
-        } else {
-            setUIStatus(.pinning)
-        }
+        setUIStatus(.routeMapping)
     }
     
     func route(pointEdited routePoint: RoutePoint) {
@@ -384,11 +376,7 @@ extension MapBoxViewController: RouteControllerDelegate {
         for (annotation, id) in annotationsID {
             if id == routePoint.id {
                 mapView.removeAnnotation(annotation)
-                if routeController.isProperForRouteCreation {
-                    setUIStatus(.routeMapping)
-                } else {
-                    setUIStatus(.pinning)
-                }
+                setUIStatus(.routeMapping)
             }
         }
     }
