@@ -222,15 +222,16 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             hideSpinner()
             
             if routeController.isProperForRouteCreation {
-                routeEstimationView.isHidden = false
                 clearAllBarItem.isEnabled = true
                 routeListBarItem.isEnabled = true
                 
                 routeLengthLabel.text = format(metres: routeController.totalLengthInMeters)
-                routeTimeLabel.text = format(seconds: routeController.totalTimeInMinutes)
+                routeTimeLabel.text = format(seconds: routeController.totalTimeInSeconds)
+                
+                showEstimationView()
             } else {
                 clearAllBarItem.isEnabled = true
-                routeEstimationView.isHidden = true
+                hideEstimationView()
             }
             
             
@@ -252,6 +253,20 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     private func hideSpinner() {
         dimmingView.removeFromSuperview()
+    }
+    
+    private func showEstimationView() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            self.routeEstimationView.alpha = 1
+            self.routeEstimationView.isHidden = false
+        })
+    }
+    
+    private func hideEstimationView() {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+            self.routeEstimationView.alpha = 0
+            self.routeEstimationView.isHidden = true
+        })
     }
 
 }
