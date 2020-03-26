@@ -250,28 +250,54 @@ class RouteController {
         
         switch index {
         case 0: // First point
-            let identifier = points[index].id + points[index + 1].id
-            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            handleRouteFixing(after: index)
             
         case points.count - 1: // Last point
-            let identifier = points[index - 1].id + points[index].id
-            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            handleRouteFixing(before: index)
             
         default: // Other points in middle of route.
-            let indexOfPreviousRP = index - 1
-            var identifier = points[indexOfPreviousRP].id + points[index].id
-            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            handleRouteFixing(after: index)
+            handleRouteFixing(before: index)
             
-            let indexOfNextRP = index + 1
-            identifier = points[index].id + points[indexOfNextRP].id
-            routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+            let previousRoutePoint = points[index - 1]
+            let nextRoutePoint = points[index + 1]
             
-            createRouteFragment(from: points[indexOfPreviousRP], to: points[indexOfNextRP])
-            
+            createRouteFragment(from: previousRoutePoint, to: nextRoutePoint)
         }
         
+        // We are deleting point in the of method because logic of handling methods is linked to the existing points list.
         points.remove(at: index)
     }
+    
+    /**
+     This method does'nt delete point at routePointIndex.
+     Tells delegate identifier of RoutePoint which is going to be deleted.
+     Doesn't handle reaching out of the list.
+     */
+    private func handleRouteFixing(after routePointIndex: Int) {
+        let routePoint = points[routePointIndex]
+        let nextRoutePoint = points[routePointIndex + 1]
+        let identifier = routePoint.id + nextRoutePoint.id
+        routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+    }
+    
+    /**
+     This method does'nt delete point at routePointIndex.
+     Tells delegate identifier of RoutePoint which is going to be deleted.
+     Doesn't handle reaching out of the list.
+     Clears previous RoutePoint's timeToNextPoint and distanceToNextPoint.
+     */
+    private func handleRouteFixing(before routePointIndex: Int) {
+        let routePoint = points[routePointIndex]
+        let previousRoutePoint = points[routePointIndex - 1]
+        let identifier = previousRoutePoint.id + routePoint.id
+        
+        previousRoutePoint.timeToNextPointInSeconds = nil
+        previousRoutePoint.distanceToNextPointInMeters = nil
+        
+        routeControllerDelegate.routeController(identifierOfDeletedRouteFragment: identifier)
+    }
+    
     
     // MARK: - Helper Methods
     

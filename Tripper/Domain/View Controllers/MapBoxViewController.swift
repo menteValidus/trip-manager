@@ -370,7 +370,7 @@ extension MapBoxViewController: RoutePointEditDelegate {
     func routePointCreationDidCancelled() {
         if let newCreatedRoutePoint = newCreatedRP {
             routeController.delete(routePoint: newCreatedRoutePoint)
-            
+            setUIStatus(.routeMapping)
             newCreatedRP = nil
         }
     }
@@ -384,6 +384,11 @@ extension MapBoxViewController: RouteControllerDelegate {
         for (annotation, id) in annotationsID {
             if id == routePoint.id {
                 mapView.removeAnnotation(annotation)
+                if routeController.isProperForRouteCreation {
+                    setUIStatus(.routeMapping)
+                } else {
+                    setUIStatus(.pinning)
+                }
             }
         }
     }
