@@ -65,9 +65,9 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     }()
 
     struct SeguesIdentifiers {
-        /** You should assign RoutePoint object as sender to this segue. */
+        /// You should assign RoutePoint object as sender to this segue.
         static let showAnnotationDetail = "ShowAnnotationDetail"
-        /** You should assign RoutePoint object as sender to this segue. */
+        /// You should assign RoutePoint object as sender to this segue. 
         static let showAnnotationEdit = "ShowAnnotationEdit"
         static let showRouteList = "ShowRouteList"
     }

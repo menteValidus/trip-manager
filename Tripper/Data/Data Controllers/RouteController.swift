@@ -167,9 +167,7 @@ class RouteController {
     
     // MARK: Update's Helper Methods
 
-    /**
-     Doesn't handle cases when accesed beyound the bounds of list.
-     */
+    /// Doesn't handle cases when accesed beyound the bounds of list.
     private func updateDateAfter(index: Int, with newRoutePoint: RoutePoint) {
         let oldValueOfRP = points[index]
         
@@ -186,9 +184,7 @@ class RouteController {
         points[index] = newRoutePoint
     }
     
-    /**
-    Doesn't handle cases when accesed beyound the bounds of list.
-    */
+    /// Doesn't handle cases when accesed beyound the bounds of list.
     private func updateDateBefore(index: Int, with newRoutePoint: RoutePoint) {
         let oldValueOfRP = points[index]
         
@@ -215,11 +211,6 @@ class RouteController {
         }
     }
     
-    /**
-     Arguments of completion handler are:
-     1. Expected time to get to next route point.
-     2. Distance between two route points.
-     */
     private func createRouteFragment(from source: RoutePoint, to destination: RoutePoint) {
         remainingRouteSegmentsToCalculate += 1
         routeControllerDelegate.routeControllerIsStartedRouting()
@@ -286,10 +277,12 @@ class RouteController {
     }
     
     /**
-     This method does'nt delete point at routePointIndex.
-     Tells delegate identifier of RoutePoint which is going to be deleted.
-     Doesn't handle reaching out of the list.
-     Clears previous RoutePoint's timeToNextPoint and distanceToNextPoint.
+        Method communicates with RouteControllerDelegate, tells it the identifier of deleted RouteFragment.
+     
+     * This method doesn't delete point at routePointIndex.
+     * Tells delegate identifier of RoutePoint which is going to be deleted.
+     * Doesn't handle reaching out of the list.
+     * Clears previous RoutePoint's timeToNextPoint and distanceToNextPoint.
      */
     private func handleRouteFixing(before routePointIndex: Int) {
         let routePoint = points[routePointIndex]
