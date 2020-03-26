@@ -29,20 +29,35 @@ func display(message: String) {
     print("*** \(message)")
 }
 
-let MINUTE = 1
-let MINUTES_IN_HOUR = 60 * MINUTE
-let MINUTES_IN_DAY = 24 * MINUTES_IN_HOUR
+struct TimeUnits {
+    static let second = 1
+    static let minute = 60 * second
+    static let hour = 60 * minute
+    static let day = 24 * hour
+    static let week = 7 * day
+}
 
-func format(minutes: Int) -> String {
+
+func format(seconds: Int) -> String {
     var formattedTime = ""
-    let days = minutes / MINUTES_IN_DAY
+    let weeks = seconds / TimeUnits.week
+    
+    if weeks > 0 {
+        formattedTime.append("\(weeks) w")
+    }
+    
+    var remainedSeconds = seconds % TimeUnits.week
+    let days = remainedSeconds / TimeUnits.day
     
     if days > 0 {
+        if !formattedTime.isEmpty {
+            formattedTime.append(" ")
+        }
         formattedTime.append("\(days) d")
     }
     
-    var remainedMinutes = minutes % MINUTES_IN_DAY
-    let hours = remainedMinutes / MINUTES_IN_HOUR
+    remainedSeconds %= TimeUnits.day
+    let hours = remainedSeconds / TimeUnits.hour
     
     if hours > 0 {
         if !formattedTime.isEmpty {
@@ -51,14 +66,16 @@ func format(minutes: Int) -> String {
         formattedTime.append("\(hours) h")
     }
     
-    remainedMinutes %= MINUTES_IN_HOUR
+    remainedSeconds %= TimeUnits.hour
+    let minutes = remainedSeconds / TimeUnits.minute
     
-    if remainedMinutes > 0 {
+    if minutes > 0 {
         if !formattedTime.isEmpty {
             formattedTime.append(" ")
         }
-        formattedTime.append("\(remainedMinutes) min")
+        formattedTime.append("\(minutes) min")
     }
+    
     
     return formattedTime
 }

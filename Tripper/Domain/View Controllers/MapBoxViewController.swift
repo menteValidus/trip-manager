@@ -227,7 +227,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
                 routeListBarItem.isEnabled = true
                 
                 routeLengthLabel.text = format(metres: routeController.totalLengthInMeters)
-                routeTimeLabel.text = format(minutes: routeController.totalTimeInMinutes)
+                routeTimeLabel.text = format(seconds: routeController.totalTimeInMinutes)
             } else {
                 clearAllBarItem.isEnabled = true
                 routeEstimationView.isHidden = true

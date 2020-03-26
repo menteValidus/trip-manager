@@ -16,6 +16,6 @@ class RoadCell: UITableViewCell, SubrouteCell {
     
     func configure(for subroute: Subroute) {
         titleLabel.text = subroute.title
-        timeLabel.text = format(minutes: subroute.timeInMinutes)
+        timeLabel.text = format(seconds: subroute.timeInSeconds)
     }
 }

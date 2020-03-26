@@ -42,7 +42,7 @@ class StayingCell: UITableViewCell, SubrouteCell {
     func configure(for subroute: Subroute) {
         let staying = subroute as! Staying
         titleLabel.text = String(staying.title)
-        timeLabel.text = format(minutes: staying.timeInMinutes)
+        timeLabel.text = format(seconds: staying.timeInSeconds)
         descriptionTextView.text = staying.description
     }
     

@@ -11,12 +11,12 @@ import Foundation
 
 class Staying: Subroute {    
     var title: String
-    var timeInMinutes: Int
+    var timeInSeconds: Int
     var description: String
     
     init(title: String, seconds: Int, description: String) {
         self.title = title
-        timeInMinutes = seconds / 60
+        timeInSeconds = seconds
         self.description = description
     }
     

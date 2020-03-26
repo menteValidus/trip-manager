@@ -11,12 +11,12 @@ import Foundation
 class InRoad: Subroute {
     private static var defaultTitle = "In Road"
     var title: String
-    var timeInMinutes: Int
+    var timeInSeconds: Int
     var metres: Int
     
     init(title: String = defaultTitle, seconds: Int, metres: Int) {
         self.title = title
-        timeInMinutes = seconds / 60
+        timeInSeconds = seconds
         self.metres = metres
     }
     

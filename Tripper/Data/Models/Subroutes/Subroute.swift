@@ -10,5 +10,5 @@ import Foundation
 
 protocol Subroute {
     var title: String { get }
-    var timeInMinutes: Int { get }
+    var timeInSeconds: Int { get }
 }

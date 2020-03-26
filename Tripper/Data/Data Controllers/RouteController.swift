@@ -45,6 +45,10 @@ class RouteController {
         return minutes
     }
     
+    var totalTimeInSeconds: Int {
+        return totalTimeInMinutes * TimeUnits.minute
+    }
+    
     var subroutes: [Subroute] {
         switch countSubroutes {
         case 0:
