@@ -107,7 +107,15 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
 
         centerAt(location: routeController.points[0].coordinate)
-        setUIStatus(.start)
+        if routeController.points.count > 0 {
+            if routeController.isProperForRouteCreation {
+                setUIStatus(.routing)
+            } else {
+                setUIStatus(.routeMapping)
+            }
+        } else {
+            setUIStatus(.start)
+        }
     }
     
     // MARK: - Actions
