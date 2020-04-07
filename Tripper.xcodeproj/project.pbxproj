@@ -205,7 +205,6 @@
 				0B042A8523E98D7D00E9136F /* Table Cells */,
 				0B042A7B23E85EBF00E9136F /* View Controllers */,
 				0BD662F2241A45600034B1D6 /* Util */,
-				0B6BB0E7240E64850002D1DB /* Presentation Controllers */,
 				0B6BB0E3240E617D0002D1DB /* Transitioning */,
 				0B042A7523E3001B00E9136F /* Util.swift */,
 			);
@@ -282,13 +281,6 @@
 			children = (
 			);
 			path = Transitioning;
-			sourceTree = "<group>";
-		};
-		0B6BB0E7240E64850002D1DB /* Presentation Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Presentation Controllers";
 			sourceTree = "<group>";
 		};
 		0B6CD84323ED7630006DCDDC /* DAO */ = {

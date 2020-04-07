@@ -5,6 +5,12 @@
 //  Created by Denis Cherniy on 21.02.2020.
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
+/**
+ Начать с данного ViewController'a .
+ - Часть помеченных методов адаптировать и вынести в Interactor и Presenter.
+ - Использовать два Worker'a . Первый - для обертки SharedCoreDataWorker,  второй - для взаимодействия с Mapbox Directions API.
+ - При взаимодействии с  ShowDetailScene  использовать делегат, хранимый в Interactor'e  сцены.
+ */
 
 import UIKit
 import Mapbox
@@ -13,11 +19,11 @@ import MapboxNavigation
 import MapboxDirections
 
 fileprivate enum MapViewStatus {
-    // First launch/New route creation
+    /// First launch/New route creation
     case start
-    // Stage of route creation, waiting for API response.
+    /// Stage of route creation, waiting for API response.
     case routing
-    // Stage of route's mapping
+    /// Stage of route's mapping
     case routeMapping
 }
 
@@ -40,16 +46,20 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
     @IBOutlet weak var routeListBarItem: UIBarButtonItem!
     
+    // TODO: MOVE TO INTERACTOR.
     private var locationManager = CLLocationManager()
     
     private var lineSources = [MGLShapeSource]()
     private var lineStyles = [MGLLineStyleLayer]()
     
+    // TODO: MOVE TO WORKER. WILL BE INSTANTIATED IN INTERACTOR
     private var routeController: RouteController!
+    // TODO: REMOVE
     private var status: MapViewStatus!
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     private var newCreatedRP: RoutePoint? = nil
     
+    // TODO: REMOVE
     private var detailViewController: AnnotationDetailViewController? = nil
     
     private lazy var dimmingView = { () -> UIView in
@@ -64,6 +74,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         return dimmingView
     }()
 
+    // TODO: REMOVE
     struct SeguesIdentifiers {
         /// You should assign RoutePoint object as sender to this segue.
         static let showAnnotationDetail = "ShowAnnotationDetail"
@@ -76,10 +87,13 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         routeController = RouteController(delegate: self)
         
         routeEstimationView.layer.cornerRadius = 16
+        
+        #if DEBUG
+        print("*** *** *** DEBUG *** *** ***")
+        #endif
         
         initMap()
         registerGestureRecognizers()
@@ -87,7 +101,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: - Initializators
-    
+    // TODO: MOVE TO INTERACTOR
     private func registerGestureRecognizers() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleMapLongPress(sender:)))
         
@@ -104,10 +118,9 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         for routePoint in routeController.points {
             setAnnotation(at: routePoint)
         }
-        
-
-        centerAt(location: routeController.points[0].coordinate)
+        // TODO: INTERACT WITH ANNOTATIONS INSTEAD OF ROUTEPOINTS
         if routeController.points.count > 0 {
+            centerAt(location: routeController.points[0].coordinate)
             if routeController.isProperForRouteCreation {
                 setUIStatus(.routing)
             } else {
@@ -120,6 +133,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Actions
     
+    // TODO: MOVE INNER LOGIC TO INTERACTOR
     @IBAction func clearAll(_ sender: Any) {
         routeController.deleteAll()
         dismissDetail()
@@ -128,6 +142,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     
     // MARK: - Navigation
     
+    // TODO: MOVE IT TO THE ROUTER
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
             
@@ -160,6 +175,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
+    // TODO: MOVE IT TO THE SHOW DETAIL SCENE. HEIGHT, WIDTH AND OFFSET SET THROUGH CONSTRUCTOR.
     private func showDetail(of routePoint: RoutePoint) {
         let height = view.frame.height
         let width  = view.frame.width
@@ -193,6 +209,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    // TODO: MOVE IT TO THE SHOW DETAIL SCENE'S ROUTER.
     private func dismissDetail() {
         if let detailViewController = detailViewController {
             detailViewController.removeFromParent()
@@ -207,7 +224,8 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // MARK: - UI
-
+    
+    // TODO: COMBINE IT WITH configureUIAppearance AND MOVE EVERYTHING TO PRESENTER.
     private func setUIStatus(_ newStatus: MapViewStatus) {
         status = newStatus
         configureUIAppearance()
@@ -282,6 +300,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
 extension MapBoxViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
 
+    // TODO: USE ROUTER
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
         print("*** Selected annotation")
         let id = annotationsID[annotation as! MGLPointAnnotation]!
@@ -290,12 +309,14 @@ extension MapBoxViewController: MGLMapViewDelegate {
         mapView.deselectAnnotation(annotation, animated: false)
     }
     
+    // TODO: FOR DEBUG PURPOSES.
     func mapView(_ mapView: MGLMapView, didDeselect annotation: MGLAnnotation) {
         print("*** Deselected annotation")
     }
     
     // MARK: - Actions
     
+    // TODO: MOVE LOGIC TO INTERACTOR. PASS COORDINATE AS MODEL(REQUEST)
     @objc func handleMapLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else {
             return
@@ -316,6 +337,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
     
     // MARK: - Helper Methods
     
+    // TODO: MOVE TO PRESENTER.
     private func setAnnotation(at routePoint: RoutePoint) {
         let annotation = MGLPointAnnotation()
         annotation.title = routePoint.title
@@ -325,10 +347,13 @@ extension MapBoxViewController: MGLMapViewDelegate {
         mapView.addAnnotation(annotation)
     }
     
+    
+    // TODO: MOVE TO PRESENTER
     private func centerAt(location coordinate: CLLocationCoordinate2D, at zoomLevel: Double = 5.0) {
         mapView.setCenter(coordinate, zoomLevel: zoomLevel, animated: true)
     }
     
+    // TODO: MOVE TO PRESENTER
     private func setMapCameraAt(coordinates: [CLLocationCoordinate2D]) {
         switch coordinates.count {
         case 0:
@@ -353,17 +378,20 @@ extension MapBoxViewController: MGLMapViewDelegate {
 extension MapBoxViewController: MapRouteDelegate {
     // MARK: - Map Route Delegate
     
+    // TODO: MOVE TO ROUTER
     func mapRoute(performEditFor routePoint: RoutePoint) {
         dismissDetail()
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: routePoint)
     }
     
+    // TODO: MOVE TO INTERACTOR
     func mapRoute(didDeleted routePoint: RoutePoint) {
         dismissDetail()
         routeController.delete(routePoint: routePoint)
     }
 }
 
+// TODO: MOVE TO INTERACTOR
 extension MapBoxViewController: RoutePointEditDelegate {
     // MARK: - Route's Point Edit Delegate
     
@@ -382,13 +410,20 @@ extension MapBoxViewController: RoutePointEditDelegate {
     func routePointCreationDidCancelled() {
         if let newCreatedRoutePoint = newCreatedRP {
             routeController.delete(routePoint: newCreatedRoutePoint)
-            setUIStatus(.routeMapping)
+            
+            if routeController.points.count > 0 {
+                setUIStatus(.routeMapping)
+            } else {
+                setUIStatus(.start)
+            }
+            
             newCreatedRP = nil
         }
     }
     
 }
 
+// TODO: MOVE TO PRESENTER
 extension MapBoxViewController: RouteControllerDelegate {
     // MARK: - Route Controller's Delegate
     

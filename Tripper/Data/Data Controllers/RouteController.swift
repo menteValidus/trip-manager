@@ -9,23 +9,34 @@
 import Foundation
 import CoreLocation
 
+/**
+ Необходимо разделить данный класс на два Worker'a. Один работает с точками и располагается в ShowRouteMap, а второй - с subroutes и располагается в ListRoutePoints.
+ Вся логика, связанная с состояниями представления нужно перенести в соответствующие Interactor'ы.
+ */
 class RouteController {
     var routeControllerDelegate: RouteControllerDelegate
     
     private let routePointGateway = CoreDataRoutePointDAO()
+    
+    // TODO: MOVE TO SHOWROUTEMAP'S WORKER
     private let routeCreator: MapBoxRouteCreator
-
+    
+    // TODO: REMOVE
     private(set) var points: [RoutePoint]
+    
+    // TODO: MOVE TO INTERACTOR
     private var remainingRouteSegmentsToCalculate = 0
     
+    
+    // TODO: MOVE TO INTERACTOR
     var isProperForRouteCreation: Bool {
         return points.count > 1
     }
-    
+    // TODO: MOVE TO INTERACTOR
     private var isNotCalculating: Bool {
         return remainingRouteSegmentsToCalculate == 0
     }
-    
+    // TODO: MOVE TO INTERACTOR
     var totalLengthInMeters: Int {
         var length = 0
         for point in points {
@@ -33,7 +44,7 @@ class RouteController {
         }
         return length
     }
-    
+    // TODO: MOVE TO INTERACTOR
     var totalTimeInMinutes: Int {
         var minutes = 0
         
@@ -44,11 +55,12 @@ class RouteController {
         
         return minutes
     }
-    
+    // TODO: MOVE TO INTERACTOR
     var totalTimeInSeconds: Int {
         return totalTimeInMinutes * TimeUnits.minute
     }
     
+    // TODO: MOVE TO LISTROUTEPOINT'S WORKER
     var subroutes: [Subroute] {
         switch countSubroutes {
         case 0:
@@ -65,11 +77,12 @@ class RouteController {
             return subroutes
         }
     }
-    
+    // TODO: MOVE TO SHARED WORKER (HANDLING NAME GIVINGS)
     private var nextRoutePointNumber: Int {
         return points.count + 1
     }
     
+    // TODO: REMOVE
     // Subroute means any division of main route. i.e. Stop in city for 2 days, road between points for 3 hours, etc.
     var countSubroutes: Int {
         switch points.count {
@@ -100,7 +113,7 @@ class RouteController {
             coordinatesDictionary[point.id] = point.coordinate
         }
         
-        routeCreator = MapBoxRouteCreator(coordinates: coordinatesDictionary)
+        routeCreator = MapBoxRouteCreator()
         
         recreateRoute()
     }

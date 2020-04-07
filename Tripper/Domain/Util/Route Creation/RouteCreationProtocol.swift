@@ -7,11 +7,10 @@
 //
 
 import CoreLocation
+import MapboxDirections
 
 typealias CoordinatesDictionary = Dictionary<String, CLLocationCoordinate2D>
 
 protocol RouteCreator {
-    func add(routeCoordinate: CLLocationCoordinate2D, with id: String)
-    func remove(coordinateWith id: String)
-    func calculate()
+    func calculateRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, drawHandler: @escaping (Route?) -> Void)
 }

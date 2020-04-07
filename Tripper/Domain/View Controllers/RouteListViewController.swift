@@ -10,6 +10,7 @@ import UIKit
 
 class RouteListViewController: UITableViewController {
     
+    // TODO: INSTEAD OF DI WORKER SHOULD BE USED.
     var subroutes: [Subroute]!
     private var expandedStayingCellRowNumber: Int?
     

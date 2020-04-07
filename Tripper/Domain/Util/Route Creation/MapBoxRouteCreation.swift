@@ -13,24 +13,6 @@ import MapboxDirections
 
 class MapBoxRouteCreator: RouteCreator {
     
-    private var coordinates: CoordinatesDictionary
-    
-    init(coordinates: CoordinatesDictionary) {
-        self.coordinates = coordinates
-    }
-    
-    func add(routeCoordinate: CLLocationCoordinate2D, with id: String) {
-        
-    }
-    
-    func remove(coordinateWith id: String) {
-        
-    }
-    
-    func calculate() {
-        
-    }
-    
     // Helper Methods
     
     func calculateRoute(from source: CLLocationCoordinate2D, to destination: CLLocationCoordinate2D, drawHandler: @escaping (Route?) -> Void) {

@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+/**
+ Данный VC сильно связан с MapboxViewController. Вместо делегатов использовать передачу данных через Router.
+ */
 protocol AnnotationDetailDelegate {
     func annotationDetail(didSet time: Date)
 }
@@ -52,16 +54,19 @@ class AnnotationDetailViewController: UIViewController {
 
     // MARK: - Actions
     
+    // TODO: INSTEAD USE ROUTER'S DATA PASSING.
     @IBAction func editPoint(_ sender: UIButton) {
         self.delegate.mapRoute(performEditFor: self.routePoint)
     }
     
+    // TODO: INSTEAD USE ROUTER'S DATA PASSING.
     @IBAction func deletePoint(_ sender: UIButton) {
         delegate.mapRoute(didDeleted: routePoint)
     }
     
     // MARK: - Gesture Actions
     
+    // TODO: MOVE TO INTERACTOR.
     @objc func onPan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .changed:
@@ -88,6 +93,7 @@ class AnnotationDetailViewController: UIViewController {
         }
     }
     
+    // TODO: MOVE TO PRESENTER.
     func toggleView(screenCoverage percent: CGFloat) {
         UIView.animate(withDuration: 0.3) {
             let height = self.view.frame.height
@@ -99,6 +105,8 @@ class AnnotationDetailViewController: UIViewController {
     }
     
     // MARK: - Helper Methods
+    
+    // TODO: MOVE TO PRESENTER.
     func configureUI() {
         titleLabel.text = routePoint.title ?? ""
         descriptionTextView.text = routePoint.subtitle ?? ""
