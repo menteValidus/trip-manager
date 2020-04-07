@@ -13,7 +13,8 @@
 import UIKit
 
 protocol ManageRouteMapBusinessLogic {
-    func doSomething(request: ManageRouteMap.Something.Request)
+//    func getAnnotationsInfo(request: ManageRouteMap.Something.Request)
+    func createAnnotation(request: ManageRouteMap.SetAnnotation.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -23,15 +24,20 @@ protocol ManageRouteMapDataStore {
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
+    var annotationsInfo: [ManageRouteMap.AnnotationInfo]
+    var idGenerator: IDGenerator
     //var name: String = ""
     
-    // MARK: Do something
+    init() {
+        annotationsInfo = []
+        idGenerator = NSUUIDGenerator.instance
+    }
     
-    func doSomething(request: ManageRouteMap.Something.Request) {
-        worker = ManageRouteMapWorker()
-        worker?.doSomeWork()
-        
-        let response = ManageRouteMap.Something.Response()
-        presenter?.presentSomething(response: response)
+    // MARK: Use cases
+    
+    func createAnnotation(request: ManageRouteMap.SetAnnotation.Request) {
+        let id = idGenerator.generate()
+        let response = ManageRouteMap.SetAnnotation.Response(id: id, latitude: request.latitude, longitude: request.longitude)
+        presenter?.presentAnnotation(response: response)
     }
 }

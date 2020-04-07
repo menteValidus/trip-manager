@@ -39,6 +39,7 @@
 		0B8CE307243C8AF20065B7B5 /* ManageRouteMapModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE301243C8AF20065B7B5 /* ManageRouteMapModels.swift */; };
 		0B8CE308243C8AF20065B7B5 /* ManageRouteMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE302243C8AF20065B7B5 /* ManageRouteMapViewController.swift */; };
 		0B8CE309243C8AF20065B7B5 /* ManageRouteMapInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE303243C8AF20065B7B5 /* ManageRouteMapInteractor.swift */; };
+		0B8CE30F243CAC360065B7B5 /* IDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE30E243CAC360065B7B5 /* IDGenerator.swift */; };
 		0BD662F4241A457A0034B1D6 /* MapBoxRouteCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */; };
 		0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */; };
 		0BD662FC241A65500034B1D6 /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteFragment.swift */; };
@@ -103,6 +104,7 @@
 		0B8CE301243C8AF20065B7B5 /* ManageRouteMapModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapModels.swift; sourceTree = "<group>"; };
 		0B8CE302243C8AF20065B7B5 /* ManageRouteMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapViewController.swift; sourceTree = "<group>"; };
 		0B8CE303243C8AF20065B7B5 /* ManageRouteMapInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapInteractor.swift; sourceTree = "<group>"; };
+		0B8CE30E243CAC360065B7B5 /* IDGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDGenerator.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreation.swift; sourceTree = "<group>"; };
@@ -364,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				0B6CD85623F2E8CA006DCDDC /* RoutePointCoreDataStore.swift */,
+				0B8CE30E243CAC360065B7B5 /* IDGenerator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B8CE306243C8AF20065B7B5 /* ManageRouteMapRouter.swift in Sources */,
 				0B219307242228D2008C9224 /* SubrouteCell.swift in Sources */,
+				0B8CE30F243CAC360065B7B5 /* IDGenerator.swift in Sources */,
 				0BD662F4241A457A0034B1D6 /* MapBoxRouteCreation.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0B8CE307243C8AF20065B7B5 /* ManageRouteMapModels.swift in Sources */,

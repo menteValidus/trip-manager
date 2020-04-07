@@ -13,6 +13,18 @@
 import UIKit
 
 class ManageRouteMapWorker {
-    func doSomeWork() {
+    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    
+    func fetchAllAnnotationsInfo() -> [ManageRouteMap.AnnotationInfo] {
+        let routePoints = routePointGateway.fetchAll()
+        let annotationsInfo = routePoints.map { routePoint in
+            return convertRoutePointToAnnotationInfo(routePoint: routePoint)
+        }
+        return annotationsInfo
+    }
+    
+    private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.AnnotationInfo {
+        let annotationInfo = ManageRouteMap.AnnotationInfo(id: routePoint.id, latitude: routePoint.latitude, longitude: routePoint.longitude)
+        return annotationInfo
     }
 }

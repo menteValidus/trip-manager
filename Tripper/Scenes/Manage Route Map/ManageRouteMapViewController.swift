@@ -14,7 +14,7 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
-    func displaySomething(viewModel: ManageRouteMap.Something.ViewModel)
+    func displayAnnotation(viewModel: ManageRouteMap.SetAnnotation.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -27,6 +27,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var routeTimeLabel: UILabel!
     @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
     @IBOutlet weak var routeListBarItem: UIBarButtonItem!
+    
+    var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     
     // MARK: Object lifecycle
     
@@ -70,19 +72,45 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        registerGestureRecognizers()
+    }
+    
+    private func registerGestureRecognizers() {
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleMapLongPress(sender:)))
+        
+        for recognizer in mapView.gestureRecognizers! where recognizer is UILongPressGestureRecognizer {
+            longPressGestureRecognizer.require(toFail: recognizer)
+        }
+        mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
     // MARK: Do something
     
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = ManageRouteMap.Something.Request()
-        interactor?.doSomething(request: request)
+    func displayAnnotation(viewModel: ManageRouteMap.SetAnnotation.ViewModel) {
+        let annotation = MGLPointAnnotation()
+        let coordinate = CLLocationCoordinate2D(latitude: viewModel.latitude, longitude: viewModel.longitude)
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        annotationsID[annotation] = viewModel.id
     }
+}
+
+extension ManageRouteMapViewController: MGLMapViewDelegate {
     
-    func displaySomething(viewModel: ManageRouteMap.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    // MARK: - Map View's Delegates
+    
+    @objc func handleMapLongPress(sender: UILongPressGestureRecognizer) {
+        guard sender.state == .began else {
+            return
+        }
+        
+        let longPressedPoint: CGPoint = sender.location(in: mapView)
+        let coordinate: CLLocationCoordinate2D = mapView.convert(longPressedPoint, toCoordinateFrom: mapView)
+        
+        print("*** Long pressed on the map.")
+        
+        let request = ManageRouteMap.SetAnnotation.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        interactor?.createAnnotation(request: request)
+        
     }
 }

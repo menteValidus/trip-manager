@@ -73,6 +73,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapView" destination="xLl-8K-ctK" id="OnC-x8-mW2"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                     </connections>
                 </viewController>

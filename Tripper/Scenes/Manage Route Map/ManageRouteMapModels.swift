@@ -13,14 +13,41 @@
 import UIKit
 
 enum ManageRouteMap {
+    
+    struct AnnotationInfo {
+        let id: String
+        let latitude: Double
+        let longitude: Double
+    }
+    
     // MARK: Use cases
     
-    enum Something {
+    enum FetchAllAnnotationsInfo {
         struct Request {
         }
         struct Response {
+            
         }
         struct ViewModel {
+            
         }
     }
+    
+    enum SetAnnotation {
+        struct Request {
+            let latitude: Double
+            let longitude: Double
+        }
+        struct Response {
+            let id: String
+            let latitude: Double
+            let longitude: Double
+        }
+        struct ViewModel {
+            let id: String
+            let latitude: Double
+            let longitude: Double
+        }
+    }
+    
 }

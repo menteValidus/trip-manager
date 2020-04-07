@@ -99,7 +99,7 @@ class RouteController {
     init(delegate routeControllerDelegate: RouteControllerDelegate) {
         self.routeControllerDelegate = routeControllerDelegate
         
-        let fetchedPoints = routePointGateway.fetchAll()
+        let fetchedPoints: [RoutePointVM] = routePointGateway.fetchAll()
         points = fetchedPoints.sorted(by: { el1, el2 in
             if (el1.orderNumber < el2.orderNumber) {
                 return true
