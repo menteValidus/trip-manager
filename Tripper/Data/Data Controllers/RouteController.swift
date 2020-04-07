@@ -22,7 +22,7 @@ class RouteController {
     private let routeCreator: MapBoxRouteCreator
     
     // TODO: REMOVE
-    private(set) var points: [RoutePoint]
+    private(set) var points: [RoutePointVM]
     
     // TODO: MOVE TO INTERACTOR
     private var remainingRouteSegmentsToCalculate = 0
@@ -120,12 +120,12 @@ class RouteController {
     
     // MARK: - DB Communication Methods
     
-    private func add(point: RoutePoint) {
+    private func add(point: RoutePointVM) {
         points.append(point)
         routePointGateway.insert(point)
     }
     
-    func delete(routePoint: RoutePoint) {
+    func delete(routePoint: RoutePointVM) {
         var indexOfDeletingRoutePoint: Int? = nil
         
         for (index, point) in points.enumerated() {
@@ -147,7 +147,7 @@ class RouteController {
         routeControllerDelegate.routeControllerCleared()
     }
     
-    func update(routePoint: RoutePoint) {
+    func update(routePoint: RoutePointVM) {
         for index in 0..<points.count {
             if points[index].id == routePoint.id {
                 
@@ -160,7 +160,7 @@ class RouteController {
         routeControllerDelegate.routeControllerDidUpdated()
     }
     
-    private func updateWholeRouteDates(with routePoint: RoutePoint, at index: Int) {
+    private func updateWholeRouteDates(with routePoint: RoutePointVM, at index: Int) {
         if isProperForRouteCreation {
             switch index {
             case points.count - 1: // Last item.
@@ -181,7 +181,7 @@ class RouteController {
     // MARK: Update's Helper Methods
 
     /// Doesn't handle cases when accesed beyound the bounds of list.
-    private func updateDateAfter(index: Int, with newRoutePoint: RoutePoint) {
+    private func updateDateAfter(index: Int, with newRoutePoint: RoutePointVM) {
         let oldValueOfRP = points[index]
         
         if oldValueOfRP.departureDate != newRoutePoint.departureDate {
@@ -198,7 +198,7 @@ class RouteController {
     }
     
     /// Doesn't handle cases when accesed beyound the bounds of list.
-    private func updateDateBefore(index: Int, with newRoutePoint: RoutePoint) {
+    private func updateDateBefore(index: Int, with newRoutePoint: RoutePointVM) {
         let oldValueOfRP = points[index]
         
         if (oldValueOfRP.arrivalDate != newRoutePoint.arrivalDate) {
@@ -224,7 +224,7 @@ class RouteController {
         }
     }
     
-    private func createRouteFragment(from source: RoutePoint, to destination: RoutePoint) {
+    private func createRouteFragment(from source: RoutePointVM, to destination: RoutePointVM) {
         remainingRouteSegmentsToCalculate += 1
         routeControllerDelegate.routeControllerIsStartedRouting()
         
@@ -311,13 +311,13 @@ class RouteController {
     
     // MARK: - Helper Methods
     
-    func findRoutePointBy(id: String) -> RoutePoint? {
+    func findRoutePointBy(id: String) -> RoutePointVM? {
         return points.first(where: { routePoint in
             return routePoint.id == id
         })
     }
     
-    func getIndex(of routePoint: RoutePoint) -> Int? {
+    func getIndex(of routePoint: RoutePointVM) -> Int? {
         for (index, point) in points.enumerated() {
             if routePoint.id == point.id {
                 return index
@@ -339,20 +339,20 @@ class RouteController {
         }
     }
     
-    func createNextRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePoint {
+    func createNextRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePointVM {
         let newRoutePoint = getNextRoutePointInstance()
         newRoutePoint.coordinate = coordinate
         setNextRoutePoint(routePoint: newRoutePoint)
         return newRoutePoint
     }
     
-    private func getNextRoutePointInstance() -> RoutePoint {
-        let newRoutePoint = RoutePoint()
+    private func getNextRoutePointInstance() -> RoutePointVM {
+        let newRoutePoint = RoutePointVM()
         newRoutePoint.title = "Route point #\(nextRoutePointNumber)"
         return newRoutePoint
     }
     
-    private func setNextRoutePoint(routePoint: RoutePoint) {
+    private func setNextRoutePoint(routePoint: RoutePointVM) {
         add(point: routePoint)
         
         if isProperForRouteCreation {
@@ -363,7 +363,7 @@ class RouteController {
         }
     }
     
-    func leftLimitOf(_ routePoint: RoutePoint) -> Date? {
+    func leftLimitOf(_ routePoint: RoutePointVM) -> Date? {
         let index = getIndex(of: routePoint)
         
         if let index = index {
@@ -377,7 +377,7 @@ class RouteController {
         return nil
     }
     
-    func rightLimitOf(_ routePoint: RoutePoint) -> Date? {
+    func rightLimitOf(_ routePoint: RoutePointVM) -> Date? {
         let index = getIndex(of: routePoint)
         
         if let index = index {
@@ -391,7 +391,7 @@ class RouteController {
         return nil
     }
     
-    private func configureDates(for routePoint: RoutePoint, with sourceRoutePoint: RoutePoint, using routeTimeLength: TimeInterval) {
+    private func configureDates(for routePoint: RoutePointVM, with sourceRoutePoint: RoutePointVM, using routeTimeLength: TimeInterval) {
         if let sourceDepartureDate = sourceRoutePoint.departureDate {
             routePoint.arrivalDate = sourceDepartureDate.addingTimeInterval(routeTimeLength)
         } else {

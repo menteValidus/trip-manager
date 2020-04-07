@@ -23,7 +23,7 @@ class InRoad: Subroute {
     // MARK: - Factory
     
     struct Factory {
-        static func create(from sourceRoutePoint: RoutePoint) -> InRoad {
+        static func create(from sourceRoutePoint: RoutePointVM) -> InRoad {
             return InRoad(title: "Road", seconds: sourceRoutePoint.timeToNextPointInSeconds ?? 0,
                           metres: sourceRoutePoint.distanceToNextPointInMeters ?? 0)
         }

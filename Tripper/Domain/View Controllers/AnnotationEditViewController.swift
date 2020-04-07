@@ -23,7 +23,7 @@ class AnnotationEditViewController: UITableViewController {
     @IBOutlet weak var datePicker: UIDatePicker!
     
     var delegate: RoutePointEditDelegate!
-    var routePoint: RoutePoint!
+    var routePoint: RoutePointVM!
     var isEdit = false
     
     private var state: AnnotationEditState = .normal

@@ -23,7 +23,7 @@ class Staying: Subroute {
     // MARK: - Factory
     
     struct Factory {
-        static func create(from routePoint: RoutePoint) -> Staying {
+        static func create(from routePoint: RoutePointVM) -> Staying {
             return Staying(title: routePoint.title ?? "", seconds: routePoint.residenceTimeInSeconds ?? 0, description: routePoint.subtitle ?? "")
         }
     }

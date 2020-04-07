@@ -22,7 +22,7 @@ class AnnotationDetailViewController: UIViewController {
     
     var isEdit = false
     
-    weak var routePoint: RoutePoint!
+    weak var routePoint: RoutePointVM!
     weak var delegate: MapRouteDelegate!
     
     private var date: Date = Date()

@@ -9,10 +9,11 @@
 import CoreData
 
 protocol RoutePointDAO {
-    func fetchAll() -> [RoutePoint]
-    func insert(_ point: RoutePoint)
-    func update(_ point: RoutePoint)
-    func delete(_ point: RoutePoint)
+    func fetchAll() -> [RoutePointVM]
+    func deleteAll()
+    func insert(_ point: RoutePointVM)
+    func update(_ point: RoutePointVM)
+    func delete(_ point: RoutePointVM)
 }
 
 class RoutePointCoreDataStore: RoutePointDAO {
@@ -57,7 +58,7 @@ class RoutePointCoreDataStore: RoutePointDAO {
     
     // MARK: - Database's Queries
     
-    func fetchAll() -> [RoutePoint] {
+    func fetchAll() -> [RoutePointVM] {
         let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
         let fetchedPoints: [RoutePointEntity]
         do {
@@ -67,7 +68,7 @@ class RoutePointCoreDataStore: RoutePointDAO {
             fetchedPoints = []
         }
         
-        var routePoints: [RoutePoint] = []
+        var routePoints: [RoutePointVM] = []
         
         for pointEntity in fetchedPoints {
             routePoints.append(convertEntityToRoutePoint(pointEntity))
@@ -76,7 +77,7 @@ class RoutePointCoreDataStore: RoutePointDAO {
         return routePoints
     }
     
-    func insert(_ point: RoutePoint) {
+    func insert(_ point: RoutePointVM) {
         let entity = NSEntityDescription.entity(forEntityName: DataModelDB.Entities.RoutePointEntity.name, in: managedObjectContext)!
         
         let routePointObject = NSManagedObject(entity: entity, insertInto: managedObjectContext) as! RoutePointEntity
@@ -90,7 +91,7 @@ class RoutePointCoreDataStore: RoutePointDAO {
         
     }
     
-    func update(_ point: RoutePoint) {
+    func update(_ point: RoutePointVM) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
             NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.name)
         fetchRequest.predicate = NSPredicate(format: "id = %@", point.id)
@@ -101,14 +102,14 @@ class RoutePointCoreDataStore: RoutePointDAO {
                 configure(entity: pointToUpdate, with: point)
                 try managedObjectContext.save()
             } else {
-                throwAn(errorMessage: "There is no way we can be here!!!")
+                fatalError("There is no way we can be here!!!")
             }
         } catch {
-            throwAn(error: error)
+            fatalError("Update's Error: \(error)")
         }
     }
     
-    func delete(_ point: RoutePoint) {
+    func delete(_ point: RoutePointVM) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
             NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.name)
         fetchRequest.predicate = NSPredicate(format: "id = %@", point.id)
@@ -122,7 +123,7 @@ class RoutePointCoreDataStore: RoutePointDAO {
             try managedObjectContext.save()
             
         } catch {
-            throwAn(error: error)
+            fatalError("Delete's Error: \(error)")
         }
     }
     
@@ -134,14 +135,14 @@ class RoutePointCoreDataStore: RoutePointDAO {
         do {
             try managedObjectContext.execute(batchDeleteRequest)
         } catch {
-            throwAn(errorMessage: "CoreDataDAO.clearRoutePointEntity error: \(error)")
+            fatalError("Clear's Error: \(error)")
         }
     }
     
     // MARK: - Converters
     
-    private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
-        let point = RoutePoint(id: entity.id!, orderNumber: Int(entity.orderNumber), longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
+    private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePointVM {
+        let point = RoutePointVM(id: entity.id!, orderNumber: Int(entity.orderNumber), longitude: entity.longitude, latitude: entity.latitude, title: entity.title ?? "", subtitle: entity.subtitle ?? "")
         point.arrivalDate = entity.arrivalDate
         point.departureDate = entity.departureDate
         point.timeToNextPointInMinutes = Int(entity.timeToNextPointInSeconds / 60)
@@ -149,7 +150,7 @@ class RoutePointCoreDataStore: RoutePointDAO {
         return point
     }
     
-    private func configure(entity: RoutePointEntity, with routePoint: RoutePoint) {
+    private func configure(entity: RoutePointEntity, with routePoint: RoutePointVM) {
         entity.setValue(routePoint.id, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.id)
         entity.setValue(routePoint.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.longitude)
         entity.setValue(routePoint.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.latitude)

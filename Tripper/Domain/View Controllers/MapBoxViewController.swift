@@ -28,13 +28,13 @@ fileprivate enum MapViewStatus {
 }
 
 protocol MapRouteDelegate: class {
-    func mapRoute(performEditFor routePoint: RoutePoint)
-    func mapRoute(didDeleted routePoint: RoutePoint)
+    func mapRoute(performEditFor routePoint: RoutePointVM)
+    func mapRoute(didDeleted routePoint: RoutePointVM)
 }
 
 protocol RoutePointEditDelegate: class {
-    func route(pointEdited routePoint: RoutePoint)
-    func route(pointCreated routePoint: RoutePoint)
+    func route(pointEdited routePoint: RoutePointVM)
+    func route(pointCreated routePoint: RoutePointVM)
     func routePointCreationDidCancelled()
 }
 
@@ -57,7 +57,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     // TODO: REMOVE
     private var status: MapViewStatus!
     private var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
-    private var newCreatedRP: RoutePoint? = nil
+    private var newCreatedRP: RoutePointVM? = nil
     
     // TODO: REMOVE
     private var detailViewController: AnnotationDetailViewController? = nil
@@ -156,7 +156,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
                 presentingController.routePoint = createdRoutePoint
                 presentingController.isEdit = false
             } else {
-                let routePoint = (sender as! RoutePoint)
+                let routePoint = (sender as! RoutePointVM)
                 let leftDateLimit = routeController.leftLimitOf(routePoint)
                 presentingController.leftDateLimit = leftDateLimit
                 let rightDateLimit = routeController.rightLimitOf(routePoint)
@@ -176,7 +176,7 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     // TODO: MOVE IT TO THE SHOW DETAIL SCENE. HEIGHT, WIDTH AND OFFSET SET THROUGH CONSTRUCTOR.
-    private func showDetail(of routePoint: RoutePoint) {
+    private func showDetail(of routePoint: RoutePointVM) {
         let height = view.frame.height
         let width  = view.frame.width
         let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
@@ -338,7 +338,7 @@ extension MapBoxViewController: MGLMapViewDelegate {
     // MARK: - Helper Methods
     
     // TODO: MOVE TO PRESENTER.
-    private func setAnnotation(at routePoint: RoutePoint) {
+    private func setAnnotation(at routePoint: RoutePointVM) {
         let annotation = MGLPointAnnotation()
         annotation.title = routePoint.title
         annotation.subtitle = routePoint.subtitle
@@ -379,13 +379,13 @@ extension MapBoxViewController: MapRouteDelegate {
     // MARK: - Map Route Delegate
     
     // TODO: MOVE TO ROUTER
-    func mapRoute(performEditFor routePoint: RoutePoint) {
+    func mapRoute(performEditFor routePoint: RoutePointVM) {
         dismissDetail()
         performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: routePoint)
     }
     
     // TODO: MOVE TO INTERACTOR
-    func mapRoute(didDeleted routePoint: RoutePoint) {
+    func mapRoute(didDeleted routePoint: RoutePointVM) {
         dismissDetail()
         routeController.delete(routePoint: routePoint)
     }
@@ -395,14 +395,14 @@ extension MapBoxViewController: MapRouteDelegate {
 extension MapBoxViewController: RoutePointEditDelegate {
     // MARK: - Route's Point Edit Delegate
     
-    func route(pointCreated routePoint: RoutePoint) {
+    func route(pointCreated routePoint: RoutePointVM) {
         routeController.update(routePoint: routePoint)
         setAnnotation(at: routePoint)
         
         setUIStatus(.routeMapping)
     }
     
-    func route(pointEdited routePoint: RoutePoint) {
+    func route(pointEdited routePoint: RoutePointVM) {
         routeController.update(routePoint: routePoint)
         print("*** Did edited: \(routePoint)")
     }
@@ -427,7 +427,7 @@ extension MapBoxViewController: RoutePointEditDelegate {
 extension MapBoxViewController: RouteControllerDelegate {
     // MARK: - Route Controller's Delegate
     
-    func routeController(didDeleted routePoint: RoutePoint) {
+    func routeController(didDeleted routePoint: RoutePointVM) {
         for (annotation, id) in annotationsID {
             if id == routePoint.id {
                 mapView.removeAnnotation(annotation)
@@ -490,7 +490,7 @@ extension MapBoxViewController: RouteControllerDelegate {
         setUIStatus(.routeMapping)
     }
     
-    func routeControllerError(with routePoint: RoutePoint) {
+    func routeControllerError(with routePoint: RoutePointVM) {
         setUIStatus(.routeMapping)
         
         let alert = UIAlertController(title: "Route Creation Error", message: "Route to this point can not be created!", preferredStyle: .alert)
