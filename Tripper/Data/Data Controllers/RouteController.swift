@@ -16,7 +16,7 @@ import CoreLocation
 class RouteController {
     var routeControllerDelegate: RouteControllerDelegate
     
-    private let routePointGateway = CoreDataRoutePointDAO()
+    private let routePointGateway = RoutePointCoreDataStore()
     
     // TODO: MOVE TO SHOWROUTEMAP'S WORKER
     private let routeCreator: MapBoxRouteCreator

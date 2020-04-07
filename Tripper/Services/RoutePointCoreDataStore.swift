@@ -8,7 +8,14 @@
 
 import CoreData
 
-class CoreDataRoutePointDAO: RoutePointDAO {
+protocol RoutePointDAO {
+    func fetchAll() -> [RoutePoint]
+    func insert(_ point: RoutePoint)
+    func update(_ point: RoutePoint)
+    func delete(_ point: RoutePoint)
+}
+
+class RoutePointCoreDataStore: RoutePointDAO {
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: DataModelDB.name)

@@ -10,7 +10,7 @@
         <!--Map-->
         <scene sceneID="wNa-ef-LbL">
             <objects>
-                <viewController id="4Cc-Fh-swH" customClass="MapBoxViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4Cc-Fh-swH" customClass="ManageRouteMapViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kbD-OJ-czS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -65,11 +65,7 @@
                         <viewLayoutGuide key="safeArea" id="GF8-cM-mMC"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="QkS-8f-1If">
-                        <barButtonItem key="leftBarButtonItem" title="Clear all" id="iLe-Zf-5sl">
-                            <connections>
-                                <action selector="clearAll:" destination="4Cc-Fh-swH" id="mgv-dk-BgA"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Clear all" id="iLe-Zf-5sl"/>
                         <barButtonItem key="rightBarButtonItem" title="Route" id="3YU-Yf-sPd">
                             <connections>
                                 <segue destination="OXZ-HK-1RU" kind="show" identifier="ShowRouteList" id="FzE-9f-Hug"/>
@@ -77,12 +73,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="clearAllBarItem" destination="iLe-Zf-5sl" id="jZn-Kk-5S5"/>
-                        <outlet property="mapView" destination="xLl-8K-ctK" id="gX8-yR-d53"/>
-                        <outlet property="routeEstimationView" destination="XLC-aH-rfK" id="CDi-ft-Oc0"/>
-                        <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="v57-14-cOn"/>
-                        <outlet property="routeListBarItem" destination="3YU-Yf-sPd" id="fYl-SI-56g"/>
-                        <outlet property="routeTimeLabel" destination="Zke-0f-ISY" id="JvY-F6-FCr"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                     </connections>
                 </viewController>

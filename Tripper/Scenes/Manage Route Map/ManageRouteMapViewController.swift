@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
     func displaySomething(viewModel: ManageRouteMap.Something.ViewModel)
@@ -19,6 +20,13 @@ protocol ManageRouteMapDisplayLogic: class {
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
     var interactor: ManageRouteMapBusinessLogic?
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
+    
+    @IBOutlet weak var mapView: MGLMapView!
+    @IBOutlet weak var routeEstimationView: UIView!
+    @IBOutlet weak var routeLengthLabel: UILabel!
+    @IBOutlet weak var routeTimeLabel: UILabel!
+    @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
+    @IBOutlet weak var routeListBarItem: UIBarButtonItem!
     
     // MARK: Object lifecycle
     
