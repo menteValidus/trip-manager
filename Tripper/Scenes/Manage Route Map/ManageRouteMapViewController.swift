@@ -14,6 +14,7 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
+    func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
 }
@@ -83,11 +84,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         registerGestureRecognizers()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // TODO: Refetch data to check is there new ones.
-    }
-    
     private func registerGestureRecognizers() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleMapLongPress(sender:)))
         
@@ -95,6 +91,17 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             longPressGestureRecognizer.require(toFail: recognizer)
         }
         mapView.addGestureRecognizer(longPressGestureRecognizer)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reloadAnnotationsData()
+        // TODO: Refetch data to check is there new ones.
+    }
+    
+    private func reloadAnnotationsData() {
+        let request = ManageRouteMap.FetchNewAnnotationsInfo.Request()
+        interactor?.fetchNewAnnotationsInfo(request: request)
     }
     
     // MARK: Create Route Point
@@ -110,6 +117,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel) {
         setAnnotation(annotationInfo: viewModel.annotationInfo)
+    }
+    
+    // MARK: Fetch new annotations info
+    func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
+        
     }
     
 }

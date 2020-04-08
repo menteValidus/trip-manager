@@ -22,7 +22,7 @@ enum ManageRouteMap {
     
     // MARK: Use cases
     
-    enum FetchAllAnnotationsInfo {
+    enum FetchNewAnnotationsInfo {
         struct Request {
         }
         struct Response {

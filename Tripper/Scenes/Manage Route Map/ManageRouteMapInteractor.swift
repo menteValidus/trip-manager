@@ -13,7 +13,7 @@
 import UIKit
 
 protocol ManageRouteMapBusinessLogic {
-//    func getAnnotationsInfo(request: ManageRouteMap.Something.Request)
+    func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request)
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
 //    func deselectAnnotation(request)
@@ -55,7 +55,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         idGenerator = NSUUIDGenerator.instance
     }
     
-    // MARK: Use cases
+    // MARK: Create route point
     
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
         // If new point is creating there is no selected point.
@@ -65,6 +65,14 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         let id = idGenerator.generate()
         let response = ManageRouteMap.CreateRoutePoint.Response(id: id, latitude: request.latitude, longitude: request.longitude)
         presenter?.presentAnnotationCreation(response: response)
+    }
+    
+    // MARK: Fetch new annotations info
+    
+    func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
+        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response()
+        
+        presenter?.presentFetchNewAnnotationsInfo(response: response)
     }
     
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request) {

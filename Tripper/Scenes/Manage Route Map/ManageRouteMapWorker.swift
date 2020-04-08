@@ -15,12 +15,24 @@ import UIKit
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
     
-    func fetchAllAnnotationsInfo() -> [ManageRouteMap.ConcreteAnnotationInfo] {
-        let routePoints = routePointGateway.fetchAll()
-        let annotationsInfo = routePoints.map { routePoint in
-            return convertRoutePointToAnnotationInfo(routePoint: routePoint)
+    private let routePoints: [RoutePoint] = []
+    
+    func fetchNewAnnotationsInfo() -> [ManageRouteMap.ConcreteAnnotationInfo] {
+        let fetchedRoutePoints = routePointGateway.fetchAll()
+        var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
+        
+        fetchedRoutePoints.forEach() { routePoint in
+            let isContained = fetchedRoutePoints.contains(where: {
+                return $0.id == routePoint.id
+            })
+            
+            if !isContained {
+                let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
+                newAnnotationsInfo.append(annotationInfo)
+            }
         }
-        return annotationsInfo
+        
+        return newAnnotationsInfo
     }
     
     private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {

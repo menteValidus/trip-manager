@@ -13,6 +13,7 @@
 import UIKit
 
 protocol ManageRouteMapPresentationLogic {
+    func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response)
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
 }
@@ -20,7 +21,7 @@ protocol ManageRouteMapPresentationLogic {
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     weak var viewController: ManageRouteMapDisplayLogic?
     
-    // MARK: Do something
+    // MARK: Annotation creation
     
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response) {
         let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel(
@@ -28,8 +29,17 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
         viewController?.displayCreateRoutePoint(viewModel: viewModel)
     }
     
+    // MARK: Set route point
+    
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response) {
         let viewModel = ManageRouteMap.SetRoutePoint.ViewModel(annotationInfo: response.annotationInfo)
         viewController?.displaySetRoutePoint(viewModel: viewModel)
+    }
+    
+    // MARK: Fetch new annotations info
+    
+    func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
+        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel()
+        viewController?.displayFetchNewAnnotationsInfo(viewModel: viewModel)
     }
 }
