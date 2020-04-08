@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol CreateRoutePointRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToManageRouteMap(segue: UIStoryboardSegue?)
 }
 
 protocol CreateRoutePointDataPassing {
@@ -26,32 +26,32 @@ class CreateRoutePointRouter: NSObject, CreateRoutePointRoutingLogic, CreateRout
     
     // MARK: Routing
     
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-    //{
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
+    func routeToManageRouteMap(segue: UIStoryboardSegue?)
+    {
+      if let segue = segue {
+        let destinationVC = segue.destination as! ManageRouteMapViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+      } else {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "ManageRouteMapViewController") as! ManageRouteMapViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+        navigateToSomewhere(source: viewController!, destination: destinationVC)
+      }
+    }
     
     // MARK: Navigation
     
-    //func navigateToSomewhere(source: CreateRoutePointViewController, destination: SomewhereViewController)
-    //{
-    //  source.show(destination, sender: nil)
-    //}
+    func navigateToSomewhere(source: CreateRoutePointViewController, destination: ManageRouteMapViewController)
+    {
+        source.navigationController?.popViewController(animated: true)
+    }
     
     // MARK: Passing data
     
-    //func passDataToSomewhere(source: CreateRoutePointDataStore, destination: inout SomewhereDataStore)
-    //{
-    //  destination.name = source.name
-    //}
+    func passDataToSomewhere(source: CreateRoutePointDataStore, destination: inout ManageRouteMapDataStore)
+    {
+        destination.selectedRoutePoint = source.pointToSave
+    }
 }

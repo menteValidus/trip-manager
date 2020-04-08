@@ -32,4 +32,26 @@ enum CreateRoutePoint {
             let annotationForm: DisplayableAnnotationInfo
         }
     }
+    
+    enum SaveRoutePoint {
+        struct Request {
+            let title: String
+            let description: String
+            let arrivalDate: Date
+            let departureDate: Date
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+    enum CancelCreation {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
 }

@@ -14,6 +14,8 @@ import UIKit
 
 protocol CreateRoutePointDisplayLogic: class {
     func displayRoutePointForm(viewModel: CreateRoutePoint.FormRoutePoint.ViewModel)
+    func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel)
+    func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel)
 }
 
 class CreateRoutePointViewController: UITableViewController, CreateRoutePointDisplayLogic {
@@ -76,11 +78,40 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var arrivalDateLabel: UITableViewCell!
-    @IBOutlet weak var departureDateLabel: UITableViewCell!
-    
+    @IBOutlet weak var arrivalDateLabel: UILabel!
+    @IBOutlet weak var departureDateLabel: UILabel!
     
     func displayRoutePointForm(viewModel: CreateRoutePoint.FormRoutePoint.ViewModel) {
-        titleTextField.text = "TEST"
+        titleTextField.text = viewModel.annotationForm.title
+        descriptionTextView.text = viewModel.annotationForm.subtitle
+        arrivalDateLabel.text = viewModel.annotationForm.arrivalDate
+        departureDateLabel.text = viewModel.annotationForm.departureDate
     }
+    
+    // MARK: Cancel Creation
+    
+    @IBAction func cancel(_ sender: Any) {
+    }
+    
+    func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel) {
+        
+    }
+    
+    // MARK: Save Route Point
+    
+    @IBAction func save(_ sender: Any) {
+        let title = titleTextField.text!
+        let description = descriptionTextView.text!
+        let arrivalDate = Date()
+        let departureDate = Date()
+        
+        let request = CreateRoutePoint.SaveRoutePoint.Request(
+            title: title, description: description, arrivalDate: arrivalDate, departureDate: departureDate)
+        interactor?.saveRoutePoint(request: request)
+    }
+    
+    func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel) {
+        router?.routeToManageRouteMap(segue: nil)
+    }
+    
 }

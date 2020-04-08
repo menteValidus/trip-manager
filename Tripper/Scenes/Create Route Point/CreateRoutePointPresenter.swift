@@ -13,7 +13,8 @@
 import UIKit
 
 protocol CreateRoutePointPresentationLogic {
-    func presentRoutePointForm(response: CreateRoutePoint.FormRoutePoint.Response)
+    func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response)
+    func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response)
 }
 
 class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
@@ -26,9 +27,9 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         return dateFormatter
     }()
     
-    // MARK: Do something
+    // MARK: Form Route Point
     
-    func presentRoutePointForm(response: CreateRoutePoint.FormRoutePoint.Response) {
+    func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response) {
         let title = response.routePoint.title ?? ""
         let subtitle = response.routePoint.subtitle ?? ""
         
@@ -43,5 +44,10 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         
         let viewModel = CreateRoutePoint.FormRoutePoint.ViewModel(annotationForm: annotationForm)
         viewController?.displayRoutePointForm(viewModel: viewModel)
+    }
+    
+    func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response) {
+        let viewModel = CreateRoutePoint.SaveRoutePoint.ViewModel()
+        viewController?.displaySaveRoutePoint(viewModel: viewModel)
     }
 }

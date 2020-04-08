@@ -83,6 +83,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         registerGestureRecognizers()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // TODO: Refetch data to check is there new ones.
+    }
+    
     private func registerGestureRecognizers() {
         let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleMapLongPress(sender:)))
         

@@ -14,18 +14,19 @@ import UIKit
 
 protocol CreateRoutePointBusinessLogic {
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request)
+    func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request)
 }
 
 protocol CreateRoutePointDataStore {
-    var pointToEdit: RoutePoint? { get set }
+    var pointToSave: RoutePoint? { get set }
 }
 
 class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePointDataStore {
     var presenter: CreateRoutePointPresentationLogic?
     var worker: CreateRoutePointWorker?
-    var pointToEdit: RoutePoint?
+    var pointToSave: RoutePoint?
     
-    // MARK: Do something
+    // MARK: Form Route Point
     
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request) {
 //        worker = CreateRoutePointWorker()
@@ -36,12 +37,27 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
 //            arrivalDate: pointToEdit?.arrivalDate, departureDate: pointToEdit?.departureDate,
 //            timeToNextPointInSeconds: pointToEdit?.timeToNextPointInSeconds,
 //            distanceToNextPointInMeters: pointToEdit?.distanceToNextPointInMeters)
-        if let routePoint = pointToEdit {
-            let response = CreateRoutePoint.FormRoutePoint.Response(routePoint: routePoint)
-            presenter?.presentRoutePointForm(response: response)
+        if pointToSave == nil {
+            pointToSave = createNewRoutePoint()
+        }
+        
+        let response = CreateRoutePoint.FormRoutePoint.Response(routePoint: pointToSave!)
+        presenter?.presentFormRoutePoint(response: response)
+    }
+    
+    func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request) {
+        if pointToSave != nil {
+            pointToSave?.title = request.title
+            pointToSave?.subtitle = request.description
+            pointToSave?.arrivalDate = request.arrivalDate
+            pointToSave?.departureDate = request.departureDate
+            
+            worker?.save(routePoint: pointToSave!)
+            
+            let response = CreateRoutePoint.SaveRoutePoint.Response()
+            presenter?.presentSaveRoutePoint(response: response)
         } else {
-            let response = CreateRoutePoint.FormRoutePoint.Response(routePoint: createNewRoutePoint())
-            presenter?.presentRoutePointForm(response: response)
+            fatalError("*** There's no way we can be here!")
         }
     }
     

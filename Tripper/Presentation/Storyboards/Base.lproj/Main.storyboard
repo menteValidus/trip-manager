@@ -10,7 +10,7 @@
         <!--Map-->
         <scene sceneID="wNa-ef-LbL">
             <objects>
-                <viewController id="4Cc-Fh-swH" customClass="ManageRouteMapViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ManageRouteMapViewController" id="4Cc-Fh-swH" customClass="ManageRouteMapViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kbD-OJ-czS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -311,12 +311,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit" id="9yP-FM-o6c">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC"/>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci"/>
+                        <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC">
+                            <connections>
+                                <action selector="save:" destination="CC2-X3-ZR1" id="9QL-e6-HHc"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci">
+                            <connections>
+                                <action selector="cancel:" destination="CC2-X3-ZR1" id="XNO-ax-Cvj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="arrivalDateLabel" destination="iEl-HP-hxO" id="JWd-wl-j5k"/>
-                        <outlet property="departureDateLabel" destination="kkj-SC-e8d" id="OdG-9L-QT6"/>
+                        <outlet property="arrivalDateLabel" destination="7AX-QS-LgD" id="gUW-H7-Oj2"/>
+                        <outlet property="departureDateLabel" destination="2EA-3Z-woD" id="u4J-bQ-BKQ"/>
                         <outlet property="descriptionTextView" destination="TEf-6K-txB" id="sGr-Vs-Voh"/>
                         <outlet property="titleTextField" destination="U96-IW-Gzb" id="bCF-ZL-N47"/>
                     </connections>

@@ -20,7 +20,7 @@ protocol ManageRouteMapBusinessLogic {
 }
 
 protocol ManageRouteMapDataStore {
-    var selectedRoutePoint: RoutePoint? { get }
+    var selectedRoutePoint: RoutePoint? { get set }
 }
 
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
@@ -30,13 +30,23 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var idGenerator: IDGenerator
     
     var annotationsInfo: [AnnotationInfo]
-    var indexOfSelectedAnnotation: Int?
+    var idOfSelectedAnnotation: String?
     
     var selectedRoutePoint: RoutePoint? {
-        if let index = indexOfSelectedAnnotation {
-            return annotationsInfo[index] as? RoutePoint
-        } else {
-            return nil
+        get {
+            if let id = idOfSelectedAnnotation {
+                let selectedAnnotation = annotationsInfo.first(where: {
+                    return $0.id == id
+                })
+                
+                return selectedAnnotation as? RoutePoint
+            } else {
+                return nil
+            }
+        }
+        
+        set {
+            idOfSelectedAnnotation = newValue?.id
         }
     }
     
@@ -50,7 +60,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
         // If new point is creating there is no selected point.
         // TODO: Should extract this logic to separate use case.
-        indexOfSelectedAnnotation = nil
+        idOfSelectedAnnotation = nil
         
         let id = idGenerator.generate()
         let response = ManageRouteMap.CreateRoutePoint.Response(id: id, latitude: request.latitude, longitude: request.longitude)

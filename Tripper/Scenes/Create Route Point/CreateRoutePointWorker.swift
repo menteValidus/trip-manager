@@ -13,6 +13,27 @@
 import UIKit
 
 class CreateRoutePointWorker {
-    func doSomeWork() {
+    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    
+    func save(routePoint: RoutePoint) {
+        let routePoints = routePointGateway.fetchAll()
+        
+        let alreadyCreated = routePoints.contains(where: {
+            return $0.id == routePoint.id
+        })
+        
+        if alreadyCreated {
+            update(routePoint: routePoint)
+        } else {
+            insert(routePoint: routePoint)
+        }
+    }
+    
+    func insert(routePoint: RoutePoint) {
+        routePointGateway.insert(routePoint)
+    }
+    
+    func update(routePoint: RoutePoint) {
+        routePointGateway.update(routePoint)
     }
 }
