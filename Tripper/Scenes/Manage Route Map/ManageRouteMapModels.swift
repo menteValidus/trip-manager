@@ -14,7 +14,7 @@ import UIKit
 
 enum ManageRouteMap {
     
-    struct AnnotationInfo {
+    struct ConcreteAnnotationInfo: AnnotationInfo {
         let id: String
         let latitude: Double
         let longitude: Double
@@ -33,7 +33,7 @@ enum ManageRouteMap {
         }
     }
     
-    enum SetAnnotation {
+    enum CreateRoutePoint {
         struct Request {
             let latitude: Double
             let longitude: Double
@@ -47,6 +47,17 @@ enum ManageRouteMap {
             let id: String
             let latitude: Double
             let longitude: Double
+        }
+    }
+    
+    enum SetRoutePoint {
+        struct Request {
+        }
+        struct Response {
+            let annotationInfo: AnnotationInfo
+        }
+        struct ViewModel {
+            let annotationInfo: AnnotationInfo
         }
     }
     

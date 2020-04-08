@@ -14,7 +14,8 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
-    func displayAnnotation(viewModel: ManageRouteMap.SetAnnotation.ViewModel)
+    func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
+    func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -91,15 +92,21 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
-    // MARK: Do something
+    // MARK: Create Route Point
     
-    func displayAnnotation(viewModel: ManageRouteMap.SetAnnotation.ViewModel) {
-        let annotation = MGLPointAnnotation()
-        let coordinate = CLLocationCoordinate2D(latitude: viewModel.latitude, longitude: viewModel.longitude)
-        annotation.coordinate = coordinate
-        mapView.addAnnotation(annotation)
-        annotationsID[annotation] = viewModel.id
+    func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
+//        let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(
+//            id: viewModel.id, latitude: viewModel.latitude, longitude: viewModel.longitude)
+//        setAnnotation(annotationInfo: annotationInfo)
+        router?.routeToCreateRoutePoint(segue: nil)
     }
+    
+    // MARK: Set Route Point
+    
+    func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel) {
+        setAnnotation(annotationInfo: viewModel.annotationInfo)
+    }
+    
 }
 
 extension ManageRouteMapViewController: MGLMapViewDelegate {
@@ -116,9 +123,18 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         print("*** Long pressed on the map.")
         
-        let request = ManageRouteMap.SetAnnotation.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        interactor?.createAnnotation(request: request)
+        let request = ManageRouteMap.CreateRoutePoint.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        interactor?.createRoutePoint(request: request)
 //        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
-        router?.routeToCreateRoutePoint(segue: nil)
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func setAnnotation(annotationInfo: AnnotationInfo) {
+        let annotation = MGLPointAnnotation()
+        let coordinate = CLLocationCoordinate2D(latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
+        annotation.coordinate = coordinate
+        mapView.addAnnotation(annotation)
+        annotationsID[annotation] = annotationInfo.id
     }
 }

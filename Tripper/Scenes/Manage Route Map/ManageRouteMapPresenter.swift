@@ -13,7 +13,8 @@
 import UIKit
 
 protocol ManageRouteMapPresentationLogic {
-    func presentAnnotation(response: ManageRouteMap.SetAnnotation.Response)
+    func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
+    func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -21,8 +22,14 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     
     // MARK: Do something
     
-    func presentAnnotation(response: ManageRouteMap.SetAnnotation.Response) {
-        let viewModel = ManageRouteMap.SetAnnotation.ViewModel(id: response.id, latitude: response.latitude, longitude: response.longitude)
-        viewController?.displayAnnotation(viewModel: viewModel)
+    func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response) {
+        let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel(
+            id: response.id, latitude: response.latitude, longitude: response.longitude)
+        viewController?.displayCreateRoutePoint(viewModel: viewModel)
+    }
+    
+    func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response) {
+        let viewModel = ManageRouteMap.SetRoutePoint.ViewModel(annotationInfo: response.annotationInfo)
+        viewController?.displaySetRoutePoint(viewModel: viewModel)
     }
 }
