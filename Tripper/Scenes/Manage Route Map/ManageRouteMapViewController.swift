@@ -58,6 +58,13 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     // MARK: Routing
+//    struct SeguesIdentifiers {
+//        /// You should assign RoutePoint object as sender to this segue.
+//        static let showAnnotationDetail = "ShowAnnotationDetail"
+//        /// You should assign RoutePoint object as sender to this segue.
+//        static let showAnnotationEdit = "ShowAnnotationEdit"
+//        static let showRouteList = "ShowRouteList"
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
@@ -111,6 +118,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         let request = ManageRouteMap.SetAnnotation.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
         interactor?.createAnnotation(request: request)
-        
+//        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
+        router?.routeToCreateRoutePoint(segue: nil)
     }
 }

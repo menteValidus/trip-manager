@@ -9,10 +9,27 @@
 import Foundation
 import CoreLocation
 
-struct RoutePoint {
-    let id: String
-    var orderNumber: Int
+protocol AnnotationInfo {
+    var id: String { get }
+    var latitude: Double { get }
+    var longitude: Double { get }
+}
+
+protocol AnnotationForm {
+    var title: String? { get set }
+    var subtitle: String? { get set }
     
+    var arrivalDate: Date? { get set }
+    var departureDate: Date? { get set }
+    
+    var timeToNextPointInSeconds: Int? { get set }
+    var distanceToNextPointInMeters: Int? { get set }
+}
+
+struct RoutePoint: AnnotationInfo, AnnotationForm {
+    let id: String
+    
+    var orderNumber: Int
     var title: String?
     var subtitle: String?
     var latitude: Double = 0

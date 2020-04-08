@@ -190,7 +190,7 @@
         <!--Edit-->
         <scene sceneID="Zyu-tu-Wmh">
             <objects>
-                <tableViewController id="CC2-X3-ZR1" customClass="AnnotationEditViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="CreateRoutePointViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CC2-X3-ZR1" customClass="CreateRoutePointViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="bBu-Lb-dae">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -311,24 +311,14 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit" id="9yP-FM-o6c">
-                        <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC">
-                            <connections>
-                                <action selector="save:" destination="CC2-X3-ZR1" id="ud6-XK-h66"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci">
-                            <connections>
-                                <action selector="cancel:" destination="CC2-X3-ZR1" id="HIu-47-O2I"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC"/>
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="arrivalDateLabel" destination="7AX-QS-LgD" id="E5d-Ql-Y6g"/>
-                        <outlet property="datePicker" destination="Jal-xU-VnU" id="OaQ-JT-4If"/>
-                        <outlet property="datePickerCell" destination="SbG-nK-LNV" id="gXz-de-nxe"/>
-                        <outlet property="departureDateLabel" destination="2EA-3Z-woD" id="IAY-qr-NyN"/>
-                        <outlet property="descriptionTextView" destination="TEf-6K-txB" id="RKM-82-hR3"/>
-                        <outlet property="titleTextField" destination="U96-IW-Gzb" id="P7Z-kq-Kc3"/>
+                        <outlet property="arrivalDateLabel" destination="iEl-HP-hxO" id="JWd-wl-j5k"/>
+                        <outlet property="departureDateLabel" destination="kkj-SC-e8d" id="OdG-9L-QT6"/>
+                        <outlet property="descriptionTextView" destination="TEf-6K-txB" id="sGr-Vs-Voh"/>
+                        <outlet property="titleTextField" destination="U96-IW-Gzb" id="bCF-ZL-N47"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Pk-bw-zvl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -341,9 +331,6 @@
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Jal-xU-VnU">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="217"/>
-                                <connections>
-                                    <action selector="dataChanged:" destination="CC2-X3-ZR1" eventType="valueChanged" id="YW1-if-hlC"/>
-                                </connections>
                             </datePicker>
                         </subviews>
                         <constraints>

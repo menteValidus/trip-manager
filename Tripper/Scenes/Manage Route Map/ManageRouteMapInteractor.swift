@@ -18,15 +18,25 @@ protocol ManageRouteMapBusinessLogic {
 }
 
 protocol ManageRouteMapDataStore {
-    //var name: String { get set }
+    var selectedRoutePoint: RoutePoint? { get }
 }
 
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
-    var annotationsInfo: [ManageRouteMap.AnnotationInfo]
+    
     var idGenerator: IDGenerator
-    //var name: String = ""
+    
+    var annotationsInfo: [AnnotationInfo]
+    var indexOfSelectedAnnotation: Int?
+    
+    var selectedRoutePoint: RoutePoint? {
+        if let index = indexOfSelectedAnnotation {
+            return annotationsInfo[index] as? RoutePoint
+        } else {
+            return nil
+        }
+    }
     
     init() {
         annotationsInfo = []
