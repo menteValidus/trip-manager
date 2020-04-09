@@ -14,6 +14,7 @@ import UIKit
 
 @objc protocol ManageRouteMapRoutingLogic {
     func routeToCreateRoutePoint(segue: UIStoryboardSegue?)
+    func routeToDetailRoutePoint(segue: UIStoryboardSegue?)
 }
 
 protocol ManageRouteMapDataPassing {
@@ -25,21 +26,6 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     var dataStore: ManageRouteMapDataStore?
     
     // MARK: Routing
-    
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-    //{
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
     
     func routeToCreateRoutePoint(segue: UIStoryboardSegue?) {
         if let segue = segue {
@@ -55,9 +41,28 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         }
     }
     
+    func routeToDetailRoutePoint(segue: UIStoryboardSegue?) {
+        if let segue = segue {
+            let destinationVC = segue.destination as! DetailRoutePointViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
+                var destinationDS = destinationVC.router!.dataStore!
+                passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
+                navigateToDetailRoutePoint(source: viewController!, destination: destinationVC)
+        }
+    }
+    
     // MARK: Navigation
     
     func navigateToCreateRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController)
+    {
+      source.show(destination, sender: nil)
+    }
+    
+    func navigateToDetailRoutePoint(source: ManageRouteMapViewController, destination: DetailRoutePointViewController)
     {
       source.show(destination, sender: nil)
     }
@@ -67,5 +72,10 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     func passDataToCreateRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore)
     {
         destination.coordinateToCreateRP = source.tappedCoordinate
+    }
+    
+    func passDataToDetailRoutePoint(source: ManageRouteMapDataStore, destination: inout DetailRoutePointDataStore)
+    {
+        destination.routePoint = source.selectedRoutePoint
     }
 }

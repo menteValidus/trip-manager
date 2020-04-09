@@ -85,6 +85,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     override func viewDidLoad() {
         super.viewDidLoad()
         registerGestureRecognizers()
+        mapView.delegate = self
     }
     
     private func registerGestureRecognizers() {
@@ -131,7 +132,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Select Annotation
     
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
-        // TODO: Route to the details.
+        router?.routeToDetailRoutePoint(segue: nil)
     }
 }
 
@@ -159,7 +160,6 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         let request = ManageRouteMap.CreateRoutePoint.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
         interactor?.createRoutePoint(request: request)
-//        performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: nil)
     }
     
     // MARK: - Helper Methods

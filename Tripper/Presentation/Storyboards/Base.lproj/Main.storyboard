@@ -81,10 +81,10 @@
             </objects>
             <point key="canvasLocation" x="1103" y="-582"/>
         </scene>
-        <!--Annotation Detail View Controller-->
+        <!--Detail Route Point View Controller-->
         <scene sceneID="y9b-BA-uiU">
             <objects>
-                <viewController storyboardIdentifier="DetailViewController" id="Bjg-T4-fhS" customClass="AnnotationDetailViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailRoutePointViewController" id="Bjg-T4-fhS" customClass="DetailRoutePointViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GGm-jG-eD2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,16 +98,10 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rwy-Bq-VX3">
                                 <rect key="frame" x="24" y="12" width="30" height="30"/>
                                 <state key="normal" title="Edit"/>
-                                <connections>
-                                    <action selector="editPoint:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="MCB-P4-mY3"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="isx-VI-OL0">
                                 <rect key="frame" x="306" y="12" width="45" height="30"/>
                                 <state key="normal" title="Delete"/>
-                                <connections>
-                                    <action selector="deletePoint:" destination="Bjg-T4-fhS" eventType="touchUpInside" id="Zt8-fo-0pk"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Arrival Date:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ys4-89-eSf">
                                 <rect key="frame" x="16" y="82" width="94" height="21"/>
@@ -176,12 +170,6 @@
                         <viewLayoutGuide key="safeArea" id="0C2-fP-eBO"/>
                     </view>
                     <navigationItem key="navigationItem" id="SNW-GP-Cg9"/>
-                    <connections>
-                        <outlet property="arrivalDateLabel" destination="nmT-GR-YBy" id="qhs-pm-x4B"/>
-                        <outlet property="departureDateLabel" destination="Cbi-qO-sck" id="QhC-gv-BAR"/>
-                        <outlet property="descriptionTextView" destination="bsW-lJ-8cQ" id="QCr-WA-fUh"/>
-                        <outlet property="titleLabel" destination="MHW-vQ-MbK" id="omj-w8-nXt"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3h-z7-obX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

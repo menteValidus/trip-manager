@@ -17,13 +17,13 @@ protocol DetailRoutePointBusinessLogic {
 }
 
 protocol DetailRoutePointDataStore {
-    //var name: String { get set }
+    var routePoint: RoutePoint? { get set }
 }
 
 class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePointDataStore {
     var presenter: DetailRoutePointPresentationLogic?
     var worker: DetailRoutePointWorker?
-    //var name: String = ""
+    var routePoint: RoutePoint?
     
     // MARK: Do something
     
