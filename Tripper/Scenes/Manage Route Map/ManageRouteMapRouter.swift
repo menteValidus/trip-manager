@@ -34,10 +34,10 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             passDataToCreateRoutePoint(source: dataStore!, destination: &destinationDS)
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let destinationVC = storyboard.instantiateViewController(withIdentifier: "CreateRoutePointViewController") as! CreateRoutePointViewController
-                var destinationDS = destinationVC.router!.dataStore!
-                passDataToCreateRoutePoint(source: dataStore!, destination: &destinationDS)
-                navigateToCreateRoutePoint(source: viewController!, destination: destinationVC)
+            let destinationVC = storyboard.instantiateViewController(withIdentifier: "CreateRoutePointViewController") as! CreateRoutePointViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToCreateRoutePoint(source: dataStore!, destination: &destinationDS)
+            navigateToCreateRoutePoint(source: viewController!, destination: destinationVC)
         }
     }
     
@@ -48,10 +48,10 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
         } else {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
-                var destinationDS = destinationVC.router!.dataStore!
-                passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
-                navigateToDetailRoutePoint(source: viewController!, destination: destinationVC)
+            let destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
+            navigateToDetailRoutePoint(source: viewController!, destination: destinationVC)
         }
     }
     
@@ -59,12 +59,23 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func navigateToCreateRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController)
     {
-      source.show(destination, sender: nil)
+        source.show(destination, sender: nil)
     }
     
     func navigateToDetailRoutePoint(source: ManageRouteMapViewController, destination: DetailRoutePointViewController)
     {
-      source.show(destination, sender: nil)
+        let height = source.view.frame.height
+        let width  = source.view.frame.width
+        let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
+        
+        source.view.addSubview(destination.view)
+        destination.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+        destination.didMove(toParent: source)
+        
+        let yCoordinate = source.view.frame.height * 0.75
+        UIView.animate(withDuration: 0.3) {
+            destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+        }
     }
     
     // MARK: Passing data

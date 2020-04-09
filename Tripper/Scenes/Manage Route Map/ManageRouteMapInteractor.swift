@@ -63,10 +63,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var tappedCoordinate: CLLocationCoordinate2D?
     
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
-        // If new point is creating there is no selected point.
-        // TODO: Should extract this logic to separate use case.
-        idOfSelectedAnnotation = nil
-        
         tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
         let response = ManageRouteMap.CreateRoutePoint.Response()
         presenter?.presentAnnotationCreation(response: response)

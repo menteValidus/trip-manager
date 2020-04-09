@@ -190,18 +190,18 @@ class MapBoxViewController: UIViewController, CLLocationManagerDelegate {
             
             detailViewController = detailVC
             if let detailViewController = detailViewController {
-                detailViewController.routePoint = routePoint
-                
-                self.view.addSubview(detailViewController.view)
-                detailViewController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
-                detailViewController.didMove(toParent: self)
-                
-                let yCoordinate = view.frame.height * 0.75
-                UIView.animate(withDuration: 0.3) {
-                    detailViewController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
-                }
-                
-                detailViewController.delegate = self
+            detailViewController.routePoint = routePoint
+            
+            self.view.addSubview(detailViewController.view)
+            detailViewController.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+            detailViewController.didMove(toParent: self)
+            
+            let yCoordinate = view.frame.height * 0.75
+            UIView.animate(withDuration: 0.3) {
+                detailViewController.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+            }
+            
+            detailViewController.delegate = self
             }
             
         }

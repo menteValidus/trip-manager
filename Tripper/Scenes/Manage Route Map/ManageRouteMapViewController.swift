@@ -100,7 +100,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         reloadAnnotationsData()
-        // TODO: Refetch data to check is there new ones.
     }
     
     private func reloadAnnotationsData() {
@@ -132,7 +131,9 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Select Annotation
     
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
-        router?.routeToDetailRoutePoint(segue: nil)
+        if viewModel.identifier != nil {
+            router?.routeToDetailRoutePoint(segue: nil)
+        }
     }
 }
 
@@ -158,8 +159,11 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         print("*** Long pressed on the map.")
         
-        let request = ManageRouteMap.CreateRoutePoint.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        interactor?.createRoutePoint(request: request)
+        let requestToDeselect = ManageRouteMap.SelectAnnotation.Request(identifier: nil)
+        interactor?.selectAnnotation(request: requestToDeselect)
+        
+        let requestToCreate = ManageRouteMap.CreateRoutePoint.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        interactor?.createRoutePoint(request: requestToCreate)
     }
     
     // MARK: - Helper Methods
