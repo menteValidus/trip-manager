@@ -59,7 +59,23 @@ class RoutePointCoreDataStore: RoutePointDataStore {
     // MARK: - Database's Queries
     
     func fetch(with identifier: String) -> RoutePoint? {
-        <#function body#>
+        let pointFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
+        let predicate = NSPredicate(format: "\(DataModelDB.Entities.RoutePointEntity.KeyPathNames.id) = %@", identifier)
+        pointFetch.predicate = predicate
+        
+        let fetchedPoint: RoutePointEntity?
+        do {
+            fetchedPoint = try (managedObjectContext.fetch(pointFetch) as! [RoutePointEntity]).first
+        } catch {
+            fatalError("*** Failed to fetch RoutePoint with id: \(identifier).\n\(error)")
+        }
+        
+        if let routePointEntity = fetchedPoint {
+            let routePoint: RoutePoint = convertEntityToRoutePoint(routePointEntity)
+            return routePoint
+        } else {
+            return nil
+        }
     }
     
     func fetchAll() -> [RoutePoint] {
@@ -68,8 +84,7 @@ class RoutePointCoreDataStore: RoutePointDataStore {
         do {
             fetchedPoints = try managedObjectContext.fetch(pointsFetch) as! [RoutePointEntity]
         } catch {
-            throwAn(error: error)
-            fetchedPoints = []
+            fatalError("*** Failed to fetch all RoutePoint's date.\n\(error)")
         }
         
         var routePoints: [RoutePoint] = []
