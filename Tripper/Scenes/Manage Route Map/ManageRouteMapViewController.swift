@@ -17,6 +17,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
+    func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -119,17 +120,32 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     // MARK: Fetch new annotations info
+    
     func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
         for annotationInfo in viewModel.annotationsInfo {
-            setAnnotation(annotationInfo: annotationInfo)
+            let request = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
+            interactor?.setRoutePoint(request: request)
         }
     }
     
+    // MARK: Select Annotation
+    
+    func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
+        // TODO: Route to the details.
+    }
 }
 
 extension ManageRouteMapViewController: MGLMapViewDelegate {
     
     // MARK: - Map View's Delegates
+    
+    func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
+        let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
+        // Pass optional value if it's nil show error in presenter.
+        let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation)
+        
+        interactor?.selectAnnotation(request: request)
+    }
     
     @objc func handleMapLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else {

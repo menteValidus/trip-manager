@@ -16,6 +16,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response)
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
+    func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -40,5 +41,12 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
         let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(annotationsInfo: response.annotationsInfo)
         viewController?.displayFetchNewAnnotationsInfo(viewModel: viewModel)
+    }
+    
+    // MARK: Select annotation
+    
+    func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response) {
+        let viewModel = ManageRouteMap.SelectAnnotation.ViewModel(identifier: response.identifier)
+        viewController?.displaySelectAnnotation(viewModel: viewModel)
     }
 }

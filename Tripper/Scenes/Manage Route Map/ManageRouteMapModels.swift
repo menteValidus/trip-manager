@@ -46,13 +46,25 @@ enum ManageRouteMap {
     
     enum SetRoutePoint {
         struct Request {
+            let annotationsInfo: ConcreteAnnotationInfo
         }
         struct Response {
-            let annotationInfo: AnnotationInfo
+            let annotationInfo: ConcreteAnnotationInfo
         }
         struct ViewModel {
-            let annotationInfo: AnnotationInfo
+            let annotationInfo: ConcreteAnnotationInfo
         }
     }
     
+    enum SelectAnnotation {
+        struct Request {
+            let identifier: String?
+        }
+        struct Response {
+            let identifier: String?
+        }
+        struct ViewModel {
+            let identifier: String?
+        }
+    }
 }

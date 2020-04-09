@@ -17,6 +17,7 @@ protocol ManageRouteMapBusinessLogic {
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request)
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
+    func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request)
 //    func deselectAnnotation(request)
 }
 
@@ -67,7 +68,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         idOfSelectedAnnotation = nil
         
         tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
-//        let id = idGenerator.generate()
         let response = ManageRouteMap.CreateRoutePoint.Response()
         presenter?.presentAnnotationCreation(response: response)
     }
@@ -81,8 +81,18 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentFetchNewAnnotationsInfo(response: response)
     }
     
+    // MARK: Set route point
+    
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request) {
-//        let response = ManageRouteMap.SetRoutePoint.Response(annotationInfo: request)
-//        presenter?.presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
+        let response = ManageRouteMap.SetRoutePoint.Response(annotationInfo: request.annotationsInfo)
+        presenter?.presentSetRoutePoint(response: response)
+    }
+    
+    // MARK: Select Annotation
+    
+    func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request) {
+        idOfSelectedAnnotation = request.identifier
+        let response = ManageRouteMap.SelectAnnotation.Response(identifier: idOfSelectedAnnotation)
+        presenter?.presentSelectAnnotation(response: response)
     }
 }
