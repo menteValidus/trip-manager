@@ -51,9 +51,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let interactor = ManageRouteMapInteractor()
         let presenter = ManageRouteMapPresenter()
         let router = ManageRouteMapRouter()
+        let worker = ManageRouteMapWorker()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
+        interactor.worker = worker
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -107,9 +109,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Create Route Point
     
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
-//        let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(
-//            id: viewModel.id, latitude: viewModel.latitude, longitude: viewModel.longitude)
-//        setAnnotation(annotationInfo: annotationInfo)
         router?.routeToCreateRoutePoint(segue: nil)
     }
     
@@ -121,7 +120,9 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Fetch new annotations info
     func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
-        
+        for annotationInfo in viewModel.annotationsInfo {
+            setAnnotation(annotationInfo: annotationInfo)
+        }
     }
     
 }

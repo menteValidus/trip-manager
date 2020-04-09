@@ -30,8 +30,8 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
     // MARK: Form Route Point
     
     func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response) {
-        let title = response.routePoint.title ?? ""
-        let subtitle = response.routePoint.subtitle ?? ""
+        let title = response.routePoint.title
+        let subtitle = response.routePoint.subtitle
         
         let arrivalDate = response.routePoint.arrivalDate ?? Date()
         let arrivalDateString = dateFormatter.string(from: arrivalDate)

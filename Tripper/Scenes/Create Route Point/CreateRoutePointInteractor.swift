@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol CreateRoutePointBusinessLogic {
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request)
@@ -19,12 +20,14 @@ protocol CreateRoutePointBusinessLogic {
 
 protocol CreateRoutePointDataStore {
     var pointToSave: RoutePoint? { get set }
+    var coordinateToCreateRP: CLLocationCoordinate2D? { get set }
 }
 
 class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePointDataStore {
     var presenter: CreateRoutePointPresentationLogic?
     var worker: CreateRoutePointWorker?
-    var pointToSave: RoutePoint?
+    
+    private let idGenerator: IDGenerator = NSUUIDGenerator.instance
     
     // MARK: Form Route Point
     
@@ -38,19 +41,30 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
 //            timeToNextPointInSeconds: pointToEdit?.timeToNextPointInSeconds,
 //            distanceToNextPointInMeters: pointToEdit?.distanceToNextPointInMeters)
         if pointToSave == nil {
-            pointToSave = createNewRoutePoint()
+            if let coordinate = coordinateToCreateRP {
+                pointToSave = createNewRoutePoint(at: coordinate)
+            } else {
+                fatalError("*** There is no way we can be here!")
+            }
         }
         
         let response = CreateRoutePoint.FormRoutePoint.Response(routePoint: pointToSave!)
         presenter?.presentFormRoutePoint(response: response)
     }
     
+    // MARK: Save Route Point
+    
+    var pointToSave: RoutePoint?
+    var coordinateToCreateRP: CLLocationCoordinate2D?
+
     func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request) {
         if pointToSave != nil {
             pointToSave?.title = request.title
             pointToSave?.subtitle = request.description
             pointToSave?.arrivalDate = request.arrivalDate
             pointToSave?.departureDate = request.departureDate
+            pointToSave?.timeToNextPointInSeconds = 0
+            pointToSave?.distanceToNextPointInMeters = 0
             
             worker?.save(routePoint: pointToSave!)
             
@@ -63,8 +77,11 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     
     // MARK: - Helper Methods
     
-    private func createNewRoutePoint() -> RoutePoint {
-        let routePoint = RoutePoint(id: "test_id", orderNumber: 0)
+    private func createNewRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePoint {
+        let routePoint = RoutePoint(
+            id: idGenerator.generate(), orderNumber: 0,
+            title: "", subtitle: "",
+            latitude: coordinate.latitude, longitude: coordinate.longitude)
         return routePoint
     }
 }

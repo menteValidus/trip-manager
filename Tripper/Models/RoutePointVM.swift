@@ -16,8 +16,8 @@ protocol AnnotationInfo {
 }
 
 protocol AnnotationForm {
-    var title: String? { get set }
-    var subtitle: String? { get set }
+    var title: String { get set }
+    var subtitle: String { get set }
     
     var arrivalDate: Date? { get set }
     var departureDate: Date? { get set }
@@ -30,10 +30,10 @@ struct RoutePoint: AnnotationInfo, AnnotationForm {
     let id: String
     
     var orderNumber: Int
-    var title: String?
-    var subtitle: String?
-    var latitude: Double = 0
-    var longitude: Double = 0
+    var title: String
+    var subtitle: String
+    var latitude: Double
+    var longitude: Double
     
     // Nullable in case it's the start of trip.
     var arrivalDate: Date?

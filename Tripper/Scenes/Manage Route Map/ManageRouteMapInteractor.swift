@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol ManageRouteMapBusinessLogic {
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request)
@@ -20,6 +21,7 @@ protocol ManageRouteMapBusinessLogic {
 }
 
 protocol ManageRouteMapDataStore {
+    var tappedCoordinate: CLLocationCoordinate2D? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
 }
 
@@ -27,7 +29,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
     
-    var idGenerator: IDGenerator
+//    var idGenerator: IDGenerator
     
     var annotationsInfo: [AnnotationInfo]
     var idOfSelectedAnnotation: String?
@@ -52,25 +54,29 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     init() {
         annotationsInfo = []
-        idGenerator = NSUUIDGenerator.instance
+//        idGenerator = NSUUIDGenerator.instance
     }
     
     // MARK: Create route point
+    
+    var tappedCoordinate: CLLocationCoordinate2D?
     
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
         // If new point is creating there is no selected point.
         // TODO: Should extract this logic to separate use case.
         idOfSelectedAnnotation = nil
         
-        let id = idGenerator.generate()
-        let response = ManageRouteMap.CreateRoutePoint.Response(id: id, latitude: request.latitude, longitude: request.longitude)
+        tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
+//        let id = idGenerator.generate()
+        let response = ManageRouteMap.CreateRoutePoint.Response()
         presenter?.presentAnnotationCreation(response: response)
     }
     
     // MARK: Fetch new annotations info
     
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
-        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response()
+        let annotationsInfo = worker?.fetchNewAnnotationsInfo() ?? []
+        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(annotationsInfo: annotationsInfo)
         
         presenter?.presentFetchNewAnnotationsInfo(response: response)
     }

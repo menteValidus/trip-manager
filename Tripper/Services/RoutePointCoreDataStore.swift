@@ -58,6 +58,10 @@ class RoutePointCoreDataStore: RoutePointDataStore {
     
     // MARK: - Database's Queries
     
+    func fetch(with identifier: String) -> RoutePoint? {
+        <#function body#>
+    }
+    
     func fetchAll() -> [RoutePoint] {
         let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
         let fetchedPoints: [RoutePointEntity]

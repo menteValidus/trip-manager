@@ -26,10 +26,10 @@ enum ManageRouteMap {
         struct Request {
         }
         struct Response {
-            
+            let annotationsInfo: [ConcreteAnnotationInfo]
         }
         struct ViewModel {
-            
+            let annotationsInfo: [ConcreteAnnotationInfo]
         }
     }
     
@@ -39,14 +39,8 @@ enum ManageRouteMap {
             let longitude: Double
         }
         struct Response {
-            let id: String
-            let latitude: Double
-            let longitude: Double
         }
         struct ViewModel {
-            let id: String
-            let latitude: Double
-            let longitude: Double
         }
     }
     

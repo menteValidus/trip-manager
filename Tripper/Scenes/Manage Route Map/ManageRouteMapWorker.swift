@@ -22,7 +22,7 @@ class ManageRouteMapWorker {
         var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
         
         fetchedRoutePoints.forEach() { routePoint in
-            let isContained = fetchedRoutePoints.contains(where: {
+            let isContained = routePoints.contains(where: {
                 return $0.id == routePoint.id
             })
             

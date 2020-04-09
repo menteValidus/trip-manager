@@ -24,8 +24,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Annotation creation
     
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response) {
-        let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel(
-            id: response.id, latitude: response.latitude, longitude: response.longitude)
+        let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel()
         viewController?.displayCreateRoutePoint(viewModel: viewModel)
     }
     
@@ -39,7 +38,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Fetch new annotations info
     
     func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
-        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel()
+        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(annotationsInfo: response.annotationsInfo)
         viewController?.displayFetchNewAnnotationsInfo(viewModel: viewModel)
     }
 }

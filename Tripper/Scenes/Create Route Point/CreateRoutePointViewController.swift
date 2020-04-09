@@ -41,9 +41,11 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         let interactor = CreateRoutePointInteractor()
         let presenter = CreateRoutePointPresenter()
         let router = CreateRoutePointRouter()
+        let worker = CreateRoutePointWorker()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
+        interactor.worker = worker
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
