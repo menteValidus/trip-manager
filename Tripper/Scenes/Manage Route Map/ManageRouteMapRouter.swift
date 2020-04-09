@@ -70,6 +70,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         
         source.view.addSubview(destination.view)
         destination.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+        destination.view.isUserInteractionEnabled = true
         destination.didMove(toParent: source)
         
         let yCoordinate = source.view.frame.height * 0.75

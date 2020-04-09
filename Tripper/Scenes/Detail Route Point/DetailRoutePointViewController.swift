@@ -13,13 +13,22 @@
 import UIKit
 
 protocol DetailRoutePointDisplayLogic: class {
-    func displaySomething(viewModel: DetailRoutePoint.Something.ViewModel)
+    func displaySetupUI(viewModel: DetailRoutePoint.SetupUI.ViewModel)
+}
+
+protocol DismissablePopup: class {
+    func dismissPopup()
+}
+
+protocol ChangeablePopup: class {
+    func updateUI()
 }
 
 class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayLogic {
     var interactor: DetailRoutePointBusinessLogic?
     var router: (NSObjectProtocol & DetailRoutePointRoutingLogic & DetailRoutePointDataPassing)?
     
+    private var panGestureRecognizer: UIPanGestureRecognizer?
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -62,19 +71,88 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        // TODO: GestureRecognizer doesn't call dedicated event.
+        initGestureRecognizers()
+        setupUI()
     }
     
-    // MARK: Do something
-    
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = DetailRoutePoint.Something.Request()
-        interactor?.doSomething(request: request)
+    private func initGestureRecognizers() {
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DetailRoutePointViewController.onPan(recognizer:)))
+        view.addGestureRecognizer(panGestureRecognizer!)
     }
     
-    func displaySomething(viewModel: DetailRoutePoint.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    // MARK: - Setup UI
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var arrivalDateLabel: UILabel!
+    @IBOutlet weak var departureDateLabel: UILabel!
+    
+    func setupUI() {
+        updateUI()
+    }
+    
+    func displaySetupUI(viewModel: DetailRoutePoint.SetupUI.ViewModel) {
+        titleLabel.text = viewModel.title
+        descriptionTextView.text = viewModel.description
+        arrivalDateLabel.text = viewModel.arrivalDateText
+        departureDateLabel.text = viewModel.departureDateText
+    }
+    
+    // MARK: - Gesture Actions
+    
+    // TODO: MOVE TO INTERACTOR.
+    @objc func onPan(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .changed:
+            let translation = recognizer.translation(in: self.view)
+            let y = view.frame.minY
+            if let superViewHeight = self.view.superview?.frame.height {
+                if !(superViewHeight - view.frame.height > y + translation.y) {
+                    self.view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
+                }
+            }
+            recognizer.setTranslation(.zero, in: self.view)
+            
+        case .cancelled, .ended:
+            if view.frame.origin.y > view.frame.height * 2 / 3 {
+                toggleView(screenCoverage: 0.75)
+            } else if view.frame.origin.y > view.frame.height * 1 / 3 {
+                toggleView(screenCoverage: 0.25)
+            } else {
+                dismiss(animated: true, completion: nil)
+            }
+            
+        default:
+            return
+        }
+    }
+    
+    // TODO: MOVE TO PRESENTER.
+    func toggleView(screenCoverage percent: CGFloat) {
+        UIView.animate(withDuration: 0.3) {
+            let height = self.view.frame.height
+            let width  = self.view.frame.width
+            let yCoordinate = self.view.frame.height * percent
+            print(Float(yCoordinate))
+            self.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height)
+        }
+    }
+}
+
+extension DetailRoutePointViewController: DismissablePopup {
+    // MARK: - Dismissable Popup
+    
+    func dismissPopup() {
+        // TODO: Route back.
+    }
+}
+
+extension DetailRoutePointViewController: ChangeablePopup {
+    // MARK: - Changeable Popup
+    
+    func updateUI() {
+        let request = DetailRoutePoint.SetupUI.Request()
+        interactor?.setupUI(request: request)
     }
 }

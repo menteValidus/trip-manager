@@ -170,6 +170,12 @@
                         <viewLayoutGuide key="safeArea" id="0C2-fP-eBO"/>
                     </view>
                     <navigationItem key="navigationItem" id="SNW-GP-Cg9"/>
+                    <connections>
+                        <outlet property="arrivalDateLabel" destination="nmT-GR-YBy" id="aq3-jU-FKq"/>
+                        <outlet property="departureDateLabel" destination="Cbi-qO-sck" id="Zra-T7-Ixm"/>
+                        <outlet property="descriptionTextView" destination="bsW-lJ-8cQ" id="Xgq-oo-iJP"/>
+                        <outlet property="titleLabel" destination="MHW-vQ-MbK" id="cGr-xs-iMF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k3h-z7-obX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

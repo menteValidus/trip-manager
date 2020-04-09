@@ -10,6 +10,7 @@ import CoreData
 
 protocol RoutePointDataStore {
     func fetchAll() -> [RoutePoint]
+    func fetch(with identifier: String) -> RoutePoint?
     func deleteAll()
     func insert(_ point: RoutePoint)
     func update(_ point: RoutePoint)

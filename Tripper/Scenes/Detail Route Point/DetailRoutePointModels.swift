@@ -15,12 +15,20 @@ import UIKit
 enum DetailRoutePoint {
     // MARK: Use cases
     
-    enum Something {
+    enum SetupUI {
         struct Request {
         }
         struct Response {
+            let title: String
+            let description: String
+            let arrivalDate: Date
+            let departureDate: Date
         }
         struct ViewModel {
+            let title: String
+            let description: String
+            let arrivalDateText: String
+            let departureDateText: String
         }
     }
 }

@@ -13,7 +13,7 @@
 import UIKit
 
 protocol DetailRoutePointBusinessLogic {
-    func doSomething(request: DetailRoutePoint.Something.Request)
+    func setupUI(request: DetailRoutePoint.SetupUI.Request)
 }
 
 protocol DetailRoutePointDataStore {
@@ -25,13 +25,15 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     var worker: DetailRoutePointWorker?
     var routePoint: RoutePoint?
     
-    // MARK: Do something
+    // MARK: Setup UI
     
-    func doSomething(request: DetailRoutePoint.Something.Request) {
-        worker = DetailRoutePointWorker()
-        worker?.doSomeWork()
-        
-        let response = DetailRoutePoint.Something.Response()
-        presenter?.presentSomething(response: response)
+    func setupUI(request: DetailRoutePoint.SetupUI.Request) {
+        if let routePoint = routePoint {
+            let response = DetailRoutePoint.SetupUI.Response(
+                title: routePoint.title, description: routePoint.subtitle,
+                arrivalDate: routePoint.arrivalDate ?? Date(), departureDate: routePoint.departureDate ?? Date())
+            
+            presenter?.presentSetupUI(response: response)
+        }
     }
 }

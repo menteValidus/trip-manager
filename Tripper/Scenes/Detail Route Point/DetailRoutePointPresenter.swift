@@ -13,16 +13,27 @@
 import UIKit
 
 protocol DetailRoutePointPresentationLogic {
-    func presentSomething(response: DetailRoutePoint.Something.Response)
+    func presentSetupUI(response: DetailRoutePoint.SetupUI.Response)
 }
 
 class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     weak var viewController: DetailRoutePointDisplayLogic?
     
-    // MARK: Do something
+    private var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateStyle = .medium
+        return dateFormatter
+    }()
     
-    func presentSomething(response: DetailRoutePoint.Something.Response) {
-        let viewModel = DetailRoutePoint.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    // MARK: Setup UI
+    
+    func presentSetupUI(response: DetailRoutePoint.SetupUI.Response) {
+        let arrivalDate = dateFormatter.string(from: response.arrivalDate)
+        let departureDate = dateFormatter.string(from: response.departureDate)
+        let viewModel = DetailRoutePoint.SetupUI.ViewModel(
+            title: response.title, description: response.description,
+            arrivalDateText: arrivalDate, departureDateText: departureDate)
+        viewController?.displaySetupUI(viewModel: viewModel)
     }
 }

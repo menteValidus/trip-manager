@@ -23,6 +23,7 @@ protocol ManageRouteMapBusinessLogic {
 
 protocol ManageRouteMapDataStore {
     var tappedCoordinate: CLLocationCoordinate2D? { get set }
+    var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
 }
 
@@ -37,12 +38,15 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     var selectedRoutePoint: RoutePoint? {
         get {
+            
+            // TODO: Unreliable implementation.
             if let id = idOfSelectedAnnotation {
-                let selectedAnnotation = annotationsInfo.first(where: {
-                    return $0.id == id
-                })
-                
-                return selectedAnnotation as? RoutePoint
+                return worker?.fetchRoutePoint(with: id)
+//                let selectedAnnotation = annotationsInfo.first(where: {
+//                    return $0.id == id
+//                })
+//
+//                return selectedAnnotation as? RoutePoint
             } else {
                 return nil
             }
@@ -71,8 +75,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Fetch new annotations info
     
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
-        let annotationsInfo = worker?.fetchNewAnnotationsInfo() ?? []
-        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(annotationsInfo: annotationsInfo)
+        annotationsInfo = worker?.fetchNewAnnotationsInfo() ?? []
+        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(annotationsInfo: annotationsInfo as! [ManageRouteMap.ConcreteAnnotationInfo])
         
         presenter?.presentFetchNewAnnotationsInfo(response: response)
     }

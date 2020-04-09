@@ -39,4 +39,9 @@ class ManageRouteMapWorker {
         let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(id: routePoint.id, latitude: routePoint.latitude, longitude: routePoint.longitude)
         return annotationInfo
     }
+    
+    // TODO: Temporal.
+    func fetchRoutePoint(with id: String) -> RoutePoint {
+        return routePointGateway.fetch(with: id)!
+    }
 }
