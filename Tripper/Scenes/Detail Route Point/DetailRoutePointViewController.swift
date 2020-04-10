@@ -131,7 +131,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
             } else if view.frame.origin.y > view.frame.height * 1 / 3 {
                 toggleView(screenCoverage: 0.25)
             } else {
-                dismiss(animated: true, completion: nil)
+                dismissPopup()
             }
             
         default:

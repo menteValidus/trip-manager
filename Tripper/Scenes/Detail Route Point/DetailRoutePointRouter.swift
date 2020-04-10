@@ -49,7 +49,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
         //      if let detailViewController = detailViewController {
         source.removeFromParent()
         UIView.animate(withDuration: 0.3, animations: {
-            destination.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
+            source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
         })
