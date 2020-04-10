@@ -15,6 +15,7 @@ import UIKit
 protocol CreateRoutePointPresentationLogic {
     func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response)
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response)
+    func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response)
 }
 
 class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
@@ -27,9 +28,11 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         return dateFormatter
     }()
     
-    // MARK: Form Route Point
+    // MARK: - Form Route Point
     
     func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response) {
+        let navigationTitle = response.navigationTitle
+        
         let title = response.routePoint.title
         let subtitle = response.routePoint.subtitle
         
@@ -42,12 +45,21 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         let annotationForm = CreateRoutePoint.DisplayableAnnotationInfo(
             title: title, subtitle: subtitle, arrivalDate: arrivalDateString, departureDate: departureDateString)
         
-        let viewModel = CreateRoutePoint.FormRoutePoint.ViewModel(annotationForm: annotationForm)
+        let viewModel = CreateRoutePoint.FormRoutePoint.ViewModel(navigationTitle: navigationTitle, annotationForm: annotationForm)
         viewController?.displayRoutePointForm(viewModel: viewModel)
     }
+    
+    // MARK: Save Route Point
     
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response) {
         let viewModel = CreateRoutePoint.SaveRoutePoint.ViewModel()
         viewController?.displaySaveRoutePoint(viewModel: viewModel)
+    }
+    
+    // MARK: Cancel Creation
+    
+    func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response) {
+        let viewModel = CreateRoutePoint.CancelCreation.ViewModel()
+        viewController?.displayCancelCreation(viewModel: viewModel)
     }
 }

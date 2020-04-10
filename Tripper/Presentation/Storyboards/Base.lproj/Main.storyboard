@@ -186,7 +186,7 @@
             </objects>
             <point key="canvasLocation" x="1102" y="-1281"/>
         </scene>
-        <!--Edit-->
+        <!--Create-->
         <scene sceneID="Zyu-tu-Wmh">
             <objects>
                 <tableViewController storyboardIdentifier="CreateRoutePointViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CC2-X3-ZR1" customClass="CreateRoutePointViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
@@ -309,7 +309,7 @@
                             <outlet property="delegate" destination="CC2-X3-ZR1" id="JRI-vm-fKv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit" id="9yP-FM-o6c">
+                    <navigationItem key="navigationItem" title="Create" id="9yP-FM-o6c">
                         <barButtonItem key="leftBarButtonItem" title="Save" id="HDo-PC-iVC">
                             <connections>
                                 <action selector="save:" destination="CC2-X3-ZR1" id="9QL-e6-HHc"/>
@@ -317,7 +317,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Cancel" id="c90-th-rci">
                             <connections>
-                                <action selector="cancel:" destination="CC2-X3-ZR1" id="XNO-ax-Cvj"/>
+                                <action selector="cancel:" destination="CC2-X3-ZR1" id="NVm-va-2Md"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

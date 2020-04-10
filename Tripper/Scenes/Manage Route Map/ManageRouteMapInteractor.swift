@@ -40,6 +40,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var annotationsInfo: [AnnotationInfo]
     var idOfSelectedAnnotation: String?
     
+    // IF YOU ARE GOING TO DELETE THIS REMEMBER THERE ARE A LOT OF DEPENDENCIES.
     var selectedRoutePoint: RoutePoint? {
         get {
             

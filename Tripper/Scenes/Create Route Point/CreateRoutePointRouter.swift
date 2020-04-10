@@ -14,6 +14,7 @@ import UIKit
 
 @objc protocol CreateRoutePointRoutingLogic {
     func routeToManageRouteMap(segue: UIStoryboardSegue?)
+    func routeToManageRouteMapWithCancel(segue: UIStoryboardSegue?)
 }
 
 protocol CreateRoutePointDataPassing {
@@ -50,19 +51,45 @@ class CreateRoutePointRouter: NSObject, CreateRoutePointRoutingLogic, CreateRout
       }
     }
     
+    func routeToManageRouteMapWithCancel(segue: UIStoryboardSegue?) {
+        let destinationVC: ManageRouteMapViewController
+        
+        let viewControllers = viewController?.navigationController?.viewControllers
+        if let viewControllers = viewControllers {
+            let indexOfManageRouteMapVC = viewControllers.count - 2
+            destinationVC = viewControllers[indexOfManageRouteMapVC] as! ManageRouteMapViewController
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            destinationVC = storyboard.instantiateViewController(withIdentifier: "ManageRouteMapViewController") as! ManageRouteMapViewController
+        }
+        
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToManageRouteMapWithCancel(source: dataStore!, destination: &destinationDS)
+        navigateToManageRouteMapWithCancel(source: viewController!, destination: destinationVC)
+    }
+    
     // MARK: Navigation
     
-    func navigateToManageRouteMap(source: CreateRoutePointViewController, destination: ManageRouteMapViewController)
-    {
+    func navigateToManageRouteMap(source: CreateRoutePointViewController, destination: ManageRouteMapViewController) {
         source.navigationController?.popViewController(animated: true) {
             destination.showDetail()
         }
     }
     
+    func navigateToManageRouteMapWithCancel(source: CreateRoutePointViewController, destination: ManageRouteMapViewController) {
+        source.navigationController?.popViewController(animated: true) {
+            if let _ = destination.router?.dataStore?.selectedRoutePoint {
+                destination.showDetail()
+            }
+        }
+    }
+    
     // MARK: Passing data
     
-    func passDataToManageRouteMap(source: CreateRoutePointDataStore, destination: inout ManageRouteMapDataStore)
-    {
+    func passDataToManageRouteMap(source: CreateRoutePointDataStore, destination: inout ManageRouteMapDataStore) {
         destination.selectedRoutePoint = source.pointToSave
+    }
+    
+    func passDataToManageRouteMapWithCancel(source: CreateRoutePointDataStore, destination: inout ManageRouteMapDataStore) {
     }
 }

@@ -69,9 +69,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         formRoutePoint()
     }
     
-    // MARK: Do something
-    
-    //@IBOutlet weak var nameTextField: UITextField!
+    // MARK: Form Route Point
     
     func formRoutePoint() {
         let request = CreateRoutePoint.FormRoutePoint.Request()
@@ -84,6 +82,8 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     @IBOutlet weak var departureDateLabel: UILabel!
     
     func displayRoutePointForm(viewModel: CreateRoutePoint.FormRoutePoint.ViewModel) {
+        title = viewModel.navigationTitle
+        
         titleTextField.text = viewModel.annotationForm.title
         descriptionTextView.text = viewModel.annotationForm.subtitle
         arrivalDateLabel.text = viewModel.annotationForm.arrivalDate
@@ -93,10 +93,12 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     // MARK: Cancel Creation
     
     @IBAction func cancel(_ sender: Any) {
+        let request = CreateRoutePoint.CancelCreation.Request()
+        interactor?.cancelCreation(request: request)
     }
     
     func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel) {
-        
+        router?.routeToManageRouteMapWithCancel(segue: nil)
     }
     
     // MARK: Save Route Point

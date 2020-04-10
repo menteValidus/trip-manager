@@ -26,9 +26,11 @@ enum CreateRoutePoint {
         struct Request {
         }
         struct Response {
+            let navigationTitle: String
             let routePoint: RoutePoint
         }
         struct ViewModel {
+            let navigationTitle: String
             let annotationForm: DisplayableAnnotationInfo
         }
     }

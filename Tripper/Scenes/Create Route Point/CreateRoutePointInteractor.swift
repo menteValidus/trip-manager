@@ -16,6 +16,7 @@ import CoreLocation
 protocol CreateRoutePointBusinessLogic {
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request)
     func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request)
+    func cancelCreation(request: CreateRoutePoint.CancelCreation.Request)
 }
 
 protocol CreateRoutePointDataStore {
@@ -29,26 +30,22 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     
     private let idGenerator: IDGenerator = NSUUIDGenerator.instance
     
-    // MARK: Form Route Point
+    // MARK: - Form Route Point
     
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request) {
-//        worker = CreateRoutePointWorker()
-//        worker?.doSomeWork()
-        
-//        let annotationInfo = CreateRoutePoint.DisplayableAnnotationInfo(
-//            title: pointToEdit?.title, subtitle: pointToEdit?.subtitle,
-//            arrivalDate: pointToEdit?.arrivalDate, departureDate: pointToEdit?.departureDate,
-//            timeToNextPointInSeconds: pointToEdit?.timeToNextPointInSeconds,
-//            distanceToNextPointInMeters: pointToEdit?.distanceToNextPointInMeters)
+        let navigationTitle: String
         if pointToSave == nil {
+            navigationTitle = "Create"
             if let coordinate = coordinateToCreateRP {
                 pointToSave = createNewRoutePoint(at: coordinate)
             } else {
                 fatalError("*** There is no way we can be here!")
             }
+        } else {
+            navigationTitle = "Edit"
         }
         
-        let response = CreateRoutePoint.FormRoutePoint.Response(routePoint: pointToSave!)
+        let response = CreateRoutePoint.FormRoutePoint.Response(navigationTitle: navigationTitle, routePoint: pointToSave!)
         presenter?.presentFormRoutePoint(response: response)
     }
     
@@ -73,6 +70,13 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         } else {
             fatalError("*** There's no way we can be here!")
         }
+    }
+    
+    // MARK: Cancel Creation
+    
+    func cancelCreation(request: CreateRoutePoint.CancelCreation.Request) {
+        let response = CreateRoutePoint.CancelCreation.Response()
+        presenter?.presentCancelCreation(response: response)
     }
     
     // MARK: - Helper Methods
