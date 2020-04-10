@@ -18,7 +18,9 @@ protocol ManageRouteMapBusinessLogic {
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
     func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request)
-//    func deselectAnnotation(request)
+    //    func deselectAnnotation(request)
+    func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request)
+    func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -33,8 +35,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var worker: ManageRouteMapWorker?
     var popup: Popup?
     
-//    var idGenerator: IDGenerator
-    
     var annotationsInfo: [AnnotationInfo]
     var idOfSelectedAnnotation: String?
     
@@ -44,11 +44,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             // TODO: Unreliable implementation.
             if let id = idOfSelectedAnnotation {
                 return worker?.fetchRoutePoint(with: id)
-//                let selectedAnnotation = annotationsInfo.first(where: {
-//                    return $0.id == id
-//                })
-//
-//                return selectedAnnotation as? RoutePoint
             } else {
                 return nil
             }
@@ -64,7 +59,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
 //        idGenerator = NSUUIDGenerator.instance
     }
     
-    // MARK: Create route point
+    // MARK: - Create route point
     
     var tappedCoordinate: CLLocationCoordinate2D?
     
@@ -98,5 +93,20 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         idOfSelectedAnnotation = request.identifier
         let response = ManageRouteMap.SelectAnnotation.Response(identifier: idOfSelectedAnnotation)
         presenter?.presentSelectAnnotation(response: response)
+    }
+    
+    // MARK: Edit Route Point
+    
+    func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request) {
+        idOfSelectedAnnotation = request.identifier
+        let response = ManageRouteMap.EditRoutePoint.Response()
+        presenter?.presentEditRoutePoint(response: response)
+    }
+    
+    // MARK: Delete Route Point
+    
+    func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request) {
+        let response = ManageRouteMap.DeleteRoutePoint.Response(identifier: request.identifier)
+        presenter?.presentDeleteRoutePoint(response: response)
     }
 }

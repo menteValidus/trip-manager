@@ -121,7 +121,9 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     
     func displayEditRoutePoint(viewModel: DetailRoutePoint.EditRoutePoint.ViewModel) {
         print("Use case EditRoutePoint is completed")
+        router?.routeToManageRouteMapWithEdit(segue: nil)
     }
+    
     // MARK: Delete Route Point
     
     @IBAction func deleteRoutePoint() {
@@ -131,6 +133,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     
     func displayDeleteRoutePoint(viewModel: DetailRoutePoint.DeleteRoutePoint.ViewModel) {
         print("Use case DeleteRoutePoint is completed")
+        router?.routeToManageRouteMapWithDelete(segue: nil)
     }
     
     

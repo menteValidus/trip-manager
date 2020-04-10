@@ -14,6 +14,8 @@ import UIKit
 
 @objc protocol DetailRoutePointRoutingLogic {
     func routeToManageRouteMap(segue: UIStoryboardSegue?)
+    func routeToManageRouteMapWithEdit(segue: UIStoryboardSegue?)
+    func routeToManageRouteMapWithDelete(segue: UIStoryboardSegue?)
 }
 
 protocol DetailRoutePointDataPassing {
@@ -40,6 +42,20 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
         }
     }
     
+    func routeToManageRouteMapWithEdit(segue: UIStoryboardSegue?) {
+        let destinationVC = viewController?.parent as! ManageRouteMapViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToManageRouteMapWithEdit(source: dataStore!, destination: &destinationDS)
+        navigateToManageRouteMapWithEdit(source: viewController!, destination: destinationVC)
+    }
+    
+    func routeToManageRouteMapWithDelete(segue: UIStoryboardSegue?) {
+        let destinationVC = viewController?.parent as! ManageRouteMapViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToManageRouteMapWithEdit(source: dataStore!, destination: &destinationDS)
+        navigateToManageRouteMapWithEdit(source: viewController!, destination: destinationVC)
+    }
+    
     // MARK: Navigation
     
     func navigateToManageRouteMap(source: DetailRoutePointViewController, destination: ManageRouteMapViewController)
@@ -52,9 +68,42 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
         })
     }
     
+    func navigateToManageRouteMapWithEdit(source: DetailRoutePointViewController, destination: ManageRouteMapViewController)
+    {
+        source.removeFromParent()
+        UIView.animate(withDuration: 0.3, animations: {
+            source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
+        }, completion: { _ in
+            source.view.removeFromSuperview()
+        })
+        
+        // TODO: Need to get rid of this dependency.
+        destination.editSelectedRoutePoint()
+    }
+    
+    func navigateToManageRouteMapWithDelete(source: DetailRoutePointViewController, destination: ManageRouteMapViewController)
+    {
+        source.removeFromParent()
+        UIView.animate(withDuration: 0.3, animations: {
+            source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
+        }, completion: { _ in
+            source.view.removeFromSuperview()
+        })
+    }
+    
     // MARK: Passing data
     
     func passDataToManageRouteMap(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
+    {
+        destination.popup = nil
+    }
+    
+    func passDataToManageRouteMapWithEdit(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
+    {
+        destination.popup = nil
+    }
+    
+    func passDataToManageRouteMapWithDelete(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
         destination.popup = nil
     }

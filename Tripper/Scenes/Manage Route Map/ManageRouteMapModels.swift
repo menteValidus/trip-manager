@@ -67,4 +67,26 @@ enum ManageRouteMap {
             let identifier: String?
         }
     }
+    
+    enum EditRoutePoint {
+        struct Request {
+            let identifier: String?
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+    enum DeleteRoutePoint {
+        struct Request {
+            let identifier: String?
+        }
+        struct Response {
+            let identifier: String?
+        }
+        struct ViewModel {
+            let identifier: String?
+        }
+    }
 }

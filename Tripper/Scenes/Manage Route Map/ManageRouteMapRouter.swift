@@ -15,6 +15,7 @@ import UIKit
 @objc protocol ManageRouteMapRoutingLogic {
     func routeToCreateRoutePoint(segue: UIStoryboardSegue?)
     func routeToDetailRoutePoint(segue: UIStoryboardSegue?)
+    func routeToEditRoutePoint(segue: UIStoryboardSegue?)
 }
 
 protocol ManageRouteMapDataPassing {
@@ -62,6 +63,14 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         }
     }
     
+    func routeToEditRoutePoint(segue: UIStoryboardSegue?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "CreateRoutePointViewController") as! CreateRoutePointViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToEditRoutePoint(source: dataStore!, destination: &destinationDS)
+        navigateToEditRoutePoint(source: viewController!, destination: destinationVC)
+    }
+    
     // MARK: Navigation
     
     func navigateToCreateRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController)
@@ -95,6 +104,10 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         }
     }
     
+    func navigateToEditRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController) {
+        source.show(destination, sender: nil)
+    }
+    
     // MARK: Passing data
     
     func passDataToCreateRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore)
@@ -105,5 +118,9 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     func passDataToDetailRoutePoint(source: ManageRouteMapDataStore, destination: inout DetailRoutePointDataStore)
     {
         destination.routePoint = source.selectedRoutePoint
+    }
+    
+    func passDataToEditRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore) {
+        destination.pointToSave = source.selectedRoutePoint
     }
 }

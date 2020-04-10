@@ -17,36 +17,52 @@ protocol ManageRouteMapPresentationLogic {
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response)
+    func presentEditRoutePoint(response: ManageRouteMap.EditRoutePoint.Response)
+    func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     weak var viewController: ManageRouteMapDisplayLogic?
     
-    // MARK: Annotation creation
+    // MARK: Annotation Creation
     
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response) {
         let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel()
         viewController?.displayCreateRoutePoint(viewModel: viewModel)
     }
     
-    // MARK: Set route point
+    // MARK: Set Route Point
     
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response) {
         let viewModel = ManageRouteMap.SetRoutePoint.ViewModel(annotationInfo: response.annotationInfo)
         viewController?.displaySetRoutePoint(viewModel: viewModel)
     }
     
-    // MARK: Fetch new annotations info
+    // MARK: Fetch New Annotations Info
     
     func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
         let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(annotationsInfo: response.annotationsInfo)
         viewController?.displayFetchNewAnnotationsInfo(viewModel: viewModel)
     }
     
-    // MARK: Select annotation
+    // MARK: Select Annotation
     
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response) {
         let viewModel = ManageRouteMap.SelectAnnotation.ViewModel(identifier: response.identifier)
         viewController?.displaySelectAnnotation(viewModel: viewModel)
+    }
+    
+    // MARK: Edit Route Point
+    
+    func presentEditRoutePoint(response: ManageRouteMap.EditRoutePoint.Response) {
+        let viewModel = ManageRouteMap.EditRoutePoint.ViewModel()
+        viewController?.displayEditRoutePoint(viewModel: viewModel)
+    }
+    
+    // MARK: Delete Route Point
+    
+    func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response) {
+        let viewModel = ManageRouteMap.DeleteRoutePoint.ViewModel(identifier: response.identifier)
+        viewController?.displayDeleteRoutePoint(viewModel: viewModel)
     }
 }
