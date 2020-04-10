@@ -17,6 +17,7 @@ protocol DetailRoutePointPresentationLogic {
     func presentDismiss(response: DetailRoutePoint.Dismiss.Response)
     func presentEditRoutePoint(response: DetailRoutePoint.EditRoutePoint.Response)
     func presentDeleteRoutePoint(response: DetailRoutePoint.DeleteRoutePoint.Response)
+    func presentToggleView(response: DetailRoutePoint.ToggleView.Response)
 }
 
 class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
@@ -59,5 +60,13 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     func presentDeleteRoutePoint(response: DetailRoutePoint.DeleteRoutePoint.Response) {
         let viewModel = DetailRoutePoint.DeleteRoutePoint.ViewModel()
         viewController?.displayDeleteRoutePoint(viewModel: viewModel)
+    }
+    
+    // MARK: Toggle View
+    
+    func presentToggleView(response: DetailRoutePoint.ToggleView.Response) {
+        let screenCoverage = CGFloat(response.screenCoverage)
+        let viewModel = DetailRoutePoint.ToggleView.ViewModel(screenCoverage: screenCoverage)
+        viewController?.displayToggleView(viewModel: viewModel)
     }
 }

@@ -58,4 +58,17 @@ enum DetailRoutePoint {
         struct ViewModel {
         }
     }
+    
+    enum ToggleView {
+        struct Request {
+            let positionFromTheTop: Float
+            let maxDistanceToPan: Float
+        }
+        struct Response {
+            let screenCoverage: Float
+        }
+        struct ViewModel {
+            let screenCoverage: CGFloat
+        }
+    }
 }

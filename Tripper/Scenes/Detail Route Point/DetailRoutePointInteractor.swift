@@ -17,6 +17,7 @@ protocol DetailRoutePointBusinessLogic {
     func dismiss(request: DetailRoutePoint.Dismiss.Request)
     func editRoutePoint(request: DetailRoutePoint.EditRoutePoint.Request)
     func deleteRoutePoint(request: DetailRoutePoint.DeleteRoutePoint.Request)
+    func toggleView(request: DetailRoutePoint.ToggleView.Request)
 }
 
 protocol DetailRoutePointDataStore {
@@ -59,5 +60,27 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     func deleteRoutePoint(request: DetailRoutePoint.DeleteRoutePoint.Request) {
         let response = DetailRoutePoint.DeleteRoutePoint.Response()
         presenter?.presentDeleteRoutePoint(response: response)
+    }
+    
+    // MARK: Toggle View
+    
+    func toggleView(request: DetailRoutePoint.ToggleView.Request) {
+        let positionFromTheTop = request.positionFromTheTop
+        let maxDistanceToPan = request.maxDistanceToPan
+        let response: DetailRoutePoint.ToggleView.Response
+        
+        if positionFromTheTop < maxDistanceToPan * 1 / 3 {
+            response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0.75)
+        } else if positionFromTheTop < maxDistanceToPan * 2 / 3 {
+            response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0.25)
+        } else {
+            if positionFromTheTop < maxDistanceToPan * 0.95 {
+                response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0.25)
+            } else {
+                response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0)
+            }
+        }
+        
+        presenter?.presentToggleView(response: response)
     }
 }

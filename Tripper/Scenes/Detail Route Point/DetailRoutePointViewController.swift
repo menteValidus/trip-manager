@@ -17,6 +17,7 @@ protocol DetailRoutePointDisplayLogic: class {
     func displayDismiss(viewModel: DetailRoutePoint.Dismiss.ViewModel)
     func displayEditRoutePoint(viewModel: DetailRoutePoint.EditRoutePoint.ViewModel)
     func displayDeleteRoutePoint(viewModel: DetailRoutePoint.DeleteRoutePoint.ViewModel)
+    func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel)
 }
 
 typealias Popup = DismissablePopup & ChangeablePopup
@@ -79,8 +80,12 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         super.viewDidLoad()
         // TODO: GestureRecognizer doesn't call dedicated event.
         initGestureRecognizers()
-        self.view.layer.cornerRadius = 32
+        initView()
         setupUI()
+    }
+    
+    private func initView() {
+        self.view.layer.cornerRadius = 32
     }
     
     private func initGestureRecognizers() {
@@ -136,6 +141,22 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         router?.routeToManageRouteMapWithDelete(segue: nil)
     }
     
+    // MARK: Toggle View
+    
+    func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel) {
+        let percent = viewModel.screenCoverage
+        if percent > 0 {
+            UIView.animate(withDuration: 0.3) {
+                let height = self.view.frame.height
+                let width  = self.view.frame.width
+                let yCoordinate = height * (1 - percent)
+                print(Float(yCoordinate))
+                self.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height)
+            }
+        } else {
+            dismissPopup()
+        }
+    }
     
     // MARK: - Gesture Actions
     
@@ -153,20 +174,22 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
             recognizer.setTranslation(.zero, in: self.view)
             
         case .cancelled, .ended:
-            let positionFromTheTop = view.frame.origin.y
-            let maxDistanceToPan = view.frame.height
+            let positionFromTheTop = Float(view.frame.origin.y)
+            let maxDistanceToPan = Float(view.frame.height)
+            let request = DetailRoutePoint.ToggleView.Request(positionFromTheTop: positionFromTheTop, maxDistanceToPan: maxDistanceToPan)
+            interactor?.toggleView(request: request)
             
-            if positionFromTheTop < maxDistanceToPan * 1 / 3 {
-                toggleView(screenCoverage: 0.75)
-            } else if positionFromTheTop < maxDistanceToPan * 2 / 3 {
-                toggleView(screenCoverage: 0.25)
-            } else {
-                if positionFromTheTop < maxDistanceToPan * 0.95 {
-                    toggleView(screenCoverage: 0.25)
-                } else {
-                    dismissPopup()
-                }
-            }
+//            if positionFromTheTop < maxDistanceToPan * 1 / 3 {
+//                toggleView(screenCoverage: 0.75)
+//            } else if positionFromTheTop < maxDistanceToPan * 2 / 3 {
+//                toggleView(screenCoverage: 0.25)
+//            } else {
+//                if positionFromTheTop < maxDistanceToPan * 0.95 {
+//                    toggleView(screenCoverage: 0.25)
+//                } else {
+//                    dismissPopup()
+//                }
+//            }
             
         default:
             return
