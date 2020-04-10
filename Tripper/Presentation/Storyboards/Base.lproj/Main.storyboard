@@ -84,7 +84,7 @@
         <!--Detail Route Point View Controller-->
         <scene sceneID="y9b-BA-uiU">
             <objects>
-                <viewController storyboardIdentifier="DetailRoutePointViewController" id="Bjg-T4-fhS" customClass="DetailRoutePointViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailRoutePointViewController" automaticallyAdjustsScrollViewInsets="NO" id="Bjg-T4-fhS" customClass="DetailRoutePointViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GGm-jG-eD2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -149,25 +149,24 @@
                             <constraint firstItem="8C6-zn-JHc" firstAttribute="top" secondItem="DO3-h1-v6K" secondAttribute="bottom" constant="32" id="19H-i8-Jkz"/>
                             <constraint firstItem="nmT-GR-YBy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ys4-89-eSf" secondAttribute="trailing" constant="16" id="44W-FW-yJ1"/>
                             <constraint firstItem="bsW-lJ-8cQ" firstAttribute="top" secondItem="8C6-zn-JHc" secondAttribute="bottom" constant="8" id="9KL-0p-qrB"/>
-                            <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="nmT-GR-YBy" secondAttribute="trailing" constant="16" id="9hq-iM-igt"/>
-                            <constraint firstItem="8C6-zn-JHc" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="16" id="CHI-S7-FGF"/>
-                            <constraint firstItem="Rwy-Bq-VX3" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="12" id="FWE-if-Bce"/>
-                            <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="Cbi-qO-sck" secondAttribute="trailing" constant="16" id="Gr6-A9-QHs"/>
-                            <constraint firstItem="ys4-89-eSf" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="16" id="HuH-EZ-Nzr"/>
-                            <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="isx-VI-OL0" secondAttribute="trailing" constant="24" id="IXn-Sc-MwG"/>
-                            <constraint firstItem="0C2-fP-eBO" firstAttribute="trailing" secondItem="bsW-lJ-8cQ" secondAttribute="trailing" constant="24" id="KjA-Nc-Z0Z"/>
+                            <constraint firstAttribute="trailing" secondItem="nmT-GR-YBy" secondAttribute="trailing" constant="16" id="9hq-iM-igt"/>
+                            <constraint firstItem="8C6-zn-JHc" firstAttribute="leading" secondItem="GGm-jG-eD2" secondAttribute="leading" constant="16" id="CHI-S7-FGF"/>
+                            <constraint firstItem="Rwy-Bq-VX3" firstAttribute="top" secondItem="GGm-jG-eD2" secondAttribute="top" constant="12" id="FWE-if-Bce"/>
+                            <constraint firstAttribute="trailing" secondItem="Cbi-qO-sck" secondAttribute="trailing" constant="16" id="Gr6-A9-QHs"/>
+                            <constraint firstItem="ys4-89-eSf" firstAttribute="leading" secondItem="GGm-jG-eD2" secondAttribute="leading" constant="16" id="HuH-EZ-Nzr"/>
+                            <constraint firstAttribute="trailing" secondItem="isx-VI-OL0" secondAttribute="trailing" constant="24" id="IXn-Sc-MwG"/>
+                            <constraint firstAttribute="trailing" secondItem="bsW-lJ-8cQ" secondAttribute="trailing" constant="24" id="KjA-Nc-Z0Z"/>
                             <constraint firstItem="Cbi-qO-sck" firstAttribute="centerY" secondItem="DO3-h1-v6K" secondAttribute="centerY" id="T1q-3u-EfA"/>
                             <constraint firstItem="ys4-89-eSf" firstAttribute="top" secondItem="Rwy-Bq-VX3" secondAttribute="bottom" constant="40" id="XI3-db-HvL"/>
-                            <constraint firstItem="bsW-lJ-8cQ" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="24" id="aJy-HB-h8v"/>
-                            <constraint firstItem="MHW-vQ-MbK" firstAttribute="centerX" secondItem="0C2-fP-eBO" secondAttribute="centerX" id="aKZ-nE-odL"/>
+                            <constraint firstItem="bsW-lJ-8cQ" firstAttribute="leading" secondItem="GGm-jG-eD2" secondAttribute="leading" constant="24" id="aJy-HB-h8v"/>
+                            <constraint firstItem="MHW-vQ-MbK" firstAttribute="centerX" secondItem="GGm-jG-eD2" secondAttribute="centerX" id="aKZ-nE-odL"/>
                             <constraint firstItem="DO3-h1-v6K" firstAttribute="top" secondItem="ys4-89-eSf" secondAttribute="bottom" constant="32" id="dnS-s2-iWq"/>
-                            <constraint firstItem="Rwy-Bq-VX3" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="24" id="juE-rO-Rpd"/>
-                            <constraint firstItem="isx-VI-OL0" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="12" id="jzq-mY-6g7"/>
-                            <constraint firstItem="MHW-vQ-MbK" firstAttribute="top" secondItem="0C2-fP-eBO" secondAttribute="top" constant="16" id="kXk-fo-2Df"/>
-                            <constraint firstItem="DO3-h1-v6K" firstAttribute="leading" secondItem="0C2-fP-eBO" secondAttribute="leading" constant="16" id="m9g-i9-wTC"/>
+                            <constraint firstItem="Rwy-Bq-VX3" firstAttribute="leading" secondItem="GGm-jG-eD2" secondAttribute="leading" constant="24" id="juE-rO-Rpd"/>
+                            <constraint firstItem="isx-VI-OL0" firstAttribute="top" secondItem="GGm-jG-eD2" secondAttribute="top" constant="12" id="jzq-mY-6g7"/>
+                            <constraint firstItem="MHW-vQ-MbK" firstAttribute="top" secondItem="GGm-jG-eD2" secondAttribute="top" constant="16" id="kXk-fo-2Df"/>
+                            <constraint firstItem="DO3-h1-v6K" firstAttribute="leading" secondItem="GGm-jG-eD2" secondAttribute="leading" constant="16" id="m9g-i9-wTC"/>
                             <constraint firstItem="nmT-GR-YBy" firstAttribute="centerY" secondItem="ys4-89-eSf" secondAttribute="centerY" id="owW-A9-6pv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="0C2-fP-eBO"/>
                     </view>
                     <navigationItem key="navigationItem" id="SNW-GP-Cg9"/>
                     <connections>

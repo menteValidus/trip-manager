@@ -14,7 +14,10 @@ import UIKit
 
 protocol DetailRoutePointDisplayLogic: class {
     func displaySetupUI(viewModel: DetailRoutePoint.SetupUI.ViewModel)
+    func displayDismiss(viewModel: DetailRoutePoint.Dismiss.ViewModel)
 }
+
+typealias Popup = DismissablePopup & ChangeablePopup
 
 protocol DismissablePopup: class {
     func dismissPopup()
@@ -23,6 +26,7 @@ protocol DismissablePopup: class {
 protocol ChangeablePopup: class {
     func updateUI()
 }
+
 
 class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayLogic {
     var interactor: DetailRoutePointBusinessLogic?
@@ -73,6 +77,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         super.viewDidLoad()
         // TODO: GestureRecognizer doesn't call dedicated event.
         initGestureRecognizers()
+        self.view.layer.cornerRadius = 32
         setupUI()
     }
     
@@ -97,6 +102,12 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         descriptionTextView.text = viewModel.description
         arrivalDateLabel.text = viewModel.arrivalDateText
         departureDateLabel.text = viewModel.departureDateText
+    }
+    
+    // MARK: Dismiss
+    
+    func displayDismiss(viewModel: DetailRoutePoint.Dismiss.ViewModel) {
+        router?.routeToManageRouteMap(segue: nil)
     }
     
     // MARK: - Gesture Actions
@@ -144,7 +155,8 @@ extension DetailRoutePointViewController: DismissablePopup {
     // MARK: - Dismissable Popup
     
     func dismissPopup() {
-        // TODO: Route back.
+        let request = DetailRoutePoint.Dismiss.Request()
+        interactor?.dismiss(request: request)
     }
 }
 

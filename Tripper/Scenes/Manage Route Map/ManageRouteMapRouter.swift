@@ -47,8 +47,15 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             var destinationDS = destinationVC.router!.dataStore!
             passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
         } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
+            let destinationVC: DetailRoutePointViewController
+            
+            if let viewController = dataStore?.popup as? DetailRoutePointViewController {
+                destinationVC = viewController
+            } else {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
+            }
+            
             var destinationDS = destinationVC.router!.dataStore!
             passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
             navigateToDetailRoutePoint(source: viewController!, destination: destinationVC)
@@ -64,18 +71,27 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func navigateToDetailRoutePoint(source: ManageRouteMapViewController, destination: DetailRoutePointViewController)
     {
-        let height = source.view.frame.height
-        let width  = source.view.frame.width
-        let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
-        
-        source.view.addSubview(destination.view)
-        destination.view.frame = CGRect(x: 0, y: height, width: width, height: height)
-        destination.view.isUserInteractionEnabled = true
-        destination.didMove(toParent: source)
-        
-        let yCoordinate = source.view.frame.height * 0.75
-        UIView.animate(withDuration: 0.3) {
-            destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+        if let popup = source.router?.dataStore?.popup {
+            popup.updateUI()
+        } else {
+            let height = source.view.frame.height - 150
+            let width  = source.view.frame.width
+            let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
+            
+            source.addChild(destination)
+            source.view.addSubview(destination.view)
+            destination.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+            destination.view.isUserInteractionEnabled = true
+            destination.didMove(toParent: source)
+            
+            
+            let yCoordinate = source.view.frame.height * 0.75
+//            UIView.animate(withDuration: 0.3) {
+//                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+//            }
+            
+            // TODO: Not sure that it belongs here.
+            dataStore?.popup = destination
         }
     }
     

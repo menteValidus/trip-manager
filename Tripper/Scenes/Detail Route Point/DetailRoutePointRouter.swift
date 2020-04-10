@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol DetailRoutePointRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToManageRouteMap(segue: UIStoryboardSegue?)
 }
 
 protocol DetailRoutePointDataPassing {
@@ -26,32 +26,40 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     
     // MARK: Routing
     
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
-    //{
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
+    func routeToManageRouteMap(segue: UIStoryboardSegue?)
+    {
+        if let segue = segue {
+            let destinationVC = segue.destination as! ManageRouteMapViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
+        } else {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let destinationVC = storyboard.instantiateViewController(withIdentifier: "ManageRouteMapViewController") as! ManageRouteMapViewController
+            let destinationVC = viewController?.parent as! ManageRouteMapViewController
+            var destinationDS = destinationVC.router!.dataStore! 
+            passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
+            navigateToManageRouteMap(source: viewController!, destination: destinationVC)
+        }
+    }
     
     // MARK: Navigation
     
-    //func navigateToSomewhere(source: DetailRoutePointViewController, destination: SomewhereViewController)
-    //{
-    //  source.show(destination, sender: nil)
-    //}
+    func navigateToManageRouteMap(source: DetailRoutePointViewController, destination: ManageRouteMapViewController)
+    {
+        //      if let detailViewController = detailViewController {
+        source.removeFromParent()
+        UIView.animate(withDuration: 0.3, animations: {
+            destination.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
+        }, completion: { _ in
+            source.view.removeFromSuperview()
+        })
+        //      }
+    }
     
     // MARK: Passing data
     
-    //func passDataToSomewhere(source: DetailRoutePointDataStore, destination: inout SomewhereDataStore)
-    //{
-    //  destination.name = source.name
-    //}
+    func passDataToManageRouteMap(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
+    {
+        destination.popup = nil
+    }
 }

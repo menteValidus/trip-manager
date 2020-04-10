@@ -14,6 +14,7 @@ import UIKit
 
 protocol DetailRoutePointBusinessLogic {
     func setupUI(request: DetailRoutePoint.SetupUI.Request)
+    func dismiss(request: DetailRoutePoint.Dismiss.Request)
 }
 
 protocol DetailRoutePointDataStore {
@@ -35,5 +36,12 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
             
             presenter?.presentSetupUI(response: response)
         }
+    }
+    
+    // MARK: Dismiss
+    
+    func dismiss(request: DetailRoutePoint.Dismiss.Request) {
+        let response = DetailRoutePoint.Dismiss.Response()
+        presenter?.presentDismiss(response: response)
     }
 }

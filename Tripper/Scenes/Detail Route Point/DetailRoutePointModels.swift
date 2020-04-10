@@ -31,4 +31,13 @@ enum DetailRoutePoint {
             let departureDateText: String
         }
     }
+    
+    enum Dismiss {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
 }

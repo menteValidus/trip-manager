@@ -14,6 +14,7 @@ import UIKit
 
 protocol DetailRoutePointPresentationLogic {
     func presentSetupUI(response: DetailRoutePoint.SetupUI.Response)
+    func presentDismiss(response: DetailRoutePoint.Dismiss.Response)
 }
 
 class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
@@ -35,5 +36,10 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
             title: response.title, description: response.description,
             arrivalDateText: arrivalDate, departureDateText: departureDate)
         viewController?.displaySetupUI(viewModel: viewModel)
+    }
+    
+    func presentDismiss(response: DetailRoutePoint.Dismiss.Response) {
+        let viewModel = DetailRoutePoint.Dismiss.ViewModel()
+        viewController?.displayDismiss(viewModel: viewModel)
     }
 }

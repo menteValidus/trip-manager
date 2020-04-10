@@ -25,11 +25,13 @@ protocol ManageRouteMapDataStore {
     var tappedCoordinate: CLLocationCoordinate2D? { get set }
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
+    var popup: Popup? { get set }
 }
 
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
+    var popup: Popup?
     
 //    var idGenerator: IDGenerator
     
@@ -67,6 +69,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var tappedCoordinate: CLLocationCoordinate2D?
     
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
+        popup?.dismissPopup()
+        
         tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
         let response = ManageRouteMap.CreateRoutePoint.Response()
         presenter?.presentAnnotationCreation(response: response)
