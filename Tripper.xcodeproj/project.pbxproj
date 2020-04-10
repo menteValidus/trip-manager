@@ -31,6 +31,7 @@
 		0B418C5D243F1E150007B611 /* DetailRoutePointModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C57243F1E150007B611 /* DetailRoutePointModels.swift */; };
 		0B418C5E243F1E150007B611 /* DetailRoutePointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C58243F1E150007B611 /* DetailRoutePointViewController.swift */; };
 		0B418C5F243F1E150007B611 /* DetailRoutePointInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C59243F1E150007B611 /* DetailRoutePointInteractor.swift */; };
+		0B418C62244099820007B611 /* UINavigationController+PopCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */; };
 		0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */; };
 		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
@@ -106,6 +107,7 @@
 		0B418C57243F1E150007B611 /* DetailRoutePointModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointModels.swift; sourceTree = "<group>"; };
 		0B418C58243F1E150007B611 /* DetailRoutePointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointViewController.swift; sourceTree = "<group>"; };
 		0B418C59243F1E150007B611 /* DetailRoutePointInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointInteractor.swift; sourceTree = "<group>"; };
+		0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopCompletion.swift"; sourceTree = "<group>"; };
 		0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
 		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 		0B042A5823E2D02100E9136F /* Tripper */ = {
 			isa = PBXGroup;
 			children = (
+				0B418C602440995E0007B611 /* Extensions */,
 				0B8CE30D243C93020065B7B5 /* Models */,
 				0B8CE30A243C8E9F0065B7B5 /* Services */,
 				0B8CE2FC243C8AAE0065B7B5 /* Scenes */,
@@ -325,6 +328,14 @@
 				0B418C57243F1E150007B611 /* DetailRoutePointModels.swift */,
 			);
 			path = "Detail Route Point";
+			sourceTree = "<group>";
+		};
+		0B418C602440995E0007B611 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		0B6BB0E3240E617D0002D1DB /* Transitioning */ = {
@@ -694,6 +705,7 @@
 				0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */,
 				0B418C5E243F1E150007B611 /* DetailRoutePointViewController.swift in Sources */,
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
+				0B418C62244099820007B611 /* UINavigationController+PopCompletion.swift in Sources */,
 				0B042A7823E836B300E9136F /* RouteController.swift in Sources */,
 				0BD662FC241A65500034B1D6 /* RouteFragment.swift in Sources */,
 				0B8CE304243C8AF20065B7B5 /* ManageRouteMapPresenter.swift in Sources */,

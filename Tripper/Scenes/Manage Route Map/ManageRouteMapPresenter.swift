@@ -17,6 +17,8 @@ protocol ManageRouteMapPresentationLogic {
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response)
+    func presentDeselectAnnotation(response: ManageRouteMap.DeselectAnnotation.Response)
+    func presentShowDetail(response: ManageRouteMap.ShowDetail.Response)
     func presentEditRoutePoint(response: ManageRouteMap.EditRoutePoint.Response)
     func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response)
 }
@@ -50,6 +52,20 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response) {
         let viewModel = ManageRouteMap.SelectAnnotation.ViewModel(identifier: response.identifier)
         viewController?.displaySelectAnnotation(viewModel: viewModel)
+    }
+    
+    // MARK: Deselect Annotation
+    
+    func presentDeselectAnnotation(response: ManageRouteMap.DeselectAnnotation.Response) {
+        let viewModel = ManageRouteMap.DeselectAnnotation.ViewModel()
+        viewController?.displayDeselectAnnotation(viewModel: viewModel)
+    }
+    
+    // MARK: Show Detail
+    
+    func presentShowDetail(response: ManageRouteMap.ShowDetail.Response) {
+        let viewModel = ManageRouteMap.ShowDetail.ViewModel()
+        viewController?.displayShowDetail(viewModel: viewModel)
     }
     
     // MARK: Edit Route Point

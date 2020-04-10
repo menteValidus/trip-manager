@@ -18,7 +18,8 @@ protocol ManageRouteMapBusinessLogic {
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
     func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request)
-    //    func deselectAnnotation(request)
+    func deselectAnnotation(request: ManageRouteMap.DeselectAnnotation.Request)
+    func showDetail(request: ManageRouteMap.ShowDetail.Request)
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request)
     func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request)
 }
@@ -93,6 +94,21 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         idOfSelectedAnnotation = request.identifier
         let response = ManageRouteMap.SelectAnnotation.Response(identifier: idOfSelectedAnnotation)
         presenter?.presentSelectAnnotation(response: response)
+    }
+    
+    // MARK: Deselect Annotation
+    
+    func deselectAnnotation(request: ManageRouteMap.DeselectAnnotation.Request) {
+        selectedRoutePoint = nil
+        let response = ManageRouteMap.DeselectAnnotation.Response()
+        presenter?.presentDeselectAnnotation(response: response)
+    }
+    
+    // MARK: Show Detail
+    
+    func showDetail(request: ManageRouteMap.ShowDetail.Request) {
+        let response = ManageRouteMap.ShowDetail.Response()
+        presenter?.presentShowDetail(response: response)
     }
     
     // MARK: Edit Route Point

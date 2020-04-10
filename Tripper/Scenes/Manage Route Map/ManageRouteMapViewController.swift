@@ -18,6 +18,8 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
+    func displayDeselectAnnotation(viewModel: ManageRouteMap.DeselectAnnotation.ViewModel)
+    func displayShowDetail(viewModel: ManageRouteMap.ShowDetail.ViewModel)
     func displayEditRoutePoint(viewModel: ManageRouteMap.EditRoutePoint.ViewModel)
     func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel)
 }
@@ -127,21 +129,37 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
         if viewModel.identifier != nil {
-            router?.routeToDetailRoutePoint(segue: nil)
+            showDetail()
         }
+    }
+    
+    // MARK: Deselect Annotation
+    
+    func displayDeselectAnnotation(viewModel: ManageRouteMap.DeselectAnnotation.ViewModel) {
+        let selectedAnnotation = mapView.selectedAnnotations.first
+        if let annotation = selectedAnnotation {
+            mapView.deselectAnnotation(annotation, animated: true)
+        }
+        
+    }
+    
+    // MARK: Show Detail
+    
+    func showDetail() {
+        let request = ManageRouteMap.ShowDetail.Request()
+        interactor?.showDetail(request: request)
+    }
+    
+    func displayShowDetail(viewModel: ManageRouteMap.ShowDetail.ViewModel) {
+        router?.routeToDetailRoutePoint(segue: nil)
     }
     
     // MARK: Edit Route Point
     
     func editSelectedRoutePoint() {
-        let selectedAnnotation = mapView.selectedAnnotations.first
-        if let annotation = selectedAnnotation {
-            let idOfSelectedRP = annotationsID[annotation as! MGLPointAnnotation]
-            
-            if let identifier = idOfSelectedRP {
-                let request = ManageRouteMap.EditRoutePoint.Request(identifier: identifier)
-                interactor?.editRoutePoint(request: request)
-            }
+        if let identifier = getIDOfSelectedRoutePoint() {
+            let request = ManageRouteMap.EditRoutePoint.Request(identifier: identifier)
+            interactor?.editRoutePoint(request: request)
         }
     }
     
@@ -153,6 +171,19 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel) {
         
+    }
+    
+    // MARK: Shared Helper Methods
+    
+    private func getIDOfSelectedRoutePoint() -> String? {
+        let selectedAnnotation = mapView.selectedAnnotations.first
+        if let annotation = selectedAnnotation {
+            let idOfSelectedRP = annotationsID[annotation as! MGLPointAnnotation]
+            
+            return idOfSelectedRP
+        }
+        
+        return nil
     }
 }
 

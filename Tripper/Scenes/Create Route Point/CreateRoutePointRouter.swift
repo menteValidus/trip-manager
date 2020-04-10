@@ -45,7 +45,9 @@ class CreateRoutePointRouter: NSObject, CreateRoutePointRoutingLogic, CreateRout
     
     func navigateToSomewhere(source: CreateRoutePointViewController, destination: ManageRouteMapViewController)
     {
-        source.navigationController?.popViewController(animated: true)
+        source.navigationController?.popViewController(animated: true) {
+            destination.showDetail()
+        }
     }
     
     // MARK: Passing data

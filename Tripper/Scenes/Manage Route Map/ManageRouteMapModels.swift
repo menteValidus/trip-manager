@@ -68,6 +68,25 @@ enum ManageRouteMap {
         }
     }
     
+    enum DeselectAnnotation {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+    enum ShowDetail {
+       struct Request {
+       }
+       struct Response {
+       }
+       struct ViewModel {
+       }
+   }
+       
+    
     enum EditRoutePoint {
         struct Request {
             let identifier: String?
