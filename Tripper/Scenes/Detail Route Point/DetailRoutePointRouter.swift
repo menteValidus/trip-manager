@@ -65,6 +65,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
+            destination.deselectAnnotations()
         })
     }
     
@@ -99,6 +100,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     
     func passDataToManageRouteMapWithEdit(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
+        destination.routePointToEdit = source.routePoint
         destination.popup = nil
     }
     

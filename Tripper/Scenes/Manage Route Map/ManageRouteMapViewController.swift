@@ -135,6 +135,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Deselect Annotation
     
+    func deselectAnnotations() {
+        let request = ManageRouteMap.DeselectAnnotation.Request()
+        interactor?.deselectAnnotation(request: request)
+    }
+    
     func displayDeselectAnnotation(viewModel: ManageRouteMap.DeselectAnnotation.ViewModel) {
         let selectedAnnotation = mapView.selectedAnnotations.first
         if let annotation = selectedAnnotation {

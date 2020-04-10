@@ -121,6 +121,6 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     }
     
     func passDataToEditRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore) {
-        destination.pointToSave = source.selectedRoutePoint
+        destination.pointToSave = source.routePointToEdit
     }
 }

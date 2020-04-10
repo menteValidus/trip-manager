@@ -28,6 +28,7 @@ protocol ManageRouteMapDataStore {
     var tappedCoordinate: CLLocationCoordinate2D? { get set }
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
+    var routePointToEdit: RoutePoint? { get set }
     var popup: Popup? { get set }
 }
 
@@ -112,6 +113,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     }
     
     // MARK: Edit Route Point
+    
+    var routePointToEdit: RoutePoint?
     
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request) {
         idOfSelectedAnnotation = request.identifier
