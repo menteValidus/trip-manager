@@ -33,8 +33,6 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             var destinationDS = destinationVC.router!.dataStore!
             passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
         } else {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let destinationVC = storyboard.instantiateViewController(withIdentifier: "ManageRouteMapViewController") as! ManageRouteMapViewController
             let destinationVC = viewController?.parent as! ManageRouteMapViewController
             var destinationDS = destinationVC.router!.dataStore! 
             passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
@@ -46,14 +44,12 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     
     func navigateToManageRouteMap(source: DetailRoutePointViewController, destination: ManageRouteMapViewController)
     {
-        //      if let detailViewController = detailViewController {
         source.removeFromParent()
         UIView.animate(withDuration: 0.3, animations: {
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
         })
-        //      }
     }
     
     // MARK: Passing data

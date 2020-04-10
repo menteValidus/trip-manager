@@ -15,6 +15,8 @@ import UIKit
 protocol DetailRoutePointBusinessLogic {
     func setupUI(request: DetailRoutePoint.SetupUI.Request)
     func dismiss(request: DetailRoutePoint.Dismiss.Request)
+    func editRoutePoint(request: DetailRoutePoint.EditRoutePoint.Request)
+    func deleteRoutePoint(request: DetailRoutePoint.DeleteRoutePoint.Request)
 }
 
 protocol DetailRoutePointDataStore {
@@ -26,7 +28,7 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     var worker: DetailRoutePointWorker?
     var routePoint: RoutePoint?
     
-    // MARK: Setup UI
+    // MARK: - Setup UI
     
     func setupUI(request: DetailRoutePoint.SetupUI.Request) {
         if let routePoint = routePoint {
@@ -43,5 +45,19 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     func dismiss(request: DetailRoutePoint.Dismiss.Request) {
         let response = DetailRoutePoint.Dismiss.Response()
         presenter?.presentDismiss(response: response)
+    }
+    
+    // MARK: Edit Route Point
+    
+    func editRoutePoint(request: DetailRoutePoint.EditRoutePoint.Request) {
+        let response = DetailRoutePoint.EditRoutePoint.Response()
+        presenter?.presentEditRoutePoint(response: response)
+    }
+    
+    // MARK: Delete Route Point
+    
+    func deleteRoutePoint(request: DetailRoutePoint.DeleteRoutePoint.Request) {
+        let response = DetailRoutePoint.DeleteRoutePoint.Response()
+        presenter?.presentDeleteRoutePoint(response: response)
     }
 }

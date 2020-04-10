@@ -142,6 +142,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
+        mapView.deselectAnnotation(annotation, animated: true)
         let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
         // Pass optional value if it's nil show error in presenter.
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation)

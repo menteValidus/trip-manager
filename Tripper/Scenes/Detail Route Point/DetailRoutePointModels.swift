@@ -40,4 +40,22 @@ enum DetailRoutePoint {
         struct ViewModel {
         }
     }
+    
+    enum EditRoutePoint {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+    enum DeleteRoutePoint {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
 }

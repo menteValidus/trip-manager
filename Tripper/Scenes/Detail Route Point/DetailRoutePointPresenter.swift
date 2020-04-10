@@ -15,6 +15,8 @@ import UIKit
 protocol DetailRoutePointPresentationLogic {
     func presentSetupUI(response: DetailRoutePoint.SetupUI.Response)
     func presentDismiss(response: DetailRoutePoint.Dismiss.Response)
+    func presentEditRoutePoint(response: DetailRoutePoint.EditRoutePoint.Response)
+    func presentDeleteRoutePoint(response: DetailRoutePoint.DeleteRoutePoint.Response)
 }
 
 class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
@@ -27,7 +29,7 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
         return dateFormatter
     }()
     
-    // MARK: Setup UI
+    // MARK: - Setup UI
     
     func presentSetupUI(response: DetailRoutePoint.SetupUI.Response) {
         let arrivalDate = dateFormatter.string(from: response.arrivalDate)
@@ -38,8 +40,24 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
         viewController?.displaySetupUI(viewModel: viewModel)
     }
     
+    // MARK: Dismiss
+    
     func presentDismiss(response: DetailRoutePoint.Dismiss.Response) {
         let viewModel = DetailRoutePoint.Dismiss.ViewModel()
         viewController?.displayDismiss(viewModel: viewModel)
+    }
+    
+    // MARK: Edit Route Point
+    
+    func presentEditRoutePoint(response: DetailRoutePoint.EditRoutePoint.Response) {
+        let viewModel = DetailRoutePoint.EditRoutePoint.ViewModel()
+        viewController?.displayEditRoutePoint(viewModel: viewModel)
+    }
+    
+    // MARK: Delete Route Point
+    
+    func presentDeleteRoutePoint(response: DetailRoutePoint.DeleteRoutePoint.Response) {
+        let viewModel = DetailRoutePoint.DeleteRoutePoint.ViewModel()
+        viewController?.displayDeleteRoutePoint(viewModel: viewModel)
     }
 }

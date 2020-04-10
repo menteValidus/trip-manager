@@ -15,6 +15,8 @@ import UIKit
 protocol DetailRoutePointDisplayLogic: class {
     func displaySetupUI(viewModel: DetailRoutePoint.SetupUI.ViewModel)
     func displayDismiss(viewModel: DetailRoutePoint.Dismiss.ViewModel)
+    func displayEditRoutePoint(viewModel: DetailRoutePoint.EditRoutePoint.ViewModel)
+    func displayDeleteRoutePoint(viewModel: DetailRoutePoint.DeleteRoutePoint.ViewModel)
 }
 
 typealias Popup = DismissablePopup & ChangeablePopup
@@ -110,6 +112,28 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         router?.routeToManageRouteMap(segue: nil)
     }
     
+    // MARK: Edit Route Point
+    
+    @IBAction func editRoutePoint() {
+        let request = DetailRoutePoint.EditRoutePoint.Request()
+        interactor?.editRoutePoint(request: request)
+    }
+    
+    func displayEditRoutePoint(viewModel: DetailRoutePoint.EditRoutePoint.ViewModel) {
+        print("Use case EditRoutePoint is completed")
+    }
+    // MARK: Delete Route Point
+    
+    @IBAction func deleteRoutePoint() {
+        let request = DetailRoutePoint.DeleteRoutePoint.Request()
+        interactor?.deleteRoutePoint(request: request)
+    }
+    
+    func displayDeleteRoutePoint(viewModel: DetailRoutePoint.DeleteRoutePoint.ViewModel) {
+        print("Use case DeleteRoutePoint is completed")
+    }
+    
+    
     // MARK: - Gesture Actions
     
     // TODO: MOVE TO INTERACTOR.
@@ -126,12 +150,19 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
             recognizer.setTranslation(.zero, in: self.view)
             
         case .cancelled, .ended:
-            if view.frame.origin.y > view.frame.height * 2 / 3 {
+            let positionFromTheTop = view.frame.origin.y
+            let maxDistanceToPan = view.frame.height
+            
+            if positionFromTheTop < maxDistanceToPan * 1 / 3 {
                 toggleView(screenCoverage: 0.75)
-            } else if view.frame.origin.y > view.frame.height * 1 / 3 {
+            } else if positionFromTheTop < maxDistanceToPan * 2 / 3 {
                 toggleView(screenCoverage: 0.25)
             } else {
-                dismissPopup()
+                if positionFromTheTop < maxDistanceToPan * 0.95 {
+                    toggleView(screenCoverage: 0.25)
+                } else {
+                    dismissPopup()
+                }
             }
             
         default:
@@ -144,7 +175,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         UIView.animate(withDuration: 0.3) {
             let height = self.view.frame.height
             let width  = self.view.frame.width
-            let yCoordinate = self.view.frame.height * percent
+            let yCoordinate = self.view.frame.height * (1 - percent)
             print(Float(yCoordinate))
             self.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height)
         }

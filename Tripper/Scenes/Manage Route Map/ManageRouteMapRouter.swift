@@ -74,7 +74,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         if let popup = source.router?.dataStore?.popup {
             popup.updateUI()
         } else {
-            let height = source.view.frame.height - 150
+            let height = source.view.frame.height
             let width  = source.view.frame.width
             let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
             
@@ -86,9 +86,9 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             
             
             let yCoordinate = source.view.frame.height * 0.75
-//            UIView.animate(withDuration: 0.3) {
-//                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
-//            }
+            UIView.animate(withDuration: 0.3) {
+                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+            }
             
             // TODO: Not sure that it belongs here.
             dataStore?.popup = destination
