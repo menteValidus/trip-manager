@@ -52,8 +52,8 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     func routeToManageRouteMapWithDelete(segue: UIStoryboardSegue?) {
         let destinationVC = viewController?.parent as! ManageRouteMapViewController
         var destinationDS = destinationVC.router!.dataStore!
-        passDataToManageRouteMapWithEdit(source: dataStore!, destination: &destinationDS)
-        navigateToManageRouteMapWithEdit(source: viewController!, destination: destinationVC)
+        passDataToManageRouteMapWithDelete(source: dataStore!, destination: &destinationDS)
+        navigateToManageRouteMapWithDelete(source: viewController!, destination: destinationVC)
     }
     
     // MARK: Navigation
@@ -75,10 +75,9 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
+            // TODO: Need to get rid of this dependency.
+            destination.editSelectedRoutePoint()
         })
-        
-        // TODO: Need to get rid of this dependency.
-        destination.editSelectedRoutePoint()
     }
     
     func navigateToManageRouteMapWithDelete(source: DetailRoutePointViewController, destination: ManageRouteMapViewController)
