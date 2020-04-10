@@ -15,8 +15,8 @@ import UIKit
 protocol DetailRoutePointDisplayLogic: class {
     func displaySetupUI(viewModel: DetailRoutePoint.SetupUI.ViewModel)
     func displayDismiss(viewModel: DetailRoutePoint.Dismiss.ViewModel)
-    func displayEditRoutePoint(viewModel: DetailRoutePoint.EditRoutePoint.ViewModel)
-    func displayDeleteRoutePoint(viewModel: DetailRoutePoint.DeleteRoutePoint.ViewModel)
+    func displayEdit(viewModel: DetailRoutePoint.Edit.ViewModel)
+    func displayDelete(viewModel: DetailRoutePoint.Delete.ViewModel)
     func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel)
 }
 
@@ -117,26 +117,26 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         router?.routeToManageRouteMap(segue: nil)
     }
     
-    // MARK: Edit Route Point
+    // MARK: Edit
     
     @IBAction func editRoutePoint() {
-        let request = DetailRoutePoint.EditRoutePoint.Request()
-        interactor?.editRoutePoint(request: request)
+        let request = DetailRoutePoint.Edit.Request()
+        interactor?.edit(request: request)
     }
     
-    func displayEditRoutePoint(viewModel: DetailRoutePoint.EditRoutePoint.ViewModel) {
+    func displayEdit(viewModel: DetailRoutePoint.Edit.ViewModel) {
         print("Use case EditRoutePoint is completed")
         router?.routeToManageRouteMapWithEdit(segue: nil)
     }
     
-    // MARK: Delete Route Point
+    // MARK: Delete
     
     @IBAction func deleteRoutePoint() {
-        let request = DetailRoutePoint.DeleteRoutePoint.Request()
-        interactor?.deleteRoutePoint(request: request)
+        let request = DetailRoutePoint.Delete.Request()
+        interactor?.delete(request: request)
     }
     
-    func displayDeleteRoutePoint(viewModel: DetailRoutePoint.DeleteRoutePoint.ViewModel) {
+    func displayDelete(viewModel: DetailRoutePoint.Delete.ViewModel) {
         print("Use case DeleteRoutePoint is completed")
         router?.routeToManageRouteMapWithDelete(segue: nil)
     }
@@ -174,22 +174,10 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
             recognizer.setTranslation(.zero, in: self.view)
             
         case .cancelled, .ended:
-            let positionFromTheTop = Float(view.frame.origin.y)
-            let maxDistanceToPan = Float(view.frame.height)
+            let positionFromTheTop = view.frame.origin.y
+            let maxDistanceToPan = view.frame.height
             let request = DetailRoutePoint.ToggleView.Request(positionFromTheTop: positionFromTheTop, maxDistanceToPan: maxDistanceToPan)
             interactor?.toggleView(request: request)
-            
-//            if positionFromTheTop < maxDistanceToPan * 1 / 3 {
-//                toggleView(screenCoverage: 0.75)
-//            } else if positionFromTheTop < maxDistanceToPan * 2 / 3 {
-//                toggleView(screenCoverage: 0.25)
-//            } else {
-//                if positionFromTheTop < maxDistanceToPan * 0.95 {
-//                    toggleView(screenCoverage: 0.25)
-//                } else {
-//                    dismissPopup()
-//                }
-//            }
             
         default:
             return

@@ -15,8 +15,8 @@ import UIKit
 protocol DetailRoutePointBusinessLogic {
     func setupUI(request: DetailRoutePoint.SetupUI.Request)
     func dismiss(request: DetailRoutePoint.Dismiss.Request)
-    func editRoutePoint(request: DetailRoutePoint.EditRoutePoint.Request)
-    func deleteRoutePoint(request: DetailRoutePoint.DeleteRoutePoint.Request)
+    func edit(request: DetailRoutePoint.Edit.Request)
+    func delete(request: DetailRoutePoint.Delete.Request)
     func toggleView(request: DetailRoutePoint.ToggleView.Request)
 }
 
@@ -50,23 +50,23 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     
     // MARK: Edit Route Point
     
-    func editRoutePoint(request: DetailRoutePoint.EditRoutePoint.Request) {
-        let response = DetailRoutePoint.EditRoutePoint.Response()
-        presenter?.presentEditRoutePoint(response: response)
+    func edit(request: DetailRoutePoint.Edit.Request) {
+        let response = DetailRoutePoint.Edit.Response()
+        presenter?.presentEdit(response: response)
     }
     
     // MARK: Delete Route Point
     
-    func deleteRoutePoint(request: DetailRoutePoint.DeleteRoutePoint.Request) {
-        let response = DetailRoutePoint.DeleteRoutePoint.Response()
-        presenter?.presentDeleteRoutePoint(response: response)
+    func delete(request: DetailRoutePoint.Delete.Request) {
+        let response = DetailRoutePoint.Delete.Response()
+        presenter?.presentDelete(response: response)
     }
     
     // MARK: Toggle View
     
     func toggleView(request: DetailRoutePoint.ToggleView.Request) {
-        let positionFromTheTop = request.positionFromTheTop
-        let maxDistanceToPan = request.maxDistanceToPan
+        let positionFromTheTop = Float(request.positionFromTheTop)
+        let maxDistanceToPan = Float(request.maxDistanceToPan)
         let response: DetailRoutePoint.ToggleView.Response
         
         if positionFromTheTop < maxDistanceToPan * 1 / 3 {

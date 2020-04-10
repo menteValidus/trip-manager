@@ -15,8 +15,8 @@ import UIKit
 protocol DetailRoutePointPresentationLogic {
     func presentSetupUI(response: DetailRoutePoint.SetupUI.Response)
     func presentDismiss(response: DetailRoutePoint.Dismiss.Response)
-    func presentEditRoutePoint(response: DetailRoutePoint.EditRoutePoint.Response)
-    func presentDeleteRoutePoint(response: DetailRoutePoint.DeleteRoutePoint.Response)
+    func presentEdit(response: DetailRoutePoint.Edit.Response)
+    func presentDelete(response: DetailRoutePoint.Delete.Response)
     func presentToggleView(response: DetailRoutePoint.ToggleView.Response)
 }
 
@@ -48,18 +48,18 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
         viewController?.displayDismiss(viewModel: viewModel)
     }
     
-    // MARK: Edit Route Point
+    // MARK: Edit
     
-    func presentEditRoutePoint(response: DetailRoutePoint.EditRoutePoint.Response) {
-        let viewModel = DetailRoutePoint.EditRoutePoint.ViewModel()
-        viewController?.displayEditRoutePoint(viewModel: viewModel)
+    func presentEdit(response: DetailRoutePoint.Edit.Response) {
+        let viewModel = DetailRoutePoint.Edit.ViewModel()
+        viewController?.displayEdit(viewModel: viewModel)
     }
     
-    // MARK: Delete Route Point
+    // MARK: Delete
     
-    func presentDeleteRoutePoint(response: DetailRoutePoint.DeleteRoutePoint.Response) {
-        let viewModel = DetailRoutePoint.DeleteRoutePoint.ViewModel()
-        viewController?.displayDeleteRoutePoint(viewModel: viewModel)
+    func presentDelete(response: DetailRoutePoint.Delete.Response) {
+        let viewModel = DetailRoutePoint.Delete.ViewModel()
+        viewController?.displayDelete(viewModel: viewModel)
     }
     
     // MARK: Toggle View

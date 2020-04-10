@@ -41,7 +41,7 @@ enum DetailRoutePoint {
         }
     }
     
-    enum EditRoutePoint {
+    enum Edit {
         struct Request {
         }
         struct Response {
@@ -50,7 +50,7 @@ enum DetailRoutePoint {
         }
     }
     
-    enum DeleteRoutePoint {
+    enum Delete {
         struct Request {
         }
         struct Response {
@@ -61,8 +61,8 @@ enum DetailRoutePoint {
     
     enum ToggleView {
         struct Request {
-            let positionFromTheTop: Float
-            let maxDistanceToPan: Float
+            let positionFromTheTop: CGFloat
+            let maxDistanceToPan: CGFloat
         }
         struct Response {
             let screenCoverage: Float
