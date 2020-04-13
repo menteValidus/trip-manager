@@ -174,8 +174,19 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Delete Route Point
     
+    func deleteSelectedRoutePoint() {
+        let request = ManageRouteMap.DeleteRoutePoint.Request();
+        interactor?.deleteRoutePoint(request: request)
+    }
+    
     func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel) {
-        
+        for (annotation, id) in annotationsID {
+            if id == viewModel.identifier {
+                mapView.removeAnnotation(annotation)
+                annotationsID.removeValue(forKey: annotation)
+//                return
+            }
+        }
     }
     
     // MARK: Shared Helper Methods

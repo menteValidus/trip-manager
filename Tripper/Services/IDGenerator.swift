@@ -16,7 +16,7 @@ class NSUUIDGenerator: IDGenerator {
     private static var _instance: NSUUIDGenerator?
     private let idGenerator: NSUUID
 
-    private init() {
+    init() {
         idGenerator = NSUUID()
     }
     

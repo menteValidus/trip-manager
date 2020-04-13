@@ -29,6 +29,7 @@ protocol ManageRouteMapDataStore {
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
     var routePointToEdit: RoutePoint? { get set }
+    var routePointToDelete: RoutePoint? { get set }
     var popup: Popup? { get set }
 }
 
@@ -125,8 +126,13 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: Delete Route Point
     
+    var routePointToDelete: RoutePoint?
+    
     func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request) {
-        let response = ManageRouteMap.DeleteRoutePoint.Response(identifier: request.identifier)
-        presenter?.presentDeleteRoutePoint(response: response)
+        if let routePoint = routePointToDelete {
+            worker?.delete(routePoint: routePoint)
+            let response = ManageRouteMap.DeleteRoutePoint.Response(identifier: routePoint.id)
+            presenter?.presentDeleteRoutePoint(response: response)
+        }
     }
 }

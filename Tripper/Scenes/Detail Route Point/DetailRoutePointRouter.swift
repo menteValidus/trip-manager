@@ -88,6 +88,8 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
+            // TODO: Need to get rid of this dependency.
+            destination.deleteSelectedRoutePoint()
         })
     }
     
@@ -106,6 +108,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     
     func passDataToManageRouteMapWithDelete(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
+        destination.routePointToDelete = source.routePoint
         destination.popup = nil
     }
 }

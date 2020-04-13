@@ -35,6 +35,10 @@ class ManageRouteMapWorker {
         return newAnnotationsInfo
     }
     
+    func delete(routePoint: RoutePoint) {
+        routePointGateway.delete(routePoint)
+    }
+    
     private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {
         let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(id: routePoint.id, latitude: routePoint.latitude, longitude: routePoint.longitude)
         return annotationInfo

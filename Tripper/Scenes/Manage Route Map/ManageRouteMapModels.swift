@@ -99,7 +99,6 @@ enum ManageRouteMap {
     
     enum DeleteRoutePoint {
         struct Request {
-            let identifier: String?
         }
         struct Response {
             let identifier: String?

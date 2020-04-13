@@ -28,7 +28,7 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     var presenter: CreateRoutePointPresentationLogic?
     var worker: CreateRoutePointWorker?
     
-    private let idGenerator: IDGenerator = NSUUIDGenerator.instance
+    private let idGenerator: IDGenerator = NSUUIDGenerator()
     
     // MARK: - Form Route Point
     
