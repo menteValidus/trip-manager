@@ -15,15 +15,13 @@ import UIKit
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
     
-    private let routePoints: [RoutePoint] = []
-    
-    func fetchNewAnnotationsInfo() -> [ManageRouteMap.ConcreteAnnotationInfo] {
+    func fetchNewAnnotationsInfo(comparingWith idList: [String]) -> [ManageRouteMap.ConcreteAnnotationInfo] {
         let fetchedRoutePoints = routePointGateway.fetchAll()
         var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
         
         fetchedRoutePoints.forEach() { routePoint in
-            let isContained = routePoints.contains(where: {
-                return $0.id == routePoint.id
+            let isContained = idList.contains(where: {
+                return $0 == routePoint.id
             })
             
             if !isContained {

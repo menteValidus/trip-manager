@@ -78,10 +78,26 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Fetch new annotations info
     
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
-        annotationsInfo = worker?.fetchNewAnnotationsInfo() ?? []
+        annotationsInfo = worker?.fetchNewAnnotationsInfo(comparingWith: idOfAlreadySettedRoutePoints) ?? []
         let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(annotationsInfo: annotationsInfo as! [ManageRouteMap.ConcreteAnnotationInfo])
         
         presenter?.presentFetchNewAnnotationsInfo(response: response)
+    }
+    
+    private var idOfAlreadySettedRoutePoints: [String] {
+        let idList: [String]
+        
+        if annotationsInfo.count > 0 {
+            idList = annotationsInfo.map({
+                return $0.id
+            })
+            
+            return idList
+        } else {
+            idList = []
+            
+            return idList
+        }
     }
     
     // MARK: Set route point
