@@ -17,6 +17,7 @@ enum ManageRouteMap {
     
     struct ConcreteAnnotationInfo: AnnotationInfo {
         let id: String
+        let orderNumber: Int
         let latitude: Double
         let longitude: Double
     }
@@ -142,12 +143,29 @@ enum ManageRouteMap {
     }
     
     enum MapRoute {
+        struct SubrouteInfo {
+            let startWaypoint: Waypoint
+            let endWaypoint: Waypoint
+        }
+        
+        struct Waypoint {
+            let id: String
+            let latitude: Double
+            let longitude: Double
+//            let coordinate: CLLocationCoordinate2D
+        }
+        
         struct Request {
+            let addedAnnotationsInfo: [ConcreteAnnotationInfo]
+            let idsOfDeletedRoutePoints: [String]
         }
         struct Response {
-//            let idsOfCreatedRP: 
+            let addedSubroutesInfo: [SubrouteInfo]
+            let idsOfDeletedRouteFragments: [String]
         }
         struct ViewModel {
+            let addedSubroutesInfo: [SubrouteInfo]
+            let idsOfDeletedRouteFragments: [String]
         }
     }
 

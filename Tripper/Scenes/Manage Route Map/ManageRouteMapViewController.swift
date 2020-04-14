@@ -68,10 +68,12 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let presenter = ManageRouteMapPresenter()
         let router = ManageRouteMapRouter()
         let worker = ManageRouteMapWorker()
+        let routeCreator = MapboxRouteCreator()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
         interactor.worker = worker
+        interactor.routeCreator = routeCreator
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -142,7 +144,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
         
         if viewModel.newAnnotationsInfo.count > 0 && viewModel.idsOfRemovedRoutePoints.count > 0 {
-            let request = ManageRouteMap.MapRoute.Request()
+            let request = ManageRouteMap.MapRoute.Request(addedAnnotationsInfo: viewModel.newAnnotationsInfo,
+                                                          idsOfDeletedRoutePoints: viewModel.idsOfRemovedRoutePoints)
             interactor?.mapRoute(request: request)
         }
     }
@@ -220,7 +223,19 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Map Route
     
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel) {
+        if viewModel.idsOfDeletedRouteFragments.count > 0 {
+            for id in viewModel.idsOfDeletedRouteFragments {
+                let request = ManageRouteMap.DeleteRouteFragment.Request()
+                interactor?.deleteRouteFragment(request: request)
+            }
+        }
         
+        if viewModel.addedSubroutesInfo.count > 0 {
+            for subrouteInfo in viewModel.addedSubroutesInfo {
+                let request = ManageRouteMap.CreateRouteFragment.Request()
+                interactor?.createRouteFragment(request: request)
+            }
+        }
     }
     
     // MARK: Shared Helper Methods

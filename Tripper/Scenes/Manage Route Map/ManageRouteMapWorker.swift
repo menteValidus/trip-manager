@@ -50,7 +50,8 @@ class ManageRouteMapWorker {
     }
     
     private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {
-        let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(id: routePoint.id, latitude: routePoint.latitude, longitude: routePoint.longitude)
+        let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(id: routePoint.id, orderNumber: routePoint.orderNumber,
+                                                                   latitude: routePoint.latitude, longitude: routePoint.longitude)
         return annotationInfo
     }
     

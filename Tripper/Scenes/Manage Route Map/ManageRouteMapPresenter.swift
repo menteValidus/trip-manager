@@ -100,7 +100,9 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Map Route
     
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response) {
-        let viewModel = ManageRouteMap.MapRoute.ViewModel()
+        let viewModel = ManageRouteMap.MapRoute.ViewModel(addedSubroutesInfo: response.addedSubroutesInfo,
+                                                          idsOfDeletedRouteFragments: response.idsOfDeletedRouteFragments)
+        viewController?.displayMapRoute(viewModel: viewModel)
         // TODO: Implement:
         // If there's waiting for result show LoadingView and call Map Route use case
         // Else if it's route fragment creation call dedicated use case or if it's route fragment deletion call Delete use case

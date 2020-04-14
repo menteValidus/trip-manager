@@ -11,6 +11,7 @@ import CoreLocation
 
 protocol AnnotationInfo {
     var id: String { get }
+    var orderNumber: Int { get }
     var latitude: Double { get }
     var longitude: Double { get }
 }

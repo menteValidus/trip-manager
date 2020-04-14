@@ -37,6 +37,7 @@ protocol ManageRouteMapDataStore {
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
+    var routeCreator: MapboxRouteCreator?
 
     var idOfSelectedAnnotation: String?
     
@@ -172,9 +173,66 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Map Route
     
     func mapRoute(request: ManageRouteMap.MapRoute.Request) {
+//        let response = ManageRouteMap.MapRoute.Response(addedAnnotationsInfo: request.addedAnnotationsInfo,
+//                                                        idsOfDeletedRouteFragments: request.idsOfDeletedRoutePoints)
+//        presenter?.presentMapRoute(response: response)
+//        
+        var addedSubroutesInfo: [ManageRouteMap.MapRoute.SubrouteInfo] = []
+        let addedAnnotationsInfo = request.addedAnnotationsInfo.sorted(by: { return $0.orderNumber < $1.orderNumber})
+        if addedAnnotationsInfo.count > 0 {
+//            var response = ManageRouteMap.MapRoute.Response(isLoading: true)
+//            presenter?.presentMapRoute(response: response)
+
+            for annotationInfo in addedAnnotationsInfo {
+                if let previousAnnotationInfo = getPreviousAnnotationInfo(by: annotationInfo.orderNumber) {
+                    let startWaypoint = ManageRouteMap.MapRoute.Waypoint(
+                        id: previousAnnotationInfo.id,
+                        latitude: previousAnnotationInfo.latitude, longitude: previousAnnotationInfo.longitude)
+                    let endWaypoint = ManageRouteMap.MapRoute.Waypoint(
+                        id: annotationInfo.id,
+                        latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
+                    addedSubroutesInfo.append(ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint))
+                }
+            }
+
+//            response = ManageRouteMap.MapRoute.Response(isLoading: false)
+//            presenter?.presentMapRoute(response: response)
+        }
         
-        let response = ManageRouteMap.MapRoute.Response()
+        var idOfDeletedRouteFragments: [String] = []
+        for id in request.idsOfDeletedRoutePoints {
+            let orderNumber = worker!.fetchRoutePoint(with: id).orderNumber
+            
+            if let idOfPreviousPoint = getPreviousAnnotationInfo(by: orderNumber)?.id {
+                idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: id))
+            }
+            
+            if let idOfNextPoint = getNextAnnotationInfo(by: orderNumber)?.id {
+                idOfDeletedRouteFragments.append(format(firstID: id, secondID: idOfNextPoint))
+            }
+        }
+        let response = ManageRouteMap.MapRoute.Response(addedSubroutesInfo: addedSubroutesInfo,
+                                                        idsOfDeletedRouteFragments: idOfDeletedRouteFragments)
         presenter?.presentMapRoute(response: response)
-        // TODO: Check whether this is deletion or creation.
+    }
+    
+    private func getPreviousAnnotationInfo(by orderNumber: Int) -> AnnotationInfo? {
+        let filteredAnnotationInfo = annotationsInfo.filter({ return $0.orderNumber < orderNumber}).first
+        
+        if let filteredOrderNumber = filteredAnnotationInfo?.orderNumber, filteredOrderNumber < orderNumber {
+            return filteredAnnotationInfo
+        } else {
+            return nil
+        }
+    }
+    
+    private func getNextAnnotationInfo(by orderNumber: Int) -> AnnotationInfo? {
+        let filteredAnnotationInfo = annotationsInfo.filter({ return $0.orderNumber > orderNumber }).first
+        
+        if let filteredOrderNumber = filteredAnnotationInfo?.orderNumber, filteredOrderNumber > orderNumber {
+            return filteredAnnotationInfo
+        } else {
+            return nil
+        }
     }
 }
