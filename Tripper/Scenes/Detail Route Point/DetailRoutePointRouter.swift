@@ -108,7 +108,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     
     func passDataToManageRouteMapWithDelete(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
-        destination.routePointToDelete = source.routePoint
+//        destination.routePointToDelete = source.routePoint
         destination.popup = nil
     }
 }

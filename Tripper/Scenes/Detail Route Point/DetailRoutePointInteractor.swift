@@ -58,8 +58,11 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     // MARK: Delete Route Point
     
     func delete(request: DetailRoutePoint.Delete.Request) {
-        let response = DetailRoutePoint.Delete.Response()
-        presenter?.presentDelete(response: response)
+        if let routePoint = routePoint {
+            let response = DetailRoutePoint.Delete.Response()
+            worker?.delete(routePoint: routePoint)
+            presenter?.presentDelete(response: response)
+        }
     }
     
     // MARK: Toggle View

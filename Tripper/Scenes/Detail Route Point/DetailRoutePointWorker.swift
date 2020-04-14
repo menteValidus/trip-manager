@@ -13,6 +13,9 @@
 import UIKit
 
 class DetailRoutePointWorker {
-    func doSomeWork() {
+    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    
+    func delete(routePoint: RoutePoint) {
+        routePointGateway.delete(routePoint)
     }
 }
