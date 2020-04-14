@@ -46,7 +46,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Fetch Difference
     
     func presentFetchDifference(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
-        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, removedAnnotationsInfo: response.removedAnnotationsInfo)
+        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, idsOfRemovedRoutePoints: response.idsOfRemovedRoutePoints)
         viewController?.displayFetchDifference(viewModel: viewModel)
     }
     

@@ -136,12 +136,12 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             interactor?.setRoutePoint(request: requestToSetRP)
         }
         
-        for annotationInfo in viewModel.removedAnnotationsInfo {
-            let requestToDeleteRP = ManageRouteMap.DeleteAnnotation.Request(identifier: annotationInfo.id)
+        for identifier in viewModel.idsOfRemovedRoutePoints {
+            let requestToDeleteRP = ManageRouteMap.DeleteAnnotation.Request(identifier: identifier)
             interactor?.deleteRoutePoint(request: requestToDeleteRP)
         }
         
-        if viewModel.newAnnotationsInfo.count > 0 && viewModel.removedAnnotationsInfo.count > 0 {
+        if viewModel.newAnnotationsInfo.count > 0 && viewModel.idsOfRemovedRoutePoints.count > 0 {
             let request = ManageRouteMap.MapRoute.Request()
             interactor?.mapRoute(request: request)
         }

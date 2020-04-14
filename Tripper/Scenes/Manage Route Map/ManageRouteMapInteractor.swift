@@ -32,7 +32,6 @@ protocol ManageRouteMapDataStore {
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
     var routePointToEdit: RoutePoint? { get set }
-//    var routePointToDelete: RoutePoint? { get set }
 }
 
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
@@ -60,7 +59,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     init() {
         annotationsInfo = []
-//        idGenerator = NSUUIDGenerator.instance
     }
     
     // MARK: - Create route point
@@ -75,26 +73,21 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: Fetch new annotations info
     var annotationsInfo: [AnnotationInfo]
-    var newAnnotationsInfo: [AnnotationInfo]?
     
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
         
         if let fetchedInfo = worker?.fetchNewAnnotationsInfo(comparingWith: idOfAlreadySettedRoutePoints) {
-            let (addedAnnotationsInfo, removedAnnotationsInfo) = fetchedInfo
+            let (addedAnnotationsInfo, idsOfRemovedRP) = fetchedInfo
             
             annotationsInfo.append(contentsOf: addedAnnotationsInfo)
             
-            for annotationInfo in removedAnnotationsInfo {
-                let index = annotationsInfo.firstIndex(where: {
-                    return $0.id == annotationInfo.id
-                })
-                
-                annotationsInfo.remove(at: index!)
+            for id in idsOfRemovedRP {
+                let indexToDelete = annotationsInfo.firstIndex(where: { return $0.id == id })
+                annotationsInfo.remove(at: indexToDelete!)
             }
             
             let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(newAnnotationsInfo: addedAnnotationsInfo,
-                                                                           removedAnnotationsInfo: removedAnnotationsInfo)
-            
+                                                                           idsOfRemovedRoutePoints: idsOfRemovedRP)
             presenter?.presentFetchDifference(response: response)
         }
     }
@@ -160,11 +153,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
 //    var routePointToDelete: RoutePoint?
     
     func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request) {
-//        if let routePoint = routePointToDelete {
-//            worker?.delete(routePoint: routePoint)
-            let response = ManageRouteMap.DeleteAnnotation.Response(identifier: request.identifier)
-            presenter?.presentDeleteRoutePoint(response: response)
-//        }
+        let response = ManageRouteMap.DeleteAnnotation.Response(identifier: request.identifier)
+        presenter?.presentDeleteRoutePoint(response: response)
     }
     
     // MARK: Create Route Fragment

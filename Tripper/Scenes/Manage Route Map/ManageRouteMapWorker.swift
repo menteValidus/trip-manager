@@ -13,18 +13,25 @@
 import UIKit
 
 /// Created and deleted Route Points.
-typealias FetchedDifference = ([ManageRouteMap.ConcreteAnnotationInfo], [ManageRouteMap.ConcreteAnnotationInfo])
+typealias FetchedDifference = ([ManageRouteMap.ConcreteAnnotationInfo], [String])
 
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
     
     func fetchNewAnnotationsInfo(comparingWith idList: [String]) -> FetchedDifference {
         let fetchedRoutePoints = routePointGateway.fetchAll()
-        var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
-        var removedAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
+        let (newAnnotationsInfo, idsOfRemovedRP) = findNewData(within: fetchedRoutePoints, with: idList)
         
-        fetchedRoutePoints.forEach() { routePoint in
-            let isContained = idList.contains(where: {
+        return (newAnnotationsInfo, idsOfRemovedRP)
+    }
+    
+    private func findNewData(within routePoints: [RoutePoint], with idList: [String]) -> FetchedDifference {
+        var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
+        var idsOfExistedRoutePoints = idList
+        
+        routePoints.forEach() { routePoint in
+            // Check whether this element already displayed.
+            let isContained = idsOfExistedRoutePoints.contains(where: {
                 return $0 == routePoint.id
             })
             
@@ -33,11 +40,13 @@ class ManageRouteMapWorker {
             if !isContained {
                 newAnnotationsInfo.append(annotationInfo)
             } else {
-                removedAnnotationsInfo.append(annotationInfo)
+                // Remove this id from check list.
+                let index = idsOfExistedRoutePoints.firstIndex(of: routePoint.id)
+                idsOfExistedRoutePoints.remove(at: index!)
             }
         }
         
-        return (newAnnotationsInfo, removedAnnotationsInfo)
+        return (newAnnotationsInfo, idsOfExistedRoutePoints)
     }
     
     private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {
