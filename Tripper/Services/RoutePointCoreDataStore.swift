@@ -307,7 +307,7 @@ extension RoutePointCoreDataStore: OrderNumberGenerator {
             if let routePointEntity = fetchResult.first as? RoutePointEntity {
                 return routePointEntity.orderNumber
             } else {
-                fatalError("*** Couldn't find any entry!")
+                return 0
             }
         } catch {
             fatalError("***Failed to fetch max order number with error = \(error)")
