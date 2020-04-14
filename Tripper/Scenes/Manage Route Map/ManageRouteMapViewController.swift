@@ -22,6 +22,9 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayShowDetail(viewModel: ManageRouteMap.ShowDetail.ViewModel)
     func displayEditRoutePoint(viewModel: ManageRouteMap.EditRoutePoint.ViewModel)
     func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel)
+    func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel)
+    func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel)
+    func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -184,9 +187,31 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             if id == viewModel.identifier {
                 mapView.removeAnnotation(annotation)
                 annotationsID.removeValue(forKey: annotation)
-//                return
             }
         }
+    }
+    
+    // MARK: Create Route Fragment
+    
+    func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel) {
+        
+    }
+    
+    // MARK: Delete Route Fragment
+    
+    func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel) {
+        
+    }
+    
+    // MARK: Map Route
+    
+    func mapRoute() {
+        let request = ManageRouteMap.MapRoute.Request()
+        
+    }
+    
+    func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel) {
+        
     }
     
     // MARK: Shared Helper Methods

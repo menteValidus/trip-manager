@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 enum ManageRouteMap {
     
@@ -18,6 +19,13 @@ enum ManageRouteMap {
         let id: String
         let latitude: Double
         let longitude: Double
+    }
+    
+    struct ConcreteRouteFragment: RouteFragment {
+        var identifier: String
+        var coordinates: [CLLocationCoordinate2D]
+        var travelTimeInSeconds: Int
+        var travelDistanceInMeters: Int
     }
     
     // MARK: Use cases
@@ -107,4 +115,36 @@ enum ManageRouteMap {
             let identifier: String?
         }
     }
+    
+    enum CreateRouteFragment {
+        struct Request {
+        }
+        struct Response {
+//            let isLoaded: Bool
+//            let routeFragment: ConcreteRouteFragment?
+        }
+        struct ViewModel {
+//            let isLoaded: Bool
+//            let routeFragment: ConcreteRouteFragment?
+        }
+    }
+    
+    enum DeleteRouteFragment {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
+    enum MapRoute {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+
 }

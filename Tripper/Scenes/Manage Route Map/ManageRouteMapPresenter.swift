@@ -21,6 +21,9 @@ protocol ManageRouteMapPresentationLogic {
     func presentShowDetail(response: ManageRouteMap.ShowDetail.Response)
     func presentEditRoutePoint(response: ManageRouteMap.EditRoutePoint.Response)
     func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response)
+    func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response)
+    func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response)
+    func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -80,5 +83,27 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response) {
         let viewModel = ManageRouteMap.DeleteRoutePoint.ViewModel(identifier: response.identifier)
         viewController?.displayDeleteRoutePoint(viewModel: viewModel)
+    }
+    
+    // MARK: Create Route Fragment
+    
+    func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response) {
+        
+    }
+    
+    // MARK: Delete Route Fragment
+    
+    func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response) {
+        
+    }
+    
+    // MARK: Map Route
+    
+    func presentMapRoute(response: ManageRouteMap.MapRoute.Response) {
+        let viewModel = ManageRouteMap.MapRoute.ViewModel()
+        // TODO: Implement:
+        // If there's waiting for result show LoadingView and call Map Route use case
+        // Else if it's route fragment creation call dedicated use case or if it's route fragment deletion call Delete use case
+        // and then call Map Route use case to disable LoadingView.
     }
 }

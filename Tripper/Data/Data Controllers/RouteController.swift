@@ -234,7 +234,7 @@ class RouteController {
                 source.timeToNextPointInSeconds = Int(route.expectedTravelTime)
                 source.distanceToNextPointInMeters = Int(route.distance)
                 
-                let createdRouteFragment = RouteFragment(identifier: routeFragmentId, coordinates: route.coordinates!, timeInSeconds: source.timeToNextPointInSeconds!, distanceInMeters: source.distanceToNextPointInMeters!)
+                let createdRouteFragment = RouteFragmentVM(identifier: routeFragmentId, coordinates: route.coordinates!, timeInSeconds: source.timeToNextPointInSeconds!, distanceInMeters: source.distanceToNextPointInMeters!)
                 
                 self.configureDates(for: destination, with: source, using: route.expectedTravelTime)
                 

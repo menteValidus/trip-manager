@@ -10,7 +10,7 @@ import Foundation
 
 protocol RouteControllerDelegate {
     func routeController(didDeleted routePoint: RoutePointVM)
-    func routeController(didCalculated routeFragment: RouteFragment)
+    func routeController(didCalculated routeFragment: RouteFragmentVM)
     func routeController(identifierOfDeletedRouteFragment: String)
     func routeControllerCleared()
     func routeControllerDidUpdated()

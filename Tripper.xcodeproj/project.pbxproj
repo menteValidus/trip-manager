@@ -55,7 +55,7 @@
 		0B8CE31C243CBA9A0065B7B5 /* CreateRoutePointInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE316243CBA9A0065B7B5 /* CreateRoutePointInteractor.swift */; };
 		0BD662F4241A457A0034B1D6 /* MapBoxRouteCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */; };
 		0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */; };
-		0BD662FC241A65500034B1D6 /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteFragment.swift */; };
+		0BD662FC241A65500034B1D6 /* RouteFragmentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteFragmentVM.swift */; };
 		0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
@@ -135,7 +135,7 @@
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreation.swift; sourceTree = "<group>"; };
 		0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCreationProtocol.swift; sourceTree = "<group>"; };
-		0BD662FB241A65500034B1D6 /* RouteFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
+		0BD662FB241A65500034B1D6 /* RouteFragmentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentVM.swift; sourceTree = "<group>"; };
 		0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteControllerDelegate.swift; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -462,7 +462,7 @@
 		0BD662F8241A516F0034B1D6 /* Route */ = {
 			isa = PBXGroup;
 			children = (
-				0BD662FB241A65500034B1D6 /* RouteFragment.swift */,
+				0BD662FB241A65500034B1D6 /* RouteFragmentVM.swift */,
 			);
 			path = Route;
 			sourceTree = "<group>";
@@ -707,7 +707,7 @@
 				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
 				0B418C62244099820007B611 /* UINavigationController+PopCompletion.swift in Sources */,
 				0B042A7823E836B300E9136F /* RouteController.swift in Sources */,
-				0BD662FC241A65500034B1D6 /* RouteFragment.swift in Sources */,
+				0BD662FC241A65500034B1D6 /* RouteFragmentVM.swift in Sources */,
 				0B8CE304243C8AF20065B7B5 /* ManageRouteMapPresenter.swift in Sources */,
 				0B8CE317243CBA9A0065B7B5 /* CreateRoutePointPresenter.swift in Sources */,
 				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,

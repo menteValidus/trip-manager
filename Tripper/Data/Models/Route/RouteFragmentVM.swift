@@ -9,7 +9,14 @@
 import Foundation
 import CoreLocation
 
-class RouteFragment: Codable {
+protocol RouteFragment {
+    var identifier: String { get set }
+    var coordinates: [CLLocationCoordinate2D] { get set }
+    var travelTimeInSeconds: Int { get set }
+    var travelDistanceInMeters: Int { get set }
+}
+
+class RouteFragmentVM: RouteFragment {
     var identifier: String
     var coordinates: [CLLocationCoordinate2D]
     var travelTimeInSeconds: Int

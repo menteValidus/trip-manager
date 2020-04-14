@@ -22,6 +22,9 @@ protocol ManageRouteMapBusinessLogic {
     func showDetail(request: ManageRouteMap.ShowDetail.Request)
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request)
     func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request)
+    func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request)
+    func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request)
+    func mapRoute(request: ManageRouteMap.MapRoute.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -150,5 +153,23 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             let response = ManageRouteMap.DeleteRoutePoint.Response(identifier: routePoint.id)
             presenter?.presentDeleteRoutePoint(response: response)
         }
+    }
+    
+    // MARK: Create Route Fragment
+    
+    func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request) {
+        
+    }
+    
+    // MARK: Delete Route Fragment
+    
+    func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request) {
+        
+    }
+    
+    // MARK: Map Route
+    
+    func mapRoute(request: ManageRouteMap.MapRoute.Request) {
+        // TODO: Check whether this is deletion or creation.
     }
 }

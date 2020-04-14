@@ -436,7 +436,7 @@ extension MapBoxViewController: RouteControllerDelegate {
         }
     }
     
-    func routeController(didCalculated routeFragment: RouteFragment) {
+    func routeController(didCalculated routeFragment: RouteFragmentVM) {
         drawRoute(routeCoordinates: routeFragment.coordinates, identifier: routeFragment.identifier)
         if let newCreatedPoint = newCreatedRP {
             performSegue(withIdentifier: SeguesIdentifiers.showAnnotationEdit, sender: newCreatedPoint)
