@@ -88,7 +88,8 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Create Route Fragment
     
     func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response) {
-        
+        let viewModel = ManageRouteMap.CreateRouteFragment.ViewModel(routeFragment: response.routeFragment)
+        viewController?.displayCreateRouteFragment(viewModel: viewModel)
     }
     
     // MARK: Delete Route Fragment

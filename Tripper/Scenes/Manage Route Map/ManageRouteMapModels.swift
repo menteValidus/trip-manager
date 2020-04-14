@@ -122,23 +122,25 @@ enum ManageRouteMap {
     
     enum CreateRouteFragment {
         struct Request {
+            let addedSubrouteInfo: MapRoute.SubrouteInfo
         }
         struct Response {
-//            let isLoaded: Bool
-//            let routeFragment: ConcreteRouteFragment?
+            let routeFragment: ConcreteRouteFragment
         }
         struct ViewModel {
-//            let isLoaded: Bool
-//            let routeFragment: ConcreteRouteFragment?
+            let routeFragment: ConcreteRouteFragment
         }
     }
     
     enum DeleteRouteFragment {
         struct Request {
+            let identifier: String
         }
         struct Response {
+            let identifier: String
         }
         struct ViewModel {
+            let identifier: String
         }
     }
     

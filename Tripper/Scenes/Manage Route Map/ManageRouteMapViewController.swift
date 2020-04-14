@@ -143,7 +143,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             interactor?.deleteRoutePoint(request: requestToDeleteRP)
         }
         
-        if viewModel.newAnnotationsInfo.count > 0 && viewModel.idsOfRemovedRoutePoints.count > 0 {
+        if viewModel.newAnnotationsInfo.count > 0 || viewModel.idsOfRemovedRoutePoints.count > 0 {
             let request = ManageRouteMap.MapRoute.Request(addedAnnotationsInfo: viewModel.newAnnotationsInfo,
                                                           idsOfDeletedRoutePoints: viewModel.idsOfRemovedRoutePoints)
             interactor?.mapRoute(request: request)
@@ -211,7 +211,24 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Create Route Fragment
     
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel) {
+        let routeCoordinates = viewModel.routeFragment.coordinates
+        let identifier = viewModel.routeFragment.identifier
+        guard routeCoordinates.count > 0 else { return }
         
+        let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
+        
+        let source = MGLShapeSource(identifier: identifier, features: [polyline], options: nil)
+        
+        // Customize the route line color and width
+        let lineStyle = MGLLineStyleLayer(identifier: identifier, source: source)
+        lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        lineStyle.lineWidth = NSExpression(forConstantValue: 3)
+        
+        mapView.style?.addSource(source)
+//        lineSources.append(source)
+        mapView.style?.addLayer(lineStyle)
+//        lineStyles.append(lineStyle)
+
     }
     
     // MARK: Delete Route Fragment
@@ -225,14 +242,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel) {
         if viewModel.idsOfDeletedRouteFragments.count > 0 {
             for id in viewModel.idsOfDeletedRouteFragments {
-                let request = ManageRouteMap.DeleteRouteFragment.Request()
+                let request = ManageRouteMap.DeleteRouteFragment.Request(identifier: id)
                 interactor?.deleteRouteFragment(request: request)
             }
         }
         
         if viewModel.addedSubroutesInfo.count > 0 {
             for subrouteInfo in viewModel.addedSubroutesInfo {
-                let request = ManageRouteMap.CreateRouteFragment.Request()
+                let request = ManageRouteMap.CreateRouteFragment.Request(addedSubrouteInfo: subrouteInfo)
                 interactor?.createRouteFragment(request: request)
             }
         }

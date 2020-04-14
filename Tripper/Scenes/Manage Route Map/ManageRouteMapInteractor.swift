@@ -161,7 +161,21 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Create Route Fragment
     
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request) {
-        
+        let startCoordinate = CLLocationCoordinate2D(
+            latitude: request.addedSubrouteInfo.startWaypoint.latitude, longitude: request.addedSubrouteInfo.startWaypoint.longitude)
+        let endCoordinate = CLLocationCoordinate2D(
+            latitude: request.addedSubrouteInfo.endWaypoint.latitude, longitude: request.addedSubrouteInfo.endWaypoint.longitude)
+        routeCreator?.calculateRoute(from: startCoordinate, to: endCoordinate, drawHandler: { routeInfo in
+            if let routeInfo = routeInfo {
+                let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
+                                              secondID: request.addedSubrouteInfo.endWaypoint.id)
+                let routeFragment = ManageRouteMap.ConcreteRouteFragment(identifier: idOfNewRouteFragment, coordinates: routeInfo.coordinates, travelTimeInSeconds: routeInfo.timeInSeconds, travelDistanceInMeters: routeInfo.distanceInMeters)
+                
+                let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
+                self.presenter?.presentCreateRouteFragment(response: response)
+            }
+            
+        })
     }
     
     // MARK: Delete Route Fragment
@@ -173,16 +187,10 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Map Route
     
     func mapRoute(request: ManageRouteMap.MapRoute.Request) {
-//        let response = ManageRouteMap.MapRoute.Response(addedAnnotationsInfo: request.addedAnnotationsInfo,
-//                                                        idsOfDeletedRouteFragments: request.idsOfDeletedRoutePoints)
-//        presenter?.presentMapRoute(response: response)
-//        
         var addedSubroutesInfo: [ManageRouteMap.MapRoute.SubrouteInfo] = []
         let addedAnnotationsInfo = request.addedAnnotationsInfo.sorted(by: { return $0.orderNumber < $1.orderNumber})
         if addedAnnotationsInfo.count > 0 {
-//            var response = ManageRouteMap.MapRoute.Response(isLoading: true)
-//            presenter?.presentMapRoute(response: response)
-
+            // TODO: TELL HOW MUCH ROUTES WILL BE CREATED. USE NEW USE CASE: ShowLoadingView
             for annotationInfo in addedAnnotationsInfo {
                 if let previousAnnotationInfo = getPreviousAnnotationInfo(by: annotationInfo.orderNumber) {
                     let startWaypoint = ManageRouteMap.MapRoute.Waypoint(
@@ -194,9 +202,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                     addedSubroutesInfo.append(ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint))
                 }
             }
-
-//            response = ManageRouteMap.MapRoute.Response(isLoading: false)
-//            presenter?.presentMapRoute(response: response)
         }
         
         var idOfDeletedRouteFragments: [String] = []
