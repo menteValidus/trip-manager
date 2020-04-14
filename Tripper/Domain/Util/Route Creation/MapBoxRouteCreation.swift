@@ -11,7 +11,7 @@ import CoreLocation.CLLocation
 import MapboxCoreNavigation
 import MapboxDirections
 
-class MapBoxRouteCreator: RouteCreator {
+class MapBoxRouteCreatorVM {
     
     // Helper Methods
     

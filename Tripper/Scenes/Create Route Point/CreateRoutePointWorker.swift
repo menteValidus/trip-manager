@@ -13,7 +13,7 @@
 import UIKit
 
 class CreateRoutePointWorker {
-    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    private let routePointGateway: RoutePointDataStore & OrderNumberGenerator = RoutePointCoreDataStore()
     
     func save(routePoint: RoutePoint) {
         let routePoints = routePointGateway.fetchAll()
@@ -35,5 +35,9 @@ class CreateRoutePointWorker {
     
     func update(routePoint: RoutePoint) {
         routePointGateway.update(routePoint)
+    }
+    
+    func getNewOrderNumber() -> Int {
+        return routePointGateway.getNewOrderNumber()
     }
 }

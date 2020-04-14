@@ -19,7 +19,7 @@ class RouteController {
     private let routePointGateway = RoutePointCoreDataStore()
     
     // TODO: MOVE TO SHOWROUTEMAP'S WORKER
-    private let routeCreator: MapBoxRouteCreator
+    private let routeCreator: MapBoxRouteCreatorVM
     
     // TODO: REMOVE
     private(set) var points: [RoutePointVM]
@@ -113,7 +113,7 @@ class RouteController {
             coordinatesDictionary[point.id] = point.coordinate
         }
         
-        routeCreator = MapBoxRouteCreator()
+        routeCreator = MapBoxRouteCreatorVM()
         
         recreateRoute()
     }
@@ -234,7 +234,7 @@ class RouteController {
                 source.timeToNextPointInSeconds = Int(route.expectedTravelTime)
                 source.distanceToNextPointInMeters = Int(route.distance)
                 
-                let createdRouteFragment = RouteFragmentVM(identifier: routeFragmentId, coordinates: route.coordinates!, timeInSeconds: source.timeToNextPointInSeconds!, distanceInMeters: source.distanceToNextPointInMeters!)
+                let createdRouteFragment = RouteFragmentVM(identifier: routeFragmentId, coordinates: route.coordinates!, travelTimeInSeconds: source.timeToNextPointInSeconds!, travelDistanceInMeters: source.distanceToNextPointInMeters!)
                 
                 self.configureDates(for: destination, with: source, using: route.expectedTravelTime)
                 

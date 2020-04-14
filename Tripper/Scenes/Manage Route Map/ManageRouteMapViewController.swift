@@ -196,11 +196,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Delete Route Point
     
-//    func deleteSelectedRoutePoint() {
-//        let request = ManageRouteMap.DeleteRoutePoint.Request(identifier: <#String#>);
-//        interactor?.deleteRoutePoint(request: request)
-//    }
-    
     func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteAnnotation.ViewModel) {
         for (annotation, id) in annotationsID {
             if id == viewModel.identifier {
@@ -223,11 +218,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     // MARK: Map Route
-    
-    func mapRoute() {
-        let request = ManageRouteMap.MapRoute.Request()
-        
-    }
     
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel) {
         
