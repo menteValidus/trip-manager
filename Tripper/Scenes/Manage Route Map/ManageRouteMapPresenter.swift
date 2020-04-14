@@ -13,14 +13,14 @@
 import UIKit
 
 protocol ManageRouteMapPresentationLogic {
-    func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response)
+    func presentFetchDifference(response: ManageRouteMap.FetchNewAnnotationsInfo.Response)
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response)
     func presentDeselectAnnotation(response: ManageRouteMap.DeselectAnnotation.Response)
     func presentShowDetail(response: ManageRouteMap.ShowDetail.Response)
     func presentEditRoutePoint(response: ManageRouteMap.EditRoutePoint.Response)
-    func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response)
+    func presentDeleteRoutePoint(response: ManageRouteMap.DeleteAnnotation.Response)
     func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response)
     func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response)
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
@@ -43,11 +43,11 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
         viewController?.displaySetRoutePoint(viewModel: viewModel)
     }
     
-    // MARK: Fetch New Annotations Info
+    // MARK: Fetch Difference
     
-    func presentFetchNewAnnotationsInfo(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
-        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(annotationsInfo: response.annotationsInfo)
-        viewController?.displayFetchNewAnnotationsInfo(viewModel: viewModel)
+    func presentFetchDifference(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
+        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, removedAnnotationsInfo: response.removedAnnotationsInfo)
+        viewController?.displayFetchDifference(viewModel: viewModel)
     }
     
     // MARK: Select Annotation
@@ -80,8 +80,8 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     
     // MARK: Delete Route Point
     
-    func presentDeleteRoutePoint(response: ManageRouteMap.DeleteRoutePoint.Response) {
-        let viewModel = ManageRouteMap.DeleteRoutePoint.ViewModel(identifier: response.identifier)
+    func presentDeleteRoutePoint(response: ManageRouteMap.DeleteAnnotation.Response) {
+        let viewModel = ManageRouteMap.DeleteAnnotation.ViewModel(identifier: response.identifier)
         viewController?.displayDeleteRoutePoint(viewModel: viewModel)
     }
     

@@ -12,29 +12,32 @@
 
 import UIKit
 
+/// Created and deleted Route Points.
+typealias FetchedDifference = ([ManageRouteMap.ConcreteAnnotationInfo], [ManageRouteMap.ConcreteAnnotationInfo])
+
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
     
-    func fetchNewAnnotationsInfo(comparingWith idList: [String]) -> [ManageRouteMap.ConcreteAnnotationInfo] {
+    func fetchNewAnnotationsInfo(comparingWith idList: [String]) -> FetchedDifference {
         let fetchedRoutePoints = routePointGateway.fetchAll()
         var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
+        var removedAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
         
         fetchedRoutePoints.forEach() { routePoint in
             let isContained = idList.contains(where: {
                 return $0 == routePoint.id
             })
             
+            let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
+            
             if !isContained {
-                let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
                 newAnnotationsInfo.append(annotationInfo)
+            } else {
+                removedAnnotationsInfo.append(annotationInfo)
             }
         }
         
-        return newAnnotationsInfo
-    }
-    
-    func delete(routePoint: RoutePoint) {
-        routePointGateway.delete(routePoint)
+        return (newAnnotationsInfo, removedAnnotationsInfo)
     }
     
     private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {

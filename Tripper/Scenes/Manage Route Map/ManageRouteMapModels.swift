@@ -34,10 +34,12 @@ enum ManageRouteMap {
         struct Request {
         }
         struct Response {
-            let annotationsInfo: [ConcreteAnnotationInfo]
+            let newAnnotationsInfo: [ConcreteAnnotationInfo]
+            let removedAnnotationsInfo: [ConcreteAnnotationInfo]
         }
         struct ViewModel {
-            let annotationsInfo: [ConcreteAnnotationInfo]
+            let newAnnotationsInfo: [ConcreteAnnotationInfo]
+            let removedAnnotationsInfo: [ConcreteAnnotationInfo]
         }
     }
     
@@ -105,8 +107,9 @@ enum ManageRouteMap {
         }
     }
     
-    enum DeleteRoutePoint {
+    enum DeleteAnnotation {
         struct Request {
+            let identifier: String
         }
         struct Response {
             let identifier: String?
@@ -142,6 +145,7 @@ enum ManageRouteMap {
         struct Request {
         }
         struct Response {
+//            let idsOfCreatedRP: 
         }
         struct ViewModel {
         }

@@ -14,14 +14,14 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
-    func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel)
+    func displayFetchDifference(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
     func displayDeselectAnnotation(viewModel: ManageRouteMap.DeselectAnnotation.ViewModel)
     func displayShowDetail(viewModel: ManageRouteMap.ShowDetail.ViewModel)
     func displayEditRoutePoint(viewModel: ManageRouteMap.EditRoutePoint.ViewModel)
-    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel)
+    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteAnnotation.ViewModel)
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel)
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel)
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
@@ -37,6 +37,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var routeTimeLabel: UILabel!
     @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
     @IBOutlet weak var routeListBarItem: UIBarButtonItem!
+    
+    var popup: Popup? {
+        didSet {
+            if popup == nil {
+                fetchDifference()
+            }
+        }
+    }
     
     var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     
@@ -99,17 +107,13 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reloadAnnotationsData()
-    }
-    
-    private func reloadAnnotationsData() {
-        let request = ManageRouteMap.FetchNewAnnotationsInfo.Request()
-        interactor?.fetchNewAnnotationsInfo(request: request)
+        fetchDifference()
     }
     
     // MARK: Create Route Point
     
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
+        popup?.dismissPopup()
         router?.routeToCreateRoutePoint(segue: nil)
     }
     
@@ -119,12 +123,27 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         setAnnotation(annotationInfo: viewModel.annotationInfo)
     }
     
-    // MARK: Fetch new annotations info
+    // MARK: Fetch Difference
     
-    func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
-        for annotationInfo in viewModel.annotationsInfo {
-            let request = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
-            interactor?.setRoutePoint(request: request)
+    func fetchDifference() {
+        let request = ManageRouteMap.FetchNewAnnotationsInfo.Request()
+        interactor?.fetchNewAnnotationsInfo(request: request)
+    }
+    
+    func displayFetchDifference(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
+        for annotationInfo in viewModel.newAnnotationsInfo {
+            let requestToSetRP = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
+            interactor?.setRoutePoint(request: requestToSetRP)
+        }
+        
+        for annotationInfo in viewModel.removedAnnotationsInfo {
+            let requestToDeleteRP = ManageRouteMap.DeleteAnnotation.Request(identifier: annotationInfo.id)
+            interactor?.deleteRoutePoint(request: requestToDeleteRP)
+        }
+        
+        if viewModel.newAnnotationsInfo.count > 0 && viewModel.removedAnnotationsInfo.count > 0 {
+            let request = ManageRouteMap.MapRoute.Request()
+            interactor?.mapRoute(request: request)
         }
     }
     
@@ -177,12 +196,12 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Delete Route Point
     
-    func deleteSelectedRoutePoint() {
-        let request = ManageRouteMap.DeleteRoutePoint.Request();
-        interactor?.deleteRoutePoint(request: request)
-    }
+//    func deleteSelectedRoutePoint() {
+//        let request = ManageRouteMap.DeleteRoutePoint.Request(identifier: <#String#>);
+//        interactor?.deleteRoutePoint(request: request)
+//    }
     
-    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel) {
+    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteAnnotation.ViewModel) {
         for (annotation, id) in annotationsID {
             if id == viewModel.identifier {
                 mapView.removeAnnotation(annotation)

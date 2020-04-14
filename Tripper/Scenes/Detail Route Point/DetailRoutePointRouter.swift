@@ -65,7 +65,8 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
-            destination.deselectAnnotations()
+            destination.popup = nil
+//            destination.deselectAnnotations()
         })
     }
     
@@ -76,6 +77,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
+            destination.popup = nil
             // TODO: Need to get rid of this dependency.
             destination.editSelectedRoutePoint()
         })
@@ -88,8 +90,9 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
+            destination.popup = nil
             // TODO: Need to get rid of this dependency.
-            destination.deleteSelectedRoutePoint()
+//            destination.deleteSelectedRoutePoint()
         })
     }
     
@@ -97,18 +100,18 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
     
     func passDataToManageRouteMap(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
-        destination.popup = nil
+        
     }
     
     func passDataToManageRouteMapWithEdit(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
         destination.routePointToEdit = source.routePoint
-        destination.popup = nil
+//        destination.popup = nil
     }
     
     func passDataToManageRouteMapWithDelete(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
     {
 //        destination.routePointToDelete = source.routePoint
-        destination.popup = nil
+//        destination.popup = nil
     }
 }

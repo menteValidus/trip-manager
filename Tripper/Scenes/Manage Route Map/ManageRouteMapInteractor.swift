@@ -21,7 +21,7 @@ protocol ManageRouteMapBusinessLogic {
     func deselectAnnotation(request: ManageRouteMap.DeselectAnnotation.Request)
     func showDetail(request: ManageRouteMap.ShowDetail.Request)
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request)
-    func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request)
+    func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request)
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request)
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request)
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
@@ -32,16 +32,13 @@ protocol ManageRouteMapDataStore {
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
     var routePointToEdit: RoutePoint? { get set }
-    var routePointToDelete: RoutePoint? { get set }
-    var popup: Popup? { get set }
+//    var routePointToDelete: RoutePoint? { get set }
 }
 
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
-    var popup: Popup?
-    
-    var annotationsInfo: [AnnotationInfo]
+
     var idOfSelectedAnnotation: String?
     
     // IF YOU ARE GOING TO DELETE THIS REMEMBER THERE ARE A LOT OF DEPENDENCIES.
@@ -70,21 +67,36 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     var tappedCoordinate: CLLocationCoordinate2D?
     
-    func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
-        popup?.dismissPopup()
-        
+    func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {        
         tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
         let response = ManageRouteMap.CreateRoutePoint.Response()
         presenter?.presentAnnotationCreation(response: response)
     }
     
     // MARK: Fetch new annotations info
+    var annotationsInfo: [AnnotationInfo]
+    var newAnnotationsInfo: [AnnotationInfo]?
     
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
-        annotationsInfo = worker?.fetchNewAnnotationsInfo(comparingWith: idOfAlreadySettedRoutePoints) ?? []
-        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(annotationsInfo: annotationsInfo as! [ManageRouteMap.ConcreteAnnotationInfo])
         
-        presenter?.presentFetchNewAnnotationsInfo(response: response)
+        if let fetchedInfo = worker?.fetchNewAnnotationsInfo(comparingWith: idOfAlreadySettedRoutePoints) {
+            let (addedAnnotationsInfo, removedAnnotationsInfo) = fetchedInfo
+            
+            annotationsInfo.append(contentsOf: addedAnnotationsInfo)
+            
+            for annotationInfo in removedAnnotationsInfo {
+                let index = annotationsInfo.firstIndex(where: {
+                    return $0.id == annotationInfo.id
+                })
+                
+                annotationsInfo.remove(at: index!)
+            }
+            
+            let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(newAnnotationsInfo: addedAnnotationsInfo,
+                                                                           removedAnnotationsInfo: removedAnnotationsInfo)
+            
+            presenter?.presentFetchDifference(response: response)
+        }
     }
     
     private var idOfAlreadySettedRoutePoints: [String] {
@@ -143,16 +155,16 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentEditRoutePoint(response: response)
     }
     
-    // MARK: Delete Route Point
+    // MARK: Delete Annotation
     
-    var routePointToDelete: RoutePoint?
+//    var routePointToDelete: RoutePoint?
     
-    func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request) {
-        if let routePoint = routePointToDelete {
-            worker?.delete(routePoint: routePoint)
-            let response = ManageRouteMap.DeleteRoutePoint.Response(identifier: routePoint.id)
+    func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request) {
+//        if let routePoint = routePointToDelete {
+//            worker?.delete(routePoint: routePoint)
+            let response = ManageRouteMap.DeleteAnnotation.Response(identifier: request.identifier)
             presenter?.presentDeleteRoutePoint(response: response)
-        }
+//        }
     }
     
     // MARK: Create Route Fragment
@@ -170,6 +182,9 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Map Route
     
     func mapRoute(request: ManageRouteMap.MapRoute.Request) {
+        
+        let response = ManageRouteMap.MapRoute.Response()
+        presenter?.presentMapRoute(response: response)
         // TODO: Check whether this is deletion or creation.
     }
 }
