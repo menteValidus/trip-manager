@@ -13,7 +13,7 @@
 import UIKit
 
 /// Created and deleted Route Points.
-typealias FetchedDifference = ([ManageRouteMap.ConcreteAnnotationInfo], [String])
+typealias FetchedDifference = ([AnnotationInfo], [String])
 
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()

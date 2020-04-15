@@ -35,11 +35,11 @@ enum ManageRouteMap {
         struct Request {
         }
         struct Response {
-            let newAnnotationsInfo: [ConcreteAnnotationInfo]
+            let newAnnotationsInfo: [AnnotationInfo]
             let idsOfRemovedRoutePoints: [String]
         }
         struct ViewModel {
-            let newAnnotationsInfo: [ConcreteAnnotationInfo]
+            let newAnnotationsInfo: [AnnotationInfo]
             let idsOfRemovedRoutePoints: [String]
         }
     }
@@ -57,13 +57,13 @@ enum ManageRouteMap {
     
     enum SetRoutePoint {
         struct Request {
-            let annotationsInfo: ConcreteAnnotationInfo
+            let annotationsInfo: AnnotationInfo
         }
         struct Response {
-            let annotationInfo: ConcreteAnnotationInfo
+            let annotationInfo: AnnotationInfo
         }
         struct ViewModel {
-            let annotationInfo: ConcreteAnnotationInfo
+            let annotationInfo: AnnotationInfo
         }
     }
     
@@ -158,7 +158,7 @@ enum ManageRouteMap {
         }
         
         struct Request {
-            let addedAnnotationsInfo: [ConcreteAnnotationInfo]
+            let addedAnnotationsInfo: [AnnotationInfo]
             let idsOfDeletedRoutePoints: [String]
         }
         struct Response {
