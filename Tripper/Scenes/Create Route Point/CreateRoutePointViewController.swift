@@ -22,7 +22,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     var interactor: CreateRoutePointBusinessLogic?
     var router: (NSObjectProtocol & CreateRoutePointRoutingLogic & CreateRoutePointDataPassing)?
     
-    // MARK: Object lifecycle
+    // MARK: - Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -51,7 +51,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         router.dataStore = interactor
     }
     
-    // MARK: Routing
+    // MARK: - Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
@@ -62,14 +62,30 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         }
     }
     
-    // MARK: View lifecycle
+    // MARK: - View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         formRoutePoint()
     }
     
-    // MARK: Form Route Point
+    // MARK: - Table View's Delegate
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch (indexPath.section, indexPath.row) {
+        case (0, 0):
+//            tableView.deselectRow(at: indexPath, animated: false)
+            titleTextField.becomeFirstResponder()
+        case (1, 0):
+//            tableView.deselectRow(at: indexPath, animated: false)
+            descriptionTextView.becomeFirstResponder()
+        default:
+            break
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: - Form Route Point
     
     func formRoutePoint() {
         let request = CreateRoutePoint.FormRoutePoint.Request()
