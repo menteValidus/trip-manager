@@ -25,6 +25,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response)
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
     func presentClearAll(response: ManageRouteMap.ClearAll.Response)
+    func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -117,5 +118,12 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentClearAll(response: ManageRouteMap.ClearAll.Response) {
         let viewModel = ManageRouteMap.ClearAll.ViewModel()
         viewController?.displayClearAll(viewModel: viewModel)
+    }
+    
+    // MARK: Block User Input
+    
+    func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response) {
+        let viewModel = ManageRouteMap.ToggleUserInput.ViewModel(isLocked: response.isLocked)
+        viewController?.displayToggleUserInput(viewModel: viewModel)
     }
 }

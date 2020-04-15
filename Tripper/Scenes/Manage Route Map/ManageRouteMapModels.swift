@@ -179,4 +179,16 @@ enum ManageRouteMap {
         struct ViewModel {
         }
     }
+    
+    enum ToggleUserInput {
+        struct Request {
+            let isLocked: Bool
+        }
+        struct Response {
+            let isLocked: Bool
+        }
+        struct ViewModel {
+            let isLocked: Bool
+        }
+    }
 }

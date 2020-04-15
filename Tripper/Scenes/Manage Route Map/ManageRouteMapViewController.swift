@@ -26,6 +26,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel)
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
+    func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -228,6 +229,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
         mapView.style?.addSource(source)
         mapView.style?.addLayer(lineStyle)
+        
+        routeFragmentsToProcess -= 1
     }
     
     // MARK: Delete Route Fragment
@@ -244,11 +247,26 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         if let layer = mapView.style?.layer(withIdentifier: viewModel.identifier) {
             mapView.style!.removeLayer(layer)
         }
+        
+        routeFragmentsToProcess -= 1
     }
     
     // MARK: Map Route
     
+    private var routeFragmentsToProcess = 0 {
+        didSet {
+            if routeFragmentsToProcess == 0 {
+                toggleUserInput(isLocked: false)
+            }
+        }
+    }
+    
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel) {
+        routeFragmentsToProcess = viewModel.idsOfDeletedRouteFragments.count + viewModel.addedSubroutesInfo.count
+        if routeFragmentsToProcess > 0 {
+            toggleUserInput(isLocked: true)
+        }
+        
         if viewModel.idsOfDeletedRouteFragments.count > 0 {
             for id in viewModel.idsOfDeletedRouteFragments {
                 let request = ManageRouteMap.DeleteRouteFragment.Request(identifier: id)
@@ -273,6 +291,50 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
         fetchDifference()
+    }
+    
+    // MARK: Toggle User Input
+    
+    private lazy var dimmingView = { () -> UIView in
+        let dimmingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        
+        // Blur Effect
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = dimmingView.bounds
+        dimmingView.addSubview(blurEffectView)
+        
+        return dimmingView
+    }()
+    
+    func toggleUserInput(isLocked: Bool) {
+        let request = ManageRouteMap.ToggleUserInput.Request(isLocked: isLocked)
+        interactor?.toggleUserInput(request: request)
+    }
+    
+    func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel) {
+        if viewModel.isLocked {
+            // Lock all user input
+            showSpinner()
+        } else {
+            // Unlock
+            hideSpinner()
+        }
+    }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = CGPoint(x: dimmingView.bounds.midX + 0.5, y: dimmingView.bounds.midY + 0.5)
+        spinner.tag = 1000
+        dimmingView.addSubview(spinner)
+        
+        
+        view.addSubview(dimmingView)
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        dimmingView.removeFromSuperview()
     }
     
     // MARK: Shared Helper Methods

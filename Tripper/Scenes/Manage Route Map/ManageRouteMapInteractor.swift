@@ -26,6 +26,7 @@ protocol ManageRouteMapBusinessLogic {
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request)
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
     func clearAll(request: ManageRouteMap.ClearAll.Request)
+    func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -280,5 +281,12 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         worker?.deleteAllEntries()
         let response = ManageRouteMap.ClearAll.Response()
         presenter?.presentClearAll(response: response)
+    }
+    
+    // MARK: Toggle User Input
+    
+    func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request) {
+        let response = ManageRouteMap.ToggleUserInput.Response(isLocked: request.isLocked)
+        presenter?.presentToggleUserInput(response: response)
     }
 }
