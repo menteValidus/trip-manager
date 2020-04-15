@@ -193,13 +193,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             // TODO: TELL HOW MUCH ROUTES WILL BE CREATED. USE NEW USE CASE: ShowLoadingView
             for annotationInfo in addedAnnotationsInfo {
                 if let previousAnnotationInfo = getPreviousAnnotationInfo(by: annotationInfo.orderNumber) {
-                    let startWaypoint = ManageRouteMap.MapRoute.Waypoint(
-                        id: previousAnnotationInfo.id,
-                        latitude: previousAnnotationInfo.latitude, longitude: previousAnnotationInfo.longitude)
-                    let endWaypoint = ManageRouteMap.MapRoute.Waypoint(
-                        id: annotationInfo.id,
-                        latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
-                    addedSubroutesInfo.append(ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint))
+                    let subrouteInfo = createSubrouteInfo(start: previousAnnotationInfo, end: annotationInfo)
+                    addedSubroutesInfo.append(subrouteInfo)
                 }
             }
         }
@@ -208,12 +203,19 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         for id in request.idsOfDeletedRoutePoints {
             let orderNumber = worker!.fetchRoutePoint(with: id).orderNumber
             
-            if let idOfPreviousPoint = getPreviousAnnotationInfo(by: orderNumber)?.id {
+            let previousAnnotationInfo = getPreviousAnnotationInfo(by: orderNumber)
+            if let idOfPreviousPoint = previousAnnotationInfo?.id {
                 idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: id))
             }
             
-            if let idOfNextPoint = getNextAnnotationInfo(by: orderNumber)?.id {
+            let nextAnnotationInfo = getNextAnnotationInfo(by: orderNumber)
+            if let idOfNextPoint = nextAnnotationInfo?.id {
                 idOfDeletedRouteFragments.append(format(firstID: id, secondID: idOfNextPoint))
+            }
+            
+            if let startPoint = previousAnnotationInfo, let endPoint = nextAnnotationInfo {
+                let subrouteInfoForGap = createSubrouteInfo(start: startPoint, end: endPoint)
+                addedSubroutesInfo.append(subrouteInfoForGap)
             }
         }
         let response = ManageRouteMap.MapRoute.Response(addedSubroutesInfo: addedSubroutesInfo,
@@ -239,5 +241,17 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         } else {
             return nil
         }
+    }
+    
+    private func createSubrouteInfo(start: AnnotationInfo, end: AnnotationInfo) -> ManageRouteMap.MapRoute.SubrouteInfo {
+        let startWaypoint = ManageRouteMap.MapRoute.Waypoint(
+            id: start.id,
+            latitude: start.latitude, longitude: start.longitude)
+        let endWaypoint = ManageRouteMap.MapRoute.Waypoint(
+            id: end.id,
+            latitude: end.latitude, longitude: end.longitude)
+        let subrouteInfo = ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint)
+        
+        return subrouteInfo
     }
 }
