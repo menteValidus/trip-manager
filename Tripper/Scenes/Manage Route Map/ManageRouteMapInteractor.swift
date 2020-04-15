@@ -14,7 +14,7 @@ import UIKit
 import CoreLocation
 
 protocol ManageRouteMapBusinessLogic {
-    func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request)
+    func fetchDifference(request: ManageRouteMap.FetchDifference.Request)
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
     func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request)
@@ -72,11 +72,11 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentAnnotationCreation(response: response)
     }
     
-    // MARK: Fetch new annotations info
+    // MARK: Fetch Difference
     /// Should be modified only in this use case!
     var annotationsInfo: [AnnotationInfo]
     
-    func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
+    func fetchDifference(request: ManageRouteMap.FetchDifference.Request) {
         
         if let fetchedInfo = worker?.fetchDifference(comparingWith: annotationsInfo) {
             let (addedAnnotationsInfo, removedAnnotationsInfo) = fetchedInfo
@@ -88,7 +88,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 annotationsInfo.remove(at: indexToDelete!)
             }
             
-            let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(newAnnotationsInfo: addedAnnotationsInfo,
+            let response = ManageRouteMap.FetchDifference.Response(newAnnotationsInfo: addedAnnotationsInfo,
                                                                            removedAnnotationInfo: removedAnnotationsInfo)
             presenter?.presentFetchDifference(response: response)
         }

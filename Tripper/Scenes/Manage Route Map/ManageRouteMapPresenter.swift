@@ -13,7 +13,7 @@
 import UIKit
 
 protocol ManageRouteMapPresentationLogic {
-    func presentFetchDifference(response: ManageRouteMap.FetchNewAnnotationsInfo.Response)
+    func presentFetchDifference(response: ManageRouteMap.FetchDifference.Response)
     func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response)
@@ -45,8 +45,8 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     
     // MARK: Fetch Difference
     
-    func presentFetchDifference(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
-        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, removedAnnotationsInfo: response.removedAnnotationInfo)
+    func presentFetchDifference(response: ManageRouteMap.FetchDifference.Response) {
+        let viewModel = ManageRouteMap.FetchDifference.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, removedAnnotationsInfo: response.removedAnnotationInfo)
         viewController?.displayFetchDifference(viewModel: viewModel)
     }
     

@@ -14,7 +14,7 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
-    func displayFetchDifference(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel)
+    func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
@@ -128,11 +128,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Fetch Difference
     
     func fetchDifference() {
-        let request = ManageRouteMap.FetchNewAnnotationsInfo.Request()
-        interactor?.fetchNewAnnotationsInfo(request: request)
+        let request = ManageRouteMap.FetchDifference.Request()
+        interactor?.fetchDifference(request: request)
     }
     
-    func displayFetchDifference(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
+    func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel) {
         for annotationInfo in viewModel.newAnnotationsInfo {
             let requestToSetRP = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
             interactor?.setRoutePoint(request: requestToSetRP)

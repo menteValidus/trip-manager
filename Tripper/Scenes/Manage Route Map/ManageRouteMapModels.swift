@@ -31,7 +31,7 @@ enum ManageRouteMap {
     
     // MARK: Use cases
     
-    enum FetchNewAnnotationsInfo {
+    enum FetchDifference {
         struct Request {
         }
         struct Response {
