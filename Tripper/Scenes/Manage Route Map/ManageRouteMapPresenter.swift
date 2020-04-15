@@ -24,6 +24,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response)
     func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response)
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
+    func presentClearAll(response: ManageRouteMap.ClearAll.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -109,5 +110,12 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
         // If there's waiting for result show LoadingView and call Map Route use case
         // Else if it's route fragment creation call dedicated use case or if it's route fragment deletion call Delete use case
         // and then call Map Route use case to disable LoadingView.
+    }
+    
+    // MARK: Clear All
+    
+    func presentClearAll(response: ManageRouteMap.ClearAll.Response) {
+        let viewModel = ManageRouteMap.ClearAll.ViewModel()
+        viewController?.displayClearAll(viewModel: viewModel)
     }
 }

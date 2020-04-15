@@ -25,6 +25,7 @@ protocol ManageRouteMapBusinessLogic {
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request)
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request)
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
+    func clearAll(request: ManageRouteMap.ClearAll.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -192,7 +193,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         if addedAnnotationsInfo.count > 0 {
             // TODO: TELL HOW MUCH ROUTES WILL BE CREATED. USE NEW USE CASE: ShowLoadingView
             for annotationInfo in addedAnnotationsInfo {
-                if let previousAnnotationInfo = getPreviousAnnotationInfo(by: annotationInfo.orderNumber) {
+                if let previousAnnotationInfo = getPreviousAnnotationInfo(within: annotationsInfo, by: annotationInfo.orderNumber) {
                     let subrouteInfo = createSubrouteInfo(start: previousAnnotationInfo, end: annotationInfo)
                     addedSubroutesInfo.append(subrouteInfo)
                 }
@@ -200,17 +201,31 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         }
         
         var idOfDeletedRouteFragments: [String] = []
+        
+        // There's huge problem. If we delete several points between some other points route won't be reconstructed and empty gap will be remained. Now it isn't a problem but if we want delete several points (not all of them but more than two) we should implement this behaviour.
         for annotationInfo in request.removedAnnotationsInfo {
             let orderNumber = annotationInfo.orderNumber
             
-            let previousAnnotationInfo = getPreviousAnnotationInfo(by: orderNumber)
+            let previousAnnotationInfo = getPreviousAnnotationInfo(within: annotationsInfo, by: orderNumber)
             if let idOfPreviousPoint = previousAnnotationInfo?.id {
                 idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
+            } else {
+                // Check previous point within deleted route points.
+                let previousPoint = getPreviousAnnotationInfo(within: request.removedAnnotationsInfo, by: orderNumber)
+                if let idOfPreviousPoint = previousPoint?.id {
+                    idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
+                }
             }
             
-            let nextAnnotationInfo = getNextAnnotationInfo(by: orderNumber)
+            let nextAnnotationInfo = getNextAnnotationInfo(within: annotationsInfo, by: orderNumber)
             if let idOfNextPoint = nextAnnotationInfo?.id {
                 idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
+            } else {
+                // Check next point within deleted route points.
+                let nextPoint = getNextAnnotationInfo(within: request.removedAnnotationsInfo, by: orderNumber)
+                if let idOfNextPoint = nextPoint?.id {
+                    idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
+                }
             }
             
             if let startPoint = previousAnnotationInfo, let endPoint = nextAnnotationInfo {
@@ -223,8 +238,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentMapRoute(response: response)
     }
     
-    private func getPreviousAnnotationInfo(by orderNumber: Int) -> AnnotationInfo? {
-        let filteredAnnotationInfo = annotationsInfo.sorted(by: { lhs, rhs in
+    private func getPreviousAnnotationInfo(within annotationsInfoToSearchIn: [AnnotationInfo], by orderNumber: Int) -> AnnotationInfo? {
+        let filteredAnnotationInfo = annotationsInfoToSearchIn.sorted(by: { lhs, rhs in
             return lhs.orderNumber > rhs.orderNumber
             }).filter({ return $0.orderNumber < orderNumber }).first
         
@@ -235,8 +250,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         }
     }
     
-    private func getNextAnnotationInfo(by orderNumber: Int) -> AnnotationInfo? {
-        let filteredAnnotationInfo = annotationsInfo.sorted(by: { lhs, rhs in
+    private func getNextAnnotationInfo(within annotationsInfoToSearchIn: [AnnotationInfo], by orderNumber: Int) -> AnnotationInfo? {
+        let filteredAnnotationInfo = annotationsInfoToSearchIn.sorted(by: { lhs, rhs in
             return lhs.orderNumber < rhs.orderNumber
             }).filter({ return $0.orderNumber > orderNumber }).first
         
@@ -257,5 +272,13 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         let subrouteInfo = ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint)
         
         return subrouteInfo
+    }
+    
+    // MARK: Clear All
+    
+    func clearAll(request: ManageRouteMap.ClearAll.Request) {
+        worker?.deleteAllEntries()
+        let response = ManageRouteMap.ClearAll.Response()
+        presenter?.presentClearAll(response: response)
     }
 }

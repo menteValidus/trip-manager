@@ -25,6 +25,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel)
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel)
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
+    func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -261,6 +262,17 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
                 interactor?.createRouteFragment(request: request)
             }
         }
+    }
+    
+    // MARK: Clear All
+    
+    @IBAction func clearAll() {
+        let request = ManageRouteMap.ClearAll.Request()
+        interactor?.clearAll(request: request)
+    }
+    
+    func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
+        fetchDifference()
     }
     
     // MARK: Shared Helper Methods

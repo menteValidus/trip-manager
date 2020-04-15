@@ -89,14 +89,14 @@ enum ManageRouteMap {
     }
     
     enum ShowDetail {
-       struct Request {
-       }
-       struct Response {
-       }
-       struct ViewModel {
-       }
-   }
-       
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
     
     enum EditRoutePoint {
         struct Request {
@@ -154,7 +154,7 @@ enum ManageRouteMap {
             let id: String
             let latitude: Double
             let longitude: Double
-//            let coordinate: CLLocationCoordinate2D
+            //            let coordinate: CLLocationCoordinate2D
         }
         
         struct Request {
@@ -170,5 +170,13 @@ enum ManageRouteMap {
             let idsOfDeletedRouteFragments: [String]
         }
     }
-
+    
+    enum ClearAll {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
 }
