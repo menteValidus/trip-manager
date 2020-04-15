@@ -73,22 +73,23 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     }
     
     // MARK: Fetch new annotations info
+    /// Should be modified only in this use case!
     var annotationsInfo: [AnnotationInfo]
     
     func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
         
-        if let fetchedInfo = worker?.fetchNewAnnotationsInfo(comparingWith: idOfAlreadySettedRoutePoints) {
-            let (addedAnnotationsInfo, idsOfRemovedRP) = fetchedInfo
+        if let fetchedInfo = worker?.fetchDifference(comparingWith: annotationsInfo) {
+            let (addedAnnotationsInfo, removedAnnotationsInfo) = fetchedInfo
             
             annotationsInfo.append(contentsOf: addedAnnotationsInfo)
             
-            for id in idsOfRemovedRP {
-                let indexToDelete = annotationsInfo.firstIndex(where: { return $0.id == id })
+            for annotationInfo in removedAnnotationsInfo {
+                let indexToDelete = annotationsInfo.firstIndex(where: { return $0.id == annotationInfo.id })
                 annotationsInfo.remove(at: indexToDelete!)
             }
             
             let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(newAnnotationsInfo: addedAnnotationsInfo,
-                                                                           idsOfRemovedRoutePoints: idsOfRemovedRP)
+                                                                           removedAnnotationInfo: removedAnnotationsInfo)
             presenter?.presentFetchDifference(response: response)
         }
     }
@@ -151,8 +152,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: Delete Annotation
     
-//    var routePointToDelete: RoutePoint?
-    
     func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request) {
         let response = ManageRouteMap.DeleteAnnotation.Response(identifier: request.identifier)
         presenter?.presentDeleteRoutePoint(response: response)
@@ -181,7 +180,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Delete Route Fragment
     
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request) {
-        
+        let response = ManageRouteMap.DeleteRouteFragment.Response(identifier: request.identifier)
+        presenter?.presentDeleteRouteFragment(response: response)
     }
     
     // MARK: Map Route
@@ -200,17 +200,17 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         }
         
         var idOfDeletedRouteFragments: [String] = []
-        for id in request.idsOfDeletedRoutePoints {
-            let orderNumber = worker!.fetchRoutePoint(with: id).orderNumber
+        for annotationInfo in request.removedAnnotationsInfo {
+            let orderNumber = annotationInfo.orderNumber
             
             let previousAnnotationInfo = getPreviousAnnotationInfo(by: orderNumber)
             if let idOfPreviousPoint = previousAnnotationInfo?.id {
-                idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: id))
+                idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
             }
             
             let nextAnnotationInfo = getNextAnnotationInfo(by: orderNumber)
             if let idOfNextPoint = nextAnnotationInfo?.id {
-                idOfDeletedRouteFragments.append(format(firstID: id, secondID: idOfNextPoint))
+                idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
             }
             
             if let startPoint = previousAnnotationInfo, let endPoint = nextAnnotationInfo {
@@ -224,7 +224,9 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     }
     
     private func getPreviousAnnotationInfo(by orderNumber: Int) -> AnnotationInfo? {
-        let filteredAnnotationInfo = annotationsInfo.filter({ return $0.orderNumber < orderNumber}).first
+        let filteredAnnotationInfo = annotationsInfo.sorted(by: { lhs, rhs in
+            return lhs.orderNumber > rhs.orderNumber
+            }).filter({ return $0.orderNumber < orderNumber }).first
         
         if let filteredOrderNumber = filteredAnnotationInfo?.orderNumber, filteredOrderNumber < orderNumber {
             return filteredAnnotationInfo
@@ -234,7 +236,9 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     }
     
     private func getNextAnnotationInfo(by orderNumber: Int) -> AnnotationInfo? {
-        let filteredAnnotationInfo = annotationsInfo.filter({ return $0.orderNumber > orderNumber }).first
+        let filteredAnnotationInfo = annotationsInfo.sorted(by: { lhs, rhs in
+            return lhs.orderNumber < rhs.orderNumber
+            }).filter({ return $0.orderNumber > orderNumber }).first
         
         if let filteredOrderNumber = filteredAnnotationInfo?.orderNumber, filteredOrderNumber > orderNumber {
             return filteredAnnotationInfo

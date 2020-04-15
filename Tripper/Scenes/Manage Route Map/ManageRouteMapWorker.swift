@@ -13,26 +13,26 @@
 import UIKit
 
 /// Created and deleted Route Points.
-typealias FetchedDifference = ([AnnotationInfo], [String])
+typealias FetchedDifference = ([AnnotationInfo], [AnnotationInfo])
 
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
     
-    func fetchNewAnnotationsInfo(comparingWith idList: [String]) -> FetchedDifference {
+    func fetchDifference(comparingWith annotationsInfo: [AnnotationInfo]) -> FetchedDifference {
         let fetchedRoutePoints = routePointGateway.fetchAll()
-        let (newAnnotationsInfo, idsOfRemovedRP) = findNewData(within: fetchedRoutePoints, with: idList)
+        let (newAnnotationsInfo, idsOfRemovedRP) = findDifference(within: fetchedRoutePoints, with: annotationsInfo)
         
         return (newAnnotationsInfo, idsOfRemovedRP)
     }
     
-    private func findNewData(within routePoints: [RoutePoint], with idList: [String]) -> FetchedDifference {
+    private func findDifference(within passedRoutePoints: [RoutePoint], with annotationsInfoToCompareWith: [AnnotationInfo]) -> FetchedDifference {
         var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
-        var idsOfExistedRoutePoints = idList
+        var deletedAnnotationsInfo = annotationsInfoToCompareWith
         
-        routePoints.forEach() { routePoint in
+        passedRoutePoints.forEach() { routePoint in
             // Check whether this element already displayed.
-            let isContained = idsOfExistedRoutePoints.contains(where: {
-                return $0 == routePoint.id
+            let isContained = deletedAnnotationsInfo.contains(where: {
+                return $0.id == routePoint.id
             })
             
             let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
@@ -41,12 +41,14 @@ class ManageRouteMapWorker {
                 newAnnotationsInfo.append(annotationInfo)
             } else {
                 // Remove this id from check list.
-                let index = idsOfExistedRoutePoints.firstIndex(of: routePoint.id)
-                idsOfExistedRoutePoints.remove(at: index!)
+                let index = deletedAnnotationsInfo.firstIndex(where: {
+                    return $0.id == routePoint.id
+                })
+                deletedAnnotationsInfo.remove(at: index!)
             }
         }
         
-        return (newAnnotationsInfo, idsOfExistedRoutePoints)
+        return (newAnnotationsInfo, deletedAnnotationsInfo)
     }
     
     private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {

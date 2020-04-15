@@ -138,14 +138,15 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             interactor?.setRoutePoint(request: requestToSetRP)
         }
         
-        for identifier in viewModel.idsOfRemovedRoutePoints {
+        for annotationInfo in viewModel.removedAnnotationsInfo {
+            let identifier = annotationInfo.id
             let requestToDeleteRP = ManageRouteMap.DeleteAnnotation.Request(identifier: identifier)
             interactor?.deleteRoutePoint(request: requestToDeleteRP)
         }
         
-        if viewModel.newAnnotationsInfo.count > 0 || viewModel.idsOfRemovedRoutePoints.count > 0 {
+        if viewModel.newAnnotationsInfo.count > 0 || viewModel.removedAnnotationsInfo.count > 0 {
             let request = ManageRouteMap.MapRoute.Request(addedAnnotationsInfo: viewModel.newAnnotationsInfo,
-                                                          idsOfDeletedRoutePoints: viewModel.idsOfRemovedRoutePoints)
+                                                          removedAnnotationsInfo: viewModel.removedAnnotationsInfo)
             interactor?.mapRoute(request: request)
         }
     }
@@ -225,16 +226,23 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         lineStyle.lineWidth = NSExpression(forConstantValue: 3)
         
         mapView.style?.addSource(source)
-//        lineSources.append(source)
         mapView.style?.addLayer(lineStyle)
-//        lineStyles.append(lineStyle)
-
     }
     
     // MARK: Delete Route Fragment
     
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel) {
+        if let sources = mapView.style?.sources {
+            for source in sources {
+                if source.identifier == viewModel.identifier {
+                    mapView.style!.removeSource(source)
+                }
+            }
+        }
         
+        if let layer = mapView.style?.layer(withIdentifier: viewModel.identifier) {
+            mapView.style!.removeLayer(layer)
+        }
     }
     
     // MARK: Map Route
@@ -274,7 +282,6 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
-//        mapView.deselectAnnotation(annotation, animated: true)
         let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
         // Pass optional value if it's nil show error in presenter.
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation)

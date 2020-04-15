@@ -46,7 +46,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Fetch Difference
     
     func presentFetchDifference(response: ManageRouteMap.FetchNewAnnotationsInfo.Response) {
-        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, idsOfRemovedRoutePoints: response.idsOfRemovedRoutePoints)
+        let viewModel = ManageRouteMap.FetchNewAnnotationsInfo.ViewModel(newAnnotationsInfo: response.newAnnotationsInfo, removedAnnotationsInfo: response.removedAnnotationInfo)
         viewController?.displayFetchDifference(viewModel: viewModel)
     }
     
@@ -95,7 +95,8 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Delete Route Fragment
     
     func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response) {
-        
+        let viewModel = ManageRouteMap.DeleteRouteFragment.ViewModel(identifier: response.identifier)
+        viewController?.displayDeleteRouteFragment(viewModel: viewModel)
     }
     
     // MARK: Map Route
