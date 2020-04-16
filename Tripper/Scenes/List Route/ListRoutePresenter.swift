@@ -13,16 +13,15 @@
 import UIKit
 
 protocol ListRoutePresentationLogic {
-    func presentSomething(response: ListRoute.Something.Response)
+    func presentFetchData(response: ListRoute.FetchData.Response)
 }
 
 class ListRoutePresenter: ListRoutePresentationLogic {
     weak var viewController: ListRouteDisplayLogic?
     
-    // MARK: Do Something
+    // MARK: - Fetch Data
     
-    func presentSomething(response: ListRoute.Something.Response) {
-        let viewModel = ListRoute.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
-    }
-}
+    func presentFetchData(response: ListRoute.FetchData.Response) {
+        let viewModel = ListRoute.FetchData.ViewModel(subroutes: response.subroutes)
+        viewController?.displayFetchData(viewModel: viewModel)
+    }}

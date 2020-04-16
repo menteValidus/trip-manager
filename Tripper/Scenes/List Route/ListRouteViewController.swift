@@ -13,7 +13,7 @@
 import UIKit
 
 protocol ListRouteDisplayLogic: class {
-    func displaySomething(viewModel: ListRoute.Something.ViewModel)
+    func displayFetchData(viewModel: ListRoute.FetchData.ViewModel)
 }
 
 class ListRouteViewController: UITableViewController, ListRouteDisplayLogic {
@@ -39,9 +39,11 @@ class ListRouteViewController: UITableViewController, ListRouteDisplayLogic {
         let interactor = ListRouteInteractor()
         let presenter = ListRoutePresenter()
         let router = ListRouteRouter()
+        let worker = ListRouteWorker()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
+        interactor.worker = worker
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -60,21 +62,67 @@ class ListRouteViewController: UITableViewController, ListRouteDisplayLogic {
     
     // MARK: View Lifecycle
     
+    struct TableView {
+        struct CellIdentifiers {
+            static let roadCell = "RoadCell"
+            static let stayingCell = "StayingCell"
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        var cellNib = UINib(nibName: TableView.CellIdentifiers.roadCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.roadCell)
+        
+        cellNib = UINib(nibName: TableView.CellIdentifiers.stayingCell, bundle: nil)
+        tableView.register(cellNib, forCellReuseIdentifier: TableView.CellIdentifiers.stayingCell)
+        
+        fetchData()
     }
     
-    // MARK: Do Something
+    // MARK: Table View's Delegate
     
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = ListRoute.Something.Request()
-        interactor?.doSomething(request: request)
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return subroutes.count
     }
     
-    func displaySomething(viewModel: ListRoute.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let anotherSubroute = subroutes[indexPath.row]
+        
+        switch anotherSubroute {
+        case is InRoad:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.roadCell, for: indexPath) as! RoadCell
+            cell.configure(for: anotherSubroute as! InRoad)
+            
+            return cell
+            
+        case is Staying:
+            let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.stayingCell, for: indexPath) as! StayingCell
+            cell.configure(for: anotherSubroute as! Staying)
+            
+            return cell
+            
+        default:
+            fatalError("*** It's impossible to be here!")
+        }
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    // MARK: Fetch Data
+    
+    var subroutes = [Subroute]()
+    
+    func fetchData() {
+        let request = ListRoute.FetchData.Request()
+        interactor?.fetchData(request: request)
+    }
+    
+    func displayFetchData(viewModel: ListRoute.FetchData.ViewModel) {
+        subroutes = viewModel.subroutes
+        tableView.reloadData()
     }
 }

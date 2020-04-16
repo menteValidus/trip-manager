@@ -13,25 +13,21 @@
 import UIKit
 
 protocol ListRouteBusinessLogic {
-    func doSomething(request: ListRoute.Something.Request)
+    func fetchData(request: ListRoute.FetchData.Request)
 }
 
 protocol ListRouteDataStore {
-    //var name: String { get set }
 }
 
 class ListRouteInteractor: ListRouteBusinessLogic, ListRouteDataStore {
     var presenter: ListRoutePresentationLogic?
     var worker: ListRouteWorker?
-    //var name: String = ""
     
     // MARK: Do Something
     
-    func doSomething(request: ListRoute.Something.Request) {
-        worker = ListRouteWorker()
-        worker?.doSomeWork()
-        
-        let response = ListRoute.Something.Response()
-        presenter?.presentSomething(response: response)
+    func fetchData(request: ListRoute.FetchData.Request) {
+        let subroutes = worker!.fetchSubroutes()
+        let response = ListRoute.FetchData.Response(subroutes: subroutes)
+        presenter?.presentFetchData(response: response)
     }
 }

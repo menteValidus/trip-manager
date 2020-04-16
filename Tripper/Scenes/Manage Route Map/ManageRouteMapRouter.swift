@@ -16,6 +16,7 @@ import UIKit
     func routeToCreateRoutePoint(segue: UIStoryboardSegue?)
     func routeToDetailRoutePoint(segue: UIStoryboardSegue?)
     func routeToEditRoutePoint(segue: UIStoryboardSegue?)
+    func routeToListRoute(segue: UIStoryboardSegue?)
 }
 
 protocol ManageRouteMapDataPassing {
@@ -71,6 +72,20 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         navigateToEditRoutePoint(source: viewController!, destination: destinationVC)
     }
     
+    func routeToListRoute(segue: UIStoryboardSegue?) {
+        if let segue = segue {
+            let destinationVC = segue.destination as! ListRouteViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToListRoute(source: dataStore!, destination: &destinationDS)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationVC = storyboard.instantiateViewController(withIdentifier: "ListRouteViewController") as! ListRouteViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToListRoute(source: dataStore!, destination: &destinationDS)
+            navigateToListRoute(source: viewController!, destination: destinationVC)
+        }
+    }
+    
     // MARK: Navigation
     
     func navigateToCreateRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController)
@@ -108,6 +123,10 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         source.show(destination, sender: nil)
     }
     
+    func navigateToListRoute(source: ManageRouteMapViewController, destination: ListRouteViewController) {
+        source.show(destination, sender: nil)
+    }
+    
     // MARK: Passing data
     
     func passDataToCreateRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore)
@@ -122,5 +141,8 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func passDataToEditRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore) {
         destination.pointToSave = source.routePointToEdit
+    }
+    
+    func passDataToListRoute(source: ManageRouteMapDataStore, destination: inout ListRouteDataStore) {
     }
 }

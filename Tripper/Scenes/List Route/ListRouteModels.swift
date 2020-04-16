@@ -15,12 +15,14 @@ import UIKit
 enum ListRoute {
     // MARK: Use Cases
     
-    enum Something {
+    enum FetchData {
         struct Request {
         }
         struct Response {
+            let subroutes: [Subroute]
         }
         struct ViewModel {
+            let subroutes: [Subroute]
         }
     }
 }

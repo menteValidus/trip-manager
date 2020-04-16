@@ -65,16 +65,19 @@
                         <viewLayoutGuide key="safeArea" id="GF8-cM-mMC"/>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="QkS-8f-1If">
-                        <barButtonItem key="leftBarButtonItem" title="Clear all" id="iLe-Zf-5sl"/>
+                        <barButtonItem key="leftBarButtonItem" title="Clear all" id="iLe-Zf-5sl">
+                            <connections>
+                                <action selector="clearAll" destination="4Cc-Fh-swH" id="s0l-wi-eKD"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Route" id="3YU-Yf-sPd">
                             <connections>
-                                <segue destination="OXZ-HK-1RU" kind="show" identifier="ShowRouteList" id="FzE-9f-Hug"/>
+                                <segue destination="OXZ-HK-1RU" kind="show" identifier="ListRoute" id="FzE-9f-Hug"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="OnC-x8-mW2"/>
-                        <segue destination="CC2-X3-ZR1" kind="show" identifier="ShowAnnotationEdit" id="nRI-RB-1uU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -355,7 +358,7 @@
         <!--Route-->
         <scene sceneID="fPz-AV-oOg">
             <objects>
-                <tableViewController id="OXZ-HK-1RU" customClass="RouteListViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="OXZ-HK-1RU" customClass="ListRouteViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="cAW-hY-HVJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -88,10 +88,12 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         let subtitle = ""
         let latitude = coordinate.latitude
         let longitude = coordinate.longitude
+        let arrivalDate = Date()
+        let departureDate = Date()
         
         let routePoint = RoutePoint(id: id, orderNumber: orderNumber,
                                     title: title, subtitle: subtitle,
-                                    latitude: latitude, longitude: longitude)
+                                    latitude: latitude, longitude: longitude, arrivalDate: arrivalDate, departureDate: departureDate)
         return routePoint
     }
 }

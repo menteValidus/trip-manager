@@ -99,7 +99,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         super.viewDidLoad()
         registerGestureRecognizers()
         mapView.delegate = self
-        mapView.userTrackingMode = MGLUserTrackingMode.follow
+//        mapView.userTrackingMode = MGLUserTrackingMode.follow
     }
     
     private func registerGestureRecognizers() {

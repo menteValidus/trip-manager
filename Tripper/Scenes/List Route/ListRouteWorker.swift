@@ -13,6 +13,29 @@
 import UIKit
 
 class ListRouteWorker {
-    func doSomeWork() {
+    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    
+    func fetchSubroutes() -> [Subroute] {
+        let fetchedRoutePoints = routePointGateway.fetchAll().sorted(by: { lhs, rhs in
+            return lhs.orderNumber < rhs.orderNumber
+        })
+        
+        var subroutes = [Subroute]()
+        for index in 0..<(fetchedRoutePoints.count) {
+            let routePoint = fetchedRoutePoints[index]
+            let timeToStayInSeconds = Int(routePoint.departureDate.timeIntervalSince(routePoint.arrivalDate))
+            let staying = Staying(title: routePoint.title, seconds: timeToStayInSeconds, description: routePoint.subtitle)
+            subroutes.append(staying)
+            
+            let nextIndex = index + 1
+            if nextIndex < fetchedRoutePoints.count {
+                let nextRoutePoint = fetchedRoutePoints[nextIndex]
+                let timeToNextPointInSeconds = Int(nextRoutePoint.arrivalDate.timeIntervalSince(routePoint.departureDate))
+                let inRoad = InRoad(seconds: timeToNextPointInSeconds, metres: routePoint.distanceToNextPointInMeters ?? 0)
+                subroutes.append(inRoad)
+            }
+        }
+        
+        return subroutes
     }
 }

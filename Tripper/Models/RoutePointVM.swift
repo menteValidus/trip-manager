@@ -20,8 +20,8 @@ protocol AnnotationForm {
     var title: String { get set }
     var subtitle: String { get set }
     
-    var arrivalDate: Date? { get set }
-    var departureDate: Date? { get set }
+    var arrivalDate: Date { get set }
+    var departureDate: Date { get set }
     
     var timeToNextPointInSeconds: Int? { get set }
     var distanceToNextPointInMeters: Int? { get set }
@@ -37,9 +37,9 @@ struct RoutePoint: AnnotationInfo, AnnotationForm {
     var longitude: Double
     
     // Nullable in case it's the start of trip.
-    var arrivalDate: Date?
+    var arrivalDate: Date
     // Nullable in case it's the end of trip.
-    var departureDate: Date?
+    var departureDate: Date
     
     // Nullable in case it's the end of trip.
     var timeToNextPointInSeconds: Int?
