@@ -131,7 +131,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func passDataToCreateRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore)
     {
-        destination.coordinateToCreateRP = source.tappedCoordinate
+        destination.dataToCreateRoutePoint = source.dataToCreateRoutePoint
     }
     
     func passDataToDetailRoutePoint(source: ManageRouteMapDataStore, destination: inout DetailRoutePointDataStore)

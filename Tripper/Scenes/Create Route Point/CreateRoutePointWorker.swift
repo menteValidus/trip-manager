@@ -13,7 +13,11 @@
 import UIKit
 
 class CreateRoutePointWorker {
-    private let routePointGateway: RoutePointDataStore & OrderNumberGenerator = RoutePointCoreDataStore()
+    private let routePointGateway: RoutePointDataStore & OrderNumberGenerator & DateLimiter
+    
+    init() {
+        routePointGateway = RoutePointCoreDataStore()
+    }
     
     func save(routePoint: RoutePoint) {
         let routePoints = routePointGateway.fetchAll()
@@ -39,5 +43,15 @@ class CreateRoutePointWorker {
     
     func getNewOrderNumber() -> Int {
         return routePointGateway.getNewOrderNumber()
+    }
+    
+    func getLeftLimit(by orderNumber: Int) -> Date {
+        let leftLimit = routePointGateway.fetchLeftLimit(by: orderNumber)
+        return leftLimit
+    }
+    
+    func getRightLimit(by orderNumber: Int) -> Date {
+        let rightLimit = routePointGateway.fetchRightLimit(by: orderNumber)
+        return rightLimit
     }
 }

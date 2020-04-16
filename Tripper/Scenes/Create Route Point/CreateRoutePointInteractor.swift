@@ -21,7 +21,7 @@ protocol CreateRoutePointBusinessLogic {
 
 protocol CreateRoutePointDataStore {
     var pointToSave: RoutePoint? { get set }
-    var coordinateToCreateRP: CLLocationCoordinate2D? { get set }
+    var dataToCreateRoutePoint: SimpleRoutePointInfo? { get set }
 }
 
 class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePointDataStore {
@@ -36,8 +36,8 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         let navigationTitle: String
         if pointToSave == nil {
             navigationTitle = "Create"
-            if let coordinate = coordinateToCreateRP {
-                pointToSave = createNewRoutePoint(at: coordinate)
+            if let data = dataToCreateRoutePoint {
+                pointToSave = createNewRoutePoint(with: data)
             } else {
                 fatalError("*** There is no way we can be here!")
             }
@@ -52,7 +52,7 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     // MARK: Save Route Point
     
     var pointToSave: RoutePoint?
-    var coordinateToCreateRP: CLLocationCoordinate2D?
+    var dataToCreateRoutePoint: SimpleRoutePointInfo?
 
     func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request) {
         if pointToSave != nil {
@@ -81,16 +81,16 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     
     // MARK: - Helper Methods
     
-    private func createNewRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePoint {
+    private func createNewRoutePoint(with data: SimpleRoutePointInfo) -> RoutePoint {
         let id = idGenerator.generate()
         let orderNumber = worker!.getNewOrderNumber()
-        let title = ""
+        let title = "Route Point #\(orderNumber)"
         let subtitle = ""
-        let latitude = coordinate.latitude
-        let longitude = coordinate.longitude
-        let arrivalDate = Date()
+        let latitude = data.tappedCoordinate.latitude
+        let longitude = data.tappedCoordinate.longitude
+        let arrivalDate = worker!.getLeftLimit(by: orderNumber).addingTimeInterval(TimeInterval(data.timeToNextPointInSeconds))
         let departureDate = Date()
-        
+        let distance = data.distanceToNextPointInMeters
         let routePoint = RoutePoint(id: id, orderNumber: orderNumber,
                                     title: title, subtitle: subtitle,
                                     latitude: latitude, longitude: longitude, arrivalDate: arrivalDate, departureDate: departureDate)

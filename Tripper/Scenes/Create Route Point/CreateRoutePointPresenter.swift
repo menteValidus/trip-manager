@@ -23,7 +23,7 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
     
     private let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .none
+        dateFormatter.timeStyle = .short
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()
@@ -36,10 +36,10 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         let title = response.routePoint.title
         let subtitle = response.routePoint.subtitle
         
-        let arrivalDate = response.routePoint.arrivalDate ?? Date()
+        let arrivalDate = response.routePoint.arrivalDate
         let arrivalDateString = dateFormatter.string(from: arrivalDate)
         
-        let departureDate = response.routePoint.departureDate ?? Date()
+        let departureDate = response.routePoint.departureDate
         let departureDateString = dateFormatter.string(from: departureDate)
         
         let annotationForm = CreateRoutePoint.DisplayableAnnotationInfo(

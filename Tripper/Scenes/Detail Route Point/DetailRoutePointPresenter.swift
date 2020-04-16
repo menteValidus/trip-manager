@@ -25,7 +25,7 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     
     private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .none
+        dateFormatter.timeStyle = .medium
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()

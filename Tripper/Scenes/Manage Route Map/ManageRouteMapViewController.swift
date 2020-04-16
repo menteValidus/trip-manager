@@ -118,7 +118,10 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Create Route Point
     
+    private var isNewPointCreated: Bool = false
+    
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
+//        isNewPointCreated = true
         popup?.dismissPopup()
         router?.routeToCreateRoutePoint(segue: nil)
     }

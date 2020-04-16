@@ -30,8 +30,15 @@ protocol ManageRouteMapBusinessLogic {
     func focus(request: ManageRouteMap.Focus.Request)
 }
 
+
+struct SimpleRoutePointInfo {
+    let tappedCoordinate: CLLocationCoordinate2D
+    let timeToNextPointInSeconds: Int
+    let distanceToNextPointInMeters: Int
+}
+
 protocol ManageRouteMapDataStore {
-    var tappedCoordinate: CLLocationCoordinate2D? { get set }
+    var dataToCreateRoutePoint: SimpleRoutePointInfo? { get set }
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
     var routePointToEdit: RoutePoint? { get set }
@@ -67,12 +74,36 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: - Create route point
     
-    var tappedCoordinate: CLLocationCoordinate2D?
+    var dataToCreateRoutePoint: SimpleRoutePointInfo?
     
-    func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {        
-        tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
-        let response = ManageRouteMap.CreateRoutePoint.Response()
-        presenter?.presentAnnotationCreation(response: response)
+    func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
+        let sortedAnnotationsInfo = annotationsInfo.sorted(by: { lhs, rhs in
+        return lhs.orderNumber < rhs.orderNumber
+        })
+        
+        let tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
+        if let lastAnnotation = sortedAnnotationsInfo.last {
+            let lastAnnotationCoordinate = CLLocationCoordinate2D(latitude: lastAnnotation.latitude, longitude: lastAnnotation.longitude)
+            
+            routeCreator?.calculateRoute(from: lastAnnotationCoordinate, to: tappedCoordinate, drawHandler: { routeInfo in
+                if let routeInfo = routeInfo {
+                    self.dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: routeInfo.timeInSeconds, distanceToNextPointInMeters: routeInfo.distanceInMeters)
+                    
+                    let response = ManageRouteMap.CreateRoutePoint.Response()
+                    self.presenter?.presentAnnotationCreation(response: response)
+                } else {
+                    // TODO: Display error.
+                }
+            })
+        } else {
+            dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
+            
+            let response = ManageRouteMap.CreateRoutePoint.Response()
+            presenter?.presentAnnotationCreation(response: response)
+        }
+        
+        
+        
     }
     
     // MARK: Fetch Difference

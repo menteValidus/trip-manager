@@ -21,6 +21,11 @@ protocol OrderNumberGenerator: class {
     func getNewOrderNumber() -> Int
 }
 
+protocol DateLimiter {
+    func fetchLeftLimit(by orderNumber: Int) -> Date
+    func fetchRightLimit(by orderNumber: Int) -> Date
+}
+
 class RoutePointCoreDataStore: RoutePointDataStore {
     
     lazy var persistentContainer: NSPersistentContainer = {
@@ -181,8 +186,8 @@ class RoutePointCoreDataStore: RoutePointDataStore {
         entity.setValue(routePoint.longitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.longitude)
         entity.setValue(routePoint.latitude, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.latitude)
         entity.setValue(routePoint.orderNumber, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber)
-        entity.setValue(routePoint.title ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.title)
-        entity.setValue(routePoint.subtitle ?? "", forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
+        entity.setValue(routePoint.title, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.title)
+        entity.setValue(routePoint.subtitle, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
         entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
         entity.setValue(routePoint.timeToNextPointInSeconds, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.timeToNextPointInSeconds)
@@ -288,6 +293,7 @@ class RoutePointCoreDataStore: RoutePointDataStore {
 
 extension RoutePointCoreDataStore: OrderNumberGenerator {
     // MARK: - Order Number Generator
+    
     func getNewOrderNumber() -> Int {
         let maxOrderNumber = fetchMaxOrderNumber()
         
@@ -310,7 +316,60 @@ extension RoutePointCoreDataStore: OrderNumberGenerator {
                 return 0
             }
         } catch {
-            fatalError("***Failed to fetch max order number with error = \(error)")
+            fatalError("*** Failed to fetch max order number with error = \(error)")
         }
     }
+}
+
+extension RoutePointCoreDataStore: DateLimiter {
+    // MARK: - Date Limiter
+    
+    func fetchLeftLimit(by orderNumber: Int) -> Date {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
+        
+        let predicate =
+            NSPredicate(format: "\(DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber) < %d", orderNumber)
+        fetchRequest.predicate = predicate
+        
+        let sortDesctiptor = NSSortDescriptor(key: DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber, ascending: true)
+        fetchRequest.sortDescriptors = [sortDesctiptor]
+        fetchRequest.fetchLimit = 1
+
+        do {
+            let fetchResult = try managedObjectContext.fetch(fetchRequest)
+            
+            if let routePointEntity = fetchResult.last as? RoutePointEntity {
+                return routePointEntity.departureDate
+            } else {
+                return Date()
+            }
+        } catch {
+            fatalError("*** Failed to fetch left date limit with error = \(error)")
+        }
+    }
+    
+    func fetchRightLimit(by orderNumber: Int) -> Date {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
+        
+        let predicate =
+            NSPredicate(format: "\(DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber) > %d", orderNumber)
+        fetchRequest.predicate = predicate
+        
+        let sortDesctiptor = NSSortDescriptor(key: DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber, ascending: true)
+        fetchRequest.sortDescriptors = [sortDesctiptor]
+        fetchRequest.fetchLimit = 1
+
+        do {
+            let fetchResult = try managedObjectContext.fetch(fetchRequest)
+            
+            if let routePointEntity = fetchResult.first as? RoutePointEntity {
+                return routePointEntity.arrivalDate
+            } else {
+                return Date()
+            }
+        } catch {
+            fatalError("*** Failed to fetch right date limit with error = \(error)")
+        }
+    }
+    
 }
