@@ -27,6 +27,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
     func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
+    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -336,6 +337,25 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     private func hideSpinner() {
         dimmingView.removeFromSuperview()
+        tempFocus()
+    }
+    
+    // MARK: Focus
+    
+    // TODO: Temprorary. Will be removed.
+    func tempFocus() {
+        var coordinates = [CLLocationCoordinate2D]()
+        for (annotation, _) in annotationsID {
+            coordinates.append(annotation.coordinate)
+        }
+        let request = ManageRouteMap.Focus.Request(coordinates: coordinates)
+        interactor?.focus(request: request)
+    }
+    
+    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel) {
+        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate))
+        
+        mapView.setCamera(camera, animated: true)
     }
     
     // MARK: Shared Helper Methods
@@ -363,6 +383,8 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         interactor?.selectAnnotation(request: request)
     }
+    
+    // MARK: Gesture Handlers
     
     @objc func handleMapLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else {

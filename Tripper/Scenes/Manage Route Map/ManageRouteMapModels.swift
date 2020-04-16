@@ -191,4 +191,18 @@ enum ManageRouteMap {
             let isLocked: Bool
         }
     }
+    
+    enum Focus {
+        struct Request {
+            let coordinates: [CLLocationCoordinate2D]
+        }
+        struct Response {
+            let southWestCoordinate: CLLocationCoordinate2D
+            let northEastCoordinate: CLLocationCoordinate2D
+        }
+        struct ViewModel {
+            let southWestCoordinate: CLLocationCoordinate2D
+            let northEastCoordinate: CLLocationCoordinate2D
+        }
+    }
 }

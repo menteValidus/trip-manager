@@ -26,6 +26,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
     func presentClearAll(response: ManageRouteMap.ClearAll.Response)
     func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response)
+    func presentFocus(response: ManageRouteMap.Focus.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -107,10 +108,6 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
         let viewModel = ManageRouteMap.MapRoute.ViewModel(addedSubroutesInfo: response.addedSubroutesInfo,
                                                           idsOfDeletedRouteFragments: response.idsOfDeletedRouteFragments)
         viewController?.displayMapRoute(viewModel: viewModel)
-        // TODO: Implement:
-        // If there's waiting for result show LoadingView and call Map Route use case
-        // Else if it's route fragment creation call dedicated use case or if it's route fragment deletion call Delete use case
-        // and then call Map Route use case to disable LoadingView.
     }
     
     // MARK: Clear All
@@ -125,5 +122,13 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response) {
         let viewModel = ManageRouteMap.ToggleUserInput.ViewModel(isLocked: response.isLocked)
         viewController?.displayToggleUserInput(viewModel: viewModel)
+    }
+    
+    // MARK: Focus
+    
+    func presentFocus(response: ManageRouteMap.Focus.Response) {
+        let viewModel = ManageRouteMap.Focus.ViewModel(
+            southWestCoordinate: response.southWestCoordinate, northEastCoordinate: response.northEastCoordinate)
+        viewController?.displayFocus(viewModel: viewModel)
     }
 }

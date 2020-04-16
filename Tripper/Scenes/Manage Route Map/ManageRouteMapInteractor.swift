@@ -27,6 +27,7 @@ protocol ManageRouteMapBusinessLogic {
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
     func clearAll(request: ManageRouteMap.ClearAll.Request)
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
+    func focus(request: ManageRouteMap.Focus.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -288,5 +289,90 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request) {
         let response = ManageRouteMap.ToggleUserInput.Response(isLocked: request.isLocked)
         presenter?.presentToggleUserInput(response: response)
+    }
+    
+    // MARK: Focus
+    
+    func focus(request: ManageRouteMap.Focus.Request) {
+        // if we have no annotations we can skip all of this
+        if request.coordinates.count == 0 {
+            return
+        }
+
+        // then run through each annotation in the list to find the
+        // minimum and maximum latitude and longitude values
+        var minimum = CLLocationCoordinate2D()
+        var maximum = CLLocationCoordinate2D()
+        var minMaxInitialized = false
+        var numberOfValidAnnotations = 0
+
+        for a in request.coordinates {
+            // only use annotations that are of our own custom type
+            // in the event that the user is browsing from a location far away
+            // you can omit this if you want the user's location to be included in the region
+//            if ( [a isKindOfClass: [ECAnnotation class]] )
+//            {
+                // if we haven't grabbed the first good value, do so now
+                if ( !minMaxInitialized )
+                {
+                    minimum = a;
+                    maximum = a;
+                    minMaxInitialized = true;
+                }
+                else // otherwise compare with the current value
+                {
+                    minimum.latitude = min( minimum.latitude, a.latitude )
+                    minimum.longitude = min(minimum.longitude, a.longitude )
+
+                    maximum.latitude = max( maximum.latitude, a.latitude )
+                    maximum.longitude = max( maximum.longitude, a.longitude )
+                }
+                numberOfValidAnnotations += 1
+//            }
+        }
+
+        // If we don't have any valid annotations we can leave now,
+        // this will happen in the event that there is only the user location
+        if numberOfValidAnnotations == 0 {
+            return
+        }
+
+        // Now that we have a min and max lat/lon create locations for the
+        // three points in a right triangle
+        let locSouthWest = CLLocationCoordinate2D(latitude: minimum.latitude, longitude: minimum.longitude)
+//        CLLocation* locSouthWest = [[CLLocation alloc]
+//                                    initWithLatitude: min.latitude
+//                                    longitude: min.longitude];
+//        CLLocation* locSouthEast = [[CLLocation alloc]
+//                                    initWithLatitude: min.latitude
+//                                    longitude: max.longitude];
+        let locNorthEast = CLLocationCoordinate2D(latitude: maximum.latitude, longitude: maximum.longitude)
+//        CLLocation* locNorthEast = [[CLLocation alloc]
+//                                    initWithLatitude: max.latitude
+//                                    longitude: max.longitude];
+
+        // Create a region centered at the midpoint of our hypotenuse
+//        CLLocationCoordinate2D regionCenter;
+//        regionCenter.latitude = (minimum.latitude + maximum.latitude) / 2.0;
+//        regionCenter.longitude = (minimum.longitude + maximum.longitude) / 2.0;
+//
+//        // Use the locations that we just created to calculate the distance
+//        // between each of the points in meters.
+//        CLLocationDistance latMeters = [locSouthEast getDistanceFrom: locNorthEast];
+//        CLLocationDistance lonMeters = [locSouthEast getDistanceFrom: locSouthWest];
+//
+//        MKCoordinateRegion region;
+//        region = MKCoordinateRegionMakeWithDistance( regionCenter, latMeters, lonMeters );
+//
+//        MKCoordinateRegion fitRegion = [myMapView regionThatFits: region];
+//        [myMapView setRegion: fitRegion animated: YES];
+//
+//        // Clean up
+//        [locSouthWest release];
+//        [locSouthEast release];
+//        [locNorthEast release];
+//
+        let response = ManageRouteMap.Focus.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
+        presenter?.presentFocus(response: response)
     }
 }
