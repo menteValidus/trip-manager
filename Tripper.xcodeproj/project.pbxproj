@@ -195,6 +195,7 @@
 		0B042A5823E2D02100E9136F /* Tripper */ = {
 			isa = PBXGroup;
 			children = (
+				0B366749244875D30099AFAB /* Utils */,
 				0B418C602440995E0007B611 /* Extensions */,
 				0B8CE30D243C93020065B7B5 /* Models */,
 				0B8CE30A243C8E9F0065B7B5 /* Services */,
@@ -249,7 +250,6 @@
 				0B042A7B23E85EBF00E9136F /* View Controllers */,
 				0BD662F2241A45600034B1D6 /* Util */,
 				0B6BB0E3240E617D0002D1DB /* Transitioning */,
-				0B042A7523E3001B00E9136F /* Util.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -317,6 +317,14 @@
 				0B042A7723E836B300E9136F /* RouteController.swift */,
 			);
 			path = "Data Controllers";
+			sourceTree = "<group>";
+		};
+		0B366749244875D30099AFAB /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				0B042A7523E3001B00E9136F /* Util.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		0B418C47243F1D470007B611 /* Detail Route Point */ = {
