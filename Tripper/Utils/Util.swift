@@ -37,6 +37,9 @@ struct TimeUnits {
     static let week = 7 * day
 }
 
+func format(firstID: String, secondID: String) -> String {
+    return "\(firstID)-\(secondID)"
+}
 
 func format(seconds: Int) -> String {
     var formattedTime = ""

@@ -14,17 +14,20 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
-    func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel)
+    func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
     func displayDeselectAnnotation(viewModel: ManageRouteMap.DeselectAnnotation.ViewModel)
     func displayShowDetail(viewModel: ManageRouteMap.ShowDetail.ViewModel)
     func displayEditRoutePoint(viewModel: ManageRouteMap.EditRoutePoint.ViewModel)
-    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel)
+    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteAnnotation.ViewModel)
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel)
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel)
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
+    func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
+    func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
+    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -37,6 +40,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var routeTimeLabel: UILabel!
     @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
     @IBOutlet weak var routeListBarItem: UIBarButtonItem!
+    
+    var popup: Popup? {
+        didSet {
+            if popup == nil {
+                fetchDifference()
+            }
+        }
+    }
     
     var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     
@@ -60,10 +71,12 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let presenter = ManageRouteMapPresenter()
         let router = ManageRouteMapRouter()
         let worker = ManageRouteMapWorker()
+        let routeCreator = MapboxRouteCreator()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
         interactor.worker = worker
+        interactor.routeCreator = routeCreator
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -86,6 +99,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         super.viewDidLoad()
         registerGestureRecognizers()
         mapView.delegate = self
+        mapView.userTrackingMode = MGLUserTrackingMode.follow
     }
     
     private func registerGestureRecognizers() {
@@ -99,17 +113,13 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reloadAnnotationsData()
-    }
-    
-    private func reloadAnnotationsData() {
-        let request = ManageRouteMap.FetchNewAnnotationsInfo.Request()
-        interactor?.fetchNewAnnotationsInfo(request: request)
+        fetchDifference()
     }
     
     // MARK: Create Route Point
     
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
+        popup?.dismissPopup()
         router?.routeToCreateRoutePoint(segue: nil)
     }
     
@@ -119,12 +129,29 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         setAnnotation(annotationInfo: viewModel.annotationInfo)
     }
     
-    // MARK: Fetch new annotations info
+    // MARK: Fetch Difference
     
-    func displayFetchNewAnnotationsInfo(viewModel: ManageRouteMap.FetchNewAnnotationsInfo.ViewModel) {
-        for annotationInfo in viewModel.annotationsInfo {
-            let request = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
-            interactor?.setRoutePoint(request: request)
+    func fetchDifference() {
+        let request = ManageRouteMap.FetchDifference.Request()
+        interactor?.fetchDifference(request: request)
+    }
+    
+    func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel) {
+        for annotationInfo in viewModel.newAnnotationsInfo {
+            let requestToSetRP = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
+            interactor?.setRoutePoint(request: requestToSetRP)
+        }
+        
+        for annotationInfo in viewModel.removedAnnotationsInfo {
+            let identifier = annotationInfo.id
+            let requestToDeleteRP = ManageRouteMap.DeleteAnnotation.Request(identifier: identifier)
+            interactor?.deleteRoutePoint(request: requestToDeleteRP)
+        }
+        
+        if viewModel.newAnnotationsInfo.count > 0 || viewModel.removedAnnotationsInfo.count > 0 {
+            let request = ManageRouteMap.MapRoute.Request(addedAnnotationsInfo: viewModel.newAnnotationsInfo,
+                                                          removedAnnotationsInfo: viewModel.removedAnnotationsInfo)
+            interactor?.mapRoute(request: request)
         }
     }
     
@@ -177,12 +204,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Delete Route Point
     
-    func deleteSelectedRoutePoint() {
-        let request = ManageRouteMap.DeleteRoutePoint.Request();
-        interactor?.deleteRoutePoint(request: request)
-    }
-    
-    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteRoutePoint.ViewModel) {
+    func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteAnnotation.ViewModel) {
         for (annotation, id) in annotationsID {
             if id == viewModel.identifier {
                 mapView.removeAnnotation(annotation)
@@ -194,24 +216,146 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Create Route Fragment
     
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel) {
+        let routeCoordinates = viewModel.routeFragment.coordinates
+        let identifier = viewModel.routeFragment.identifier
+        guard routeCoordinates.count > 0 else { return }
         
+        let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
+        
+        let source = MGLShapeSource(identifier: identifier, features: [polyline], options: nil)
+        
+        // Customize the route line color and width
+        let lineStyle = MGLLineStyleLayer(identifier: identifier, source: source)
+        lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        lineStyle.lineWidth = NSExpression(forConstantValue: 3)
+        
+        mapView.style?.addSource(source)
+        mapView.style?.addLayer(lineStyle)
+        
+        routeFragmentsToProcess -= 1
     }
     
     // MARK: Delete Route Fragment
     
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel) {
+        if let sources = mapView.style?.sources {
+            for source in sources {
+                if source.identifier == viewModel.identifier {
+                    mapView.style!.removeSource(source)
+                }
+            }
+        }
         
+        if let layer = mapView.style?.layer(withIdentifier: viewModel.identifier) {
+            mapView.style!.removeLayer(layer)
+        }
+        
+        routeFragmentsToProcess -= 1
     }
     
     // MARK: Map Route
     
-    func mapRoute() {
-        let request = ManageRouteMap.MapRoute.Request()
-        
+    private var routeFragmentsToProcess = 0 {
+        didSet {
+            if routeFragmentsToProcess == 0 {
+                toggleUserInput(isLocked: false)
+            }
+        }
     }
     
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel) {
+        routeFragmentsToProcess = viewModel.idsOfDeletedRouteFragments.count + viewModel.addedSubroutesInfo.count
+        if routeFragmentsToProcess > 0 {
+            toggleUserInput(isLocked: true)
+        }
         
+        if viewModel.idsOfDeletedRouteFragments.count > 0 {
+            for id in viewModel.idsOfDeletedRouteFragments {
+                let request = ManageRouteMap.DeleteRouteFragment.Request(identifier: id)
+                interactor?.deleteRouteFragment(request: request)
+            }
+        }
+        
+        if viewModel.addedSubroutesInfo.count > 0 {
+            for subrouteInfo in viewModel.addedSubroutesInfo {
+                let request = ManageRouteMap.CreateRouteFragment.Request(addedSubrouteInfo: subrouteInfo)
+                interactor?.createRouteFragment(request: request)
+            }
+        }
+    }
+    
+    // MARK: Clear All
+    
+    @IBAction func clearAll() {
+        let request = ManageRouteMap.ClearAll.Request()
+        interactor?.clearAll(request: request)
+    }
+    
+    func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
+        fetchDifference()
+    }
+    
+    // MARK: Toggle User Input
+    
+    private lazy var dimmingView = { () -> UIView in
+        let dimmingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        
+        // Blur Effect
+        let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = dimmingView.bounds
+        dimmingView.addSubview(blurEffectView)
+        
+        return dimmingView
+    }()
+    
+    func toggleUserInput(isLocked: Bool) {
+        let request = ManageRouteMap.ToggleUserInput.Request(isLocked: isLocked)
+        interactor?.toggleUserInput(request: request)
+    }
+    
+    func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel) {
+        if viewModel.isLocked {
+            // Lock all user input
+            showSpinner()
+        } else {
+            // Unlock
+            hideSpinner()
+        }
+    }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = CGPoint(x: dimmingView.bounds.midX + 0.5, y: dimmingView.bounds.midY + 0.5)
+        spinner.tag = 1000
+        dimmingView.addSubview(spinner)
+        
+        
+        view.addSubview(dimmingView)
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        dimmingView.removeFromSuperview()
+        tempFocus()
+    }
+    
+    // MARK: Focus
+    
+    // TODO: Temprorary. Will be removed.
+    func tempFocus() {
+        var coordinates = [CLLocationCoordinate2D]()
+        for (annotation, _) in annotationsID {
+            coordinates.append(annotation.coordinate)
+        }
+        let request = ManageRouteMap.Focus.Request(coordinates: coordinates)
+        interactor?.focus(request: request)
+    }
+    
+    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel) {
+        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate))
+        
+        mapView.setCamera(camera, animated: true)
     }
     
     // MARK: Shared Helper Methods
@@ -233,13 +377,14 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
-//        mapView.deselectAnnotation(annotation, animated: true)
         let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
         // Pass optional value if it's nil show error in presenter.
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation)
         
         interactor?.selectAnnotation(request: request)
     }
+    
+    // MARK: Gesture Handlers
     
     @objc func handleMapLongPress(sender: UILongPressGestureRecognizer) {
         guard sender.state == .began else {

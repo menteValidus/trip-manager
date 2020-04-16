@@ -8,13 +8,17 @@
 
 import CoreData
 
-protocol RoutePointDataStore {
+protocol RoutePointDataStore: class {
     func fetchAll() -> [RoutePoint]
     func fetch(with identifier: String) -> RoutePoint?
     func deleteAll()
     func insert(_ point: RoutePoint)
     func update(_ point: RoutePoint)
     func delete(_ point: RoutePoint)
+}
+
+protocol OrderNumberGenerator: class {
+    func getNewOrderNumber() -> Int
 }
 
 class RoutePointCoreDataStore: RoutePointDataStore {
@@ -185,6 +189,8 @@ class RoutePointCoreDataStore: RoutePointDataStore {
         entity.setValue(routePoint.distanceToNextPointInMeters, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.distanceToNextPointInMeters)
     }
     
+    
+    
     // TODO: - OUTDATED
     func fetchAll() -> [RoutePointVM] {
         let pointsFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
@@ -277,5 +283,34 @@ class RoutePointCoreDataStore: RoutePointDataStore {
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
         entity.setValue(routePoint.timeToNextPointInMinutes, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.timeToNextPointInSeconds)
         entity.setValue(routePoint.distanceToNextPointInMeters, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.distanceToNextPointInMeters)
+    }
+}
+
+extension RoutePointCoreDataStore: OrderNumberGenerator {
+    // MARK: - Order Number Generator
+    func getNewOrderNumber() -> Int {
+        let maxOrderNumber = fetchMaxOrderNumber()
+        
+        return Int(maxOrderNumber) + 1
+    }
+    
+    private func fetchMaxOrderNumber() -> Int32 {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
+        
+        let sortDesctiptor = NSSortDescriptor(key: DataModelDB.Entities.RoutePointEntity.KeyPathNames.orderNumber, ascending: false)
+        fetchRequest.sortDescriptors = [sortDesctiptor]
+        fetchRequest.fetchLimit = 1
+
+        do {
+            let fetchResult = try managedObjectContext.fetch(fetchRequest)
+            
+            if let routePointEntity = fetchResult.first as? RoutePointEntity {
+                return routePointEntity.orderNumber
+            } else {
+                return 0
+            }
+        } catch {
+            fatalError("***Failed to fetch max order number with error = \(error)")
+        }
     }
 }

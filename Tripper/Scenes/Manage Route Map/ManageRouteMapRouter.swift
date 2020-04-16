@@ -50,7 +50,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         } else {
             let destinationVC: DetailRoutePointViewController
             
-            if let viewController = dataStore?.popup as? DetailRoutePointViewController {
+            if let viewController = viewController?.popup as? DetailRoutePointViewController {
                 destinationVC = viewController
             } else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -80,7 +80,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func navigateToDetailRoutePoint(source: ManageRouteMapViewController, destination: DetailRoutePointViewController)
     {
-        if let popup = source.router?.dataStore?.popup {
+        if let popup = source.popup {
             popup.updateUI()
         } else {
             let height = source.view.frame.height
@@ -100,7 +100,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             }
             
             // TODO: Not sure that it belongs here.
-            dataStore?.popup = destination
+            source.popup = destination
         }
     }
     

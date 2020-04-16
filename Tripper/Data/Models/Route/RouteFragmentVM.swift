@@ -16,16 +16,9 @@ protocol RouteFragment {
     var travelDistanceInMeters: Int { get set }
 }
 
-class RouteFragmentVM: RouteFragment {
+struct RouteFragmentVM: RouteFragment {
     var identifier: String
     var coordinates: [CLLocationCoordinate2D]
     var travelTimeInSeconds: Int
     var travelDistanceInMeters: Int
-    
-    init(identifier: String, coordinates: [CLLocationCoordinate2D], timeInSeconds: Int, distanceInMeters: Int) {
-        self.identifier = identifier
-        self.coordinates = coordinates
-        travelTimeInSeconds = timeInSeconds
-        travelDistanceInMeters = distanceInMeters
-    }
 }

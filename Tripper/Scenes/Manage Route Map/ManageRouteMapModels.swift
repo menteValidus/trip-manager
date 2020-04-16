@@ -17,6 +17,7 @@ enum ManageRouteMap {
     
     struct ConcreteAnnotationInfo: AnnotationInfo {
         let id: String
+        let orderNumber: Int
         let latitude: Double
         let longitude: Double
     }
@@ -30,14 +31,16 @@ enum ManageRouteMap {
     
     // MARK: Use cases
     
-    enum FetchNewAnnotationsInfo {
+    enum FetchDifference {
         struct Request {
         }
         struct Response {
-            let annotationsInfo: [ConcreteAnnotationInfo]
+            let newAnnotationsInfo: [AnnotationInfo]
+            let removedAnnotationInfo: [AnnotationInfo]
         }
         struct ViewModel {
-            let annotationsInfo: [ConcreteAnnotationInfo]
+            let newAnnotationsInfo: [AnnotationInfo]
+            let removedAnnotationsInfo: [AnnotationInfo]
         }
     }
     
@@ -54,13 +57,13 @@ enum ManageRouteMap {
     
     enum SetRoutePoint {
         struct Request {
-            let annotationsInfo: ConcreteAnnotationInfo
+            let annotationsInfo: AnnotationInfo
         }
         struct Response {
-            let annotationInfo: ConcreteAnnotationInfo
+            let annotationInfo: AnnotationInfo
         }
         struct ViewModel {
-            let annotationInfo: ConcreteAnnotationInfo
+            let annotationInfo: AnnotationInfo
         }
     }
     
@@ -86,14 +89,14 @@ enum ManageRouteMap {
     }
     
     enum ShowDetail {
-       struct Request {
-       }
-       struct Response {
-       }
-       struct ViewModel {
-       }
-   }
-       
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
     
     enum EditRoutePoint {
         struct Request {
@@ -105,8 +108,9 @@ enum ManageRouteMap {
         }
     }
     
-    enum DeleteRoutePoint {
+    enum DeleteAnnotation {
         struct Request {
+            let identifier: String
         }
         struct Response {
             let identifier: String?
@@ -118,27 +122,56 @@ enum ManageRouteMap {
     
     enum CreateRouteFragment {
         struct Request {
+            let addedSubrouteInfo: MapRoute.SubrouteInfo
         }
         struct Response {
-//            let isLoaded: Bool
-//            let routeFragment: ConcreteRouteFragment?
+            let routeFragment: ConcreteRouteFragment
         }
         struct ViewModel {
-//            let isLoaded: Bool
-//            let routeFragment: ConcreteRouteFragment?
+            let routeFragment: ConcreteRouteFragment
         }
     }
     
     enum DeleteRouteFragment {
         struct Request {
+            let identifier: String
         }
         struct Response {
+            let identifier: String
         }
         struct ViewModel {
+            let identifier: String
         }
     }
     
     enum MapRoute {
+        struct SubrouteInfo {
+            let startWaypoint: Waypoint
+            let endWaypoint: Waypoint
+        }
+        
+        struct Waypoint {
+            let id: String
+            let latitude: Double
+            let longitude: Double
+            //            let coordinate: CLLocationCoordinate2D
+        }
+        
+        struct Request {
+            let addedAnnotationsInfo: [AnnotationInfo]
+            let removedAnnotationsInfo: [AnnotationInfo]
+        }
+        struct Response {
+            let addedSubroutesInfo: [SubrouteInfo]
+            let idsOfDeletedRouteFragments: [String]
+        }
+        struct ViewModel {
+            let addedSubroutesInfo: [SubrouteInfo]
+            let idsOfDeletedRouteFragments: [String]
+        }
+    }
+    
+    enum ClearAll {
         struct Request {
         }
         struct Response {
@@ -146,5 +179,30 @@ enum ManageRouteMap {
         struct ViewModel {
         }
     }
-
+    
+    enum ToggleUserInput {
+        struct Request {
+            let isLocked: Bool
+        }
+        struct Response {
+            let isLocked: Bool
+        }
+        struct ViewModel {
+            let isLocked: Bool
+        }
+    }
+    
+    enum Focus {
+        struct Request {
+            let coordinates: [CLLocationCoordinate2D]
+        }
+        struct Response {
+            let southWestCoordinate: CLLocationCoordinate2D
+            let northEastCoordinate: CLLocationCoordinate2D
+        }
+        struct ViewModel {
+            let southWestCoordinate: CLLocationCoordinate2D
+            let northEastCoordinate: CLLocationCoordinate2D
+        }
+    }
 }

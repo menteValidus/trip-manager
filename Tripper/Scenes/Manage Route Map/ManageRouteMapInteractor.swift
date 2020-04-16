@@ -14,17 +14,20 @@ import UIKit
 import CoreLocation
 
 protocol ManageRouteMapBusinessLogic {
-    func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request)
+    func fetchDifference(request: ManageRouteMap.FetchDifference.Request)
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
     func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request)
     func deselectAnnotation(request: ManageRouteMap.DeselectAnnotation.Request)
     func showDetail(request: ManageRouteMap.ShowDetail.Request)
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request)
-    func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request)
+    func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request)
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request)
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request)
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
+    func clearAll(request: ManageRouteMap.ClearAll.Request)
+    func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
+    func focus(request: ManageRouteMap.Focus.Request)
 }
 
 protocol ManageRouteMapDataStore {
@@ -32,16 +35,13 @@ protocol ManageRouteMapDataStore {
     var idOfSelectedAnnotation: String? { get set }
     var selectedRoutePoint: RoutePoint? { get set }
     var routePointToEdit: RoutePoint? { get set }
-    var routePointToDelete: RoutePoint? { get set }
-    var popup: Popup? { get set }
 }
 
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
-    var popup: Popup?
-    
-    var annotationsInfo: [AnnotationInfo]
+    var routeCreator: MapboxRouteCreator?
+
     var idOfSelectedAnnotation: String?
     
     // IF YOU ARE GOING TO DELETE THIS REMEMBER THERE ARE A LOT OF DEPENDENCIES.
@@ -63,28 +63,38 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     init() {
         annotationsInfo = []
-//        idGenerator = NSUUIDGenerator.instance
     }
     
     // MARK: - Create route point
     
     var tappedCoordinate: CLLocationCoordinate2D?
     
-    func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
-        popup?.dismissPopup()
-        
+    func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {        
         tappedCoordinate = CLLocationCoordinate2D(latitude: request.latitude, longitude: request.longitude)
         let response = ManageRouteMap.CreateRoutePoint.Response()
         presenter?.presentAnnotationCreation(response: response)
     }
     
-    // MARK: Fetch new annotations info
+    // MARK: Fetch Difference
+    /// Should be modified only in this use case!
+    var annotationsInfo: [AnnotationInfo]
     
-    func fetchNewAnnotationsInfo(request: ManageRouteMap.FetchNewAnnotationsInfo.Request) {
-        annotationsInfo = worker?.fetchNewAnnotationsInfo(comparingWith: idOfAlreadySettedRoutePoints) ?? []
-        let response = ManageRouteMap.FetchNewAnnotationsInfo.Response(annotationsInfo: annotationsInfo as! [ManageRouteMap.ConcreteAnnotationInfo])
+    func fetchDifference(request: ManageRouteMap.FetchDifference.Request) {
         
-        presenter?.presentFetchNewAnnotationsInfo(response: response)
+        if let fetchedInfo = worker?.fetchDifference(comparingWith: annotationsInfo) {
+            let (addedAnnotationsInfo, removedAnnotationsInfo) = fetchedInfo
+            
+            annotationsInfo.append(contentsOf: addedAnnotationsInfo)
+            
+            for annotationInfo in removedAnnotationsInfo {
+                let indexToDelete = annotationsInfo.firstIndex(where: { return $0.id == annotationInfo.id })
+                annotationsInfo.remove(at: indexToDelete!)
+            }
+            
+            let response = ManageRouteMap.FetchDifference.Response(newAnnotationsInfo: addedAnnotationsInfo,
+                                                                           removedAnnotationInfo: removedAnnotationsInfo)
+            presenter?.presentFetchDifference(response: response)
+        }
     }
     
     private var idOfAlreadySettedRoutePoints: [String] {
@@ -143,33 +153,226 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentEditRoutePoint(response: response)
     }
     
-    // MARK: Delete Route Point
+    // MARK: Delete Annotation
     
-    var routePointToDelete: RoutePoint?
-    
-    func deleteRoutePoint(request: ManageRouteMap.DeleteRoutePoint.Request) {
-        if let routePoint = routePointToDelete {
-            worker?.delete(routePoint: routePoint)
-            let response = ManageRouteMap.DeleteRoutePoint.Response(identifier: routePoint.id)
-            presenter?.presentDeleteRoutePoint(response: response)
-        }
+    func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request) {
+        let response = ManageRouteMap.DeleteAnnotation.Response(identifier: request.identifier)
+        presenter?.presentDeleteRoutePoint(response: response)
     }
     
     // MARK: Create Route Fragment
     
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request) {
-        
+        let startCoordinate = CLLocationCoordinate2D(
+            latitude: request.addedSubrouteInfo.startWaypoint.latitude, longitude: request.addedSubrouteInfo.startWaypoint.longitude)
+        let endCoordinate = CLLocationCoordinate2D(
+            latitude: request.addedSubrouteInfo.endWaypoint.latitude, longitude: request.addedSubrouteInfo.endWaypoint.longitude)
+        routeCreator?.calculateRoute(from: startCoordinate, to: endCoordinate, drawHandler: { routeInfo in
+            if let routeInfo = routeInfo {
+                let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
+                                              secondID: request.addedSubrouteInfo.endWaypoint.id)
+                let routeFragment = ManageRouteMap.ConcreteRouteFragment(identifier: idOfNewRouteFragment, coordinates: routeInfo.coordinates, travelTimeInSeconds: routeInfo.timeInSeconds, travelDistanceInMeters: routeInfo.distanceInMeters)
+                
+                let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
+                self.presenter?.presentCreateRouteFragment(response: response)
+            }
+            
+        })
     }
     
     // MARK: Delete Route Fragment
     
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request) {
-        
+        let response = ManageRouteMap.DeleteRouteFragment.Response(identifier: request.identifier)
+        presenter?.presentDeleteRouteFragment(response: response)
     }
     
     // MARK: Map Route
     
     func mapRoute(request: ManageRouteMap.MapRoute.Request) {
-        // TODO: Check whether this is deletion or creation.
+        var addedSubroutesInfo: [ManageRouteMap.MapRoute.SubrouteInfo] = []
+        let addedAnnotationsInfo = request.addedAnnotationsInfo.sorted(by: { return $0.orderNumber < $1.orderNumber})
+        if addedAnnotationsInfo.count > 0 {
+            // TODO: TELL HOW MUCH ROUTES WILL BE CREATED. USE NEW USE CASE: ShowLoadingView
+            for annotationInfo in addedAnnotationsInfo {
+                if let previousAnnotationInfo = getPreviousAnnotationInfo(within: annotationsInfo, by: annotationInfo.orderNumber) {
+                    let subrouteInfo = createSubrouteInfo(start: previousAnnotationInfo, end: annotationInfo)
+                    addedSubroutesInfo.append(subrouteInfo)
+                }
+            }
+        }
+        
+        var idOfDeletedRouteFragments: [String] = []
+        
+        // There's huge problem. If we delete several points between some other points route won't be reconstructed and empty gap will be remained. Now it isn't a problem but if we want delete several points (not all of them but more than two) we should implement this behaviour.
+        for annotationInfo in request.removedAnnotationsInfo {
+            let orderNumber = annotationInfo.orderNumber
+            
+            let previousAnnotationInfo = getPreviousAnnotationInfo(within: annotationsInfo, by: orderNumber)
+            if let idOfPreviousPoint = previousAnnotationInfo?.id {
+                idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
+            } else {
+                // Check previous point within deleted route points.
+                let previousPoint = getPreviousAnnotationInfo(within: request.removedAnnotationsInfo, by: orderNumber)
+                if let idOfPreviousPoint = previousPoint?.id {
+                    idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
+                }
+            }
+            
+            let nextAnnotationInfo = getNextAnnotationInfo(within: annotationsInfo, by: orderNumber)
+            if let idOfNextPoint = nextAnnotationInfo?.id {
+                idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
+            } else {
+                // Check next point within deleted route points.
+                let nextPoint = getNextAnnotationInfo(within: request.removedAnnotationsInfo, by: orderNumber)
+                if let idOfNextPoint = nextPoint?.id {
+                    idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
+                }
+            }
+            
+            if let startPoint = previousAnnotationInfo, let endPoint = nextAnnotationInfo {
+                let subrouteInfoForGap = createSubrouteInfo(start: startPoint, end: endPoint)
+                addedSubroutesInfo.append(subrouteInfoForGap)
+            }
+        }
+        let response = ManageRouteMap.MapRoute.Response(addedSubroutesInfo: addedSubroutesInfo,
+                                                        idsOfDeletedRouteFragments: idOfDeletedRouteFragments)
+        presenter?.presentMapRoute(response: response)
+    }
+    
+    private func getPreviousAnnotationInfo(within annotationsInfoToSearchIn: [AnnotationInfo], by orderNumber: Int) -> AnnotationInfo? {
+        let filteredAnnotationInfo = annotationsInfoToSearchIn.sorted(by: { lhs, rhs in
+            return lhs.orderNumber > rhs.orderNumber
+            }).filter({ return $0.orderNumber < orderNumber }).first
+        
+        if let filteredOrderNumber = filteredAnnotationInfo?.orderNumber, filteredOrderNumber < orderNumber {
+            return filteredAnnotationInfo
+        } else {
+            return nil
+        }
+    }
+    
+    private func getNextAnnotationInfo(within annotationsInfoToSearchIn: [AnnotationInfo], by orderNumber: Int) -> AnnotationInfo? {
+        let filteredAnnotationInfo = annotationsInfoToSearchIn.sorted(by: { lhs, rhs in
+            return lhs.orderNumber < rhs.orderNumber
+            }).filter({ return $0.orderNumber > orderNumber }).first
+        
+        if let filteredOrderNumber = filteredAnnotationInfo?.orderNumber, filteredOrderNumber > orderNumber {
+            return filteredAnnotationInfo
+        } else {
+            return nil
+        }
+    }
+    
+    private func createSubrouteInfo(start: AnnotationInfo, end: AnnotationInfo) -> ManageRouteMap.MapRoute.SubrouteInfo {
+        let startWaypoint = ManageRouteMap.MapRoute.Waypoint(
+            id: start.id,
+            latitude: start.latitude, longitude: start.longitude)
+        let endWaypoint = ManageRouteMap.MapRoute.Waypoint(
+            id: end.id,
+            latitude: end.latitude, longitude: end.longitude)
+        let subrouteInfo = ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint)
+        
+        return subrouteInfo
+    }
+    
+    // MARK: Clear All
+    
+    func clearAll(request: ManageRouteMap.ClearAll.Request) {
+        worker?.deleteAllEntries()
+        let response = ManageRouteMap.ClearAll.Response()
+        presenter?.presentClearAll(response: response)
+    }
+    
+    // MARK: Toggle User Input
+    
+    func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request) {
+        let response = ManageRouteMap.ToggleUserInput.Response(isLocked: request.isLocked)
+        presenter?.presentToggleUserInput(response: response)
+    }
+    
+    // MARK: Focus
+    
+    func focus(request: ManageRouteMap.Focus.Request) {
+        // if we have no annotations we can skip all of this
+        if request.coordinates.count == 0 {
+            return
+        }
+
+        // then run through each annotation in the list to find the
+        // minimum and maximum latitude and longitude values
+        var minimum = CLLocationCoordinate2D()
+        var maximum = CLLocationCoordinate2D()
+        var minMaxInitialized = false
+        var numberOfValidAnnotations = 0
+
+        for a in request.coordinates {
+            // only use annotations that are of our own custom type
+            // in the event that the user is browsing from a location far away
+            // you can omit this if you want the user's location to be included in the region
+//            if ( [a isKindOfClass: [ECAnnotation class]] )
+//            {
+                // if we haven't grabbed the first good value, do so now
+                if ( !minMaxInitialized )
+                {
+                    minimum = a;
+                    maximum = a;
+                    minMaxInitialized = true;
+                }
+                else // otherwise compare with the current value
+                {
+                    minimum.latitude = min( minimum.latitude, a.latitude )
+                    minimum.longitude = min(minimum.longitude, a.longitude )
+
+                    maximum.latitude = max( maximum.latitude, a.latitude )
+                    maximum.longitude = max( maximum.longitude, a.longitude )
+                }
+                numberOfValidAnnotations += 1
+//            }
+        }
+
+        // If we don't have any valid annotations we can leave now,
+        // this will happen in the event that there is only the user location
+        if numberOfValidAnnotations == 0 {
+            return
+        }
+
+        // Now that we have a min and max lat/lon create locations for the
+        // three points in a right triangle
+        let locSouthWest = CLLocationCoordinate2D(latitude: minimum.latitude, longitude: minimum.longitude)
+//        CLLocation* locSouthWest = [[CLLocation alloc]
+//                                    initWithLatitude: min.latitude
+//                                    longitude: min.longitude];
+//        CLLocation* locSouthEast = [[CLLocation alloc]
+//                                    initWithLatitude: min.latitude
+//                                    longitude: max.longitude];
+        let locNorthEast = CLLocationCoordinate2D(latitude: maximum.latitude, longitude: maximum.longitude)
+//        CLLocation* locNorthEast = [[CLLocation alloc]
+//                                    initWithLatitude: max.latitude
+//                                    longitude: max.longitude];
+
+        // Create a region centered at the midpoint of our hypotenuse
+//        CLLocationCoordinate2D regionCenter;
+//        regionCenter.latitude = (minimum.latitude + maximum.latitude) / 2.0;
+//        regionCenter.longitude = (minimum.longitude + maximum.longitude) / 2.0;
+//
+//        // Use the locations that we just created to calculate the distance
+//        // between each of the points in meters.
+//        CLLocationDistance latMeters = [locSouthEast getDistanceFrom: locNorthEast];
+//        CLLocationDistance lonMeters = [locSouthEast getDistanceFrom: locSouthWest];
+//
+//        MKCoordinateRegion region;
+//        region = MKCoordinateRegionMakeWithDistance( regionCenter, latMeters, lonMeters );
+//
+//        MKCoordinateRegion fitRegion = [myMapView regionThatFits: region];
+//        [myMapView setRegion: fitRegion animated: YES];
+//
+//        // Clean up
+//        [locSouthWest release];
+//        [locSouthEast release];
+//        [locNorthEast release];
+//
+        let response = ManageRouteMap.Focus.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
+        presenter?.presentFocus(response: response)
     }
 }

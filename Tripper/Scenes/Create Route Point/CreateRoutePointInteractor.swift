@@ -82,10 +82,16 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     // MARK: - Helper Methods
     
     private func createNewRoutePoint(at coordinate: CLLocationCoordinate2D) -> RoutePoint {
-        let routePoint = RoutePoint(
-            id: idGenerator.generate(), orderNumber: 0,
-            title: "", subtitle: "",
-            latitude: coordinate.latitude, longitude: coordinate.longitude)
+        let id = idGenerator.generate()
+        let orderNumber = worker!.getNewOrderNumber()
+        let title = ""
+        let subtitle = ""
+        let latitude = coordinate.latitude
+        let longitude = coordinate.longitude
+        
+        let routePoint = RoutePoint(id: id, orderNumber: orderNumber,
+                                    title: title, subtitle: subtitle,
+                                    latitude: latitude, longitude: longitude)
         return routePoint
     }
 }
