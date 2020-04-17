@@ -16,6 +16,7 @@ protocol CreateRoutePointDisplayLogic: class {
     func displayRoutePointForm(viewModel: CreateRoutePoint.FormRoutePoint.ViewModel)
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel)
     func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel)
+    func displaySetDate(viewModel: CreateRoutePoint.SetDate.ViewModel)
 }
 
 class CreateRoutePointViewController: UITableViewController, CreateRoutePointDisplayLogic {
@@ -132,6 +133,26 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel) {
         router?.routeToManageRouteMap(segue: nil)
+    }
+    
+    // MARK: Set Date
+    
+    @IBAction func dateChanged(_ sender: UIDatePicker) {
+        let newDate = sender.date
+        
+        let request = CreateRoutePoint.SetDate.Request(newDate: newDate)
+        interactor?.setDate(request: request)
+    }
+    
+    func displaySetDate(viewModel: CreateRoutePoint.SetDate.ViewModel) {
+        switch viewModel.state {
+        case .arrivalDateEditing:
+            arrivalDateLabel.text = viewModel.dateString
+        case .departureDateEditing:
+            departureDateLabel.text = viewModel.dateString
+        default:
+            fatalError("*** If Set Date use case is called it means that some of the dates must be editing.")
+        }
     }
     
 }

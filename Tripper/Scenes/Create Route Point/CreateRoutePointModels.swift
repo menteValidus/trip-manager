@@ -20,6 +20,12 @@ enum CreateRoutePoint {
         var departureDate: String
     }
     
+    enum AnnotationEditState {
+        case normal
+        case arrivalDateEditing
+        case departureDateEditing
+    }
+    
     // MARK: Use cases
     
     enum FormRoutePoint {
@@ -54,6 +60,20 @@ enum CreateRoutePoint {
         struct Response {
         }
         struct ViewModel {
+        }
+    }
+    
+    enum SetDate {
+        struct Request {
+            let newDate: Date
+        }
+        struct Response {
+            let newDate: Date
+            let state: AnnotationEditState
+        }
+        struct ViewModel {
+            let dateString: String
+            let state: AnnotationEditState
         }
     }
 }

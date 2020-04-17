@@ -16,6 +16,7 @@ protocol CreateRoutePointPresentationLogic {
     func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response)
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response)
     func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response)
+    func presentSetDate(response: CreateRoutePoint.SetDate.Response)
 }
 
 class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
@@ -61,5 +62,15 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
     func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response) {
         let viewModel = CreateRoutePoint.CancelCreation.ViewModel()
         viewController?.displayCancelCreation(viewModel: viewModel)
+    }
+    
+    // MARK: Set Date
+    
+    func presentSetDate(response: CreateRoutePoint.SetDate.Response) {
+        let date = response.newDate
+        let dateString = dateFormatter.string(from: date)
+        
+        let viewModel = CreateRoutePoint.SetDate.ViewModel(dateString: dateString, state: response.state)
+        viewController?.displaySetDate(viewModel: viewModel)
     }
 }

@@ -17,6 +17,7 @@ protocol CreateRoutePointBusinessLogic {
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request)
     func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request)
     func cancelCreation(request: CreateRoutePoint.CancelCreation.Request)
+    func setDate(request: CreateRoutePoint.SetDate.Request)
 }
 
 protocol CreateRoutePointDataStore {
@@ -31,6 +32,8 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     private let idGenerator: IDGenerator = NSUUIDGenerator()
     
     // MARK: - Form Route Point
+    var arrivalDate: Date!
+    var departureDate: Date!
     
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request) {
         let navigationTitle: String
@@ -45,6 +48,9 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
             navigationTitle = "Edit"
         }
         
+        arrivalDate = pointToSave?.arrivalDate
+        departureDate = pointToSave?.departureDate
+        
         let response = CreateRoutePoint.FormRoutePoint.Response(navigationTitle: navigationTitle, routePoint: pointToSave!)
         presenter?.presentFormRoutePoint(response: response)
     }
@@ -58,10 +64,8 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         if pointToSave != nil {
             pointToSave?.title = request.title
             pointToSave?.subtitle = request.description
-            pointToSave?.arrivalDate = request.arrivalDate
-            pointToSave?.departureDate = request.departureDate
-//            pointToSave?.timeToNextPointInSeconds = 0
-//            pointToSave?.distanceToNextPointInMeters = 0
+            pointToSave?.arrivalDate = arrivalDate
+            pointToSave?.departureDate = departureDate
             
             worker?.save(routePoint: pointToSave!)
             
@@ -77,6 +81,15 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     func cancelCreation(request: CreateRoutePoint.CancelCreation.Request) {
         let response = CreateRoutePoint.CancelCreation.Response()
         presenter?.presentCancelCreation(response: response)
+    }
+    
+    // MARK: Set Date
+    
+    private var dateEditingState: CreateRoutePoint.AnnotationEditState = .normal
+    
+    func setDate(request: CreateRoutePoint.SetDate.Request) {
+        let response = CreateRoutePoint.SetDate.Response(newDate: request.newDate, state: dateEditingState)
+        presenter?.presentSetDate(response: response)
     }
     
     // MARK: - Helper Methods
