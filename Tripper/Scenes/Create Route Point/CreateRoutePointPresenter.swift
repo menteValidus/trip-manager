@@ -87,14 +87,14 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
     // MARK: Show Date Picker
     
     func presentShowDatePicker(response: CreateRoutePoint.ShowDatePicker.Response) {
-//        let viewModel = CreateRoutePoint.ShowDatePicker.ViewModel(state: <#CreateRoutePoint.AnnotationEditState#>, date: ar)
-//        viewController?.displayShowDatePicker(viewModel: viewModel)
+        let viewModel = CreateRoutePoint.ShowDatePicker.ViewModel(state: response.state, date: response.date)
+        viewController?.displayShowDatePicker(viewModel: viewModel)
     }
     
     // MARK: Hide Date Picker
     
     func presentHideDatePicker(response: CreateRoutePoint.HideDatePicker.Response) {
-//        let viewModel = CreateRoutePoint.HideDatePicker.ViewModel()
-//        viewController?.displayHideDatePicker(viewModel: viewModel)
+        let viewModel = CreateRoutePoint.HideDatePicker.ViewModel(state: response.state)
+        viewController?.displayHideDatePicker(viewModel: viewModel)
     }
 }

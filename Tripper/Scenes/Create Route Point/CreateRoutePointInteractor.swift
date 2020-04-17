@@ -140,15 +140,24 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     // MARK: Show Date Picker
     
     func showDatePicker(request: CreateRoutePoint.ShowDatePicker.Request) {
-//        let response = CreateRoutePoint.ShowDatePicker.Response()
-//        presenter?.presentShowDatePicker(response: response)
+        let state = request.state
+        let date: Date
+        
+        if state == .arrivalDateEditing {
+            date = arrivalDate
+        } else {
+            date = departureDate
+        }
+        
+        let response = CreateRoutePoint.ShowDatePicker.Response(state: state, date: date)
+        presenter?.presentShowDatePicker(response: response)
     }
     
     // MARK: Hide Date Picker
     
     func hideDatePicker(request: CreateRoutePoint.HideDatePicker.Request) {
-//        let response = CreateRoutePoint.HideDatePicker.Response()
-//        presenter?.presentHideDatePicker(response: response)
+        let response = CreateRoutePoint.HideDatePicker.Response(state: request.state)
+        presenter?.presentHideDatePicker(response: response)
     }
     
     // MARK: - Helper Methods

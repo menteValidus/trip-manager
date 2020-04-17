@@ -95,6 +95,7 @@ enum CreateRoutePoint {
     
     enum ShowDatePicker {
         struct Request {
+            let state: AnnotationEditState
         }
         struct Response {
             let state: AnnotationEditState
@@ -108,6 +109,7 @@ enum CreateRoutePoint {
     
     enum HideDatePicker {
         struct Request {
+            let state: AnnotationEditState
         }
         struct Response {
             let state: AnnotationEditState
