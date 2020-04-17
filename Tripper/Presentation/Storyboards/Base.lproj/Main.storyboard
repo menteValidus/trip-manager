@@ -78,6 +78,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="OnC-x8-mW2"/>
+                        <segue destination="CC2-X3-ZR1" kind="show" id="OLt-wK-K95"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

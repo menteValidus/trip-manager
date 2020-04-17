@@ -17,6 +17,7 @@ protocol CreateRoutePointDisplayLogic: class {
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel)
     func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel)
     func displaySetDate(viewModel: CreateRoutePoint.SetDate.ViewModel)
+    func displayToggleDatePicker(viewModel: CreateRoutePoint.ToggleDatePicker.ViewModel)
 }
 
 class CreateRoutePointViewController: UITableViewController, CreateRoutePointDisplayLogic {
@@ -184,7 +185,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("height for row at \(indexPath)")
+//        print("height for row at \(indexPath)")
         switch (indexPath.section, indexPath.row) {
         case (2, 1):
             return 217
@@ -199,7 +200,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        print("will select row at \(indexPath)")
+//        print("will select row at \(indexPath)")
         switch (indexPath.section, indexPath.row) {
         case (2, 0):
             return indexPath
@@ -213,51 +214,53 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         }
     }
     
+    // MARK: Toggle Date Picker
+    
+    func displayToggleDatePicker(viewModel: CreateRoutePoint.ToggleDatePicker.ViewModel) {
+        state = viewModel.newState
+        
+        if viewModel.oldState == viewModel.newState && viewModel.oldState != .normal {
+            hideDatePicker(in: viewModel.oldState)
+            return
+        }
+        
+        if viewModel.oldState != viewModel.newState && viewModel.oldState != .normal {
+            hideDatePicker(in: viewModel.oldState)
+            state = viewModel.newState
+            showDatePicker(in: viewModel.newState)
+            return
+        }
+        
+        if viewModel.oldState == .normal && viewModel.newState != .normal {
+            showDatePicker(in: viewModel.newState)
+            return
+        }
+        
+        if viewModel.oldState != .normal && viewModel.newState == .normal {
+            hideDatePicker(in: viewModel.oldState)
+            return
+        }
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         titleTextField.resignFirstResponder()
         descriptionTextView.resignFirstResponder()
         
         switch (indexPath.section, indexPath.row) {
-            case (0, 0):
-            //            tableView.deselectRow(at: indexPath, animated: false)
-                        titleTextField.becomeFirstResponder()
-                    case (1, 0):
-            //            tableView.deselectRow(at: indexPath, animated: false)
-                        descriptionTextView.becomeFirstResponder()
+        case (0, 0):
+            titleTextField.becomeFirstResponder()
+            
+        case (1, 0):
+            descriptionTextView.becomeFirstResponder()
             
         case (2, 0):
-            switch state {
-            case .normal:
-                state = .arrivalDateEditing
-                showDatePicker(in: state)
-                
-            case .arrivalDateEditing:
-                hideDatePicker(in: state)
-                
-            case .departureDateEditing:
-                hideDatePicker(in: state)
-                state = .arrivalDateEditing
-                showDatePicker(in: state)
-                
-            }
+            let request = CreateRoutePoint.ToggleDatePicker.Request(section: 2, row: 0)
+            interactor?.toggleDatePicker(request: request)
             
         case (3, 0):
-            switch state {
-            case .normal:
-                state = .departureDateEditing
-                showDatePicker(in: state)
-                
-            case .arrivalDateEditing:
-                hideDatePicker(in: state)
-                state = .departureDateEditing
-                showDatePicker(in: state)
-                
-            case .departureDateEditing:
-                hideDatePicker(in: state)
-                state = .normal
-                
-            }
+            let request = CreateRoutePoint.ToggleDatePicker.Request(section: 3, row: 0)
+            interactor?.toggleDatePicker(request: request)
             
         default:
             break

@@ -17,6 +17,7 @@ protocol CreateRoutePointPresentationLogic {
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response)
     func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response)
     func presentSetDate(response: CreateRoutePoint.SetDate.Response)
+    func presentToggleDatePicker(response: CreateRoutePoint.ToggleDatePicker.Response)
 }
 
 class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
@@ -72,5 +73,12 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         
         let viewModel = CreateRoutePoint.SetDate.ViewModel(dateString: dateString, state: response.state)
         viewController?.displaySetDate(viewModel: viewModel)
+    }
+    
+    // MARK: Toggle Date Picker
+    
+    func presentToggleDatePicker(response: CreateRoutePoint.ToggleDatePicker.Response) {
+        let viewModel = CreateRoutePoint.ToggleDatePicker.ViewModel(oldState: response.oldState, newState: response.newState)
+        viewController?.displayToggleDatePicker(viewModel: viewModel)
     }
 }
