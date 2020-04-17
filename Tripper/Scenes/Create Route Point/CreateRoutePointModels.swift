@@ -72,12 +72,13 @@ enum CreateRoutePoint {
             let state: AnnotationEditState
         }
         struct ViewModel {
+            let date: Date
             let dateString: String
             let state: AnnotationEditState
         }
     }
     
-    enum ToggleDatePicker {
+    enum ToggleDateEditState {
         struct Request {
             let section: Int
             let row: Int
@@ -89,6 +90,30 @@ enum CreateRoutePoint {
         struct ViewModel {
             let oldState: AnnotationEditState
             let newState: AnnotationEditState
+        }
+    }
+    
+    enum ShowDatePicker {
+        struct Request {
+        }
+        struct Response {
+            let state: AnnotationEditState
+            let date: Date
+        }
+        struct ViewModel {
+            let state: AnnotationEditState
+            let date: Date
+        }
+    }
+    
+    enum HideDatePicker {
+        struct Request {
+        }
+        struct Response {
+            let state: AnnotationEditState
+        }
+        struct ViewModel {
+            let state: AnnotationEditState
         }
     }
 }

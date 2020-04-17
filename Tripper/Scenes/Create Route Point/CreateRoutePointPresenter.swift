@@ -17,7 +17,9 @@ protocol CreateRoutePointPresentationLogic {
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response)
     func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response)
     func presentSetDate(response: CreateRoutePoint.SetDate.Response)
-    func presentToggleDatePicker(response: CreateRoutePoint.ToggleDatePicker.Response)
+    func presentToggleDateEditState(response: CreateRoutePoint.ToggleDateEditState.Response)
+    func presentShowDatePicker(response: CreateRoutePoint.ShowDatePicker.Response)
+    func presentHideDatePicker(response: CreateRoutePoint.HideDatePicker.Response)
 }
 
 class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
@@ -71,14 +73,28 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         let date = response.newDate
         let dateString = dateFormatter.string(from: date)
         
-        let viewModel = CreateRoutePoint.SetDate.ViewModel(dateString: dateString, state: response.state)
+        let viewModel = CreateRoutePoint.SetDate.ViewModel(date: date, dateString: dateString, state: response.state)
         viewController?.displaySetDate(viewModel: viewModel)
     }
     
-    // MARK: Toggle Date Picker
+    // MARK: Toggle Date Edit State
     
-    func presentToggleDatePicker(response: CreateRoutePoint.ToggleDatePicker.Response) {
-        let viewModel = CreateRoutePoint.ToggleDatePicker.ViewModel(oldState: response.oldState, newState: response.newState)
-        viewController?.displayToggleDatePicker(viewModel: viewModel)
+    func presentToggleDateEditState(response: CreateRoutePoint.ToggleDateEditState.Response) {
+        let viewModel = CreateRoutePoint.ToggleDateEditState.ViewModel(oldState: response.oldState, newState: response.newState)
+        viewController?.displayToggleDateEditState(viewModel: viewModel)
+    }
+    
+    // MARK: Show Date Picker
+    
+    func presentShowDatePicker(response: CreateRoutePoint.ShowDatePicker.Response) {
+//        let viewModel = CreateRoutePoint.ShowDatePicker.ViewModel(state: <#CreateRoutePoint.AnnotationEditState#>, date: ar)
+//        viewController?.displayShowDatePicker(viewModel: viewModel)
+    }
+    
+    // MARK: Hide Date Picker
+    
+    func presentHideDatePicker(response: CreateRoutePoint.HideDatePicker.Response) {
+//        let viewModel = CreateRoutePoint.HideDatePicker.ViewModel()
+//        viewController?.displayHideDatePicker(viewModel: viewModel)
     }
 }

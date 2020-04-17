@@ -17,7 +17,9 @@ protocol CreateRoutePointDisplayLogic: class {
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel)
     func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel)
     func displaySetDate(viewModel: CreateRoutePoint.SetDate.ViewModel)
-    func displayToggleDatePicker(viewModel: CreateRoutePoint.ToggleDatePicker.ViewModel)
+    func displayToggleDateEditState(viewModel: CreateRoutePoint.ToggleDateEditState.ViewModel)
+    func displayShowDatePicker(viewModel: CreateRoutePoint.ShowDatePicker.ViewModel)
+    func displayHideDatePicker(viewModel: CreateRoutePoint.HideDatePicker.ViewModel)
 }
 
 class CreateRoutePointViewController: UITableViewController, CreateRoutePointDisplayLogic {
@@ -144,7 +146,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     @IBOutlet weak var datePickerCell: UITableViewCell!
     @IBOutlet weak var datePicker: UIDatePicker!
     var state: CreateRoutePoint.AnnotationEditState = .normal
-
+    
     // MARK: - Table View's Delegate
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -161,7 +163,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         }
         
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print("number of rows in section \(section)")
         switch section {
@@ -185,7 +187,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        print("height for row at \(indexPath)")
+        //        print("height for row at \(indexPath)")
         switch (indexPath.section, indexPath.row) {
         case (2, 1):
             return 217
@@ -200,7 +202,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-//        print("will select row at \(indexPath)")
+        //        print("will select row at \(indexPath)")
         switch (indexPath.section, indexPath.row) {
         case (2, 0):
             return indexPath
@@ -214,9 +216,12 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         }
     }
     
-    // MARK: Toggle Date Picker
+    // MARK: Toggle Date Edit State
     
-    func displayToggleDatePicker(viewModel: CreateRoutePoint.ToggleDatePicker.ViewModel) {
+    private var numberOfRowsInArrivalSection = 1
+    private var numberOfRowsInDepartureSection = 1
+    
+    func displayToggleDateEditState(viewModel: CreateRoutePoint.ToggleDateEditState.ViewModel) {
         state = viewModel.newState
         
         if viewModel.oldState == viewModel.newState && viewModel.oldState != .normal {
@@ -228,18 +233,42 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
             hideDatePicker(in: viewModel.oldState)
             state = viewModel.newState
             showDatePicker(in: viewModel.newState)
+            
+            if numberOfRowsInArrivalSection == 2 {
+                numberOfRowsInArrivalSection = 1
+                numberOfRowsInDepartureSection = 2
+            } else {
+                numberOfRowsInArrivalSection = 2
+                numberOfRowsInDepartureSection = 1
+            }
+            
             return
         }
         
         if viewModel.oldState == .normal && viewModel.newState != .normal {
             showDatePicker(in: viewModel.newState)
+            
+            if viewModel.newState == .arrivalDateEditing {
+                numberOfRowsInArrivalSection = 2
+            } else {
+                numberOfRowsInDepartureSection = 2
+            }
+            
             return
         }
         
         if viewModel.oldState != .normal && viewModel.newState == .normal {
             hideDatePicker(in: viewModel.oldState)
+            
+            if viewModel.oldState == .arrivalDateEditing {
+                numberOfRowsInArrivalSection = 1
+            } else {
+                numberOfRowsInDepartureSection = 1
+            }
+            
             return
         }
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -255,16 +284,16 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
             descriptionTextView.becomeFirstResponder()
             
         case (2, 0):
-            let request = CreateRoutePoint.ToggleDatePicker.Request(section: 2, row: 0)
-            interactor?.toggleDatePicker(request: request)
+            let request = CreateRoutePoint.ToggleDateEditState.Request(section: 2, row: 0)
+            interactor?.toggleDateEditState(request: request)
             
         case (3, 0):
-            let request = CreateRoutePoint.ToggleDatePicker.Request(section: 3, row: 0)
-            interactor?.toggleDatePicker(request: request)
+            let request = CreateRoutePoint.ToggleDateEditState.Request(section: 3, row: 0)
+            interactor?.toggleDateEditState(request: request)
             
         default:
             break
-                
+            
         }
     }
     
@@ -286,26 +315,28 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
     }
     
-    // MARK: - Helper Methods
+    // MARK: Show Date Picker
     
-    private func showDatePicker(in state: CreateRoutePoint.AnnotationEditState) {
+    func showDatePicker() {
+        let request = CreateRoutePoint.ShowDatePicker.Request()
+        interactor?.showDatePicker(request: request)
+    }
+    
+    func displayShowDatePicker(viewModel: CreateRoutePoint.ShowDatePicker.ViewModel) {
         let indexPathDatePicker: IndexPath
         let indexPathDateRow: IndexPath
-//        let dateToSet: Date
-                
-        switch state {
+        
+        switch viewModel.state {
         case .normal:
             return
             
         case .arrivalDateEditing:
             indexPathDateRow = IndexPath(row: 0, section: 2)
             indexPathDatePicker = IndexPath(row: 1, section: 2)
-//            dateToSet = arrivalDate
             
         case .departureDateEditing:
             indexPathDateRow = IndexPath(row: 0, section: 3)
             indexPathDatePicker = IndexPath(row: 1, section: 3)
-//            dateToSet = departureDate
         }
         
         if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
@@ -317,13 +348,82 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         tableView.reloadRows(at: [indexPathDateRow], with: .none)
         tableView.endUpdates()
         
-//        datePicker.setDate(dateToSet, animated: false)
+        datePicker.date = viewModel.date
+    }
+    
+    // MARK: Hide Date Picker
+    
+    func hideDatePicker() {
+        let request = CreateRoutePoint.HideDatePicker.Request()
+        interactor?.hideDatePicker(request: request)
+    }
+    
+    func displayHideDatePicker(viewModel: CreateRoutePoint.HideDatePicker.ViewModel) {
+        let indexPathDatePicker: IndexPath
+        let indexPathDateRow: IndexPath
+        
+        switch viewModel.state {
+        case .normal:
+            return
+            
+        case .arrivalDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 2)
+            indexPathDatePicker = IndexPath(row: 1, section: 2)
+            
+        case .departureDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 3)
+            indexPathDatePicker = IndexPath(row: 1, section: 3)
+        }
+        self.state = .normal
+        
+        if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = UIColor.black
+        }
+        
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPathDateRow], with: .none)
+        tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+        tableView.endUpdates()
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func showDatePicker(in state: CreateRoutePoint.AnnotationEditState) {
+        let indexPathDatePicker: IndexPath
+        let indexPathDateRow: IndexPath
+        //        let dateToSet: Date
+        
+        switch state {
+        case .normal:
+            return
+            
+        case .arrivalDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 2)
+            indexPathDatePicker = IndexPath(row: 1, section: 2)
+            //            dateToSet = arrivalDate
+            
+        case .departureDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 3)
+            indexPathDatePicker = IndexPath(row: 1, section: 3)
+            //            dateToSet = departureDate
+        }
+        
+        if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRows(at: [indexPathDatePicker], with: .fade)
+        tableView.reloadRows(at: [indexPathDateRow], with: .none)
+        tableView.endUpdates()
+        
+        //        datePicker.setDate(dateToSet, animated: false)
     }
     
     private func hideDatePicker(in state: CreateRoutePoint.AnnotationEditState) {
         let indexPathDatePicker: IndexPath
         let indexPathDateRow: IndexPath
-                
+        
         switch state {
         case .normal:
             return

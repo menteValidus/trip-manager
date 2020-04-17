@@ -18,7 +18,9 @@ protocol CreateRoutePointBusinessLogic {
     func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request)
     func cancelCreation(request: CreateRoutePoint.CancelCreation.Request)
     func setDate(request: CreateRoutePoint.SetDate.Request)
-    func toggleDatePicker(request: CreateRoutePoint.ToggleDatePicker.Request)
+    func toggleDateEditState(request: CreateRoutePoint.ToggleDateEditState.Request)
+    func showDatePicker(request: CreateRoutePoint.ShowDatePicker.Request)
+    func hideDatePicker(request: CreateRoutePoint.HideDatePicker.Request)
 }
 
 protocol CreateRoutePointDataStore {
@@ -96,8 +98,7 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     
     // MARK: Toggle Date Picker
     
-    func toggleDatePicker(request: CreateRoutePoint.ToggleDatePicker.Request) {
-//        let response: CreateRoutePoint.ToggleDatePicker.Response
+    func toggleDateEditState(request: CreateRoutePoint.ToggleDateEditState.Request) {
         
         switch (request.section, request.row) {
         case (2, 0):
@@ -109,30 +110,11 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
             } else {
                 newState = .arrivalDateEditing
             }
-//                = CreateRoutePoint.AnnotationEditState.arrivalDateEditing
+            
             dateEditingState = newState
             
-            
-            
-            let response = CreateRoutePoint.ToggleDatePicker.Response(oldState: oldState, newState: newState)
-            presenter?.presentToggleDatePicker(response: response)
-            
-//            switch dateEditingState {
-//            case .normal:
-//                dateEditingState = response.newState
-////                showDatePicker(in: state)
-//
-//            case .arrivalDateEditing:
-//                break
-////                hideDatePicker(in: state)
-//
-//            case .departureDateEditing:
-//                response = CreateRoutePoint.ToggleDatePicker.Response(oldState: dateEditingState, newState: .arrivalDateEditing)
-//                hideDatePicker(in: state)
-//                state = .arrivalDateEditing
-//                showDatePicker(in: state)
-//
-//            }
+            let response = CreateRoutePoint.ToggleDateEditState.Response(oldState: oldState, newState: newState)
+            presenter?.presentToggleDateEditState(response: response)
             
         case (3, 0):
             let oldState = dateEditingState
@@ -146,14 +128,27 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
             
             dateEditingState = newState
             
-            let response = CreateRoutePoint.ToggleDatePicker.Response(oldState: oldState, newState: newState)
-            presenter?.presentToggleDatePicker(response: response)
+            let response = CreateRoutePoint.ToggleDateEditState.Response(oldState: oldState, newState: newState)
+            presenter?.presentToggleDateEditState(response: response)
             
         default:
             return
         }
-        
-        
+
+    }
+    
+    // MARK: Show Date Picker
+    
+    func showDatePicker(request: CreateRoutePoint.ShowDatePicker.Request) {
+//        let response = CreateRoutePoint.ShowDatePicker.Response()
+//        presenter?.presentShowDatePicker(response: response)
+    }
+    
+    // MARK: Hide Date Picker
+    
+    func hideDatePicker(request: CreateRoutePoint.HideDatePicker.Request) {
+//        let response = CreateRoutePoint.HideDatePicker.Response()
+//        presenter?.presentHideDatePicker(response: response)
     }
     
     // MARK: - Helper Methods
