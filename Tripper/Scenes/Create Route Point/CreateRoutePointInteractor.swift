@@ -93,7 +93,9 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         let distance = data.distanceToNextPointInMeters
         let routePoint = RoutePoint(id: id, orderNumber: orderNumber,
                                     title: title, subtitle: subtitle,
-                                    latitude: latitude, longitude: longitude, arrivalDate: arrivalDate, departureDate: departureDate)
+                                    latitude: latitude, longitude: longitude,
+                                    arrivalDate: arrivalDate, departureDate: departureDate,
+                                    distanceToNextPointInMeters: distance)
         return routePoint
     }
 }

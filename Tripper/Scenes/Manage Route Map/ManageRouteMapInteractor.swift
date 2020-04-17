@@ -90,7 +90,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                     self.dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: routeInfo.timeInSeconds, distanceToNextPointInMeters: routeInfo.distanceInMeters)
                     
                     let response = ManageRouteMap.CreateRoutePoint.Response()
-                    self.presenter?.presentAnnotationCreation(response: response)
+                    self.presenter?.presentCreateRoutePoint(response: response)
                 } else {
                     // TODO: Display error.
                 }
@@ -99,7 +99,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
             
             let response = ManageRouteMap.CreateRoutePoint.Response()
-            presenter?.presentAnnotationCreation(response: response)
+            presenter?.presentCreateRoutePoint(response: response)
         }
         
         

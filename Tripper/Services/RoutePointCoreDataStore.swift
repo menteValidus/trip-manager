@@ -339,7 +339,8 @@ extension RoutePointCoreDataStore: DateLimiter {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
             
             if let routePointEntity = fetchResult.last as? RoutePointEntity {
-                return routePointEntity.departureDate
+                let timeIntervalToAdd = TimeInterval(routePointEntity.timeToNextPointInSeconds)
+                return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
             } else {
                 return Date()
             }

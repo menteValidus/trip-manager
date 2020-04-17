@@ -14,7 +14,7 @@ import UIKit
 
 protocol ManageRouteMapPresentationLogic {
     func presentFetchDifference(response: ManageRouteMap.FetchDifference.Response)
-    func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response)
+    func presentCreateRoutePoint(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response)
     func presentDeselectAnnotation(response: ManageRouteMap.DeselectAnnotation.Response)
@@ -34,7 +34,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     
     // MARK: Annotation Creation
     
-    func presentAnnotationCreation(response: ManageRouteMap.CreateRoutePoint.Response) {
+    func presentCreateRoutePoint(response: ManageRouteMap.CreateRoutePoint.Response) {
         let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel()
         viewController?.displayCreateRoutePoint(viewModel: viewModel)
     }

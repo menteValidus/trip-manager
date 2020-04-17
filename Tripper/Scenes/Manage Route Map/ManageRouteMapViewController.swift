@@ -118,10 +118,15 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Create Route Point
     
-    private var isNewPointCreated: Bool = false
+    func createRoutePoint(at coordinate: CLLocationCoordinate2D) {
+        let requestToToggle = ManageRouteMap.ToggleUserInput.Request(isLocked: true)
+        interactor?.toggleUserInput(request: requestToToggle)
+        
+        let requestToCreate = ManageRouteMap.CreateRoutePoint.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        interactor?.createRoutePoint(request: requestToCreate)
+    }
     
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
-//        isNewPointCreated = true
         popup?.dismissPopup()
         router?.routeToCreateRoutePoint(segue: nil)
     }
@@ -402,8 +407,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         let requestToDeselect = ManageRouteMap.SelectAnnotation.Request(identifier: nil)
         interactor?.selectAnnotation(request: requestToDeselect)
         
-        let requestToCreate = ManageRouteMap.CreateRoutePoint.Request(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        interactor?.createRoutePoint(request: requestToCreate)
+        createRoutePoint(at: coordinate)
     }
     
     // MARK: - Helper Methods
