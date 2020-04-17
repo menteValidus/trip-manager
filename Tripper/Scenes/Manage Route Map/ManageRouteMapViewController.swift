@@ -200,10 +200,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Edit Route Point
     
     func editSelectedRoutePoint() {
-        if let identifier = getIDOfSelectedRoutePoint() {
-            let request = ManageRouteMap.EditRoutePoint.Request(identifier: identifier)
-            interactor?.editRoutePoint(request: request)
-        }
+        let request = ManageRouteMap.EditRoutePoint.Request()
+        interactor?.editRoutePoint(request: request)
     }
     
     func displayEditRoutePoint(viewModel: ManageRouteMap.EditRoutePoint.ViewModel) {

@@ -60,8 +60,8 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
             pointToSave?.subtitle = request.description
             pointToSave?.arrivalDate = request.arrivalDate
             pointToSave?.departureDate = request.departureDate
-            pointToSave?.timeToNextPointInSeconds = 0
-            pointToSave?.distanceToNextPointInMeters = 0
+//            pointToSave?.timeToNextPointInSeconds = 0
+//            pointToSave?.distanceToNextPointInMeters = 0
             
             worker?.save(routePoint: pointToSave!)
             

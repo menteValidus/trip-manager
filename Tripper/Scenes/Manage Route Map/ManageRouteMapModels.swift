@@ -101,7 +101,6 @@ enum ManageRouteMap {
     
     enum EditRoutePoint {
         struct Request {
-            let identifier: String?
         }
         struct Response {
         }

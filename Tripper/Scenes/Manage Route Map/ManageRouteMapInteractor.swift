@@ -179,9 +179,10 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     var routePointToEdit: RoutePoint?
     
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request) {
-        idOfSelectedAnnotation = request.identifier
-        let response = ManageRouteMap.EditRoutePoint.Response()
-        presenter?.presentEditRoutePoint(response: response)
+        if routePointToEdit != nil {
+            let response = ManageRouteMap.EditRoutePoint.Response()
+            presenter?.presentEditRoutePoint(response: response)
+        }
     }
     
     // MARK: Delete Annotation
