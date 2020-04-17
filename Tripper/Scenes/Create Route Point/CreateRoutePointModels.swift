@@ -45,8 +45,6 @@ enum CreateRoutePoint {
         struct Request {
             let title: String
             let description: String
-            let arrivalDate: Date
-            let departureDate: Date
         }
         struct Response {
         }

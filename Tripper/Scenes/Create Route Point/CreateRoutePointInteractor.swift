@@ -92,6 +92,17 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     private var dateEditingState: CreateRoutePoint.AnnotationEditState = .normal
     
     func setDate(request: CreateRoutePoint.SetDate.Request) {
+        switch dateEditingState {
+        case .arrivalDateEditing:
+            arrivalDate = request.newDate
+            
+        case .departureDateEditing:
+            departureDate = request.newDate
+            
+        default:
+            return
+        }
+        
         let response = CreateRoutePoint.SetDate.Response(newDate: request.newDate, state: dateEditingState)
         presenter?.presentSetDate(response: response)
     }

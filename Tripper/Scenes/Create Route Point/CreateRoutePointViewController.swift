@@ -110,11 +110,8 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     @IBAction func save(_ sender: Any) {
         let title = titleTextField.text!
         let description = descriptionTextView.text!
-        let arrivalDate = Date()
-        let departureDate = Date()
         
-        let request = CreateRoutePoint.SaveRoutePoint.Request(
-            title: title, description: description, arrivalDate: arrivalDate, departureDate: departureDate)
+        let request = CreateRoutePoint.SaveRoutePoint.Request(title: title, description: description)
         interactor?.saveRoutePoint(request: request)
     }
     
