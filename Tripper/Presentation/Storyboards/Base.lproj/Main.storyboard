@@ -327,6 +327,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="arrivalDateLabel" destination="7AX-QS-LgD" id="gUW-H7-Oj2"/>
+                        <outlet property="datePicker" destination="Jal-xU-VnU" id="Q6C-U7-ecK"/>
+                        <outlet property="datePickerCell" destination="SbG-nK-LNV" id="pP1-ri-J34"/>
                         <outlet property="departureDateLabel" destination="2EA-3Z-woD" id="u4J-bQ-BKQ"/>
                         <outlet property="descriptionTextView" destination="TEf-6K-txB" id="sGr-Vs-Voh"/>
                         <outlet property="titleTextField" destination="U96-IW-Gzb" id="bCF-ZL-N47"/>
@@ -342,6 +344,9 @@
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Jal-xU-VnU">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="217"/>
+                                <connections>
+                                    <action selector="dateChanged:" destination="CC2-X3-ZR1" eventType="valueChanged" id="SoK-Co-CMG"/>
+                                </connections>
                             </datePicker>
                         </subviews>
                         <constraints>

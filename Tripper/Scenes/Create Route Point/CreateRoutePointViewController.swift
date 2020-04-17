@@ -70,22 +70,6 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         formRoutePoint()
     }
     
-    // MARK: - Table View's Delegate
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch (indexPath.section, indexPath.row) {
-        case (0, 0):
-//            tableView.deselectRow(at: indexPath, animated: false)
-            titleTextField.becomeFirstResponder()
-        case (1, 0):
-//            tableView.deselectRow(at: indexPath, animated: false)
-            descriptionTextView.becomeFirstResponder()
-        default:
-            break
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
     // MARK: - Form Route Point
     
     func formRoutePoint() {
@@ -155,4 +139,209 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         }
     }
     
+    
+    @IBOutlet weak var datePickerCell: UITableViewCell!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    var state: CreateRoutePoint.AnnotationEditState = .normal
+
+    // MARK: - Table View's Delegate
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("Cell For row at \(indexPath)")
+        switch (indexPath.section, indexPath.row) {
+        case (2, 1):
+            return datePickerCell
+            
+        case (3, 1):
+            return datePickerCell
+            
+        default:
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("number of rows in section \(section)")
+        switch section {
+        case 2:
+            if state == .arrivalDateEditing {
+                return 2
+            } else {
+                return super.tableView(tableView, numberOfRowsInSection: section)
+            }
+            
+        case 3:
+            if state == .departureDateEditing {
+                return 2
+            } else {
+                return super.tableView(tableView, numberOfRowsInSection: section)
+            }
+            
+        default:
+            return super.tableView(tableView, numberOfRowsInSection: section)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        print("height for row at \(indexPath)")
+        switch (indexPath.section, indexPath.row) {
+        case (2, 1):
+            return 217
+            
+        case (3, 1):
+            return 217
+            
+        default:
+            return super.tableView(tableView, heightForRowAt: indexPath)
+            
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        print("will select row at \(indexPath)")
+        switch (indexPath.section, indexPath.row) {
+        case (2, 0):
+            return indexPath
+            
+        case (3, 0):
+            return indexPath
+            
+        default:
+            return nil
+            
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        titleTextField.resignFirstResponder()
+        descriptionTextView.resignFirstResponder()
+        
+        switch (indexPath.section, indexPath.row) {
+            case (0, 0):
+            //            tableView.deselectRow(at: indexPath, animated: false)
+                        titleTextField.becomeFirstResponder()
+                    case (1, 0):
+            //            tableView.deselectRow(at: indexPath, animated: false)
+                        descriptionTextView.becomeFirstResponder()
+            
+        case (2, 0):
+            switch state {
+            case .normal:
+                state = .arrivalDateEditing
+                showDatePicker(in: state)
+                
+            case .arrivalDateEditing:
+                hideDatePicker(in: state)
+                
+            case .departureDateEditing:
+                hideDatePicker(in: state)
+                state = .arrivalDateEditing
+                showDatePicker(in: state)
+                
+            }
+            
+        case (3, 0):
+            switch state {
+            case .normal:
+                state = .departureDateEditing
+                showDatePicker(in: state)
+                
+            case .arrivalDateEditing:
+                hideDatePicker(in: state)
+                state = .departureDateEditing
+                showDatePicker(in: state)
+                
+            case .departureDateEditing:
+                hideDatePicker(in: state)
+                state = .normal
+                
+            }
+            
+        default:
+            break
+                
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        let newIndexPath: IndexPath
+        
+        switch (indexPath.section, indexPath.row) {
+        case (2, 1):
+            newIndexPath = IndexPath(row: 0, section: indexPath.section)
+            
+        case (3, 1):
+            newIndexPath = IndexPath(row: 0, section: indexPath.section)
+            
+        default:
+            newIndexPath = indexPath
+            
+        }
+        
+        return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func showDatePicker(in state: CreateRoutePoint.AnnotationEditState) {
+        let indexPathDatePicker: IndexPath
+        let indexPathDateRow: IndexPath
+//        let dateToSet: Date
+                
+        switch state {
+        case .normal:
+            return
+            
+        case .arrivalDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 2)
+            indexPathDatePicker = IndexPath(row: 1, section: 2)
+//            dateToSet = arrivalDate
+            
+        case .departureDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 3)
+            indexPathDatePicker = IndexPath(row: 1, section: 3)
+//            dateToSet = departureDate
+        }
+        
+        if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = dateCell.detailTextLabel!.tintColor
+        }
+        
+        tableView.beginUpdates()
+        tableView.insertRows(at: [indexPathDatePicker], with: .fade)
+        tableView.reloadRows(at: [indexPathDateRow], with: .none)
+        tableView.endUpdates()
+        
+//        datePicker.setDate(dateToSet, animated: false)
+    }
+    
+    private func hideDatePicker(in state: CreateRoutePoint.AnnotationEditState) {
+        let indexPathDatePicker: IndexPath
+        let indexPathDateRow: IndexPath
+                
+        switch state {
+        case .normal:
+            return
+            
+        case .arrivalDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 2)
+            indexPathDatePicker = IndexPath(row: 1, section: 2)
+            
+        case .departureDateEditing:
+            indexPathDateRow = IndexPath(row: 0, section: 3)
+            indexPathDatePicker = IndexPath(row: 1, section: 3)
+        }
+        self.state = .normal
+        
+        if let dateCell = tableView.cellForRow(at: indexPathDateRow) {
+            dateCell.detailTextLabel!.textColor = UIColor.black
+        }
+        
+        tableView.beginUpdates()
+        tableView.reloadRows(at: [indexPathDateRow], with: .none)
+        tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+        tableView.endUpdates()
+    }
 }
