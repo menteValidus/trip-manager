@@ -62,8 +62,8 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     
     // MARK: Fetch Date Limits
     
-    private let leftDateLimit: Date?
-    private let rightDateLimit: Date?
+    private var leftDateLimit: Date?
+    private var rightDateLimit: Date?
     
     func fetchDateLimits(request: CreateRoutePoint.FetchDateLimits.Request) {
         let response = CreateRoutePoint.FetchDateLimits.Response()
