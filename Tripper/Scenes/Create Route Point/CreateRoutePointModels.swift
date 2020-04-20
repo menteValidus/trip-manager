@@ -41,6 +41,15 @@ enum CreateRoutePoint {
         }
     }
     
+    enum FetchDateLimits {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
+    
     enum SaveRoutePoint {
         struct Request {
             let title: String

@@ -14,6 +14,7 @@ import UIKit
 
 protocol CreateRoutePointPresentationLogic {
     func presentFormRoutePoint(response: CreateRoutePoint.FormRoutePoint.Response)
+    func presentFetchDateLimits(response: CreateRoutePoint.FetchDateLimits.Response)
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response)
     func presentCancelCreation(response: CreateRoutePoint.CancelCreation.Response)
     func presentSetDate(response: CreateRoutePoint.SetDate.Response)
@@ -51,6 +52,13 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
         
         let viewModel = CreateRoutePoint.FormRoutePoint.ViewModel(navigationTitle: navigationTitle, annotationForm: annotationForm)
         viewController?.displayRoutePointForm(viewModel: viewModel)
+    }
+    
+    // MARK: Fetch Date Limits
+    
+    func presentFetchDateLimits(response: CreateRoutePoint.FetchDateLimits.Response) {
+        let viewModel = CreateRoutePoint.FetchDateLimits.ViewModel()
+        viewController?.displayFetchDateLimits(viewModel: viewModel)
     }
     
     // MARK: Save Route Point

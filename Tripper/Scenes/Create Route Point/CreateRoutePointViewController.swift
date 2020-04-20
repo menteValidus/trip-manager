@@ -14,6 +14,7 @@ import UIKit
 
 protocol CreateRoutePointDisplayLogic: class {
     func displayRoutePointForm(viewModel: CreateRoutePoint.FormRoutePoint.ViewModel)
+    func displayFetchDateLimits(viewModel: CreateRoutePoint.FetchDateLimits.ViewModel)
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel)
     func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel)
     func displaySetDate(viewModel: CreateRoutePoint.SetDate.ViewModel)
@@ -94,15 +95,15 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         departureDateLabel.text = viewModel.annotationForm.departureDate
     }
     
-    // MARK: Cancel Creation
+    // MARK: Fetch Date Limits
     
-    @IBAction func cancel(_ sender: Any) {
-        let request = CreateRoutePoint.CancelCreation.Request()
-        interactor?.cancelCreation(request: request)
+    func fetchDateLimits() {
+        let request = CreateRoutePoint.FetchDateLimits.Request()
+        interactor?.fetchDateLimits(request: request)
     }
     
-    func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel) {
-        router?.routeToManageRouteMapWithCancel(segue: nil)
+    func displayFetchDateLimits(viewModel: CreateRoutePoint.FetchDateLimits.ViewModel) {
+        
     }
     
     // MARK: Save Route Point
@@ -117,6 +118,17 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel) {
         router?.routeToManageRouteMap(segue: nil)
+    }
+    
+    // MARK: Cancel Creation
+    
+    @IBAction func cancel(_ sender: Any) {
+        let request = CreateRoutePoint.CancelCreation.Request()
+        interactor?.cancelCreation(request: request)
+    }
+    
+    func displayCancelCreation(viewModel: CreateRoutePoint.CancelCreation.ViewModel) {
+        router?.routeToManageRouteMapWithCancel(segue: nil)
     }
     
     // MARK: Set Date

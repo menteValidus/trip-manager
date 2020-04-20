@@ -15,6 +15,7 @@ import CoreLocation
 
 protocol CreateRoutePointBusinessLogic {
     func formRoutePoint(request: CreateRoutePoint.FormRoutePoint.Request)
+    func fetchDateLimits(request: CreateRoutePoint.FetchDateLimits.Request)
     func saveRoutePoint(request: CreateRoutePoint.SaveRoutePoint.Request)
     func cancelCreation(request: CreateRoutePoint.CancelCreation.Request)
     func setDate(request: CreateRoutePoint.SetDate.Request)
@@ -57,6 +58,16 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         
         let response = CreateRoutePoint.FormRoutePoint.Response(navigationTitle: navigationTitle, routePoint: pointToSave!)
         presenter?.presentFormRoutePoint(response: response)
+    }
+    
+    // MARK: Fetch Date Limits
+    
+    private let leftDateLimit: Date?
+    private let rightDateLimit: Date?
+    
+    func fetchDateLimits(request: CreateRoutePoint.FetchDateLimits.Request) {
+        let response = CreateRoutePoint.FetchDateLimits.Response()
+        presenter?.presentFetchDateLimits(response: response)
     }
     
     // MARK: Save Route Point
