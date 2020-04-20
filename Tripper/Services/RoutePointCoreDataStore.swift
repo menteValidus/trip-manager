@@ -22,8 +22,8 @@ protocol OrderNumberGenerator: class {
 }
 
 protocol DateLimiter {
-    func fetchLeftLimit(by orderNumber: Int) -> Date
-    func fetchRightLimit(by orderNumber: Int) -> Date
+    func fetchLeftLimit(by orderNumber: Int) -> Date?
+    func fetchRightLimit(by orderNumber: Int) -> Date?
 }
 
 class RoutePointCoreDataStore: RoutePointDataStore {
@@ -324,7 +324,7 @@ extension RoutePointCoreDataStore: OrderNumberGenerator {
 extension RoutePointCoreDataStore: DateLimiter {
     // MARK: - Date Limiter
     
-    func fetchLeftLimit(by orderNumber: Int) -> Date {
+    func fetchLeftLimit(by orderNumber: Int) -> Date? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
         
         let predicate =
@@ -342,14 +342,14 @@ extension RoutePointCoreDataStore: DateLimiter {
                 let timeIntervalToAdd = TimeInterval(routePointEntity.timeToNextPointInSeconds)
                 return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
             } else {
-                return Date()
+                return nil
             }
         } catch {
             fatalError("*** Failed to fetch left date limit with error = \(error)")
         }
     }
     
-    func fetchRightLimit(by orderNumber: Int) -> Date {
+    func fetchRightLimit(by orderNumber: Int) -> Date? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
         
         let predicate =
@@ -366,7 +366,7 @@ extension RoutePointCoreDataStore: DateLimiter {
             if let routePointEntity = fetchResult.first as? RoutePointEntity {
                 return routePointEntity.arrivalDate
             } else {
-                return Date()
+                return nil
             }
         } catch {
             fatalError("*** Failed to fetch right date limit with error = \(error)")

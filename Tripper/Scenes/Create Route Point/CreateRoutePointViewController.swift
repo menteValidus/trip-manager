@@ -93,6 +93,9 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         descriptionTextView.text = viewModel.annotationForm.subtitle
         arrivalDateLabel.text = viewModel.annotationForm.arrivalDate
         departureDateLabel.text = viewModel.annotationForm.departureDate
+        
+        let requestDateLimits = CreateRoutePoint.FetchDateLimits.Request()
+        interactor?.fetchDateLimits(request: requestDateLimits)
     }
     
     // MARK: Fetch Date Limits

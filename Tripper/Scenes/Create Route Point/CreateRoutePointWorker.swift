@@ -45,12 +45,12 @@ class CreateRoutePointWorker {
         return routePointGateway.getNewOrderNumber()
     }
     
-    func getLeftLimit(by orderNumber: Int) -> Date {
+    func getLeftDateLimit(by orderNumber: Int) -> Date? {
         let leftLimit = routePointGateway.fetchLeftLimit(by: orderNumber)
         return leftLimit
     }
     
-    func getRightLimit(by orderNumber: Int) -> Date {
+    func getRightDateLimit(by orderNumber: Int) -> Date? {
         let rightLimit = routePointGateway.fetchRightLimit(by: orderNumber)
         return rightLimit
     }

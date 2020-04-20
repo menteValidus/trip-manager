@@ -66,6 +66,9 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     private var rightDateLimit: Date?
     
     func fetchDateLimits(request: CreateRoutePoint.FetchDateLimits.Request) {
+        leftDateLimit = worker?.getLeftDateLimit(by: pointToSave!.orderNumber)
+        rightDateLimit = worker?.getRightDateLimit(by: pointToSave!.orderNumber)
+        
         let response = CreateRoutePoint.FetchDateLimits.Response()
         presenter?.presentFetchDateLimits(response: response)
     }
@@ -191,8 +194,8 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         let subtitle = ""
         let latitude = data.tappedCoordinate.latitude
         let longitude = data.tappedCoordinate.longitude
-        let arrivalDate = worker!.getLeftLimit(by: orderNumber).addingTimeInterval(TimeInterval(data.timeToNextPointInSeconds))
-        let departureDate = Date()
+        let arrivalDate = worker!.getLeftDateLimit(by: orderNumber)?.addingTimeInterval(TimeInterval(data.timeToNextPointInSeconds)) ?? Date()
+        let departureDate = arrivalDate
         let distance = data.distanceToNextPointInMeters
         let routePoint = RoutePoint(id: id, orderNumber: orderNumber,
                                     title: title, subtitle: subtitle,
