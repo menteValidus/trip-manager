@@ -56,8 +56,10 @@ enum CreateRoutePoint {
             let description: String
         }
         struct Response {
+            let errorMessage: String?
         }
         struct ViewModel {
+            let errorMessage: String?
         }
     }
     

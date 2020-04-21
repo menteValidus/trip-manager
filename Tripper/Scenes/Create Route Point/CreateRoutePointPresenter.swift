@@ -64,7 +64,7 @@ class CreateRoutePointPresenter: CreateRoutePointPresentationLogic {
     // MARK: Save Route Point
     
     func presentSaveRoutePoint(response: CreateRoutePoint.SaveRoutePoint.Response) {
-        let viewModel = CreateRoutePoint.SaveRoutePoint.ViewModel()
+        let viewModel = CreateRoutePoint.SaveRoutePoint.ViewModel(errorMessage: response.errorMessage)
         viewController?.displaySaveRoutePoint(viewModel: viewModel)
     }
     

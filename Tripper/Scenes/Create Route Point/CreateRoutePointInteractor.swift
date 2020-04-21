@@ -82,16 +82,38 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         if pointToSave != nil {
             pointToSave?.title = request.title
             pointToSave?.subtitle = request.description
+            
+            if let errorMessage = compareDateWithLeftLimit(date: arrivalDate) {
+                let response = CreateRoutePoint.SaveRoutePoint.Response(errorMessage: errorMessage)
+                presenter?.presentSaveRoutePoint(response: response)
+                return
+            }
             pointToSave?.arrivalDate = arrivalDate
+            
+            if let errorMessage = compareDateWithRightLimit(date: departureDate) {
+                let response = CreateRoutePoint.SaveRoutePoint.Response(errorMessage: errorMessage)
+                presenter?.presentSaveRoutePoint(response: response)
+                return
+            }
             pointToSave?.departureDate = departureDate
             
             worker?.save(routePoint: pointToSave!)
             
-            let response = CreateRoutePoint.SaveRoutePoint.Response()
+            let response = CreateRoutePoint.SaveRoutePoint.Response(errorMessage: nil)
             presenter?.presentSaveRoutePoint(response: response)
         } else {
             fatalError("*** There's no way we can be here!")
         }
+    }
+    
+    private func compareDateWithLeftLimit(date: Date) -> String? {
+        // STUB
+        return nil
+    }
+    
+    private func compareDateWithRightLimit(date: Date) -> String? {
+        // STUB
+        return nil
     }
     
     // MARK: Cancel Creation
