@@ -271,7 +271,6 @@
 		0B042A8323E98CB000E9136F /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A8823E990DE00E9136F /* xib */,
 				0B042A8423E98CC800E9136F /* Storyboards */,
 			);
 			path = Presentation;
@@ -344,6 +343,7 @@
 		0B36674A244877980099AFAB /* List Route */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A8823E990DE00E9136F /* xib */,
 				0B36674F2448780A0099AFAB /* ListRouteViewController.swift */,
 				0B3667502448780A0099AFAB /* ListRouteInteractor.swift */,
 				0B36674B2448780A0099AFAB /* ListRoutePresenter.swift */,
