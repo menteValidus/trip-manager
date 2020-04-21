@@ -128,6 +128,10 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel) {
+        // To be sure that it's displaced because if Route Point Creation is cancelled Spinner stays there.
+        let requestToToggle = ManageRouteMap.ToggleUserInput.Request(isLocked: false)
+        interactor?.toggleUserInput(request: requestToToggle)
+        
         popup?.dismissPopup()
         router?.routeToCreateRoutePoint(segue: nil)
     }
