@@ -70,6 +70,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     init() {
         annotationsInfo = []
+        routeFragments = []
     }
     
     // MARK: - Create route point
@@ -194,6 +195,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: Create Route Fragment
     
+    var routeFragments: [RouteFragment]
+    
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request) {
         let startCoordinate = CLLocationCoordinate2D(
             latitude: request.addedSubrouteInfo.startWaypoint.latitude, longitude: request.addedSubrouteInfo.startWaypoint.longitude)
@@ -204,6 +207,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
                                               secondID: request.addedSubrouteInfo.endWaypoint.id)
                 let routeFragment = ManageRouteMap.ConcreteRouteFragment(identifier: idOfNewRouteFragment, coordinates: routeInfo.coordinates, travelTimeInSeconds: routeInfo.timeInSeconds, travelDistanceInMeters: routeInfo.distanceInMeters)
+                self.routeFragments.append(routeFragment)
                 
                 let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
                 self.presenter?.presentCreateRouteFragment(response: response)
@@ -326,85 +330,60 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Focus
     
     func focus(request: ManageRouteMap.Focus.Request) {
-        // if we have no annotations we can skip all of this
-        if request.coordinates.count == 0 {
+        let coordinates = prepareAllCoordinatesArray()
+        
+        if coordinates.count == 0 {
+            // TODO: Pass no coordinates.
             return
         }
-
-        // then run through each annotation in the list to find the
-        // minimum and maximum latitude and longitude values
-        var minimum = CLLocationCoordinate2D()
-        var maximum = CLLocationCoordinate2D()
+        
+        var minimalCoordinate = CLLocationCoordinate2D()
+        var maximalCoordinate = CLLocationCoordinate2D()
         var minMaxInitialized = false
         var numberOfValidAnnotations = 0
 
-        for a in request.coordinates {
-            // only use annotations that are of our own custom type
-            // in the event that the user is browsing from a location far away
-            // you can omit this if you want the user's location to be included in the region
-//            if ( [a isKindOfClass: [ECAnnotation class]] )
-//            {
-                // if we haven't grabbed the first good value, do so now
-                if ( !minMaxInitialized )
-                {
-                    minimum = a;
-                    maximum = a;
-                    minMaxInitialized = true;
-                }
-                else // otherwise compare with the current value
-                {
-                    minimum.latitude = min( minimum.latitude, a.latitude )
-                    minimum.longitude = min(minimum.longitude, a.longitude )
+        for coordinate in coordinates {
+//            let coordinate = CLLocationCoordinate2D(latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
+            
+            if !minMaxInitialized {
+                minimalCoordinate = coordinate;
+                maximalCoordinate = coordinate;
+                minMaxInitialized = true;
+            } else {
+                minimalCoordinate.latitude = min( minimalCoordinate.latitude, coordinate.latitude )
+                minimalCoordinate.longitude = min(minimalCoordinate.longitude, coordinate.longitude )
 
-                    maximum.latitude = max( maximum.latitude, a.latitude )
-                    maximum.longitude = max( maximum.longitude, a.longitude )
-                }
-                numberOfValidAnnotations += 1
-//            }
+                maximalCoordinate.latitude = max( maximalCoordinate.latitude, coordinate.latitude )
+                maximalCoordinate.longitude = max( maximalCoordinate.longitude, coordinate.longitude )
+            }
+            numberOfValidAnnotations += 1
         }
-
-        // If we don't have any valid annotations we can leave now,
-        // this will happen in the event that there is only the user location
+        
         if numberOfValidAnnotations == 0 {
             return
         }
+        
+        let locSouthWest = CLLocationCoordinate2D(latitude: minimalCoordinate.latitude, longitude: minimalCoordinate.longitude)
+        let locNorthEast = CLLocationCoordinate2D(latitude: maximalCoordinate.latitude, longitude: maximalCoordinate.longitude)
 
-        // Now that we have a min and max lat/lon create locations for the
-        // three points in a right triangle
-        let locSouthWest = CLLocationCoordinate2D(latitude: minimum.latitude, longitude: minimum.longitude)
-//        CLLocation* locSouthWest = [[CLLocation alloc]
-//                                    initWithLatitude: min.latitude
-//                                    longitude: min.longitude];
-//        CLLocation* locSouthEast = [[CLLocation alloc]
-//                                    initWithLatitude: min.latitude
-//                                    longitude: max.longitude];
-        let locNorthEast = CLLocationCoordinate2D(latitude: maximum.latitude, longitude: maximum.longitude)
-//        CLLocation* locNorthEast = [[CLLocation alloc]
-//                                    initWithLatitude: max.latitude
-//                                    longitude: max.longitude];
-
-        // Create a region centered at the midpoint of our hypotenuse
-//        CLLocationCoordinate2D regionCenter;
-//        regionCenter.latitude = (minimum.latitude + maximum.latitude) / 2.0;
-//        regionCenter.longitude = (minimum.longitude + maximum.longitude) / 2.0;
-//
-//        // Use the locations that we just created to calculate the distance
-//        // between each of the points in meters.
-//        CLLocationDistance latMeters = [locSouthEast getDistanceFrom: locNorthEast];
-//        CLLocationDistance lonMeters = [locSouthEast getDistanceFrom: locSouthWest];
-//
-//        MKCoordinateRegion region;
-//        region = MKCoordinateRegionMakeWithDistance( regionCenter, latMeters, lonMeters );
-//
-//        MKCoordinateRegion fitRegion = [myMapView regionThatFits: region];
-//        [myMapView setRegion: fitRegion animated: YES];
-//
-//        // Clean up
-//        [locSouthWest release];
-//        [locSouthEast release];
-//        [locNorthEast release];
-//
         let response = ManageRouteMap.Focus.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
         presenter?.presentFocus(response: response)
+    }
+    
+    private func prepareAllCoordinatesArray() -> [CLLocationCoordinate2D] {
+        var coordinates = [CLLocationCoordinate2D]()
+        
+        for annotationInfo in annotationsInfo {
+            let coordinate = CLLocationCoordinate2D(latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
+            coordinates.append(coordinate)
+        }
+        
+        for routeFragment in routeFragments {
+            for coordinate in routeFragment.coordinates {
+                coordinates.append(coordinate)
+            }
+        }
+        
+        return coordinates
     }
 }

@@ -359,12 +359,13 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         for (annotation, _) in annotationsID {
             coordinates.append(annotation.coordinate)
         }
-        let request = ManageRouteMap.Focus.Request(coordinates: coordinates)
+        let request = ManageRouteMap.Focus.Request()
         interactor?.focus(request: request)
     }
     
     func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel) {
-        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate))
+        let offset = CGFloat(60)
+        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: 20.0, left: offset, bottom: offset, right: offset))
         
         mapView.setCamera(camera, animated: true)
     }

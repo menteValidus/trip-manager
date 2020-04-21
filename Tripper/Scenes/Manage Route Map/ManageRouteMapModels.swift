@@ -194,7 +194,6 @@ enum ManageRouteMap {
     
     enum Focus {
         struct Request {
-            let coordinates: [CLLocationCoordinate2D]
         }
         struct Response {
             let southWestCoordinate: CLLocationCoordinate2D
