@@ -22,9 +22,8 @@
                                         <rect key="frame" x="332" y="128" width="50" height="50"/>
                                         <state key="normal" image="ic_user"/>
                                         <state key="selected" image="ic_user_selected"/>
-                                        <state key="highlighted" image="ic_user_selected"/>
                                         <connections>
-                                            <action selector="focusOnUser" destination="4Cc-Fh-swH" eventType="touchUpInside" id="WrI-Kb-BVy"/>
+                                            <action selector="focusOnUser:" destination="4Cc-Fh-swH" eventType="touchUpInside" id="yec-ln-pU2"/>
                                         </connections>
                                     </button>
                                 </subviews>

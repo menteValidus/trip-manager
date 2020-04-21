@@ -373,8 +373,18 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Focus On User
     
-    @IBAction func focusOnUser() {
+    @IBAction func focusOnUser(_ sender: UIButton?) {
         if let userCoordinate = mapView.userLocation?.coordinate {
+            if let button = sender {
+//                let newScale = button.transform.scaledBy(x: 1.2, y: 1.2)
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                    button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                }, completion: { _ in
+                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                        button.transform = CGAffineTransform.identity
+                    })
+                })
+            }
             let request = ManageRouteMap.FocusOnUser.Request(userCoordinate: userCoordinate)
             interactor?.focusOnUser(request: request)
         }
