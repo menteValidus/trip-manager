@@ -305,6 +305,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
         fetchDifference()
+        popup?.dismissPopup()
     }
     
     // MARK: Toggle User Input
