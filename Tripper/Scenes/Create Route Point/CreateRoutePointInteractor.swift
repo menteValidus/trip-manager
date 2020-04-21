@@ -107,12 +107,36 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     }
     
     private func compareDateWithLeftLimit(date: Date) -> String? {
-        // STUB
+        if date.compareWithoutSeconds(with: departureDate) == ComparisonResult.orderedDescending { // >
+            let errorMessage = "New Arrival Date lies beyond Departure Date!"
+            return errorMessage
+        }
+        
+        if let leftLimit = leftDateLimit {
+            if date.compareWithoutSeconds(with: leftLimit) == ComparisonResult.orderedAscending { // <
+                let errorMessage = "New Arrival Date lies beyond Departure Date of previous Route Point!"
+                return errorMessage
+            }
+        }
+        
         return nil
     }
     
     private func compareDateWithRightLimit(date: Date) -> String? {
-        // STUB
+        if date.compareWithoutSeconds(with: arrivalDate) == ComparisonResult.orderedAscending { // <
+            // This code probably will be never executed because this situation is handled in compareDateWithLeftLimit.
+            // But this method sometime can be used separately from compareDateWithLeftLimit that's why this check is lefted here.
+            let errorMessage = "New Departure Date lies beyond Arrival Date!"
+            return errorMessage
+        }
+        
+        if let rightLimit = rightDateLimit {
+            if date.compareWithoutSeconds(with: rightLimit) == ComparisonResult.orderedDescending { // >
+                let errorMessage = "New Departure Date lies beyond Arrival Date of next Route Point!"
+                return errorMessage
+            }
+        }
+        
         return nil
     }
     

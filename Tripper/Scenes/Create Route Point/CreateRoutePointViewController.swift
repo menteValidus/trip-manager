@@ -120,7 +120,21 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel) {
+        if let errorMessage = viewModel.errorMessage {
+            // TODO: Request error alert
+            showCreationFailure(title: "Date Error!", message: errorMessage)
+            return
+        }
         router?.routeToManageRouteMap(segue: nil)
+    }
+    
+    // MARK: Error Handling
+    
+    func showCreationFailure(title: String = "Error", message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(alertAction)
+        showDetailViewController(alertController, sender: nil)
     }
     
     // MARK: Cancel Creation

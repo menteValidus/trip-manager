@@ -119,6 +119,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Create Route Point
     
     func createRoutePoint(at coordinate: CLLocationCoordinate2D) {
+        // TODO: If creation of Route Point is cancelled Spinner will be here forever.
         let requestToToggle = ManageRouteMap.ToggleUserInput.Request(isLocked: true)
         interactor?.toggleUserInput(request: requestToToggle)
         
