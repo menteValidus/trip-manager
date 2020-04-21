@@ -28,6 +28,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
     func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
     func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel)
+    func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -368,6 +369,20 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: 20.0, left: offset, bottom: offset, right: offset))
         
         mapView.setCamera(camera, animated: true)
+    }
+    
+    // MARK: Focus On User
+    
+    @IBAction func focusOnUser() {
+        if let userCoordinate = mapView.userLocation?.coordinate {
+            let request = ManageRouteMap.FocusOnUser.Request(userCoordinate: userCoordinate)
+            interactor?.focusOnUser(request: request)
+        }
+    }
+    
+    func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel) {
+        let zoomLevel = 6.0
+        mapView.setCenter(viewModel.userCoordinate, zoomLevel: zoomLevel, animated: true)
     }
     
     // MARK: Shared Helper Methods

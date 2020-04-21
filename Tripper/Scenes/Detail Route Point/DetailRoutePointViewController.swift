@@ -162,7 +162,6 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     
     // MARK: - Gesture Actions
     
-    // TODO: MOVE TO INTERACTOR.
     @objc func onPan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .changed:
@@ -186,7 +185,6 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         }
     }
     
-    // TODO: MOVE TO PRESENTER.
     func toggleView(screenCoverage percent: CGFloat) {
         UIView.animate(withDuration: 0.3) {
             let height = self.view.frame.height

@@ -27,6 +27,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentClearAll(response: ManageRouteMap.ClearAll.Response)
     func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response)
     func presentFocus(response: ManageRouteMap.Focus.Response)
+    func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -130,5 +131,12 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
         let viewModel = ManageRouteMap.Focus.ViewModel(
             southWestCoordinate: response.southWestCoordinate, northEastCoordinate: response.northEastCoordinate)
         viewController?.displayFocus(viewModel: viewModel)
+    }
+    
+    // MARK: Focus On User
+    
+    func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response) {
+        let viewModel = ManageRouteMap.FocusOnUser.ViewModel(userCoordinate: response.userCoordinate)
+        viewController?.displayFocusOnUser(viewModel: viewModel)
     }
 }

@@ -28,6 +28,7 @@ protocol ManageRouteMapBusinessLogic {
     func clearAll(request: ManageRouteMap.ClearAll.Request)
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
     func focus(request: ManageRouteMap.Focus.Request)
+    func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
 }
 
 
@@ -343,7 +344,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         var numberOfValidAnnotations = 0
 
         for coordinate in coordinates {
-//            let coordinate = CLLocationCoordinate2D(latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
             
             if !minMaxInitialized {
                 minimalCoordinate = coordinate;
@@ -385,5 +385,12 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         }
         
         return coordinates
+    }
+    
+    // MARK: Focus On User
+    
+    func focusOnUser(request: ManageRouteMap.FocusOnUser.Request) {
+        let response = ManageRouteMap.FocusOnUser.Response(userCoordinate: request.userCoordinate)
+        presenter?.presentFocusOnUser(response: response)
     }
 }
