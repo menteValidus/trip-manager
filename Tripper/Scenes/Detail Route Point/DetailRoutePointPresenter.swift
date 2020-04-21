@@ -65,8 +65,8 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     // MARK: Toggle View
     
     func presentToggleView(response: DetailRoutePoint.ToggleView.Response) {
-        let screenCoverage = CGFloat(response.screenCoverage)
-        let viewModel = DetailRoutePoint.ToggleView.ViewModel(screenCoverage: screenCoverage)
+//        let screenCoverage = CGFloat(response.screenCoverage)
+        let viewModel = DetailRoutePoint.ToggleView.ViewModel(screenCoverage: response.screenCoverage)
         viewController?.displayToggleView(viewModel: viewModel)
     }
 }

@@ -73,14 +73,14 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
         let response: DetailRoutePoint.ToggleView.Response
         
         if positionFromTheTop < maxDistanceToPan * 1 / 3 {
-            response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0.75)
+            response = DetailRoutePoint.ToggleView.Response(screenCoverage: .mostPart)
         } else if positionFromTheTop < maxDistanceToPan * 2 / 3 {
-            response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0.25)
+            response = DetailRoutePoint.ToggleView.Response(screenCoverage: .smallPart)
         } else {
             if positionFromTheTop < maxDistanceToPan * 0.95 {
-                response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0.25)
+                response = DetailRoutePoint.ToggleView.Response(screenCoverage: .smallPart)
             } else {
-                response = DetailRoutePoint.ToggleView.Response(screenCoverage: 0)
+                response = DetailRoutePoint.ToggleView.Response(screenCoverage: .toDismiss)
             }
         }
         

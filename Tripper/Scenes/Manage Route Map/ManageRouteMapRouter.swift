@@ -100,18 +100,19 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         } else {
             let height = source.view.frame.height
             let width  = source.view.frame.width
-            let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
+            let topOffset = source.navigationController!.navigationBar.frame.height
+//            let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
             
             source.addChild(destination)
             source.view.addSubview(destination.view)
-            destination.view.frame = CGRect(x: 0, y: height, width: width, height: height)
+            destination.view.frame = CGRect(x: 0, y: height, width: width, height: height - topOffset)
             destination.view.isUserInteractionEnabled = true
             destination.didMove(toParent: source)
             
-            
-            let yCoordinate = source.view.frame.height * 0.75
+            let percent = CGFloat(1 - PopupCoverage.smallPart.rawValue)
+            let yCoordinate = source.view.frame.height * percent
             UIView.animate(withDuration: 0.3) {
-                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: yCoordinate + bottomOffset)
+                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height - topOffset)// + bottomOffset)
             }
             
             // TODO: Not sure that it belongs here.

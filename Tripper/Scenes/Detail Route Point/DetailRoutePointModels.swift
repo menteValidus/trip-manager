@@ -65,10 +65,10 @@ enum DetailRoutePoint {
             let maxDistanceToPan: CGFloat
         }
         struct Response {
-            let screenCoverage: Float
+            let screenCoverage: PopupCoverage
         }
         struct ViewModel {
-            let screenCoverage: CGFloat
+            let screenCoverage: PopupCoverage
         }
     }
 }

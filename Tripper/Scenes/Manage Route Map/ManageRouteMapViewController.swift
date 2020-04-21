@@ -46,6 +46,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         didSet {
             if popup == nil {
                 fetchDifference()
+            } else {
+                focusOnRoute(nil)
             }
         }
     }
@@ -350,7 +352,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     private func hideSpinner() {
         dimmingView.removeFromSuperview()
-        focusOnRoute(nil)
+//        focusOnRoute(nil)
     }
     
     // MARK: Focus
@@ -372,7 +374,15 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel) {
         let offset = CGFloat(60)
-        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: 20.0, left: offset, bottom: offset, right: offset))
+        let topOffset = offset + navigationController!.navigationBar.frame.height
+        var bottomOffset = offset
+        
+        // TODO: After end of loading there's no popup. It
+        if let popup = popup {
+            bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
+        }
+        
+        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: topOffset, left: offset, bottom: bottomOffset, right: offset))
         
         mapView.setCamera(camera, animated: true)
     }
@@ -382,7 +392,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBAction func focusOnUser(_ sender: UIButton?) {
         if let userCoordinate = mapView.userLocation?.coordinate {
             if let button = sender {
-//                let newScale = button.transform.scaledBy(x: 1.2, y: 1.2)
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
                     button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                 }, completion: { _ in

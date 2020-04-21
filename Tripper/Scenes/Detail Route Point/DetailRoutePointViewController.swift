@@ -27,13 +27,21 @@ protocol DismissablePopup: class {
 }
 
 protocol ChangeablePopup: class {
+    var state: PopupCoverage { get }
     func updateUI()
 }
 
+enum PopupCoverage: Float {
+    case mostPart = 0.75
+    case smallPart = 0.25
+    case toDismiss = 0
+}
 
 class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayLogic {
     var interactor: DetailRoutePointBusinessLogic?
     var router: (NSObjectProtocol & DetailRoutePointRoutingLogic & DetailRoutePointDataPassing)?
+    
+    var state: PopupCoverage = .smallPart
     
     private var panGestureRecognizer: UIPanGestureRecognizer?
     // MARK: Object lifecycle
@@ -146,10 +154,11 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     // MARK: Toggle View
     
     func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel) {
-        let percent = viewModel.screenCoverage
+        state = viewModel.screenCoverage
+        let percent = CGFloat(viewModel.screenCoverage.rawValue)
         if percent > 0 {
             UIView.animate(withDuration: 0.3) {
-                let height = self.view.frame.height
+                let height: CGFloat = self.view.frame.height
                 let width  = self.view.frame.width
                 let yCoordinate = height * (1 - percent)
                 print(Float(yCoordinate))
@@ -165,14 +174,15 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     @objc func onPan(recognizer: UIPanGestureRecognizer) {
         switch recognizer.state {
         case .changed:
-            let translation = recognizer.translation(in: self.view)
+            let translation = recognizer.translation(in: self.parent!.view)
             let y = view.frame.minY
-            if let superViewHeight = self.view.superview?.frame.height {
+            if let superViewHeight = self.parent?.view.frame.height {
                 if !(superViewHeight - view.frame.height > y + translation.y) {
                     self.view.frame = CGRect(x: 0, y: y + translation.y, width: view.frame.width, height: view.frame.height)
                 }
             }
             recognizer.setTranslation(.zero, in: self.view)
+            break
             
         case .cancelled, .ended:
             let positionFromTheTop = view.frame.origin.y
@@ -206,6 +216,7 @@ extension DetailRoutePointViewController: DismissablePopup {
 }
 
 extension DetailRoutePointViewController: ChangeablePopup {
+    
     // MARK: - Changeable Popup
     
     func updateUI() {
