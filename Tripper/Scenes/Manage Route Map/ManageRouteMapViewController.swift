@@ -349,17 +349,22 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     private func hideSpinner() {
         dimmingView.removeFromSuperview()
-        tempFocus()
+        focusOnRoute(nil)
     }
     
     // MARK: Focus
     
-    // TODO: Temprorary. Will be removed.
-    func tempFocus() {
-        var coordinates = [CLLocationCoordinate2D]()
-        for (annotation, _) in annotationsID {
-            coordinates.append(annotation.coordinate)
+    @IBAction func focusOnRoute(_ sender: UIButton?) {
+        if let button = sender {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                    button.transform = CGAffineTransform.identity
+                })
+            })
         }
+        
         let request = ManageRouteMap.Focus.Request()
         interactor?.focus(request: request)
     }

@@ -26,6 +26,15 @@
                                             <action selector="focusOnUser:" destination="4Cc-Fh-swH" eventType="touchUpInside" id="yec-ln-pU2"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2p9-mg-ohL">
+                                        <rect key="frame" x="332" y="186" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="ic_route"/>
+                                        <state key="selected" image="ic_user_selected"/>
+                                        <connections>
+                                            <action selector="focusOnRoute:" destination="4Cc-Fh-swH" eventType="touchUpInside" id="6zq-9x-Kdv"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -451,6 +460,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic_route" width="50" height="50"/>
         <image name="ic_user" width="50" height="50"/>
         <image name="ic_user_selected" width="80" height="80"/>
     </resources>
