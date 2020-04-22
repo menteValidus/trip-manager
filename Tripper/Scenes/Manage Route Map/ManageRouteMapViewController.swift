@@ -450,12 +450,17 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel) {
         if viewModel.toShow {
-            // TODO: Animate
-            routeEstimationView.isHidden = false
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+                self.routeEstimationView.alpha = 1
+                self.routeEstimationView.isHidden = false
+            })
             routeLengthLabel.text = viewModel.distanceEstimation
             routeTimeLabel.text = viewModel.timeEstimation
         } else {
-            routeEstimationView.isHidden = true
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+               self.routeEstimationView.alpha = 0
+               self.routeEstimationView.isHidden = true
+            })
             routeLengthLabel.text = ""
             routeTimeLabel.text = ""
         }
