@@ -401,17 +401,22 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel) {
-        let offset = CGFloat(60)
-        let topOffset = offset + navigationController!.navigationBar.frame.height
-        var bottomOffset = offset
-        
-        if let popup = popup {
-            bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
+        if viewModel.northEastCoordinate != viewModel.southWestCoordinate {
+            let offset = CGFloat(60)
+            let topOffset = offset + navigationController!.navigationBar.frame.height
+            var bottomOffset = offset
+            
+            if let popup = popup {
+                bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
+            }
+            
+            let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: topOffset, left: offset, bottom: bottomOffset, right: offset))
+            
+            mapView.setCamera(camera, animated: true)
+        } else { // Just one point
+            let zoomLevel = 6.0
+            mapView.setCenter(viewModel.northEastCoordinate, zoomLevel: zoomLevel, animated: true)
         }
-        
-        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: topOffset, left: offset, bottom: bottomOffset, right: offset))
-        
-        mapView.setCamera(camera, animated: true)
     }
     
     // MARK: Focus On User
@@ -450,19 +455,27 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel) {
         if viewModel.toShow {
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
-                self.routeEstimationView.alpha = 1
-                self.routeEstimationView.isHidden = false
-            })
             routeLengthLabel.text = viewModel.distanceEstimation
             routeTimeLabel.text = viewModel.timeEstimation
+            
+            if routeEstimationView.isHidden {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+                    self.routeEstimationView.alpha = 1
+                }, completion: { _ in
+                    self.routeEstimationView.isHidden = false
+                })
+            }
+            
         } else {
-            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
-               self.routeEstimationView.alpha = 0
-               self.routeEstimationView.isHidden = true
-            })
-            routeLengthLabel.text = ""
-            routeTimeLabel.text = ""
+            if !routeEstimationView.isHidden {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+                   self.routeEstimationView.alpha = 0
+                }, completion: { _ in
+                    self.routeEstimationView.isHidden = true
+                    self.routeLengthLabel.text = ""
+                    self.routeTimeLabel.text = ""
+                })
+            }
         }
         
     }
