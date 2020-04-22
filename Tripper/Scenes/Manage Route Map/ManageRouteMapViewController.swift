@@ -120,7 +120,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Create Route Point
     
     func createRoutePoint(at coordinate: CLLocationCoordinate2D) {
-        // TODO: If creation of Route Point is cancelled Spinner will be here forever.
         let requestToToggle = ManageRouteMap.ToggleUserInput.Request(isLocked: true)
         interactor?.toggleUserInput(request: requestToToggle)
         
@@ -363,7 +362,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     private func showSpinner() {
-        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        let spinner = UIActivityIndicatorView(style: .large)
         spinner.center = CGPoint(x: dimmingView.bounds.midX + 0.5, y: dimmingView.bounds.midY + 0.5)
         spinner.tag = 1000
         dimmingView.addSubview(spinner)
@@ -515,8 +514,6 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         let longPressedPoint: CGPoint = sender.location(in: mapView)
         let coordinate: CLLocationCoordinate2D = mapView.convert(longPressedPoint, toCoordinateFrom: mapView)
-        
-        print("*** Long pressed on the map.")
         
         let requestToSelect = ManageRouteMap.SelectAnnotation.Request(identifier: nil)
         interactor?.selectAnnotation(request: requestToSelect)

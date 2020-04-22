@@ -9,12 +9,6 @@
 import Foundation
 import UIKit
 
-let applicationDocumentsDirectory: URL = {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    return paths[0]
-}()
-
-
 func throwAn(error: Error) {
     print("*** Error: \(error)")
     fatalError("Error: \(error)")
@@ -83,18 +77,20 @@ func format(seconds: Int) -> String {
     return formattedTime
 }
 
-let METER = 1
-let KILOMETER = 1000 * METER
+struct DistanceUnits {
+    static let meter = 1
+    static let kilometer = 1000 * meter
+}
 
 func format(metres: Int) -> String {
     var formattedDistance = ""
-    let kilometers = metres / KILOMETER
+    let kilometers = metres / DistanceUnits.kilometer
     
     if kilometers > 0 {
         formattedDistance.append("\(kilometers) km")
     }
     
-    let remainedMeters = metres % KILOMETER
+    let remainedMeters = metres % DistanceUnits.kilometer
     
     if remainedMeters > 0 {
         if !formattedDistance.isEmpty {

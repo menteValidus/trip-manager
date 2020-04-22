@@ -44,6 +44,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     var state: PopupCoverage = .smallPart
     
     private var panGestureRecognizer: UIPanGestureRecognizer?
+    
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {

@@ -101,7 +101,6 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             let height = source.view.frame.height
             let width  = source.view.frame.width
             let topOffset = source.navigationController!.navigationBar.frame.height
-//            let bottomOffset = UIApplication.shared.statusBarFrame.height + 15
             
             source.addChild(destination)
             source.view.addSubview(destination.view)
@@ -112,10 +111,9 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             let percent = CGFloat(1 - PopupCoverage.smallPart.rawValue)
             let yCoordinate = source.view.frame.height * percent
             UIView.animate(withDuration: 0.3) {
-                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height - topOffset)// + bottomOffset)
+                destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height - topOffset)
             }
             
-            // TODO: Not sure that it belongs here.
             source.popup = destination
         }
     }

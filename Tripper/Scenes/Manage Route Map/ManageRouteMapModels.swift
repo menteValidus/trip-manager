@@ -13,6 +13,13 @@
 import UIKit
 import CoreLocation
 
+protocol RouteFragment {
+    var identifier: String { get set }
+    var coordinates: [CLLocationCoordinate2D] { get set }
+    var travelTimeInSeconds: Int { get set }
+    var travelDistanceInMeters: Int { get set }
+}
+
 enum ManageRouteMap {
     
     struct ConcreteAnnotationInfo: AnnotationInfo {
@@ -155,7 +162,6 @@ enum ManageRouteMap {
             let id: String
             let latitude: Double
             let longitude: Double
-            //            let coordinate: CLLocationCoordinate2D
         }
         
         struct Request {

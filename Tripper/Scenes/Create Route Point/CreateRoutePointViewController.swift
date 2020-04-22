@@ -203,7 +203,6 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //        print("height for row at \(indexPath)")
         switch (indexPath.section, indexPath.row) {
         case (2, 1):
             return 217
@@ -218,7 +217,6 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        //        print("will select row at \(indexPath)")
         switch (indexPath.section, indexPath.row) {
         case (2, 0):
             return indexPath
@@ -238,17 +236,14 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     private var numberOfRowsInDepartureSection = 1
     
     func displayToggleDateEditState(viewModel: CreateRoutePoint.ToggleDateEditState.ViewModel) {
-//        print("*********** Old: \(viewModel.oldState)\n new: \(viewModel.newState)")
         
         if viewModel.oldState != .normal && viewModel.newState == .normal {
-//            print("*********** Hide: \(viewModel.oldState)")
             let requestToHide = CreateRoutePoint.HideDatePicker.Request(state: viewModel.oldState)
             interactor?.hideDatePicker(request: requestToHide)
             return
         }
         
         if viewModel.oldState != viewModel.newState && viewModel.oldState != .normal && viewModel.newState != .normal {
-//            print("*********** Hide: \(viewModel.oldState) Show: \(viewModel.newState)")
             let requestToHide = CreateRoutePoint.HideDatePicker.Request(state: viewModel.oldState)
             interactor?.hideDatePicker(request: requestToHide)
             let requestToShow = CreateRoutePoint.ShowDatePicker.Request(state: viewModel.newState)
@@ -258,7 +253,6 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         }
         
         if viewModel.oldState == .normal && viewModel.newState != .normal {
-//            print("*********** Show: \(viewModel.newState)")
             let requestToShow = CreateRoutePoint.ShowDatePicker.Request(state: viewModel.newState)
             interactor?.showDatePicker(request: requestToShow)
             

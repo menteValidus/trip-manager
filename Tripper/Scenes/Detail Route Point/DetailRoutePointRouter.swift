@@ -66,7 +66,6 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
         }, completion: { _ in
             source.view.removeFromSuperview()
             destination.popup = nil
-//            destination.deselectAnnotations()
         })
     }
     
@@ -91,27 +90,17 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
         }, completion: { _ in
             source.view.removeFromSuperview()
             destination.popup = nil
-            // TODO: Need to get rid of this dependency.
-//            destination.deleteSelectedRoutePoint()
         })
     }
     
     // MARK: Passing data
     
-    func passDataToManageRouteMap(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
-    {
-        
+    func passDataToManageRouteMap(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore) {
     }
     
-    func passDataToManageRouteMapWithEdit(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
-    {
-        destination.routePointToEdit = source.routePoint
-//        destination.popup = nil
+    func passDataToManageRouteMapWithEdit(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore) {
     }
     
-    func passDataToManageRouteMapWithDelete(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore)
-    {
-//        destination.routePointToDelete = source.routePoint
-//        destination.popup = nil
+    func passDataToManageRouteMapWithDelete(source: DetailRoutePointDataStore, destination: inout ManageRouteMapDataStore) {
     }
 }

@@ -11,10 +11,8 @@
 		0B042A6123E2D02100E9136F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A5F23E2D02100E9136F /* Main.storyboard */; };
 		0B042A6323E2D02200E9136F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A6223E2D02200E9136F /* Assets.xcassets */; };
 		0B042A6623E2D02200E9136F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A6423E2D02200E9136F /* LaunchScreen.storyboard */; };
-		0B042A7323E2EFFF00E9136F /* RoutePointVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7223E2EFFF00E9136F /* RoutePointVM.swift */; };
+		0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7223E2EFFF00E9136F /* RoutePoint.swift */; };
 		0B042A7623E3001B00E9136F /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7523E3001B00E9136F /* Util.swift */; };
-		0B042A7823E836B300E9136F /* RouteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7723E836B300E9136F /* RouteController.swift */; };
-		0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A7C23E85EE900E9136F /* RouteListViewController.swift */; };
 		0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A8623E98DBA00E9136F /* RoadCell.swift */; };
 		0B042A8A23E990FA00E9136F /* RoadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B042A8923E990FA00E9136F /* RoadCell.xib */; };
 		0B042A8D23E9931500E9136F /* StayingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A8B23E9931500E9136F /* StayingCell.swift */; };
@@ -22,7 +20,6 @@
 		0B042A9123EA9C1400E9136F /* Staying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9023EA9C1400E9136F /* Staying.swift */; };
 		0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9223EA9C2E00E9136F /* Subroute.swift */; };
 		0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B042A9423EA9E7300E9136F /* InRoad.swift */; };
-		0B05D4B72409286F006E344A /* AnnotationEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */; };
 		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
 		0B219307242228D2008C9224 /* SubrouteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B219306242228D2008C9224 /* SubrouteCell.swift */; };
 		0B3667512448780B0099AFAB /* ListRoutePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36674B2448780A0099AFAB /* ListRoutePresenter.swift */; };
@@ -38,8 +35,6 @@
 		0B418C5E243F1E150007B611 /* DetailRoutePointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C58243F1E150007B611 /* DetailRoutePointViewController.swift */; };
 		0B418C5F243F1E150007B611 /* DetailRoutePointInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C59243F1E150007B611 /* DetailRoutePointInteractor.swift */; };
 		0B418C62244099820007B611 /* UINavigationController+PopCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */; };
-		0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */; };
-		0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */; };
 		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
 		0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */; };
 		0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */; };
@@ -61,10 +56,6 @@
 		0B8CE31C243CBA9A0065B7B5 /* CreateRoutePointInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE316243CBA9A0065B7B5 /* CreateRoutePointInteractor.swift */; };
 		0BB9B506244F19F300C23F00 /* Date+ComparisonWithoutSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB9B505244F19F300C23F00 /* Date+ComparisonWithoutSeconds.swift */; };
 		0BBFC5E22445E56600731EB4 /* MapBoxRouteCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BBFC5E12445E56600731EB4 /* MapBoxRouteCreator.swift */; };
-		0BD662F4241A457A0034B1D6 /* MapBoxRouteCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */; };
-		0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */; };
-		0BD662FC241A65500034B1D6 /* RouteFragmentVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FB241A65500034B1D6 /* RouteFragmentVM.swift */; };
-		0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,10 +84,8 @@
 		0B042A6523E2D02200E9136F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B042A6723E2D02200E9136F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B042A7023E2E1B600E9136F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		0B042A7223E2EFFF00E9136F /* RoutePointVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointVM.swift; sourceTree = "<group>"; };
+		0B042A7223E2EFFF00E9136F /* RoutePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
 		0B042A7523E3001B00E9136F /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
-		0B042A7723E836B300E9136F /* RouteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteController.swift; sourceTree = "<group>"; };
-		0B042A7C23E85EE900E9136F /* RouteListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListViewController.swift; sourceTree = "<group>"; };
 		0B042A8623E98DBA00E9136F /* RoadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoadCell.swift; sourceTree = "<group>"; };
 		0B042A8923E990FA00E9136F /* RoadCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoadCell.xib; sourceTree = "<group>"; };
 		0B042A8B23E9931500E9136F /* StayingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StayingCell.swift; sourceTree = "<group>"; };
@@ -104,7 +93,6 @@
 		0B042A9023EA9C1400E9136F /* Staying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Staying.swift; sourceTree = "<group>"; };
 		0B042A9223EA9C2E00E9136F /* Subroute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subroute.swift; sourceTree = "<group>"; };
 		0B042A9423EA9E7300E9136F /* InRoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InRoad.swift; sourceTree = "<group>"; };
-		0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationEditViewController.swift; sourceTree = "<group>"; };
 		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0F4131242A4DCD00C769C9 /* UtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
 		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -122,8 +110,6 @@
 		0B418C58243F1E150007B611 /* DetailRoutePointViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointViewController.swift; sourceTree = "<group>"; };
 		0B418C59243F1E150007B611 /* DetailRoutePointInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointInteractor.swift; sourceTree = "<group>"; };
 		0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+PopCompletion.swift"; sourceTree = "<group>"; };
-		0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxViewController.swift; sourceTree = "<group>"; };
-		0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationDetailViewController.swift; sourceTree = "<group>"; };
 		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		0B6CD84E23F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataClass.swift"; path = "DB/RoutePointEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0B6CD84F23F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "RoutePointEntity+CoreDataProperties.swift"; path = "DB/RoutePointEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -149,10 +135,6 @@
 		0BBFC5E12445E56600731EB4 /* MapBoxRouteCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreator.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreation.swift; sourceTree = "<group>"; };
-		0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCreationProtocol.swift; sourceTree = "<group>"; };
-		0BD662FB241A65500034B1D6 /* RouteFragmentVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentVM.swift; sourceTree = "<group>"; };
-		0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteControllerDelegate.swift; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -213,10 +195,9 @@
 				0B366749244875D30099AFAB /* Utils */,
 				0B418C602440995E0007B611 /* Extensions */,
 				0B8CE30D243C93020065B7B5 /* Models */,
+				0B042A8423E98CC800E9136F /* Storyboards */,
 				0B8CE30A243C8E9F0065B7B5 /* Services */,
-				0B042A8323E98CB000E9136F /* Presentation */,
-				0B042A8223E98CA200E9136F /* Domain */,
-				0B042A8123E98C9500E9136F /* Data */,
+				0B6CD85323F2D957006DCDDC /* DB */,
 				0B042A6223E2D02200E9136F /* Assets.xcassets */,
 				0B042A5923E2D02100E9136F /* AppDelegate.swift */,
 				0B7933F9242E3D04008E6746 /* SceneDelegate.swift */,
@@ -234,46 +215,6 @@
 				EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		0B042A7B23E85EBF00E9136F /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				0B6CD83E23EC22E4006DCDDC /* AnnotationDetailViewController.swift */,
-				0B05D4B62409286F006E344A /* AnnotationEditViewController.swift */,
-				0B6C6DA82400036900ABD031 /* MapBoxViewController.swift */,
-				0B042A7C23E85EE900E9136F /* RouteListViewController.swift */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		0B042A8123E98C9500E9136F /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				0B1C843324211445000C9757 /* Data Controllers */,
-				0B6CD84723ED7903006DCDDC /* Data Models */,
-				0B6CD84623ED78EC006DCDDC /* Models */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		0B042A8223E98CA200E9136F /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				0B042A8523E98D7D00E9136F /* Table Cells */,
-				0B042A7B23E85EBF00E9136F /* View Controllers */,
-				0BD662F2241A45600034B1D6 /* Util */,
-				0B6BB0E3240E617D0002D1DB /* Transitioning */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		0B042A8323E98CB000E9136F /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				0B042A8423E98CC800E9136F /* Storyboards */,
-			);
-			path = Presentation;
 			sourceTree = "<group>";
 		};
 		0B042A8423E98CC800E9136F /* Storyboards */ = {
@@ -323,15 +264,6 @@
 			path = UtilTests;
 			sourceTree = "<group>";
 		};
-		0B1C843324211445000C9757 /* Data Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				0BD662FD241A81F00034B1D6 /* RouteControllerDelegate.swift */,
-				0B042A7723E836B300E9136F /* RouteController.swift */,
-			);
-			path = "Data Controllers";
-			sourceTree = "<group>";
-		};
 		0B366749244875D30099AFAB /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -343,6 +275,8 @@
 		0B36674A244877980099AFAB /* List Route */ = {
 			isa = PBXGroup;
 			children = (
+				0B042A8F23EA9B9100E9136F /* Subroutes */,
+				0B042A8523E98D7D00E9136F /* Table Cells */,
 				0B042A8823E990DE00E9136F /* xib */,
 				0B36674F2448780A0099AFAB /* ListRouteViewController.swift */,
 				0B3667502448780A0099AFAB /* ListRouteInteractor.swift */,
@@ -376,23 +310,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		0B6BB0E3240E617D0002D1DB /* Transitioning */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Transitioning;
-			sourceTree = "<group>";
-		};
-		0B6CD84623ED78EC006DCDDC /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0BD662F8241A516F0034B1D6 /* Route */,
-				0B6CD85323F2D957006DCDDC /* DB */,
-				0B042A8F23EA9B9100E9136F /* Subroutes */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		0B6CD84723ED7903006DCDDC /* Data Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,9 +321,11 @@
 		0B6CD85323F2D957006DCDDC /* DB */ = {
 			isa = PBXGroup;
 			children = (
+				0B6CD84723ED7903006DCDDC /* Data Models */,
 				0B88891523FD465A00580A2A /* Core Data */,
 			);
 			name = DB;
+			path = Data/Models;
 			sourceTree = "<group>";
 		};
 		0B7933F0242E3955008E6746 /* MapBoxUITests */ = {
@@ -464,7 +383,7 @@
 		0B8CE30D243C93020065B7B5 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A7223E2EFFF00E9136F /* RoutePointVM.swift */,
+				0B042A7223E2EFFF00E9136F /* RoutePoint.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -480,31 +399,6 @@
 				0B8CE314243CBA9A0065B7B5 /* CreateRoutePointModels.swift */,
 			);
 			path = "Create Route Point";
-			sourceTree = "<group>";
-		};
-		0BD662F2241A45600034B1D6 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				0BD662F5241A4C840034B1D6 /* Route Creation */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
-		0BD662F5241A4C840034B1D6 /* Route Creation */ = {
-			isa = PBXGroup;
-			children = (
-				0BD662F3241A457A0034B1D6 /* MapBoxRouteCreation.swift */,
-				0BD662F6241A4CA50034B1D6 /* RouteCreationProtocol.swift */,
-			);
-			path = "Route Creation";
-			sourceTree = "<group>";
-		};
-		0BD662F8241A516F0034B1D6 /* Route */ = {
-			isa = PBXGroup;
-			children = (
-				0BD662FB241A65500034B1D6 /* RouteFragmentVM.swift */,
-			);
-			path = Route;
 			sourceTree = "<group>";
 		};
 		C5FAC7082B4FBEA6769A9AF7 /* Pods */ = {
@@ -713,15 +607,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B042A9123EA9C1400E9136F /* Staying.swift in Sources */,
-				0B6C6DA92400036900ABD031 /* MapBoxViewController.swift in Sources */,
 				0B3667562448780B0099AFAB /* ListRouteInteractor.swift in Sources */,
-				0BD662F7241A4CA50034B1D6 /* RouteCreationProtocol.swift in Sources */,
 				0B042A8D23E9931500E9136F /* StayingCell.swift in Sources */,
 				0B8CE31A243CBA9A0065B7B5 /* CreateRoutePointModels.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
 				0B6CD85723F2E8CA006DCDDC /* RoutePointCoreDataStore.swift in Sources */,
 				0B6CD85123F2D92E006DCDDC /* RoutePointEntity+CoreDataProperties.swift in Sources */,
-				0B042A7323E2EFFF00E9136F /* RoutePointVM.swift in Sources */,
+				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B418C5B243F1E150007B611 /* DetailRoutePointWorker.swift in Sources */,
 				0B8CE305243C8AF20065B7B5 /* ManageRouteMapWorker.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
@@ -731,7 +623,6 @@
 				0B8CE30F243CAC360065B7B5 /* IDGenerator.swift in Sources */,
 				0B8CE31C243CBA9A0065B7B5 /* CreateRoutePointInteractor.swift in Sources */,
 				0B3667532448780B0099AFAB /* ListRouteRouter.swift in Sources */,
-				0BD662F4241A457A0034B1D6 /* MapBoxRouteCreation.swift in Sources */,
 				0B042A9523EA9E7300E9136F /* InRoad.swift in Sources */,
 				0BB9B506244F19F300C23F00 /* Date+ComparisonWithoutSeconds.swift in Sources */,
 				0B8CE307243C8AF20065B7B5 /* ManageRouteMapModels.swift in Sources */,
@@ -740,24 +631,18 @@
 				0B8CE31B243CBA9A0065B7B5 /* CreateRoutePointViewController.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B8CE309243C8AF20065B7B5 /* ManageRouteMapInteractor.swift in Sources */,
-				0B05D4B72409286F006E344A /* AnnotationEditViewController.swift in Sources */,
 				0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */,
 				0B8CE319243CBA9A0065B7B5 /* CreateRoutePointRouter.swift in Sources */,
 				0B6CD85023F2D92E006DCDDC /* RoutePointEntity+CoreDataClass.swift in Sources */,
 				0B042A8723E98DBA00E9136F /* RoadCell.swift in Sources */,
 				0B418C5A243F1E150007B611 /* DetailRoutePointPresenter.swift in Sources */,
-				0BD662FE241A81F00034B1D6 /* RouteControllerDelegate.swift in Sources */,
 				0B418C5E243F1E150007B611 /* DetailRoutePointViewController.swift in Sources */,
-				0B6CD83F23EC22E4006DCDDC /* AnnotationDetailViewController.swift in Sources */,
 				0BBFC5E22445E56600731EB4 /* MapBoxRouteCreator.swift in Sources */,
 				0B418C62244099820007B611 /* UINavigationController+PopCompletion.swift in Sources */,
 				0B3667552448780B0099AFAB /* ListRouteViewController.swift in Sources */,
-				0B042A7823E836B300E9136F /* RouteController.swift in Sources */,
-				0BD662FC241A65500034B1D6 /* RouteFragmentVM.swift in Sources */,
 				0B8CE304243C8AF20065B7B5 /* ManageRouteMapPresenter.swift in Sources */,
 				0B3667522448780B0099AFAB /* ListRouteWorker.swift in Sources */,
 				0B8CE317243CBA9A0065B7B5 /* CreateRoutePointPresenter.swift in Sources */,
-				0B042A7D23E85EE900E9136F /* RouteListViewController.swift in Sources */,
 				0B8CE318243CBA9A0065B7B5 /* CreateRoutePointWorker.swift in Sources */,
 				0B7933FA242E3D04008E6746 /* SceneDelegate.swift in Sources */,
 				0B418C5F243F1E150007B611 /* DetailRoutePointInteractor.swift in Sources */,

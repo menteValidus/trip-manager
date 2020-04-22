@@ -9,7 +9,7 @@
 import Foundation
 
 class InRoad: Subroute {
-    private static var defaultTitle = "In Road"
+    private static let defaultTitle = "In Road"
     var title: String
     var timeInSeconds: Int
     var metres: Int
@@ -18,14 +18,5 @@ class InRoad: Subroute {
         self.title = title
         timeInSeconds = seconds
         self.metres = metres
-    }
-    
-    // MARK: - Factory
-    
-    struct Factory {
-        static func create(from sourceRoutePoint: RoutePointVM) -> InRoad {
-            return InRoad(title: "Road", seconds: sourceRoutePoint.timeToNextPointInSeconds ?? 0,
-                          metres: sourceRoutePoint.distanceToNextPointInMeters ?? 0)
-        }
     }
 }
