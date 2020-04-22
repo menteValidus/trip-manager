@@ -16,18 +16,7 @@ protocol AnnotationInfo {
     var longitude: Double { get }
 }
 
-protocol AnnotationForm {
-    var title: String { get set }
-    var subtitle: String { get set }
-    
-    var arrivalDate: Date { get set }
-    var departureDate: Date { get set }
-    
-    var timeToNextPointInSeconds: Int? { get set }
-    var distanceToNextPointInMeters: Int? { get set }
-}
-
-struct RoutePoint: AnnotationInfo, AnnotationForm {
+struct RoutePoint: AnnotationInfo {
     let id: String
     
     var orderNumber: Int
