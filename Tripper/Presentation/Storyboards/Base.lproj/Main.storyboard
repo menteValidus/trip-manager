@@ -20,7 +20,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D45-N3-msk">
                                         <rect key="frame" x="332" y="128" width="50" height="50"/>
-                                        <state key="normal" image="ic_user"/>
+                                        <state key="normal" image="ic_user_50"/>
                                         <state key="selected" image="ic_user_selected"/>
                                         <connections>
                                             <action selector="focusOnUser:" destination="4Cc-Fh-swH" eventType="touchUpInside" id="yec-ln-pU2"/>
@@ -29,7 +29,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2p9-mg-ohL">
                                         <rect key="frame" x="332" y="186" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" image="ic_route"/>
+                                        <state key="normal" image="ic_route_50"/>
                                         <state key="selected" image="ic_user_selected"/>
                                         <connections>
                                             <action selector="focusOnRoute:" destination="4Cc-Fh-swH" eventType="touchUpInside" id="6zq-9x-Kdv"/>
@@ -460,8 +460,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_route" width="50" height="50"/>
-        <image name="ic_user" width="50" height="50"/>
+        <image name="ic_route_50" width="50" height="50"/>
+        <image name="ic_user_50" width="50" height="50"/>
         <image name="ic_user_selected" width="80" height="80"/>
     </resources>
 </document>
