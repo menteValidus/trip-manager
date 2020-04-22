@@ -27,7 +27,7 @@ protocol ManageRouteMapBusinessLogic {
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
     func clearAll(request: ManageRouteMap.ClearAll.Request)
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
-    func focus(request: ManageRouteMap.Focus.Request)
+    func focusOnRoute(request: ManageRouteMap.FocusOnRoute.Request)
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
 }
 
@@ -328,9 +328,9 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentToggleUserInput(response: response)
     }
     
-    // MARK: Focus
+    // MARK: Focus On Route
     
-    func focus(request: ManageRouteMap.Focus.Request) {
+    func focusOnRoute(request: ManageRouteMap.FocusOnRoute.Request) {
         let coordinates = prepareAllCoordinatesArray()
         
         if coordinates.count == 0 {
@@ -366,8 +366,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         let locSouthWest = CLLocationCoordinate2D(latitude: minimalCoordinate.latitude, longitude: minimalCoordinate.longitude)
         let locNorthEast = CLLocationCoordinate2D(latitude: maximalCoordinate.latitude, longitude: maximalCoordinate.longitude)
 
-        let response = ManageRouteMap.Focus.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
-        presenter?.presentFocus(response: response)
+        let response = ManageRouteMap.FocusOnRoute.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
+        presenter?.presentFocusOnRoute(response: response)
     }
     
     private func prepareAllCoordinatesArray() -> [CLLocationCoordinate2D] {

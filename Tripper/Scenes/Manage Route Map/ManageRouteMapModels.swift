@@ -192,7 +192,7 @@ enum ManageRouteMap {
         }
     }
     
-    enum Focus {
+    enum FocusOnRoute {
         struct Request {
         }
         struct Response {

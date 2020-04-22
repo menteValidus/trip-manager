@@ -27,7 +27,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
     func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
-    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel)
+    func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel)
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
 }
 
@@ -355,7 +355,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
 //        focusOnRoute(nil)
     }
     
-    // MARK: Focus
+    // MARK: Focus On Route
     
     @IBAction func focusOnRoute(_ sender: UIButton?) {
         if let button = sender {
@@ -368,11 +368,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             })
         }
         
-        let request = ManageRouteMap.Focus.Request()
-        interactor?.focus(request: request)
+        let request = ManageRouteMap.FocusOnRoute.Request()
+        interactor?.focusOnRoute(request: request)
     }
     
-    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel) {
+    func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel) {
         let offset = CGFloat(60)
         let topOffset = offset + navigationController!.navigationBar.frame.height
         var bottomOffset = offset

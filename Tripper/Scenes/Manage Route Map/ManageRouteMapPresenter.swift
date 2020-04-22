@@ -26,7 +26,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
     func presentClearAll(response: ManageRouteMap.ClearAll.Response)
     func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response)
-    func presentFocus(response: ManageRouteMap.Focus.Response)
+    func presentFocusOnRoute(response: ManageRouteMap.FocusOnRoute.Response)
     func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response)
 }
 
@@ -125,12 +125,12 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
         viewController?.displayToggleUserInput(viewModel: viewModel)
     }
     
-    // MARK: Focus
+    // MARK: Focus On Route
     
-    func presentFocus(response: ManageRouteMap.Focus.Response) {
-        let viewModel = ManageRouteMap.Focus.ViewModel(
+    func presentFocusOnRoute(response: ManageRouteMap.FocusOnRoute.Response) {
+        let viewModel = ManageRouteMap.FocusOnRoute.ViewModel(
             southWestCoordinate: response.southWestCoordinate, northEastCoordinate: response.northEastCoordinate)
-        viewController?.displayFocus(viewModel: viewModel)
+        viewController?.displayFocusOnRoute(viewModel: viewModel)
     }
     
     // MARK: Focus On User
