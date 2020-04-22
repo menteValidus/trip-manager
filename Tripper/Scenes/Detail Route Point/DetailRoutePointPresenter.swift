@@ -25,7 +25,7 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     
     private var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
+        dateFormatter.timeStyle = .short
         dateFormatter.dateStyle = .medium
         return dateFormatter
     }()
@@ -65,7 +65,6 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     // MARK: Toggle View
     
     func presentToggleView(response: DetailRoutePoint.ToggleView.Response) {
-//        let screenCoverage = CGFloat(response.screenCoverage)
         let viewModel = DetailRoutePoint.ToggleView.ViewModel(screenCoverage: response.screenCoverage)
         viewController?.displayToggleView(viewModel: viewModel)
     }

@@ -35,7 +35,7 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
         if let routePoint = routePoint {
             let response = DetailRoutePoint.SetupUI.Response(
                 title: routePoint.title, description: routePoint.subtitle,
-                arrivalDate: routePoint.arrivalDate ?? Date(), departureDate: routePoint.departureDate ?? Date())
+                arrivalDate: routePoint.arrivalDate, departureDate: routePoint.departureDate)
             
             presenter?.presentSetupUI(response: response)
         }

@@ -88,7 +88,6 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: GestureRecognizer doesn't call dedicated event.
         initGestureRecognizers()
         initView()
         setupUI()
