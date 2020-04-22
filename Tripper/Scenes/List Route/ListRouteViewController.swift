@@ -108,11 +108,34 @@ class ListRouteViewController: UITableViewController, ListRouteDisplayLogic {
         
     }
     
+    var selectedRow: Int?
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        if indexPath.row % 2 == 0 {
+            if indexPath.row == selectedRow {
+                selectedRow = nil
+            } else {
+                selectedRow = indexPath.row
+            }
+            
+            tableView.reloadRows(at: [indexPath], with: .fade)
+        }
     }
     
-    // MARK: Fetch Data
+   
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if selectedRow == indexPath.row {
+            return 132.0
+        } else {
+            return 44.0
+        }
+        
+    }
+    
+    // MARK: - Fetch Data
     
     var subroutes = [Subroute]()
     

@@ -44,10 +44,10 @@ class RouteListViewController: UITableViewController {
             let selectedCell = tableView.cellForRow(at: indexPath) as! StayingCell
             if expandedStayingCellRowNumber == indexPath.row {
                 expandedStayingCellRowNumber = nil
-                selectedCell.isExpanded = false
+//                selectedCell.isExpanded = false
             } else {
                 expandedStayingCellRowNumber = indexPath.row
-                selectedCell.isExpanded = true
+//                selectedCell.isExpanded = true
             }
             
             tableView.endUpdates()
@@ -91,9 +91,9 @@ class RouteListViewController: UITableViewController {
             return 132.0
         } else if indexPath.row % 2 == 0 {
             if let cell = tableView.cellForRow(at: indexPath) as? StayingCell {
-                if cell.isExpanded {
-                    cell.isExpanded = false
-                }
+//                if cell.isExpanded {
+//                    cell.isExpanded = false
+//                }
             }
         }
         

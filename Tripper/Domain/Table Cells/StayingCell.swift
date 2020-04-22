@@ -15,25 +15,10 @@ class StayingCell: UITableViewCell, SubrouteCell {
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var descriptionTitleLabel: UILabel!
     
-    private var _isExpanded = false;
-    
-    var isExpanded: Bool {
-        get {
-            _isExpanded
-        }
-        set {
-            _isExpanded = newValue
-            configureUIVisibility()
-        }
-    }
-    
     // MARK: - UITableViewCell's Delegates
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        configureUIVisibility()
-//        descriptionTextView.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
         
     }
     
@@ -45,27 +30,4 @@ class StayingCell: UITableViewCell, SubrouteCell {
         timeLabel.text = format(seconds: staying.timeInSeconds)
         descriptionTextView.text = staying.description
     }
-    
-    func configureUIVisibility() {
-        if isExpanded {
-            self.descriptionTextView.isHidden = false
-            self.descriptionTitleLabel.isHidden = false
-            
-//            UIView.animate(withDuration: 1, animations: {
-//            self.descriptionTextView.textColor = UIColor(white: 0, alpha: 1)
-//            self.descriptionTitleLabel.textColor = UIColor(white: 0, alpha: 1)
-//            })
-        } else {
-//            UIView.animate(withDuration: 1, animations: {
-//                    self.descriptionTextView.textColor = UIColor(white: 0, alpha: 0)
-//                    self.descriptionTitleLabel.textColor = UIColor(white: 0, alpha: 0)
-//            }, completion: { _ in
-                self.descriptionTextView.isHidden = true
-                self.descriptionTitleLabel.isHidden = true
-//            })
-            
-        }
-        
-    }
-    
 }
