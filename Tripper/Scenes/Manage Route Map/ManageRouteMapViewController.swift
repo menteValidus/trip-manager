@@ -43,6 +43,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     var popup: Popup? {
         didSet {
             if popup == nil {
+                deselectAnnotation()
                 fetchDifference()
             } else {
                 focusOnRoute(nil)
@@ -178,7 +179,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Deselect Annotation
     
-    func deselectAnnotations() {
+    func deselectAnnotation() {
         let request = ManageRouteMap.DeselectAnnotation.Request()
         interactor?.deselectAnnotation(request: request)
     }
@@ -456,8 +457,8 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         
         print("*** Long pressed on the map.")
         
-        let requestToDeselect = ManageRouteMap.SelectAnnotation.Request(identifier: nil)
-        interactor?.selectAnnotation(request: requestToDeselect)
+        let requestToSelect = ManageRouteMap.SelectAnnotation.Request(identifier: nil)
+        interactor?.selectAnnotation(request: requestToSelect)
         
         createRoutePoint(at: coordinate)
     }
