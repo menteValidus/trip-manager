@@ -100,7 +100,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="clearAllBarButtonItem" destination="iLe-Zf-5sl" id="MbU-9A-JMs"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="OnC-x8-mW2"/>
+                        <outlet property="toRouteBarButtonItem" destination="3YU-Yf-sPd" id="BJC-nU-vFA"/>
                         <segue destination="CC2-X3-ZR1" kind="show" id="OLt-wK-K95"/>
                     </connections>
                 </viewController>

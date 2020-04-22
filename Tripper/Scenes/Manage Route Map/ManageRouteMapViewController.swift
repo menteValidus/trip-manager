@@ -39,8 +39,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var routeEstimationView: UIView!
     @IBOutlet weak var routeLengthLabel: UILabel!
     @IBOutlet weak var routeTimeLabel: UILabel!
-    @IBOutlet weak var clearAllBarItem: UIBarButtonItem!
-    @IBOutlet weak var routeListBarItem: UIBarButtonItem!
     
     var popup: Popup? {
         didSet {
@@ -102,7 +100,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         super.viewDidLoad()
         registerGestureRecognizers()
         mapView.delegate = self
-//        mapView.userTrackingMode = MGLUserTrackingMode.follow
     }
     
     private func registerGestureRecognizers() {
@@ -312,6 +309,9 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Toggle User Input
     
+    @IBOutlet weak var clearAllBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var toRouteBarButtonItem: UIBarButtonItem!
+    
     private lazy var dimmingView = { () -> UIView in
         let dimmingView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         
@@ -331,12 +331,16 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel) {
         if viewModel.isLocked {
-            // Lock all user input
-            showSpinner()
+            lockUserInput()
         } else {
-            // Unlock
-            hideSpinner()
+            unlockUserInput()
         }
+    }
+    
+    private func lockUserInput() {
+        showSpinner()
+        clearAllBarButtonItem.isEnabled = false
+        toRouteBarButtonItem.isEnabled = false
     }
     
     private func showSpinner() {
@@ -350,9 +354,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         spinner.startAnimating()
     }
     
+    private func unlockUserInput() {
+        hideSpinner()
+        clearAllBarButtonItem.isEnabled = true
+        toRouteBarButtonItem.isEnabled = true
+    }
+    
     private func hideSpinner() {
         dimmingView.removeFromSuperview()
-//        focusOnRoute(nil)
     }
     
     // MARK: Focus On Route
@@ -377,7 +386,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let topOffset = offset + navigationController!.navigationBar.frame.height
         var bottomOffset = offset
         
-        // TODO: After end of loading there's no popup. It
         if let popup = popup {
             bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
         }
