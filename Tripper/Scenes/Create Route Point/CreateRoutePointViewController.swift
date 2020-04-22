@@ -121,7 +121,6 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     
     func displaySaveRoutePoint(viewModel: CreateRoutePoint.SaveRoutePoint.ViewModel) {
         if let errorMessage = viewModel.errorMessage {
-            // TODO: Request error alert
             showCreationFailure(title: "Date Error!", message: errorMessage)
             return
         }

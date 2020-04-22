@@ -36,7 +36,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Annotation Creation
     
     func presentCreateRoutePoint(response: ManageRouteMap.CreateRoutePoint.Response) {
-        let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel()
+        let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel(isSucceed: response.isSucceed)
         viewController?.displayCreateRoutePoint(viewModel: viewModel)
     }
     

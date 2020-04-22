@@ -48,11 +48,12 @@ enum ManageRouteMap {
         struct Request {
             let latitude: Double
             let longitude: Double
-//            let timeToGetHereInSeconds: Int
         }
         struct Response {
+            let isSucceed: Bool
         }
         struct ViewModel {
+            let isSucceed: Bool
         }
     }
     

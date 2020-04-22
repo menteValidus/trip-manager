@@ -133,8 +133,13 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let requestToToggle = ManageRouteMap.ToggleUserInput.Request(isLocked: false)
         interactor?.toggleUserInput(request: requestToToggle)
         
-        popup?.dismissPopup()
-        router?.routeToCreateRoutePoint(segue: nil)
+        if viewModel.isSucceed {
+            popup?.dismissPopup()
+            router?.routeToCreateRoutePoint(segue: nil)
+        } else {
+            showCreationFailure(title: "Route Creation Error!", message: "Route between last an new point can't be calculated.")
+        }
+        
     }
     
     // MARK: Set Route Point
@@ -245,6 +250,15 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         mapView.style?.addLayer(lineStyle)
         
         routeFragmentsToProcess -= 1
+    }
+    
+    // MARK: Error Handling
+    
+    func showCreationFailure(title: String = "Error", message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(alertAction)
+        showDetailViewController(alertController, sender: nil)
     }
     
     // MARK: Delete Route Fragment

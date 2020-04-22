@@ -91,21 +91,19 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 if let routeInfo = routeInfo {
                     self.dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: routeInfo.timeInSeconds, distanceToNextPointInMeters: routeInfo.distanceInMeters)
                     
-                    let response = ManageRouteMap.CreateRoutePoint.Response()
+                    let response = ManageRouteMap.CreateRoutePoint.Response(isSucceed: true)
                     self.presenter?.presentCreateRoutePoint(response: response)
                 } else {
-                    // TODO: Display error.
+                    let response = ManageRouteMap.CreateRoutePoint.Response(isSucceed: false)
+                    self.presenter?.presentCreateRoutePoint(response: response)
                 }
             })
         } else {
             dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
             
-            let response = ManageRouteMap.CreateRoutePoint.Response()
+            let response = ManageRouteMap.CreateRoutePoint.Response(isSucceed: true)
             presenter?.presentCreateRoutePoint(response: response)
         }
-        
-        
-        
     }
     
     // MARK: Fetch Difference
@@ -212,7 +210,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 
                 let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
                 self.presenter?.presentCreateRouteFragment(response: response)
-            }
+            } // We don't check else because impossibility of route creation is checked before in Create Route Point use case.
             
         })
     }
@@ -230,7 +228,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         var addedSubroutesInfo: [ManageRouteMap.MapRoute.SubrouteInfo] = []
         let addedAnnotationsInfo = request.addedAnnotationsInfo.sorted(by: { return $0.orderNumber < $1.orderNumber})
         if addedAnnotationsInfo.count > 0 {
-            // TODO: TELL HOW MUCH ROUTES WILL BE CREATED. USE NEW USE CASE: ShowLoadingView
             for annotationInfo in addedAnnotationsInfo {
                 if let previousAnnotationInfo = getPreviousAnnotationInfo(within: annotationsInfo, by: annotationInfo.orderNumber) {
                     let subrouteInfo = createSubrouteInfo(start: previousAnnotationInfo, end: annotationInfo)
@@ -241,7 +238,9 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         
         var idOfDeletedRouteFragments: [String] = []
         
-        // There's huge problem. If we delete several points between some other points route won't be reconstructed and empty gap will be remained. Now it isn't a problem but if we want delete several points (not all of them but more than two) we should implement this behaviour.
+        // There's huge problem. If we delete several points between some other points route won't be reconstructed
+        // and empty gap will be remained. Now it isn't a problem but if we want delete several points (not all of them but more than two)
+        // we should implement this behaviour.
         for annotationInfo in request.removedAnnotationsInfo {
             let orderNumber = annotationInfo.orderNumber
             
@@ -334,7 +333,6 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         let coordinates = prepareAllCoordinatesArray()
         
         if coordinates.count == 0 {
-            // TODO: Pass no coordinates.
             return
         }
         
