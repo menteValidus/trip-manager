@@ -256,23 +256,39 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             
             let previousAnnotationInfo = getPreviousAnnotationInfo(within: annotationsInfo, by: orderNumber)
             if let idOfPreviousPoint = previousAnnotationInfo?.id {
-                idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
+                let routeFragmentID = format(firstID: idOfPreviousPoint, secondID: annotationInfo.id)
+                
+                if !idOfDeletedRouteFragments.contains(routeFragmentID) {
+                    idOfDeletedRouteFragments.append(routeFragmentID)
+                }
             } else {
-                // Check previous point within deleted route points.
+                // Check previous point within deleted route points in removedAnnotationsInfo array.
                 let previousPoint = getPreviousAnnotationInfo(within: request.removedAnnotationsInfo, by: orderNumber)
                 if let idOfPreviousPoint = previousPoint?.id {
-                    idOfDeletedRouteFragments.append(format(firstID: idOfPreviousPoint, secondID: annotationInfo.id))
+                    let routeFragmentID = format(firstID: idOfPreviousPoint, secondID: annotationInfo.id)
+                    
+                    if !idOfDeletedRouteFragments.contains(routeFragmentID) {
+                        idOfDeletedRouteFragments.append(routeFragmentID)
+                    }
                 }
             }
             
             let nextAnnotationInfo = getNextAnnotationInfo(within: annotationsInfo, by: orderNumber)
             if let idOfNextPoint = nextAnnotationInfo?.id {
-                idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
+                let routeFragmentID = format(firstID: annotationInfo.id, secondID: idOfNextPoint)
+                
+                if !idOfDeletedRouteFragments.contains(routeFragmentID) {
+                    idOfDeletedRouteFragments.append(routeFragmentID)
+                }
             } else {
-                // Check next point within deleted route points.
+                // Check next point within deleted route points in removedAnnotationsInfo array.
                 let nextPoint = getNextAnnotationInfo(within: request.removedAnnotationsInfo, by: orderNumber)
                 if let idOfNextPoint = nextPoint?.id {
-                    idOfDeletedRouteFragments.append(format(firstID: annotationInfo.id, secondID: idOfNextPoint))
+                    let routeFragmentID = format(firstID: annotationInfo.id, secondID: idOfNextPoint)
+                    
+                    if !idOfDeletedRouteFragments.contains(routeFragmentID) {
+                        idOfDeletedRouteFragments.append(routeFragmentID)
+                    }
                 }
             }
             
