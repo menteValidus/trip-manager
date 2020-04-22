@@ -29,6 +29,7 @@ protocol ManageRouteMapBusinessLogic {
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
     func focusOnRoute(request: ManageRouteMap.FocusOnRoute.Request)
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
+    func routeEstimation(request: ManageRouteMap.RouteEstimation.Request)
 }
 
 
@@ -194,6 +195,10 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: Create Route Fragment
     
+    /**
+     Initialized in constructor with empty array.
+     Is updating in Create Route Fragment use case (insert) and Delete Route Fragment use case (delete).
+     */
     var routeFragments: [RouteFragment]
     
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request) {
@@ -218,8 +223,13 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Delete Route Fragment
     
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request) {
-        let response = ManageRouteMap.DeleteRouteFragment.Response(identifier: request.identifier)
-        presenter?.presentDeleteRouteFragment(response: response)
+        let indexToRemove = routeFragments.firstIndex(where: { return $0.identifier == request.identifier })
+        
+        if let index = indexToRemove {
+            routeFragments.remove(at: index)
+            let response = ManageRouteMap.DeleteRouteFragment.Response(identifier: request.identifier)
+            presenter?.presentDeleteRouteFragment(response: response)
+        }
     }
     
     // MARK: Map Route
@@ -390,5 +400,20 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request) {
         let response = ManageRouteMap.FocusOnUser.Response(userCoordinate: request.userCoordinate)
         presenter?.presentFocusOnUser(response: response)
+    }
+    
+    // MARK: Route Estimation
+    
+    func routeEstimation(request: ManageRouteMap.RouteEstimation.Request) {
+        var timeInSeconds = 0
+        var distanceInMeters = 0
+        
+        for routeFragment in routeFragments {
+            timeInSeconds += routeFragment.travelTimeInSeconds
+            distanceInMeters += routeFragment.travelDistanceInMeters
+        }
+        
+        let response = ManageRouteMap.RouteEstimation.Response(timeInSeconds: timeInSeconds, distanceInMeters: distanceInMeters)
+        presenter?.presentRouteEstimation(response: response)
     }
 }

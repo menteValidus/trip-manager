@@ -28,6 +28,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentToggleUserInput(response: ManageRouteMap.ToggleUserInput.Response)
     func presentFocusOnRoute(response: ManageRouteMap.FocusOnRoute.Response)
     func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response)
+    func presentRouteEstimation(response: ManageRouteMap.RouteEstimation.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -138,5 +139,37 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response) {
         let viewModel = ManageRouteMap.FocusOnUser.ViewModel(userCoordinate: response.userCoordinate)
         viewController?.displayFocusOnUser(viewModel: viewModel)
+    }
+    
+    // MARK: Route Estimation
+    
+    func presentRouteEstimation(response: ManageRouteMap.RouteEstimation.Response) {
+        let timeEstimation = format(seconds: response.timeInSeconds)
+        let distanceEstimation = format(metres: response.distanceInMeters)
+        
+        if timeEstimation.isEmpty && distanceEstimation.isEmpty {
+            let viewModel = ManageRouteMap.RouteEstimation.ViewModel(toShow: false, timeEstimation: timeEstimation,
+                                                                     distanceEstimation: distanceEstimation)
+            viewController?.displayRouteEstimation(viewModel: viewModel)
+            return
+        }
+        
+        if timeEstimation.isEmpty && !distanceEstimation.isEmpty {
+            let viewModel = ManageRouteMap.RouteEstimation.ViewModel(toShow: true, timeEstimation: "Several seconds",
+                                                                     distanceEstimation: distanceEstimation)
+            viewController?.displayRouteEstimation(viewModel: viewModel)
+            return
+        }
+        
+        if !timeEstimation.isEmpty && distanceEstimation.isEmpty {
+            let viewModel = ManageRouteMap.RouteEstimation.ViewModel(toShow: true, timeEstimation: timeEstimation,
+                                                                     distanceEstimation: "Several metres")
+            viewController?.displayRouteEstimation(viewModel: viewModel)
+            return
+        }
+        
+        let viewModel = ManageRouteMap.RouteEstimation.ViewModel(toShow: true, timeEstimation: timeEstimation,
+                                                                 distanceEstimation: distanceEstimation)
+        viewController?.displayRouteEstimation(viewModel: viewModel)
     }
 }

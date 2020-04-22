@@ -217,4 +217,18 @@ enum ManageRouteMap {
             let userCoordinate: CLLocationCoordinate2D
         }
     }
+    
+    enum RouteEstimation {
+        struct Request {
+        }
+        struct Response {
+            let timeInSeconds: Int
+            let distanceInMeters: Int
+        }
+        struct ViewModel {
+            let toShow: Bool
+            let timeEstimation: String
+            let distanceEstimation: String
+        }
+    }
 }

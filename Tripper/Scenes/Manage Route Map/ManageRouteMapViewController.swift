@@ -29,6 +29,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
     func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel)
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
+    func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -36,9 +37,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
     
     @IBOutlet weak var mapView: MGLMapView!
-    @IBOutlet weak var routeEstimationView: UIView!
-    @IBOutlet weak var routeLengthLabel: UILabel!
-    @IBOutlet weak var routeTimeLabel: UILabel!
     
     var popup: Popup? {
         didSet {
@@ -101,6 +99,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         super.viewDidLoad()
         registerGestureRecognizers()
         mapView.delegate = self
+        
+        routeEstimationView.layer.cornerRadius = 16
     }
     
     private func registerGestureRecognizers() {
@@ -250,6 +250,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         mapView.style?.addLayer(lineStyle)
         
         routeFragmentsToProcess -= 1
+        
+        routeEstimation()
     }
     
     // MARK: Error Handling
@@ -277,6 +279,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
         
         routeFragmentsToProcess -= 1
+        
+        routeEstimation()
     }
     
     // MARK: Map Route
@@ -431,6 +435,31 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel) {
         let zoomLevel = 6.0
         mapView.setCenter(viewModel.userCoordinate, zoomLevel: zoomLevel, animated: true)
+    }
+    
+    // MARK: Route Estimation
+    
+    @IBOutlet weak var routeEstimationView: UIView!
+    @IBOutlet weak var routeLengthLabel: UILabel!
+    @IBOutlet weak var routeTimeLabel: UILabel!
+    
+    func routeEstimation() {
+        let request = ManageRouteMap.RouteEstimation.Request()
+        interactor?.routeEstimation(request: request)
+    }
+    
+    func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel) {
+        if viewModel.toShow {
+            // TODO: Animate
+            routeEstimationView.isHidden = false
+            routeLengthLabel.text = viewModel.distanceEstimation
+            routeTimeLabel.text = viewModel.timeEstimation
+        } else {
+            routeEstimationView.isHidden = true
+            routeLengthLabel.text = ""
+            routeTimeLabel.text = ""
+        }
+        
     }
     
     // MARK: Shared Helper Methods
