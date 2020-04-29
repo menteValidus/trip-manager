@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="RouteFragmentEntity" representedClassName="RouteFragmentEntity" syncable="YES">
+        <attribute name="coordinates" optional="YES" attributeType="Transformable"/>
+        <attribute name="distanceInMeters" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="timeInSeconds" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="RoutePointEntity" representedClassName="RoutePointEntity" syncable="YES">
         <attribute name="arrivalDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="departureDate" attributeType="Date" usesScalarValueType="NO"/>
@@ -14,5 +20,6 @@
     </entity>
     <elements>
         <element name="RoutePointEntity" positionX="-63" positionY="-18" width="128" height="193"/>
+        <element name="RouteFragmentEntity" positionX="-54" positionY="63" width="128" height="103"/>
     </elements>
 </model>
