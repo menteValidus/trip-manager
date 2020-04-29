@@ -210,7 +210,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             if let routeInfo = routeInfo {
                 let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
                                               secondID: request.addedSubrouteInfo.endWaypoint.id)
-                let routeFragment = ManageRouteMap.ConcreteRouteFragment(identifier: idOfNewRouteFragment, coordinates: routeInfo.coordinates, travelTimeInSeconds: routeInfo.timeInSeconds, travelDistanceInMeters: routeInfo.distanceInMeters)
+                let routeFragment = ConcreteRouteFragment(identifier: idOfNewRouteFragment, coordinates: routeInfo.coordinates, travelTimeInSeconds: routeInfo.timeInSeconds, travelDistanceInMeters: routeInfo.distanceInMeters)
                 self.routeFragments.append(routeFragment)
                 
                 let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
