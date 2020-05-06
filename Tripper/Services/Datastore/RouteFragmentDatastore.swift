@@ -8,43 +8,14 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
-protocol RouteFragmentDataStore: class {
+protocol RouteFragmentDatastore: class {
+    func fetchAll() -> [RouteFragment]
+    func insert(_ fragment: RouteFragment)
 }
 
-class RouteFragmentCoreDataStore: RouteFragmentDataStore {
-    
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: DataModelDB.name)
-        container.loadPersistentStores(completionHandler: { storeDescription, error in
-            if let error = error {
-                throwAn(error: error)
-            }
-        })
-        
-        return container
-    }()
-    
-    lazy var managedObjectContext: NSManagedObjectContext = persistentContainer.viewContext
-    
-    
-    private struct DataModelDB {
-        static let name = "DataModel"
-        
-        struct Entities {
-            
-            struct RouteFragmentEntity {
-                static let name = "RouteFragmentEntity"
-                
-                struct KeyPathNames {
-                    static let id = "id"
-                    static let coordinates = "coordinates"
-                    static let time = "timeInSeconds"
-                    static let distance = "distanceInMeters"
-                }
-            }
-        }
-    }
+extension CoreDatastore: RouteFragmentDatastore {
     
     // MARK: - Database's Queries
     
@@ -54,13 +25,13 @@ class RouteFragmentCoreDataStore: RouteFragmentDataStore {
         do {
             fetchedPoints = try managedObjectContext.fetch(pointsFetch) as! [RouteFragmentEntity]
         } catch {
-            fatalError("*** Failed to fetch all RoutePoint's date.\n\(error)")
+            fatalError("*** Failed to fetch all RoutePoint's date.\nError:\(error)")
         }
         
         var routeFragments: [RouteFragment] = []
         
         for fragmentEntity in fetchedPoints {
-            routeFragments.append(convertEntityToRoutePoint(fragmentEntity))
+            routeFragments.append(convertEntityToRouteFragment(fragmentEntity))
         }
         
         return routeFragments
@@ -75,7 +46,7 @@ class RouteFragmentCoreDataStore: RouteFragmentDataStore {
         do {
             try managedObjectContext.save()
         } catch {
-            throwAn(error: error)
+            fatalError("Insert's Error: \(error)")
         }
     }
     
@@ -111,18 +82,51 @@ class RouteFragmentCoreDataStore: RouteFragmentDataStore {
     
     // MARK: - Converters
     
-    private func convertEntityToRoutePoint(_ entity: RouteFragmentEntity) -> RouteFragment {
-        let routeFragment = ConcreteRouteFragment(identifier: entity.id!, coordinates: [/*TODO*/], travelTimeInSeconds: Int(entity.timeInSeconds), travelDistanceInMeters: Int(entity.distanceInMeters))
+    private func convertEntityToRouteFragment(_ entity: RouteFragmentEntity) -> RouteFragment {
+        let previousPointID = entity.previousFragmentOf.id
+        let nextPointID = entity.nextFragmentOf.id
+        var coordinates = [CLLocationCoordinate2D]()
+        
+        if let coordEntities = entity.coordinates {
+            for coordinateEntity in coordEntities {
+                let coordinate = convertEntityToCoordinate(coordinateEntity as! CoordinateEntity)
+                coordinates.append(coordinate)
+            }
+        }
+        
+        let routeFragment = ConcreteRouteFragment(startPointID: previousPointID, endPointID: nextPointID, coordinates: coordinates, travelTimeInSeconds: Int(entity.timeInSeconds), travelDistanceInMeters: Int(entity.distanceInMeters))
+
         return routeFragment
+    }
+    
+    private func convertEntityToCoordinate(_ entity: CoordinateEntity) -> CLLocationCoordinate2D {
+        let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(entity.latitude), longitude: CLLocationDegrees(entity.longitude))
+        return coordinate
+    }
+    
+    private func convertCoordinateToEntity(_ coordinate: CLLocationCoordinate2D) -> CoordinateEntity {
+        let entity = CoordinateEntity(context: managedObjectContext)
+        entity.latitude = Float(coordinate.latitude)
+        entity.longitude = Float(coordinate.longitude)
+        return entity
     }
     
     // MARK: Configurators
     
     private func configure(entity: RouteFragmentEntity, with routeFragment: RouteFragment) {
-        entity.setValue(routeFragment.identifier, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.id)
-        entity.setValue(routeFragment.coordinates, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.coordinates)
+//        entity.setValue(routeFragment.identifier, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.id)
+//        entity.setValue(routeFragment.coordinates, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.coordinates)
         entity.setValue(routeFragment.travelTimeInSeconds, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.time)
         entity.setValue(routeFragment.travelDistanceInMeters, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.distance)
+        let startPoint = fetchRoutePointEntity(with: routeFragment.startPointID)!
+        entity.nextFragmentOf = startPoint
+        let endPoint = fetchRoutePointEntity(with: routeFragment.endPointID)!
+        entity.previousFragmentOf = endPoint
+        
+        for coordinate in routeFragment.coordinates {
+            let coordEntity = convertCoordinateToEntity(coordinate)
+            coordEntity.ofFragment = entity
+            // TODO: Check whether after this assignment Coordinate and RouteFragment connected from each side.
+        }
     }
-    
 }

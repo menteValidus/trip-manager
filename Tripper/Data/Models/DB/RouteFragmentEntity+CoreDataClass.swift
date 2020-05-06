@@ -2,7 +2,7 @@
 //  RouteFragmentEntity+CoreDataClass.swift
 //  
 //
-//  Created by Denis Cherniy on 29.04.2020.
+//  Created by Denis Cherniy on 06.05.2020.
 //
 //
 

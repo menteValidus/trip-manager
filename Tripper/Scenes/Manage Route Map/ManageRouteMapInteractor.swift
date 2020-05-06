@@ -208,10 +208,17 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             latitude: request.addedSubrouteInfo.endWaypoint.latitude, longitude: request.addedSubrouteInfo.endWaypoint.longitude)
         routeCreator?.calculateRoute(from: startCoordinate, to: endCoordinate, drawHandler: { routeInfo in
             if let routeInfo = routeInfo {
-                let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
-                                              secondID: request.addedSubrouteInfo.endWaypoint.id)
-                let routeFragment = ConcreteRouteFragment(identifier: idOfNewRouteFragment, coordinates: routeInfo.coordinates, travelTimeInSeconds: routeInfo.timeInSeconds, travelDistanceInMeters: routeInfo.distanceInMeters)
+//                let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
+//                                              secondID: request.addedSubrouteInfo.endWaypoint.id)
+                let startPointID = request.addedSubrouteInfo.startWaypoint.id
+                let endPointID = request.addedSubrouteInfo.endWaypoint.id
+                let routeFragment = ConcreteRouteFragment(startPointID: startPointID, endPointID: endPointID,
+                                                          coordinates: routeInfo.coordinates,
+                                                          travelTimeInSeconds: routeInfo.timeInSeconds,
+                                                          travelDistanceInMeters: routeInfo.distanceInMeters)
                 self.routeFragments.append(routeFragment)
+                
+//                self.worker?.insert(routeFragment: routeFragment)
                 
                 let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
                 self.presenter?.presentCreateRouteFragment(response: response)

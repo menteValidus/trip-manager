@@ -13,7 +13,7 @@
 import UIKit
 
 class DetailRoutePointWorker {
-    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    private let routePointGateway: RoutePointDataStore = CoreDatastore()
     
     func delete(routePoint: RoutePoint) {
         routePointGateway.delete(routePoint)

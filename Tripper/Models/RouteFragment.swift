@@ -9,15 +9,23 @@
 import CoreLocation
 
 protocol RouteFragment {
-    var identifier: String { get set }
+    var identifier: String { get }
+    var startPointID: String { get set }
+    var endPointID: String { get set }
     var coordinates: [CLLocationCoordinate2D] { get set }
     var travelTimeInSeconds: Int { get set }
     var travelDistanceInMeters: Int { get set }
 }
 
 struct ConcreteRouteFragment: RouteFragment {
-    var identifier: String
+    var startPointID: String
+    var endPointID: String
     var coordinates: [CLLocationCoordinate2D]
     var travelTimeInSeconds: Int
     var travelDistanceInMeters: Int
+    
+    var identifier: String {
+        let id = format(firstID: startPointID, secondID: endPointID)
+        return id
+    }
 }

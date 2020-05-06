@@ -16,7 +16,16 @@ import UIKit
 typealias FetchedDifference = ([AnnotationInfo], [AnnotationInfo])
 
 class ManageRouteMapWorker {
-    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    private let routePointGateway: RoutePointDataStore
+    private let routeFragmentGateway: RouteFragmentDatastore
+    
+    init() {
+        let coreDatastore = CoreDatastore()
+        routePointGateway = coreDatastore
+        routeFragmentGateway = coreDatastore
+    }
+    
+    // MARK: - Route Point Data Store
     
     func fetchDifference(comparingWith annotationsInfo: [AnnotationInfo]) -> FetchedDifference {
         let fetchedRoutePoints = routePointGateway.fetchAll()
@@ -66,5 +75,18 @@ class ManageRouteMapWorker {
     // TODO: Temporal.
     func fetchRoutePoint(with id: String) -> RoutePoint {
         return routePointGateway.fetch(with: id)!
+    }
+}
+
+extension ManageRouteMapWorker {
+    // MARK: - Route Fragment Data Store
+    
+    func fetchAll() -> [RouteFragment] {
+        let fetchedRouteFragments = routeFragmentGateway.fetchAll()
+        return fetchedRouteFragments
+    }
+    
+    func insert(routeFragment: RouteFragment) {
+        routeFragmentGateway.insert(routeFragment)
     }
 }

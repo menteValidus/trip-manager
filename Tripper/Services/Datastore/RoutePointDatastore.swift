@@ -1,68 +1,45 @@
 //
-//  CoreDataDAO.swift
+//  RoutePointDatastore.swift
 //  Tripper
 //
-//  Created by Denis Cherniy on 11.02.2020.
+//  Created by Denis Cherniy on 06.05.2020.
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
 
 import CoreData
 
-class CoreDatestore: RoutePointDataStore {
-    
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: DataModelDB.name)
-        container.loadPersistentStores(completionHandler: { storeDescription, error in
-            if let error = error {
-                throwAn(error: error)
-            }
-        })
-        
-        return container
-    }()
-    
-    lazy var managedObjectContext: NSManagedObjectContext = persistentContainer.viewContext
-    
-    
-    struct DataModelDB {
-        static let name = "DataModel"
-        
-        struct Entities {
-            
-            struct RoutePointEntity {
-                static let name = "RoutePointEntity"
-                
-                struct KeyPathNames {
-                    static let id = "id"
-                    static let longitude = "longitude"
-                    static let latitude = "latitude"
-                    static let orderNumber = "orderNumber"
-                    static let title = "title"
-                    static let subtitle = "subtitle"
-                    static let arrivalDate = "arrivalDate"
-                    static let departureDate = "departureDate"
-                    static let distanceToNextPointInMeters = "distanceToNextPointInMeters"
-                    static let timeToNextPointInSeconds = "timeToNextPointInSeconds"
-                }
-            }
-            
-            struct RouteFragmentEntity {
-                static let name = "RouteFragmentEntity"
-                
-                struct KeyPathNames {
-                    static let id = "id"
-                    static let coordinates = "coordinates"
-                    static let time = "timeInSeconds"
-                    static let distance = "distanceInMeters"
-                }
-            }
-                
-        }
-    }
+protocol RoutePointDataStore: class {
+    func fetchAll() -> [RoutePoint]
+    func fetch(with identifier: String) -> RoutePoint?
+    func deleteAll()
+    func insert(_ point: RoutePoint)
+    func update(_ point: RoutePoint)
+    func delete(_ point: RoutePoint)
+}
+
+protocol OrderNumberGenerator: class {
+    func getNewOrderNumber() -> Int
+}
+
+protocol DateLimiter {
+    func fetchLeftLimit(by orderNumber: Int) -> Date?
+    func fetchRightLimit(by orderNumber: Int) -> Date?
+}
+
+extension CoreDatastore: RoutePointDataStore {
     
     // MARK: - Database's Queries
     
     func fetch(with identifier: String) -> RoutePoint? {
+        if let routePointEntity = fetchRoutePointEntity(with: identifier) {
+            let routePoint: RoutePoint = convertEntityToRoutePoint(routePointEntity)
+            return routePoint
+        } else {
+            return nil
+        }
+    }
+    
+    func fetchRoutePointEntity(with identifier: String) -> RoutePointEntity? {
         let pointFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
         let predicate = NSPredicate(format: "\(DataModelDB.Entities.RoutePointEntity.KeyPathNames.id) = %@", identifier)
         pointFetch.predicate = predicate
@@ -74,12 +51,7 @@ class CoreDatestore: RoutePointDataStore {
             fatalError("*** Failed to fetch RoutePoint with id: \(identifier).\n\(error)")
         }
         
-        if let routePointEntity = fetchedPoint {
-            let routePoint: RoutePoint = convertEntityToRoutePoint(routePointEntity)
-            return routePoint
-        } else {
-            return nil
-        }
+        return fetchedPoint
     }
     
     func fetchAll() -> [RoutePoint] {
@@ -166,12 +138,10 @@ class CoreDatestore: RoutePointDataStore {
     
     private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
         let point = RoutePoint(
-            id: entity.id!, orderNumber: Int(entity.orderNumber),
+            id: entity.id, orderNumber: Int(entity.orderNumber),
             title: entity.title ?? "", subtitle: entity.subtitle ?? "",
             latitude: entity.latitude, longitude: entity.longitude,
-            arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
-            timeToNextPointInSeconds: Int(entity.timeToNextPointInSeconds),
-            distanceToNextPointInMeters: Int(entity.distanceToNextPointInMeters))
+            arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
         return point
     }
     
@@ -190,7 +160,7 @@ class CoreDatestore: RoutePointDataStore {
     
 }
 
-extension CoreDatestore: OrderNumberGenerator {
+extension CoreDatastore: OrderNumberGenerator {
     // MARK: - Order Number Generator
     
     func getNewOrderNumber() -> Int {
@@ -220,7 +190,7 @@ extension CoreDatestore: OrderNumberGenerator {
     }
 }
 
-extension CoreDatestore: DateLimiter {
+extension CoreDatastore: DateLimiter {
     // MARK: - Date Limiter
     
     func fetchLeftLimit(by orderNumber: Int) -> Date? {
@@ -238,8 +208,9 @@ extension CoreDatestore: DateLimiter {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
             
             if let routePointEntity = fetchResult.last as? RoutePointEntity {
-                let timeIntervalToAdd = TimeInterval(routePointEntity.timeToNextPointInSeconds)
-                return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
+//                let timeIntervalToAdd = TimeInterval(routePointEntity.previousFragment?.timeInSeconds)
+//                return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
+                return nil
             } else {
                 return nil
             }
