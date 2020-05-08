@@ -15,7 +15,17 @@ protocol RouteFragmentDatastore: class {
     func insert(_ fragment: RouteFragment)
 }
 
-extension CoreDatastore: RouteFragmentDatastore {
+class RouteFragmentCoreDataStore: RouteFragmentDatastore {
+    
+    private lazy var managedObjectContext: NSManagedObjectContext = {
+        return NSManagedObjectContext.shared
+    }()
+    
+    private let routePointGateway: RoutePointDataStore
+    
+    init(routePointGateway: RoutePointDataStore) {
+        self.routePointGateway = routePointGateway
+    }
     
     // MARK: - Database's Queries
     
@@ -67,18 +77,6 @@ extension CoreDatastore: RouteFragmentDatastore {
             fatalError("Delete's Error: \(error)")
         }
     }
-//
-//    func deleteAll() {
-//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
-//
-//        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-//
-//        do {
-//            try managedObjectContext.execute(batchDeleteRequest)
-//        } catch {
-//            fatalError("Clear's Error: \(error)")
-//        }
-//    }
     
     // MARK: - Converters
     
@@ -88,7 +86,18 @@ extension CoreDatastore: RouteFragmentDatastore {
         var coordinates = [CLLocationCoordinate2D]()
         
         if let coordEntities = entity.coordinates {
-            for coordinateEntity in coordEntities {
+            let orderedCoordinates = coordEntities.sorted(by: { lhs, rhs in
+                let lhsCoord = lhs as! CoordinateEntity
+                let rhsCoord = rhs as! CoordinateEntity
+                
+                if (lhsCoord.orderNumber > rhsCoord.orderNumber) {
+                    return true
+                }
+                
+                return false
+            })
+            
+            for coordinateEntity in orderedCoordinates {
                 let coordinate = convertEntityToCoordinate(coordinateEntity as! CoordinateEntity)
                 coordinates.append(coordinate)
             }
@@ -114,8 +123,6 @@ extension CoreDatastore: RouteFragmentDatastore {
     // MARK: Configurators
     
     private func configure(entity: RouteFragmentEntity, with routeFragment: RouteFragment) {
-//        entity.setValue(routeFragment.identifier, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.id)
-//        entity.setValue(routeFragment.coordinates, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.coordinates)
         entity.setValue(routeFragment.travelTimeInSeconds, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.time)
         entity.setValue(routeFragment.travelDistanceInMeters, forKey: DataModelDB.Entities.RouteFragmentEntity.KeyPathNames.distance)
         let startPoint = fetchRoutePointEntity(with: routeFragment.startPointID)!
@@ -123,10 +130,30 @@ extension CoreDatastore: RouteFragmentDatastore {
         let endPoint = fetchRoutePointEntity(with: routeFragment.endPointID)!
         entity.previousFragmentOf = endPoint
         
+        var orderNumber = 1
         for coordinate in routeFragment.coordinates {
             let coordEntity = convertCoordinateToEntity(coordinate)
+            coordEntity.orderNumber = Int64(orderNumber)
             coordEntity.ofFragment = entity
-            // TODO: Check whether after this assignment Coordinate and RouteFragment connected from each side.
+            orderNumber += 1
         }
     }
+    
+    // MARK: Helper Methods
+    
+    private func fetchRoutePointEntity(with identifier: String) -> RoutePointEntity? {
+        let pointFetch = NSFetchRequest<NSFetchRequestResult>(entityName: DataModelDB.Entities.RoutePointEntity.name)
+        let predicate = NSPredicate(format: "\(DataModelDB.Entities.RoutePointEntity.KeyPathNames.id) = %@", identifier)
+        pointFetch.predicate = predicate
+        
+        let fetchedPoint: RoutePointEntity?
+        do {
+            fetchedPoint = try (managedObjectContext.fetch(pointFetch) as! [RoutePointEntity]).first
+        } catch {
+            fatalError("*** Failed to fetch RoutePoint with id: \(identifier).\n\(error)")
+        }
+        
+        return fetchedPoint
+    }
+    
 }

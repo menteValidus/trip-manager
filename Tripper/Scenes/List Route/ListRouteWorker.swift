@@ -13,7 +13,7 @@
 import UIKit
 
 class ListRouteWorker {
-    private let routePointGateway: RoutePointDataStore = CoreDatastore()
+    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
     
     func fetchSubroutes() -> [Subroute] {
         let fetchedRoutePoints = routePointGateway.fetchAll().sorted(by: { lhs, rhs in

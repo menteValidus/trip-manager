@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="CoordinateEntity" representedClassName="CoordinateEntity" syncable="YES">
-        <attribute name="latitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="longitude" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="latitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="orderNumber" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="ofFragment" maxCount="1" deletionRule="Nullify" destinationEntity="RouteFragmentEntity" inverseName="coordinates" inverseEntity="RouteFragmentEntity"/>
     </entity>
     <entity name="RouteFragmentEntity" representedClassName="RouteFragmentEntity" syncable="YES">
@@ -25,7 +26,7 @@
         <relationship name="previousFragment" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RouteFragmentEntity" inverseName="previousFragmentOf" inverseEntity="RouteFragmentEntity"/>
     </entity>
     <elements>
-        <element name="CoordinateEntity" positionX="131.91796875" positionY="77.96875" width="128" height="88"/>
+        <element name="CoordinateEntity" positionX="131.91796875" positionY="77.96875" width="128" height="103"/>
         <element name="RouteFragmentEntity" positionX="-54" positionY="63" width="128" height="118"/>
         <element name="RoutePointEntity" positionX="-304.4765625" positionY="2.78515625" width="128" height="193"/>
     </elements>

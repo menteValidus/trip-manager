@@ -2,7 +2,7 @@
 //  RouteFragmentEntity+CoreDataProperties.swift
 //  
 //
-//  Created by Denis Cherniy on 06.05.2020.
+//  Created by Denis Cherniy on 08.05.2020.
 //
 //
 

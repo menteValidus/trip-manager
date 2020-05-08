@@ -16,7 +16,7 @@ class CreateRoutePointWorker {
     private let routePointGateway: RoutePointDataStore & OrderNumberGenerator & DateLimiter
     
     init() {
-        routePointGateway = CoreDatastore()
+        routePointGateway = RoutePointCoreDataStore()
     }
     
     func save(routePoint: RoutePoint) {

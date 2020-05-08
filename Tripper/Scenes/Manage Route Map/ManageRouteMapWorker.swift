@@ -22,9 +22,9 @@ class ManageRouteMapWorker {
     private var lastFetchedRoutePoints: [RoutePoint]
     
     init() {
-        let coreDatastore = CoreDatastore()
-        routePointGateway = coreDatastore
-        routeFragmentGateway = coreDatastore
+//        let coreDatastore = CoreDatastore()
+        routePointGateway = RoutePointCoreDataStore()
+        routeFragmentGateway = RouteFragmentCoreDataStore(routePointGateway: routePointGateway)
         
         lastFetchedRoutePoints = []
     }

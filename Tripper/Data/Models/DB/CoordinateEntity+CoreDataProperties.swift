@@ -2,7 +2,7 @@
 //  CoordinateEntity+CoreDataProperties.swift
 //  
 //
-//  Created by Denis Cherniy on 06.05.2020.
+//  Created by Denis Cherniy on 08.05.2020.
 //
 //
 
@@ -18,6 +18,7 @@ extension CoordinateEntity {
 
     @NSManaged public var latitude: Float
     @NSManaged public var longitude: Float
+    @NSManaged public var orderNumber: Int64
     @NSManaged public var ofFragment: RouteFragmentEntity?
 
 }

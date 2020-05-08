@@ -35,6 +35,7 @@
 		0B3667542448780B0099AFAB /* ListRouteModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36674E2448780A0099AFAB /* ListRouteModels.swift */; };
 		0B3667552448780B0099AFAB /* ListRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36674F2448780A0099AFAB /* ListRouteViewController.swift */; };
 		0B3667562448780B0099AFAB /* ListRouteInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3667502448780A0099AFAB /* ListRouteInteractor.swift */; };
+		0B3B6A6B24654602002329F4 /* NSManagedObjectContext+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B3B6A6A24654602002329F4 /* NSManagedObjectContext+Shared.swift */; };
 		0B418C5A243F1E150007B611 /* DetailRoutePointPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C54243F1E150007B611 /* DetailRoutePointPresenter.swift */; };
 		0B418C5B243F1E150007B611 /* DetailRoutePointWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C55243F1E150007B611 /* DetailRoutePointWorker.swift */; };
 		0B418C5C243F1E150007B611 /* DetailRoutePointRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B418C56243F1E150007B611 /* DetailRoutePointRouter.swift */; };
@@ -45,7 +46,6 @@
 		0B5411362459C5AC009D8099 /* RouteFragmentDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5411352459C5AC009D8099 /* RouteFragmentDatastore.swift */; };
 		0B5411382459C711009D8099 /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5411372459C711009D8099 /* RouteFragment.swift */; };
 		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
-		0B6CD85723F2E8CA006DCDDC /* CoreDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD85623F2E8CA006DCDDC /* CoreDatastore.swift */; };
 		0B7933F2242E3955008E6746 /* MapBoxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7933F1242E3955008E6746 /* MapBoxUITests.swift */; };
 		0B7933FA242E3D04008E6746 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7933F9242E3D04008E6746 /* SceneDelegate.swift */; };
 		0B8CE304243C8AF20065B7B5 /* ManageRouteMapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE2FE243C8AF20065B7B5 /* ManageRouteMapPresenter.swift */; };
@@ -117,6 +117,7 @@
 		0B36674E2448780A0099AFAB /* ListRouteModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouteModels.swift; sourceTree = "<group>"; };
 		0B36674F2448780A0099AFAB /* ListRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouteViewController.swift; sourceTree = "<group>"; };
 		0B3667502448780A0099AFAB /* ListRouteInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouteInteractor.swift; sourceTree = "<group>"; };
+		0B3B6A6A24654602002329F4 /* NSManagedObjectContext+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObjectContext+Shared.swift"; sourceTree = "<group>"; };
 		0B418C54243F1E150007B611 /* DetailRoutePointPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointPresenter.swift; sourceTree = "<group>"; };
 		0B418C55243F1E150007B611 /* DetailRoutePointWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointWorker.swift; sourceTree = "<group>"; };
 		0B418C56243F1E150007B611 /* DetailRoutePointRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointRouter.swift; sourceTree = "<group>"; };
@@ -127,7 +128,6 @@
 		0B5411352459C5AC009D8099 /* RouteFragmentDatastore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentDatastore.swift; sourceTree = "<group>"; };
 		0B5411372459C711009D8099 /* RouteFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
 		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		0B6CD85623F2E8CA006DCDDC /* CoreDatastore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDatastore.swift; sourceTree = "<group>"; };
 		0B7933EF242E3955008E6746 /* MapBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B7933F1242E3955008E6746 /* MapBoxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxUITests.swift; sourceTree = "<group>"; };
 		0B7933F3242E3955008E6746 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -281,7 +281,6 @@
 		0B199DCA2462BEA500DC136D /* Datastore */ = {
 			isa = PBXGroup;
 			children = (
-				0B6CD85623F2E8CA006DCDDC /* CoreDatastore.swift */,
 				0B199DC82462BE9300DC136D /* RoutePointDatastore.swift */,
 				0B5411352459C5AC009D8099 /* RouteFragmentDatastore.swift */,
 			);
@@ -330,6 +329,7 @@
 			children = (
 				0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */,
 				0BB9B505244F19F300C23F00 /* Date+ComparisonWithoutSeconds.swift */,
+				0B3B6A6A24654602002329F4 /* NSManagedObjectContext+Shared.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -642,9 +642,9 @@
 				0B5411382459C711009D8099 /* RouteFragment.swift in Sources */,
 				0B199DC42462B4A700DC136D /* RouteFragmentEntity+CoreDataProperties.swift in Sources */,
 				0B042A5A23E2D02100E9136F /* AppDelegate.swift in Sources */,
-				0B6CD85723F2E8CA006DCDDC /* CoreDatastore.swift in Sources */,
 				0B042A7323E2EFFF00E9136F /* RoutePoint.swift in Sources */,
 				0B418C5B243F1E150007B611 /* DetailRoutePointWorker.swift in Sources */,
+				0B3B6A6B24654602002329F4 /* NSManagedObjectContext+Shared.swift in Sources */,
 				0B8CE305243C8AF20065B7B5 /* ManageRouteMapWorker.swift in Sources */,
 				0B042A9323EA9C2E00E9136F /* Subroute.swift in Sources */,
 				0B199DC32462B4A700DC136D /* RoutePointEntity+CoreDataProperties.swift in Sources */,

@@ -26,7 +26,11 @@ protocol DateLimiter {
     func fetchRightLimit(by orderNumber: Int) -> Date?
 }
 
-extension CoreDatastore: RoutePointDataStore {
+class RoutePointCoreDataStore: RoutePointDataStore {
+    
+    lazy var managedObjectContext: NSManagedObjectContext = {
+        return NSManagedObjectContext.shared
+    }()
     
     // MARK: - Database's Queries
     
@@ -160,7 +164,7 @@ extension CoreDatastore: RoutePointDataStore {
     
 }
 
-extension CoreDatastore: OrderNumberGenerator {
+extension RoutePointCoreDataStore: OrderNumberGenerator {
     // MARK: - Order Number Generator
     
     func getNewOrderNumber() -> Int {
@@ -190,7 +194,7 @@ extension CoreDatastore: OrderNumberGenerator {
     }
 }
 
-extension CoreDatastore: DateLimiter {
+extension RoutePointCoreDataStore: DateLimiter {
     // MARK: - Date Limiter
     
     func fetchLeftLimit(by orderNumber: Int) -> Date? {
