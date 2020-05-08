@@ -139,7 +139,7 @@ extension CoreDatastore: RoutePointDataStore {
     private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
         let point = RoutePoint(
             id: entity.id, orderNumber: Int(entity.orderNumber),
-            title: entity.title ?? "", subtitle: entity.subtitle ?? "",
+            title: entity.title, subtitle: entity.subtitle,
             latitude: entity.latitude, longitude: entity.longitude,
             arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
         return point
@@ -154,8 +154,8 @@ extension CoreDatastore: RoutePointDataStore {
         entity.setValue(routePoint.subtitle, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
         entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
-        entity.setValue(routePoint.timeToNextPointInSeconds, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.timeToNextPointInSeconds)
-        entity.setValue(routePoint.distanceToNextPointInMeters, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.distanceToNextPointInMeters)
+//        entity.setValue(routePoint.timeToNextPointInSeconds, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.timeToNextPointInSeconds)
+//        entity.setValue(routePoint.distanceToNextPointInMeters, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.distanceToNextPointInMeters)
     }
     
 }
@@ -207,10 +207,11 @@ extension CoreDatastore: DateLimiter {
         do {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
             
-            if let routePointEntity = fetchResult.last as? RoutePointEntity {
-//                let timeIntervalToAdd = TimeInterval(routePointEntity.previousFragment?.timeInSeconds)
-//                return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
-                return nil
+            if  let routePointEntity = fetchResult.last as? RoutePointEntity,
+                let timeToNextPoint = routePointEntity.nextFragment?.timeInSeconds {
+                
+                let timeIntervalToAdd = TimeInterval(timeToNextPoint)
+                return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
             } else {
                 return nil
             }

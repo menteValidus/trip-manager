@@ -14,6 +14,7 @@ import UIKit
 import CoreLocation
 
 protocol ManageRouteMapBusinessLogic {
+    func setupData(request: ManageRouteMap.SetupData.Request)
     func fetchDifference(request: ManageRouteMap.FetchDifference.Request)
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
@@ -23,6 +24,7 @@ protocol ManageRouteMapBusinessLogic {
     func editRoutePoint(request: ManageRouteMap.EditRoutePoint.Request)
     func deleteRoutePoint(request: ManageRouteMap.DeleteAnnotation.Request)
     func createRouteFragment(request: ManageRouteMap.CreateRouteFragment.Request)
+    func addRouteFragment(request: ManageRouteMap.AddRouteFragment.Request)
     func deleteRouteFragment(request: ManageRouteMap.DeleteRouteFragment.Request)
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
     func clearAll(request: ManageRouteMap.ClearAll.Request)
@@ -31,7 +33,6 @@ protocol ManageRouteMapBusinessLogic {
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request)
 }
-
 
 struct SimpleRoutePointInfo {
     let tappedCoordinate: CLLocationCoordinate2D
@@ -75,7 +76,18 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         routeFragments = []
     }
     
-    // MARK: - Create route point
+    // MARK: - Data Setup
+    
+    func setupData(request: ManageRouteMap.SetupData.Request) {
+        let (fetchedAnnotationsInfo, _) = worker!.fetchRoutePointsDifference()
+        self.annotationsInfo = fetchedAnnotationsInfo
+        let routeFragments = worker!.fetchRouteFragments()
+        
+        let response = ManageRouteMap.SetupData.Response(annotationsInfo: annotationsInfo, routeFragments: routeFragments)
+        presenter?.presentDataSetup(response: response)
+    }
+    
+    // MARK: Create route point
     
     var dataToCreateRoutePoint: SimpleRoutePointInfo?
     
@@ -108,12 +120,11 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     }
     
     // MARK: Fetch Difference
-    /// Should be modified only in this use case!
     var annotationsInfo: [AnnotationInfo]
     
     func fetchDifference(request: ManageRouteMap.FetchDifference.Request) {
         
-        if let fetchedInfo = worker?.fetchDifference(comparingWith: annotationsInfo) {
+        if let fetchedInfo = worker?.fetchRoutePointsDifference() {
             let (addedAnnotationsInfo, removedAnnotationsInfo) = fetchedInfo
             
             annotationsInfo.append(contentsOf: addedAnnotationsInfo)
@@ -148,7 +159,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Set route point
     
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request) {
-        let response = ManageRouteMap.SetRoutePoint.Response(annotationInfo: request.annotationsInfo)
+        let response = ManageRouteMap.SetRoutePoint.Response(annotationInfo: request.annotationInfo)
         presenter?.presentSetRoutePoint(response: response)
     }
     
@@ -218,13 +229,19 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                                                           travelDistanceInMeters: routeInfo.distanceInMeters)
                 self.routeFragments.append(routeFragment)
                 
-//                self.worker?.insert(routeFragment: routeFragment)
+                self.worker?.insert(routeFragment: routeFragment)
                 
                 let response = ManageRouteMap.CreateRouteFragment.Response(routeFragment: routeFragment)
                 self.presenter?.presentCreateRouteFragment(response: response)
             } // We don't check else because impossibility of route creation is checked before in Create Route Point use case.
             
         })
+    }
+    
+    // MARK: Add Route Fragment
+    
+    func addRouteFragment(request: ManageRouteMap.AddRouteFragment.Request) {
+        presenter?.presentAddedRouteFragment(response: .init(routeFragment: request.routeFragment))
     }
     
     // MARK: Delete Route Fragment

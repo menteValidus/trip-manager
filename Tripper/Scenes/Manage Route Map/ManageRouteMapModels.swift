@@ -26,6 +26,19 @@ enum ManageRouteMap {
     
     // MARK: Use cases
     
+    enum SetupData {
+        struct Request {
+        }
+        struct Response {
+            let annotationsInfo: [AnnotationInfo]
+            let routeFragments: [RouteFragment]
+        }
+        struct ViewModel {
+            let annotationsInfo: [AnnotationInfo]
+            let routeFragments: [RouteFragment]
+        }
+    }
+    
     enum FetchDifference {
         struct Request {
         }
@@ -54,7 +67,7 @@ enum ManageRouteMap {
     
     enum SetRoutePoint {
         struct Request {
-            let annotationsInfo: AnnotationInfo
+            let annotationInfo: AnnotationInfo
         }
         struct Response {
             let annotationInfo: AnnotationInfo
@@ -125,6 +138,18 @@ enum ManageRouteMap {
         }
         struct ViewModel {
             let routeFragment: ConcreteRouteFragment
+        }
+    }
+    
+    enum AddRouteFragment {
+        struct Request {
+            let routeFragment: RouteFragment
+        }
+        struct Response {
+            let routeFragment: RouteFragment
+        }
+        struct ViewModel {
+            let routeFragment: RouteFragment
         }
     }
     

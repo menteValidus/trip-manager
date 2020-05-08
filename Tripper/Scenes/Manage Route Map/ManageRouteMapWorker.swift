@@ -19,45 +19,80 @@ class ManageRouteMapWorker {
     private let routePointGateway: RoutePointDataStore
     private let routeFragmentGateway: RouteFragmentDatastore
     
+    private var lastFetchedRoutePoints: [RoutePoint]
+    
     init() {
         let coreDatastore = CoreDatastore()
         routePointGateway = coreDatastore
         routeFragmentGateway = coreDatastore
+        
+        lastFetchedRoutePoints = []
     }
     
-    // MARK: - Route Point Data Store
+}
+
+extension ManageRouteMapWorker {
+    // MARK: - Annotations Info fetching
     
-    func fetchDifference(comparingWith annotationsInfo: [AnnotationInfo]) -> FetchedDifference {
+    func fetchRoutePointsDifference() -> FetchedDifference {
         let fetchedRoutePoints = routePointGateway.fetchAll()
-        let (newAnnotationsInfo, idsOfRemovedRP) = findDifference(within: fetchedRoutePoints, with: annotationsInfo)
+        let (newAnnotationsInfo, idsOfRemovedRP) = findDifference(within: fetchedRoutePoints, with: lastFetchedRoutePoints)
+        
+        lastFetchedRoutePoints = fetchedRoutePoints
         
         return (newAnnotationsInfo, idsOfRemovedRP)
     }
     
-    private func findDifference(within passedRoutePoints: [RoutePoint], with annotationsInfoToCompareWith: [AnnotationInfo]) -> FetchedDifference {
-        var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
-        var deletedAnnotationsInfo = annotationsInfoToCompareWith
+//    private func findDifference(within passedRoutePoints: [RoutePoint], with annotationsInfoToCompareWith: [AnnotationInfo]) -> FetchedDifference {
+//        var newAnnotationsInfo = [ManageRouteMap.ConcreteAnnotationInfo]()
+//        var deletedAnnotationsInfo = annotationsInfoToCompareWith
+//        
+//        passedRoutePoints.forEach() { routePoint in
+//            // Check whether this element already displayed.
+//            let isContained = deletedAnnotationsInfo.contains(where: {
+//                return $0.id == routePoint.id
+//            })
+//            
+//            let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
+//            
+//            if !isContained {
+//                newAnnotationsInfo.append(annotationInfo)
+//            } else {
+//                // Remove this id from check list.
+//                let index = deletedAnnotationsInfo.firstIndex(where: {
+//                    return $0.id == routePoint.id
+//                })
+//                deletedAnnotationsInfo.remove(at: index!)
+//            }
+//        }
+//        
+//        return (newAnnotationsInfo, deletedAnnotationsInfo)
+//    }
+    
+    private func findDifference(within passedRoutePoints: [RoutePoint], with routePointsToCompareWith: [RoutePoint]) -> ([RoutePoint], [RoutePoint]) {
+        var newRoutePoints = [RoutePoint]()
+        var deletedRoutePoints = routePointsToCompareWith
         
         passedRoutePoints.forEach() { routePoint in
             // Check whether this element already displayed.
-            let isContained = deletedAnnotationsInfo.contains(where: {
+            let isContained = deletedRoutePoints.contains(where: {
                 return $0.id == routePoint.id
             })
             
-            let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
+//            let annotationInfo = convertRoutePointToAnnotationInfo(routePoint: routePoint)
             
             if !isContained {
-                newAnnotationsInfo.append(annotationInfo)
+                newRoutePoints.append(routePoint)
             } else {
                 // Remove this id from check list.
-                let index = deletedAnnotationsInfo.firstIndex(where: {
+                let index = deletedRoutePoints.firstIndex(where: {
                     return $0.id == routePoint.id
                 })
-                deletedAnnotationsInfo.remove(at: index!)
+                deletedRoutePoints.remove(at: index!)
             }
         }
         
-        return (newAnnotationsInfo, deletedAnnotationsInfo)
+        return (newRoutePoints, deletedRoutePoints)
     }
     
     func deleteAllEntries() {
@@ -66,12 +101,12 @@ class ManageRouteMapWorker {
     
     // MARK: - Helper Methods
     
-    private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {
-        let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(id: routePoint.id, orderNumber: routePoint.orderNumber,
-                                                                   latitude: routePoint.latitude, longitude: routePoint.longitude)
-        return annotationInfo
-    }
-    
+//    private func convertRoutePointToAnnotationInfo(routePoint: RoutePoint) -> ManageRouteMap.ConcreteAnnotationInfo {
+//        let annotationInfo = ManageRouteMap.ConcreteAnnotationInfo(id: routePoint.id, orderNumber: routePoint.orderNumber,
+//                                                                   latitude: routePoint.latitude, longitude: routePoint.longitude)
+//        return annotationInfo
+//    }
+//    
     // TODO: Temporal.
     func fetchRoutePoint(with id: String) -> RoutePoint {
         return routePointGateway.fetch(with: id)!
@@ -81,7 +116,7 @@ class ManageRouteMapWorker {
 extension ManageRouteMapWorker {
     // MARK: - Route Fragment Data Store
     
-    func fetchAll() -> [RouteFragment] {
+    func fetchRouteFragments() -> [RouteFragment] {
         let fetchedRouteFragments = routeFragmentGateway.fetchAll()
         return fetchedRouteFragments
     }

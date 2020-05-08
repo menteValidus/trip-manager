@@ -14,6 +14,7 @@ import UIKit
 import Mapbox
 
 protocol ManageRouteMapDisplayLogic: class {
+    func displayDataSetup(viewModel: ManageRouteMap.SetupData.ViewModel)
     func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
@@ -23,6 +24,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayEditRoutePoint(viewModel: ManageRouteMap.EditRoutePoint.ViewModel)
     func displayDeleteRoutePoint(viewModel: ManageRouteMap.DeleteAnnotation.ViewModel)
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel)
+    func displayAddRouteFragment(viewModel: ManageRouteMap.AddRouteFragment.ViewModel)
     func displayDeleteRouteFragment(viewModel: ManageRouteMap.DeleteRouteFragment.ViewModel)
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
@@ -50,6 +52,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
+    private var isLoaded: Bool = false
     
     // MARK: Object lifecycle
     
@@ -101,6 +104,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         mapView.delegate = self
         
         routeEstimationView.layer.cornerRadius = 16
+        
+//        setupData()
     }
     
     private func registerGestureRecognizers() {
@@ -114,7 +119,49 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchDifference()
+        if isLoaded {
+            fetchDifference()
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+//        setupData()
+    }
+    
+    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        setupData()
+    }
+    // MARK: - Setup Data
+    
+    func setupData() {
+        let request = ManageRouteMap.SetupData.Request()
+        interactor?.setupData(request: request)
+    }
+    
+    func displayDataSetup(viewModel: ManageRouteMap.SetupData.ViewModel) {
+        toggleUserInput(isLocked: true)
+        
+        for annotationInfo in viewModel.annotationsInfo {
+            let request = ManageRouteMap.SetRoutePoint.Request(annotationInfo: annotationInfo)
+            interactor?.setRoutePoint(request: request)
+        }
+        
+//        routeFragmentsToProcess = viewModel.routeFragments.count
+        for routeFragment in viewModel.routeFragments {
+            let request = ManageRouteMap.AddRouteFragment.Request(routeFragment: routeFragment)
+            interactor?.addRouteFragment(request: request)
+//            routeFragmentsToProcess -= 1
+        }
+        
+        toggleUserInput(isLocked: false)
+        
+        if viewModel.routeFragments.count > 0 {
+            routeEstimation()
+        }
+        
+        isLoaded = true
     }
     
     // MARK: Create Route Point
@@ -156,7 +203,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel) {
         for annotationInfo in viewModel.newAnnotationsInfo {
-            let requestToSetRP = ManageRouteMap.SetRoutePoint.Request(annotationsInfo: annotationInfo)
+            let requestToSetRP = ManageRouteMap.SetRoutePoint.Request(annotationInfo: annotationInfo)
             interactor?.setRoutePoint(request: requestToSetRP)
         }
         
@@ -232,6 +279,17 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Create Route Fragment
     
     func displayCreateRouteFragment(viewModel: ManageRouteMap.CreateRouteFragment.ViewModel) {
+        let request = ManageRouteMap.AddRouteFragment.Request(routeFragment: viewModel.routeFragment)
+        interactor?.addRouteFragment(request: request)
+        
+        routeFragmentsToProcess -= 1
+        
+        routeEstimation()
+    }
+    
+    // MARK: Add Route Fragment
+    
+    func displayAddRouteFragment(viewModel: ManageRouteMap.AddRouteFragment.ViewModel) {
         let routeCoordinates = viewModel.routeFragment.coordinates
         let identifier = viewModel.routeFragment.identifier
         guard routeCoordinates.count > 0 else { return }
@@ -247,10 +305,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
         mapView.style?.addSource(source)
         mapView.style?.addLayer(lineStyle)
-        
-        routeFragmentsToProcess -= 1
-        
-        routeEstimation()
     }
     
     // MARK: Error Handling
@@ -490,6 +544,16 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
         
         return nil
+    }
+    
+    private func checkInProcessedRouteFragment() {
+        if routeFragmentsToProcess > 0 {
+            routeFragmentsToProcess -= 1
+            
+            routeEstimation()
+        } else {
+            fatalError("*** There are route points that are not counted in routeFragmentsToProcess!")
+        }
     }
 }
 

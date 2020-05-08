@@ -13,6 +13,7 @@
 import UIKit
 
 protocol ManageRouteMapPresentationLogic {
+    func presentDataSetup(response: ManageRouteMap.SetupData.Response)
     func presentFetchDifference(response: ManageRouteMap.FetchDifference.Response)
     func presentCreateRoutePoint(response: ManageRouteMap.CreateRoutePoint.Response)
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response)
@@ -22,6 +23,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentEditRoutePoint(response: ManageRouteMap.EditRoutePoint.Response)
     func presentDeleteRoutePoint(response: ManageRouteMap.DeleteAnnotation.Response)
     func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response)
+    func presentAddedRouteFragment(response: ManageRouteMap.AddRouteFragment.Response)
     func presentDeleteRouteFragment(response: ManageRouteMap.DeleteRouteFragment.Response)
     func presentMapRoute(response: ManageRouteMap.MapRoute.Response)
     func presentClearAll(response: ManageRouteMap.ClearAll.Response)
@@ -34,7 +36,14 @@ protocol ManageRouteMapPresentationLogic {
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     weak var viewController: ManageRouteMapDisplayLogic?
     
-    // MARK: Annotation Creation
+    // MARK: - Setup Data
+    
+    func presentDataSetup(response: ManageRouteMap.SetupData.Response) {
+        let viewModel = ManageRouteMap.SetupData.ViewModel(annotationsInfo: response.annotationsInfo, routeFragments: response.routeFragments)
+        viewController?.displayDataSetup(viewModel: viewModel)
+    }
+    
+    // MARK: Route Point Creation
     
     func presentCreateRoutePoint(response: ManageRouteMap.CreateRoutePoint.Response) {
         let viewModel = ManageRouteMap.CreateRoutePoint.ViewModel(isSucceed: response.isSucceed)
@@ -95,6 +104,12 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentCreateRouteFragment(response: ManageRouteMap.CreateRouteFragment.Response) {
         let viewModel = ManageRouteMap.CreateRouteFragment.ViewModel(routeFragment: response.routeFragment)
         viewController?.displayCreateRouteFragment(viewModel: viewModel)
+    }
+    
+    // MARK: Add Route Fragment
+    
+    func presentAddedRouteFragment(response: ManageRouteMap.AddRouteFragment.Response) {
+        viewController?.displayAddRouteFragment(viewModel: .init(routeFragment: response.routeFragment))
     }
     
     // MARK: Delete Route Fragment

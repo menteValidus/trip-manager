@@ -29,7 +29,7 @@ struct RoutePoint: AnnotationInfo {
     
     // Nullable in case it's the end of trip.
     var timeToNextPointInSeconds: Int?
-    // Nullable in case it's the start of trip.
+    // Nullable in case it's the end of trip.
     var distanceToNextPointInMeters: Int?
 }
 
