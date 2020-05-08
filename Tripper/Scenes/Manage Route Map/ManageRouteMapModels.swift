@@ -16,14 +16,7 @@ import CoreLocation
 
 
 enum ManageRouteMap {
-    
-    struct ConcreteAnnotationInfo: AnnotationInfo {
-        let id: String
-        let orderNumber: Int
-        let latitude: Double
-        let longitude: Double
-    }
-    
+
     // MARK: Use cases
     
     enum SetupData {
