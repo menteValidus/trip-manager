@@ -28,14 +28,14 @@ class ListRouteWorker {
         for index in 0..<(fetchedRoutePoints.count) {
             let routePoint = fetchedRoutePoints[index]
             let timeToStayInSeconds = Int(routePoint.departureDate.timeIntervalSince(routePoint.arrivalDate))
-            let staying = Staying(title: routePoint.title, seconds: timeToStayInSeconds, description: routePoint.subtitle)
+            let staying = ListRoute.Staying(title: routePoint.title, timeInSeconds: timeToStayInSeconds, description: routePoint.subtitle)
             subroutes.append(staying)
             
             let nextIndex = index + 1
             if nextIndex < fetchedRoutePoints.count {
                 let nextRoutePoint = fetchedRoutePoints[nextIndex]
                 let timeToNextPointInSeconds = Int(nextRoutePoint.arrivalDate.timeIntervalSince(routePoint.departureDate))
-                let inRoad = InRoad(seconds: timeToNextPointInSeconds, metres: routePoint.distanceToNextPointInMeters ?? 0)
+                let inRoad = ListRoute.InRoad(seconds: timeToNextPointInSeconds, metres: routePoint.distanceToNextPointInMeters ?? 0)
                 subroutes.append(inRoad)
             }
         }
