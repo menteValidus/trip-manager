@@ -73,8 +73,7 @@ func format(seconds: Int) -> String {
         formattedTime.append("\(minutes) min")
     }
     
-    
-    return formattedTime
+    return formattedTime.isEmpty ? "Several seconds" : formattedTime
 }
 
 struct DistanceUnits {
@@ -99,5 +98,5 @@ func format(metres: Int) -> String {
         formattedDistance.append("\(remainedMeters) m")
     }
     
-    return formattedDistance
+    return formattedDistance.isEmpty ? "Several meters" : formattedDistance
 }

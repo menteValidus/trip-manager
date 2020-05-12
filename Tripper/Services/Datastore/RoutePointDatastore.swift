@@ -141,12 +141,23 @@ class RoutePointCoreDataStore: RoutePointDataStore {
     // MARK: - Converters
     
     private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
-        let point = RoutePoint(
-            id: entity.id, orderNumber: Int(entity.orderNumber),
-            title: entity.title, subtitle: entity.subtitle,
-            latitude: entity.latitude, longitude: entity.longitude,
-            arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
-        return point
+        if let nextFragment = entity.nextFragment {
+            let point = RoutePoint(
+                id: entity.id, orderNumber: Int(entity.orderNumber),
+                title: entity.title, subtitle: entity.subtitle,
+                latitude: entity.latitude, longitude: entity.longitude,
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
+                timeToNextPointInSeconds: Int(nextFragment.timeInSeconds),
+                distanceToNextPointInMeters: Int(nextFragment.distanceInMeters))
+            return point
+        } else {
+            let point = RoutePoint(
+                id: entity.id, orderNumber: Int(entity.orderNumber),
+                title: entity.title, subtitle: entity.subtitle,
+                latitude: entity.latitude, longitude: entity.longitude,
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
+            return point
+        }
     }
     
     private func configure(entity: RoutePointEntity, with routePoint: RoutePoint) {
