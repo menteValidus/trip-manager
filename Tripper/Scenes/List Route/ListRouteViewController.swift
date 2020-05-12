@@ -91,15 +91,15 @@ class ListRouteViewController: UITableViewController, ListRouteDisplayLogic {
         let anotherSubroute = subroutes[indexPath.row]
         
         switch anotherSubroute {
-        case is InRoad:
+        case is ListRoute.InRoad:
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.roadCell, for: indexPath) as! RoadCell
-            cell.configure(for: anotherSubroute as! InRoad)
+            cell.configure(for: anotherSubroute as! ListRoute.InRoad)
             
             return cell
             
-        case is Staying:
+        case is ListRoute.Staying:
             let cell = tableView.dequeueReusableCell(withIdentifier: TableView.CellIdentifiers.stayingCell, for: indexPath) as! StayingCell
-            cell.configure(for: anotherSubroute as! Staying)
+            cell.configure(for: anotherSubroute as! ListRoute.Staying)
             
             return cell
             

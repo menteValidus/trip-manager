@@ -25,7 +25,7 @@ class StayingCell: UITableViewCell, SubrouteCell {
     // MARK: - Helper Methods
     
     func configure(for subroute: Subroute) {
-        let staying = subroute as! Staying
+        let staying = subroute as! ListRoute.Staying
         titleLabel.text = String(staying.title)
         timeLabel.text = format(seconds: staying.timeInSeconds)
         descriptionTextView.text = staying.description
