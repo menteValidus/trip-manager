@@ -30,6 +30,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayMapRoute(viewModel: ManageRouteMap.MapRoute.ViewModel)
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel)
     func displayToggleUserInput(viewModel: ManageRouteMap.ToggleUserInput.ViewModel)
+    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel)
     func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel)
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
@@ -40,6 +41,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
     
     @IBOutlet weak var mapView: MGLMapView!
+    @IBOutlet weak var userInteractionView: UIView!
     
     var popup: Popup? {
         didSet {
@@ -76,12 +78,10 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let router = ManageRouteMapRouter()
         let worker = ManageRouteMapWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
                                           routeFragmentGateway: Container.shared.resolve(RouteFragmentDatastore.self)!)
-//        let routeCreator = MapboxRouteCreator()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
         interactor.worker = worker
-//        interactor.routeCreator = routeCreator
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -102,12 +102,10 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         registerGestureRecognizers()
-        mapView.delegate = self
-        
-        routeEstimationView.layer.cornerRadius = 16
-        
-//        setupData()
+        configureDelegates()
+        configureAppearance()
     }
     
     private func registerGestureRecognizers() {
@@ -119,6 +117,15 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         mapView.addGestureRecognizer(longPressGestureRecognizer)
     }
     
+    private func configureDelegates() {
+        mapView.delegate = self
+    }
+    
+    private func configureAppearance() {
+        routeEstimationView.layer.cornerRadius = 16
+        userInteractionView.layer.cornerRadius = 32
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isLoaded {
@@ -126,15 +133,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-//        setupData()
-    }
-    
-    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
-        setupData()
-    }
     // MARK: - Setup Data
     
     func setupData() {
@@ -409,6 +407,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             lockUserInput()
         } else {
             unlockUserInput()
+            
         }
     }
     
@@ -437,6 +436,20 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     private func hideSpinner() {
         dimmingView.removeFromSuperview()
+    }
+    
+    // MARK: Focus
+    
+    private func focus() {
+        interactor?.focus(request: .init())
+    }
+    
+    func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel) {
+        if viewModel.routeExists {
+            interactor?.focusOnRoute(request: .init())
+        } else {
+            focusOnUser()
+        }
     }
     
     // MARK: Focus On Route
@@ -478,18 +491,22 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Focus On User
     
     @IBAction func focusOnUser(_ sender: UIButton?) {
-        if let userCoordinate = mapView.userLocation?.coordinate {
-            if let button = sender {
+        if let button = sender {
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+                button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            }, completion: { _ in
                 UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
-                    button.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-                }, completion: { _ in
-                    UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
-                        button.transform = CGAffineTransform.identity
-                    })
+                    button.transform = CGAffineTransform.identity
                 })
-            }
-            let request = ManageRouteMap.FocusOnUser.Request(userCoordinate: userCoordinate)
-            interactor?.focusOnUser(request: request)
+            })
+        }
+        
+        focusOnUser()
+    }
+    
+    private func focusOnUser() {
+        if let userCoordinate = mapView.userLocation?.coordinate {
+            interactor?.focusOnUser(request: .init(userCoordinate: userCoordinate))
         }
     }
     
@@ -570,6 +587,11 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation)
         
         interactor?.selectAnnotation(request: request)
+    }
+        
+    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        setupData()
+        focus()
     }
     
     // MARK: Gesture Handlers

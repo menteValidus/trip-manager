@@ -30,6 +30,7 @@ protocol ManageRouteMapBusinessLogic {
     func mapRoute(request: ManageRouteMap.MapRoute.Request)
     func clearAll(request: ManageRouteMap.ClearAll.Request)
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request)
+    func focus(request: ManageRouteMap.Focus.Request)
     func focusOnRoute(request: ManageRouteMap.FocusOnRoute.Request)
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request)
@@ -376,6 +377,13 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     func toggleUserInput(request: ManageRouteMap.ToggleUserInput.Request) {
         let response = ManageRouteMap.ToggleUserInput.Response(isLocked: request.isLocked)
         presenter?.presentToggleUserInput(response: response)
+    }
+    
+    // MARK: Focus
+    
+    func focus(request: ManageRouteMap.Focus.Request) {
+        let routeExists = !annotationsInfo.isEmpty
+        presenter?.presentFocus(response: .init(routeExists: routeExists))
     }
     
     // MARK: Focus On Route

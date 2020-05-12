@@ -203,6 +203,17 @@ enum ManageRouteMap {
         }
     }
     
+    enum Focus {
+        struct Request {
+        }
+        struct Response {
+            let routeExists: Bool
+        }
+        struct ViewModel {
+            let routeExists: Bool
+        }
+    }
+    
     enum FocusOnRoute {
         struct Request {
         }
