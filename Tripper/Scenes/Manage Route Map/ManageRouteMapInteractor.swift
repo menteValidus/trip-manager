@@ -12,6 +12,7 @@
 
 import UIKit
 import CoreLocation
+import Swinject
 
 protocol ManageRouteMapBusinessLogic {
     func setupData(request: ManageRouteMap.SetupData.Request)
@@ -50,7 +51,7 @@ protocol ManageRouteMapDataStore {
 class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataStore {
     var presenter: ManageRouteMapPresentationLogic?
     var worker: ManageRouteMapWorker?
-    var routeCreator: MapboxRouteCreator?
+    var routeCreator: RouteCreator
 
     var idOfSelectedAnnotation: String?
     
@@ -72,6 +73,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     }
     
     init() {
+        routeCreator = Container.shared.resolve(RouteCreator.self)!
         annotationsInfo = []
         routeFragments = []
     }
@@ -101,7 +103,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         if let lastAnnotation = sortedAnnotationsInfo.last {
             let lastAnnotationCoordinate = CLLocationCoordinate2D(latitude: lastAnnotation.latitude, longitude: lastAnnotation.longitude)
             
-            routeCreator?.calculateRoute(from: lastAnnotationCoordinate, to: tappedCoordinate, drawHandler: { routeInfo in
+            routeCreator.calculateRoute(from: lastAnnotationCoordinate, to: tappedCoordinate, drawHandler: { routeInfo in
                 if let routeInfo = routeInfo {
                     self.dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: routeInfo.timeInSeconds, distanceToNextPointInMeters: routeInfo.distanceInMeters)
                     
@@ -218,10 +220,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             latitude: request.addedSubrouteInfo.startWaypoint.latitude, longitude: request.addedSubrouteInfo.startWaypoint.longitude)
         let endCoordinate = CLLocationCoordinate2D(
             latitude: request.addedSubrouteInfo.endWaypoint.latitude, longitude: request.addedSubrouteInfo.endWaypoint.longitude)
-        routeCreator?.calculateRoute(from: startCoordinate, to: endCoordinate, drawHandler: { routeInfo in
+        routeCreator.calculateRoute(from: startCoordinate, to: endCoordinate, drawHandler: { routeInfo in
             if let routeInfo = routeInfo {
-//                let idOfNewRouteFragment = format(firstID: request.addedSubrouteInfo.startWaypoint.id,
-//                                              secondID: request.addedSubrouteInfo.endWaypoint.id)
                 let startPointID = request.addedSubrouteInfo.startWaypoint.id
                 let endPointID = request.addedSubrouteInfo.endWaypoint.id
                 let routeFragment = ConcreteRouteFragment(startPointID: startPointID, endPointID: endPointID,

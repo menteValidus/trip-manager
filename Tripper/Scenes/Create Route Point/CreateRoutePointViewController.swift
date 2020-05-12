@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Swinject
 
 protocol CreateRoutePointDisplayLogic: class {
     func displayRoutePointForm(viewModel: CreateRoutePoint.FormRoutePoint.ViewModel)
@@ -46,7 +47,9 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         let interactor = CreateRoutePointInteractor()
         let presenter = CreateRoutePointPresenter()
         let router = CreateRoutePointRouter()
-        let worker = CreateRoutePointWorker()
+        let worker = CreateRoutePointWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
+                                            orderNumberGenerator: Container.shared.resolve(OrderNumberGenerator.self)!,
+                                            dateLimiter: Container.shared.resolve(DateLimiter.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
