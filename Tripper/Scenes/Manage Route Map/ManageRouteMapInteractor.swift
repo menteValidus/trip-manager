@@ -82,6 +82,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         let (fetchedAnnotationsInfo, _) = worker!.fetchRoutePointsDifference()
         self.annotationsInfo = fetchedAnnotationsInfo
         let routeFragments = worker!.fetchRouteFragments()
+        self.routeFragments = routeFragments
         
         let response = ManageRouteMap.SetupData.Response(annotationsInfo: annotationsInfo, routeFragments: routeFragments)
         presenter?.presentDataSetup(response: response)

@@ -323,6 +323,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             for source in sources {
                 if source.identifier == viewModel.identifier {
                     mapView.style!.removeSource(source)
+                    break
                 }
             }
         }

@@ -81,8 +81,8 @@ class RouteFragmentCoreDataStore: RouteFragmentDatastore {
     // MARK: - Converters
     
     private func convertEntityToRouteFragment(_ entity: RouteFragmentEntity) -> RouteFragment {
-        let previousPointID = entity.previousFragmentOf.id
-        let nextPointID = entity.nextFragmentOf.id
+        let previousPointID = entity.nextFragmentOf.id
+        let nextPointID = entity.previousFragmentOf.id
         var coordinates = [CLLocationCoordinate2D]()
         
         if let coordEntities = entity.coordinates {
