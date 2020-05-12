@@ -13,8 +13,6 @@
 import UIKit
 import CoreLocation
 
-
-
 enum ManageRouteMap {
 
     // MARK: Use cases
