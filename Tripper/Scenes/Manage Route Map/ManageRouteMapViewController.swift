@@ -12,6 +12,7 @@
 
 import UIKit
 import Mapbox
+import Swinject
 
 protocol ManageRouteMapDisplayLogic: class {
     func displayDataSetup(viewModel: ManageRouteMap.SetupData.ViewModel)
@@ -73,13 +74,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let interactor = ManageRouteMapInteractor()
         let presenter = ManageRouteMapPresenter()
         let router = ManageRouteMapRouter()
-        let worker = ManageRouteMapWorker()
-        let routeCreator = MapboxRouteCreator()
+        let worker = ManageRouteMapWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
+                                          routeFragmentGateway: Container.shared.resolve(RouteFragmentDatastore.self)!)
+//        let routeCreator = MapboxRouteCreator()
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
         interactor.worker = worker
-        interactor.routeCreator = routeCreator
+//        interactor.routeCreator = routeCreator
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor

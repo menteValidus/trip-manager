@@ -11,9 +11,14 @@
 //
 
 import UIKit
+import Swinject
 
 class DetailRoutePointWorker {
-    private let routePointGateway: RoutePointDataStore = RoutePointCoreDataStore()
+    private let routePointGateway: RoutePointDataStore
+    
+    init(routePointGateway: RoutePointDataStore) {
+        self.routePointGateway = Container.shared.resolve(RoutePointDataStore.self)!
+    }
     
     func delete(routePoint: RoutePoint) {
         routePointGateway.delete(routePoint)

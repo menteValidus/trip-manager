@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,6 +46,7 @@
 		0B5411362459C5AC009D8099 /* RouteFragmentDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5411352459C5AC009D8099 /* RouteFragmentDatastore.swift */; };
 		0B5411382459C711009D8099 /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5411372459C711009D8099 /* RouteFragment.swift */; };
 		0B6CD84D23F2D7D5006DCDDC /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0B6CD84B23F2D7D5006DCDDC /* DataModel.xcdatamodeld */; };
+		0B737B58246AB800008924AE /* SwinjectContainer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B737B57246AB800008924AE /* SwinjectContainer+Shared.swift */; };
 		0B7933F2242E3955008E6746 /* MapBoxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7933F1242E3955008E6746 /* MapBoxUITests.swift */; };
 		0B7933FA242E3D04008E6746 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7933F9242E3D04008E6746 /* SceneDelegate.swift */; };
 		0B8CE304243C8AF20065B7B5 /* ManageRouteMapPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8CE2FE243C8AF20065B7B5 /* ManageRouteMapPresenter.swift */; };
@@ -128,6 +129,7 @@
 		0B5411352459C5AC009D8099 /* RouteFragmentDatastore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentDatastore.swift; sourceTree = "<group>"; };
 		0B5411372459C711009D8099 /* RouteFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
 		0B6CD84C23F2D7D5006DCDDC /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		0B737B57246AB800008924AE /* SwinjectContainer+Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SwinjectContainer+Shared.swift"; sourceTree = "<group>"; };
 		0B7933EF242E3955008E6746 /* MapBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MapBoxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B7933F1242E3955008E6746 /* MapBoxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapBoxUITests.swift; sourceTree = "<group>"; };
 		0B7933F3242E3955008E6746 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				0B418C61244099820007B611 /* UINavigationController+PopCompletion.swift */,
 				0BB9B505244F19F300C23F00 /* Date+ComparisonWithoutSeconds.swift */,
 				0B3B6A6A24654602002329F4 /* NSManagedObjectContext+Shared.swift */,
+				0B737B57246AB800008924AE /* SwinjectContainer+Shared.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -593,39 +596,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks.sh",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
-				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
-				"${BUILT_PRODUCTS_DIR}/MapboxCoreNavigation/MapboxCoreNavigation.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxDirections.swift/MapboxDirections.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxMobileEvents/MapboxMobileEvents.framework",
-				"${BUILT_PRODUCTS_DIR}/MapboxNavigation/MapboxNavigation.framework",
-				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework",
-				"${PODS_ROOT}/MapboxNavigationNative/MapboxNavigationNative.framework.dSYM",
-				"${BUILT_PRODUCTS_DIR}/MapboxSpeech/MapboxSpeech.framework",
-				"${BUILT_PRODUCTS_DIR}/Polyline/Polyline.framework",
-				"${BUILT_PRODUCTS_DIR}/Solar/Solar.framework",
-				"${BUILT_PRODUCTS_DIR}/Turf/Turf.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxCoreNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxDirections.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxMobileEvents.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigation.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxNavigationNative.framework",
-				"${DWARF_DSYM_FOLDER_PATH}/MapboxNavigationNative.framework.dSYM",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MapboxSpeech.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Polyline.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Solar.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Turf.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -662,6 +642,7 @@
 				0B8CE307243C8AF20065B7B5 /* ManageRouteMapModels.swift in Sources */,
 				0B3667512448780B0099AFAB /* ListRoutePresenter.swift in Sources */,
 				0B8CE308243C8AF20065B7B5 /* ManageRouteMapViewController.swift in Sources */,
+				0B737B58246AB800008924AE /* SwinjectContainer+Shared.swift in Sources */,
 				0B8CE31B243CBA9A0065B7B5 /* CreateRoutePointViewController.swift in Sources */,
 				0B042A7623E3001B00E9136F /* Util.swift in Sources */,
 				0B8CE309243C8AF20065B7B5 /* ManageRouteMapInteractor.swift in Sources */,

@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Swinject
 
 protocol DetailRoutePointDisplayLogic: class {
     func displaySetupUI(viewModel: DetailRoutePoint.SetupUI.ViewModel)
@@ -64,7 +65,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         let interactor = DetailRoutePointInteractor()
         let presenter = DetailRoutePointPresenter()
         let router = DetailRoutePointRouter()
-        let worker = DetailRoutePointWorker()
+        let worker = DetailRoutePointWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter

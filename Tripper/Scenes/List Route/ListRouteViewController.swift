@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import Swinject
 
 protocol ListRouteDisplayLogic: class {
     func displayFetchData(viewModel: ListRoute.FetchData.ViewModel)
@@ -39,7 +40,7 @@ class ListRouteViewController: UITableViewController, ListRouteDisplayLogic {
         let interactor = ListRouteInteractor()
         let presenter = ListRoutePresenter()
         let router = ListRouteRouter()
-        let worker = ListRouteWorker()
+        let worker = ListRouteWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
