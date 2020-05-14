@@ -61,7 +61,7 @@ extension NSManagedObjectContext {
         let container = NSPersistentContainer(name: DataModelDB.name)
         container.loadPersistentStores(completionHandler: { storeDescription, error in
             if let error = error {
-                throwAn(error: error)
+                fatalError("*** Error at loading persisten store. Error:\n\(error)")
             }
         })
         

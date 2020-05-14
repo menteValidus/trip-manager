@@ -9,19 +9,13 @@
 import Foundation
 import UIKit
 
-func throwAn(error: Error) {
-    print("*** Error: \(error)")
-    fatalError("Error: \(error)")
+// MARK: IDs Formatter
+
+func format(firstID: String, secondID: String) -> String {
+    return "\(firstID)-\(secondID)"
 }
 
-func throwAn(errorMessage: String) {
-    print("*** \(errorMessage)")
-    fatalError(errorMessage)
-}
-
-func display(message: String) {
-    print("*** \(message)")
-}
+// MARK: Time Formatter
 
 struct TimeUnits {
     static let second = 1
@@ -29,10 +23,6 @@ struct TimeUnits {
     static let hour = 60 * minute
     static let day = 24 * hour
     static let week = 7 * day
-}
-
-func format(firstID: String, secondID: String) -> String {
-    return "\(firstID)-\(secondID)"
 }
 
 func format(seconds: Int) -> String {
@@ -73,8 +63,10 @@ func format(seconds: Int) -> String {
         formattedTime.append("\(minutes) min")
     }
     
-    return formattedTime//.isEmpty ? "Several seconds" : formattedTime
+    return formattedTime
 }
+
+// MARK: Distance Formatter
 
 struct DistanceUnits {
     static let meter = 1
@@ -98,5 +90,5 @@ func format(metres: Int) -> String {
         formattedDistance.append("\(remainedMeters) m")
     }
     
-    return formattedDistance//.isEmpty ? "Several meters" : formattedDistance
+    return formattedDistance
 }

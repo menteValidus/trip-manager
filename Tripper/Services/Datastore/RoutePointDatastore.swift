@@ -85,7 +85,7 @@ class RoutePointCoreDataStore: RoutePointDataStore {
         do {
             try managedObjectContext.save()
         } catch {
-            throwAn(error: error)
+            fatalError("*** Insert's Error: \(error)")
         }
         
     }
@@ -101,10 +101,10 @@ class RoutePointCoreDataStore: RoutePointDataStore {
                 configure(entity: pointToUpdate, with: point)
                 try managedObjectContext.save()
             } else {
-                fatalError("There is no way we can be here!!!")
+                fatalError("*** Tried to update inexistent route point.")
             }
         } catch {
-            fatalError("Update's Error: \(error)")
+            fatalError("*** Update's Fetch Error: \(error)")
         }
     }
     
