@@ -68,6 +68,8 @@
 		0BAD797D246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD797C246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift */; };
 		0BAD7983246D68EC00575D4C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD797F246D68EC00575D4C /* Main.storyboard */; };
 		0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */; };
+		0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */; };
+		0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
 
@@ -157,6 +159,8 @@
 		0BAD797C246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapDisplayLogicSpy.swift; sourceTree = "<group>"; };
 		0BAD7980246D68EC00575D4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0BAD7982246D68EC00575D4C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePointGatewayMock.swift; sourceTree = "<group>"; };
+		0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentGatewayMock.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
@@ -446,9 +450,9 @@
 		0BAD7977246D5E5E00575D4C /* Test Doubles */ = {
 			isa = PBXGroup;
 			children = (
-				0BAD7978246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift */,
-				0BAD797A246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift */,
 				0BAD797C246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift */,
+				0BAD797A246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift */,
+				0BAD7978246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift */,
 			);
 			path = "Test Doubles";
 			sourceTree = "<group>";
@@ -456,6 +460,8 @@
 		0BAD797E246D662100575D4C /* Service Doubles */ = {
 			isa = PBXGroup;
 			children = (
+				0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */,
+				0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */,
 			);
 			path = "Service Doubles";
 			sourceTree = "<group>";
@@ -707,9 +713,11 @@
 			files = (
 				0BAD7973246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift in Sources */,
 				0BAD7979246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift in Sources */,
+				0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */,
 				0BAD7975246D5CB700575D4C /* ManageRouteMapWorkerTests.swift in Sources */,
 				0BAD7974246D5CB700575D4C /* ManageRouteMapInteractorTests.swift in Sources */,
 				0BAD797D246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift in Sources */,
+				0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */,
 				0BAD7976246D5CB700575D4C /* ManageRouteMapPresenterTests.swift in Sources */,
 				0BAD7966246D55F100575D4C /* TripperTests.swift in Sources */,
 				0BAD797B246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift in Sources */,
