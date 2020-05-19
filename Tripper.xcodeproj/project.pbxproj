@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
+		0B7A45062473FF3C00AA1F5E /* FastNavigationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */; };
+		0B7A45072473FF3C00AA1F5E /* FastNavigationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */; };
+		0B7A45082473FF3C00AA1F5E /* FastNavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */; };
+		0B7A45092473FF3C00AA1F5E /* FastNavigationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */; };
+		0B7A450A2473FF3C00AA1F5E /* FastNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */; };
+		0B7A450B2473FF3C00AA1F5E /* FastNavigationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */; };
 		0BAD792C246D462300575D4C /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78E9246D462200575D4C /* RoutePoint.swift */; };
 		0BAD792D246D462300575D4C /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EA246D462200575D4C /* RouteFragment.swift */; };
 		0BAD792E246D462300575D4C /* Date+ComparisonWithoutSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */; };
@@ -97,6 +103,12 @@
 		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0F4131242A4DCD00C769C9 /* UtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
 		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationPresenter.swift; sourceTree = "<group>"; };
+		0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationWorker.swift; sourceTree = "<group>"; };
+		0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationRouter.swift; sourceTree = "<group>"; };
+		0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationModels.swift; sourceTree = "<group>"; };
+		0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationViewController.swift; sourceTree = "<group>"; };
+		0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationInteractor.swift; sourceTree = "<group>"; };
 		0BAD78E9246D462200575D4C /* RoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
 		0BAD78EA246D462200575D4C /* RouteFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
 		0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ComparisonWithoutSeconds.swift"; sourceTree = "<group>"; };
@@ -251,6 +263,19 @@
 			path = UtilTests;
 			sourceTree = "<group>";
 		};
+		0B7A44FF2473FF1300AA1F5E /* Fast Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */,
+				0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */,
+				0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */,
+				0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */,
+				0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */,
+				0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */,
+			);
+			path = "Fast Navigation";
+			sourceTree = "<group>";
+		};
 		0BAD78E8246D462200575D4C /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +300,7 @@
 		0BAD78F1246D462300575D4C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				0B7A44FF2473FF1300AA1F5E /* Fast Navigation */,
 				0BAD78F2246D462300575D4C /* Manage Route Map */,
 				0BAD78F9246D462300575D4C /* Detail Route Point */,
 				0BAD7900246D462300575D4C /* Create Route Point */,
@@ -659,6 +685,8 @@
 				0BAD7931246D462300575D4C /* Formatters.swift in Sources */,
 				0BAD795B246D462300575D4C /* RouteFragmentDatastore.swift in Sources */,
 				0BAD795E246D462300575D4C /* MapBoxRouteCreator.swift in Sources */,
+				0B7A450A2473FF3C00AA1F5E /* FastNavigationViewController.swift in Sources */,
+				0B7A45082473FF3C00AA1F5E /* FastNavigationRouter.swift in Sources */,
 				0BAD7933246D462300575D4C /* ManageRouteMapViewController.swift in Sources */,
 				0BAD7956246D462300575D4C /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				0BAD792C246D462300575D4C /* RoutePoint.swift in Sources */,
@@ -673,19 +701,23 @@
 				0BAD793D246D462300575D4C /* DetailRoutePointModels.swift in Sources */,
 				0BAD7937246D462300575D4C /* ManageRouteMapInteractor.swift in Sources */,
 				0BAD794E246D462300575D4C /* ListRoutePresenter.swift in Sources */,
+				0B7A450B2473FF3C00AA1F5E /* FastNavigationInteractor.swift in Sources */,
 				0BAD7958246D462300575D4C /* RouteFragmentEntity+CoreDataProperties.swift in Sources */,
 				0BAD7942246D462300575D4C /* CreateRoutePointViewController.swift in Sources */,
 				0BAD7935246D462300575D4C /* ManageRouteMapModels.swift in Sources */,
 				0BAD7950246D462300575D4C /* AppDelegate.swift in Sources */,
 				0BAD7934246D462300575D4C /* ManageRouteMapPresenter.swift in Sources */,
 				0BAD7941246D462300575D4C /* CreateRoutePointWorker.swift in Sources */,
+				0B7A45062473FF3C00AA1F5E /* FastNavigationPresenter.swift in Sources */,
 				0BAD7949246D462300575D4C /* RoadCell.swift in Sources */,
 				0BAD7948246D462300575D4C /* StayingCell.swift in Sources */,
+				0B7A45072473FF3C00AA1F5E /* FastNavigationWorker.swift in Sources */,
 				0BAD7938246D462300575D4C /* ManageRouteMapWorker.swift in Sources */,
 				0BAD793A246D462300575D4C /* DetailRoutePointViewController.swift in Sources */,
 				0BAD792F246D462300575D4C /* NSManagedObjectContext+Shared.swift in Sources */,
 				0BAD7932246D462300575D4C /* UINavigationController+PopCompletion.swift in Sources */,
 				0BAD7952246D462300575D4C /* DataModel.xcdatamodeld in Sources */,
+				0B7A45092473FF3C00AA1F5E /* FastNavigationModels.swift in Sources */,
 				0BAD795C246D462300575D4C /* RoutePointDatastore.swift in Sources */,
 				0BAD793B246D462300575D4C /* DetailRoutePointWorker.swift in Sources */,
 				0BAD7939246D462300575D4C /* DetailRoutePointInteractor.swift in Sources */,
