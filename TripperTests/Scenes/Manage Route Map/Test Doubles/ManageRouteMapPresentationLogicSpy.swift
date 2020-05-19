@@ -8,6 +8,8 @@
 @testable import Tripper
 
 class ManageRouteMapPresentationLogicSpy: ManageRouteMapPresentationLogic {
+    var viewController: ManageRouteMapDisplayLogic!
+    
     func presentDataSetup(response: ManageRouteMap.SetupData.Response) {
     }
     
@@ -15,6 +17,7 @@ class ManageRouteMapPresentationLogicSpy: ManageRouteMapPresentationLogic {
     }
     
     func presentCreateRoutePoint(response: ManageRouteMap.CreateRoutePoint.Response) {
+        viewController.displayCreateRoutePoint(viewModel: .init(isSucceed: response.isSucceed))
     }
     
     func presentSetRoutePoint(response: ManageRouteMap.SetRoutePoint.Response) {

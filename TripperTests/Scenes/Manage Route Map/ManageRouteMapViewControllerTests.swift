@@ -12,12 +12,15 @@
 
 @testable import Tripper
 import XCTest
+import CoreLocation
 
 class ManageRouteMapViewControllerTests: XCTestCase {
     // MARK: Subject Under Test
     
     var sut: ManageRouteMapViewController!
     var window: UIWindow!
+    var routePointGateway: RoutePointDataStore!
+    var routeFragmentGateway: RouteFragmentDatastore!
     
     // MARK: Test Lifecycle
     
@@ -37,7 +40,37 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     func setupManageRouteMapViewController() {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        sut = storyboard.instantiateViewController(withIdentifier: "ManageRouteMapViewController") as! ManageRouteMapViewController
+        sut = storyboard.instantiateViewController(withIdentifier: "ManageRouteMapViewController") as? ManageRouteMapViewController
+        let navigationController = UINavigationController()
+        navigationController.addChild(sut)
+    }
+    
+    func setupEmptyGateways() {
+        routePointGateway = RoutePointGatewayMock(initialStorage: [])
+        routeFragmentGateway = RouteFragmentGatewayMock(initialStorage: [])
+    }
+    
+    func setupGateways() {
+        let startRoutePoint = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date(), timeToNextPointInSeconds: 60, distanceToNextPointInMeters: 60)
+        let date = Date().addingTimeInterval(TimeInterval(startRoutePoint.timeToNextPointInSeconds!))
+        let endRoutePoint = RoutePoint(id: "22", orderNumber: 2, title: "Stub #2", subtitle: "S(t)ubtitle", latitude: 1, longitude: 1, arrivalDate: date, departureDate: date, timeToNextPointInSeconds: nil, distanceToNextPointInMeters: nil)
+        routePointGateway = RoutePointGatewayMock(initialStorage: [startRoutePoint, endRoutePoint])
+        
+        let firstCoord = CLLocationCoordinate2D(latitude: startRoutePoint.latitude, longitude: startRoutePoint.longitude)
+        let secondCoord = CLLocationCoordinate2D(latitude: endRoutePoint.latitude, longitude: endRoutePoint.longitude)
+        let routeFragment = ConcreteRouteFragment(startPointID: startRoutePoint.id, endPointID: endRoutePoint.id, coordinates: [firstCoord, secondCoord], travelTimeInSeconds: 60, travelDistanceInMeters: 60)
+        routeFragmentGateway = RouteFragmentGatewayMock(initialStorage: [routeFragment])
+    }
+    
+    func standardSetup() {
+        let interactor = ManageRouteMapInteractor()
+        let presenter = ManageRouteMapPresenter()
+        
+        presenter.viewController = sut
+        interactor.presenter = presenter
+        
+        interactor.worker = ManageRouteMapWorker(routePointGateway: routePointGateway, routeFragmentGateway: routeFragmentGateway)
+        sut.interactor = interactor
     }
     
     func loadView() {
@@ -47,27 +80,68 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     
     // MARK: Tests
     
-    func testShouldDoSomethingWhenViewIsLoaded() {
-        // Given
-        let spy = ManageRouteMapBusinessLogicSpy()
-        sut.interactor = spy
+    func testFetchDifferenceWithEmptyDB() {
+        setupEmptyGateways()
+        standardSetup()
         
-        // When
         loadView()
+        sut.fetchDifference()
         
-        // Then
-//        XCTAssertTrue(spy.doSomethingCalled, "viewDidLoad() should ask the interactor to do something")
+        XCTAssertTrue(sut.mapView.annotations == nil)
     }
     
-    func testDisplaySomething() {
-        // Given
-//        let viewModel = ManageRouteMap.Something.ViewModel()
+    func testFetchDifferenceWithFilledDB() {
+        setupGateways()
+        standardSetup()
         
-        // When
         loadView()
-//        sut.displaySomething(viewModel: viewModel)
+        sut.fetchDifference()
         
-        // Then
-        //XCTAssertEqual(sut.nameTextField.text, "", "displaySomething(viewModel:) should update the name text field")
+        XCTAssertTrue(sut.mapView.annotations!.count > 0)
+    }
+    
+    func testSetAnnotation() {
+        setupEmptyGateways()
+        standardSetup()
+        let annotationInfo = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date(), timeToNextPointInSeconds: 60, distanceToNextPointInMeters: 60)
+        
+        loadView()
+        sut.interactor?.setRoutePoint(request: .init(annotationInfo: annotationInfo))
+        
+        XCTAssertTrue(sut.mapView.annotations!.count == 1)
+    }
+    
+    func testSelectAnnotation() {
+        setupGateways()
+        standardSetup()
+        
+        loadView()
+        sut.fetchDifference()
+        sut.mapView.selectAnnotation(sut.annotationsID.first!.key, animated: false, completionHandler: nil)
+        
+        XCTAssertTrue(!sut.mapView.selectedAnnotations.isEmpty)
+    }
+    
+    func testPopup() {
+        setupGateways()
+        standardSetup()
+        let selectedAnnotationID = routePointGateway.fetchAll().first?.id
+        
+        loadView()
+        sut.interactor?.selectAnnotation(request: .init(identifier: selectedAnnotationID))
+        
+        XCTAssertTrue(sut.popup != nil)
+    }
+    
+    func testDeselectAnnotation() {
+        setupGateways()
+        standardSetup()
+        
+        loadView()
+        sut.fetchDifference()
+        sut.mapView.selectAnnotation(sut.annotationsID.first!.key, animated: false, completionHandler: nil)
+        sut.interactor?.deselectAnnotation(request: .init())
+        
+        XCTAssertTrue(sut.mapView.selectedAnnotations.isEmpty)
     }
 }

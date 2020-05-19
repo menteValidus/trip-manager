@@ -148,11 +148,9 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             interactor?.setRoutePoint(request: request)
         }
         
-//        routeFragmentsToProcess = viewModel.routeFragments.count
         for routeFragment in viewModel.routeFragments {
             let request = ManageRouteMap.AddRouteFragment.Request(routeFragment: routeFragment)
             interactor?.addRouteFragment(request: request)
-//            routeFragmentsToProcess -= 1
         }
         
         toggleUserInput(isLocked: false)

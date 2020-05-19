@@ -9,6 +9,9 @@
 @testable import Tripper
 
 class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {
+    var presenter: ManageRouteMapPresentationLogic!
+    var worker: ManageRouteMapWorker!
+    
     func setupData(request: ManageRouteMap.SetupData.Request) {
     }
     
@@ -16,6 +19,7 @@ class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {
     }
     
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request) {
+        presenter.presentCreateRoutePoint(response: .init(isSucceed: true))
     }
     
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request) {
