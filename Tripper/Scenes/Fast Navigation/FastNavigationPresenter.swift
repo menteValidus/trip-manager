@@ -13,8 +13,31 @@
 import UIKit
 
 protocol FastNavigationPresentationLogic {
+    func presentFetchedData(response: FastNavigation.FetchData.Response)
 }
 
 class FastNavigationPresenter: FastNavigationPresentationLogic {
     weak var viewController: FastNavigationDisplayLogic?
+    
+    // MARK: - Fetch Data
+    
+    func presentFetchedData(response: FastNavigation.FetchData.Response) {
+        var subroutes = [Subroute]()
+        
+        let fetchedRoutePoints = response.routePoints
+        for index in 0..<(fetchedRoutePoints.count) {
+            let routePoint = fetchedRoutePoints[index]
+            let timeToStayInSeconds = Int(routePoint.departureDate.timeIntervalSince(routePoint.arrivalDate))
+            let staying = ListRoute.Staying(title: routePoint.title, timeInSeconds: timeToStayInSeconds, description: routePoint.subtitle)
+            subroutes.append(staying)
+            
+            if index < fetchedRoutePoints.count - 1 {
+                let inRoad = ListRoute.InRoad(seconds: routePoint.timeToNextPointInSeconds ?? 0,
+                                              metres: routePoint.distanceToNextPointInMeters ?? 0)
+                subroutes.append(inRoad)
+            }
+        }
+        
+        viewController?.displayFetchedData(viewModel: .init(subroutes: subroutes))
+    }
 }

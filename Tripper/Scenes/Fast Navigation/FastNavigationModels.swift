@@ -15,5 +15,14 @@ import UIKit
 enum FastNavigation {
     // MARK: Use Cases
     
-    
+    struct FetchData {
+        struct Request {
+        }
+        struct Response {
+            let routePoints: [RoutePoint]
+        }
+        struct ViewModel {
+            let subroutes: [Subroute]
+        }
+    }
 }

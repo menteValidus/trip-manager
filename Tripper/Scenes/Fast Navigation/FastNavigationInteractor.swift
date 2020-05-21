@@ -13,6 +13,7 @@
 import UIKit
 
 protocol FastNavigationBusinessLogic {
+    func fetchData(request: FastNavigation.FetchData.Request)
 }
 
 protocol FastNavigationDataStore {
@@ -20,7 +21,14 @@ protocol FastNavigationDataStore {
 
 class FastNavigationInteractor: FastNavigationBusinessLogic, FastNavigationDataStore {
     var presenter: FastNavigationPresentationLogic?
-    var worker: FastNavigationWorker?
+    var worker: FastNavigationWorker!
     //var name: String = ""
     
+    // MARK: - Fetch Data
+    
+    func fetchData(request: FastNavigation.FetchData.Request) {
+        let routePoints = worker!.fetchAll()
+        
+        presenter?.presentFetchedData(response: .init(routePoints: routePoints))
+    }
 }

@@ -11,8 +11,10 @@
 //
 
 import UIKit
+import Swinject
 
 protocol FastNavigationDisplayLogic: class {
+    func displayFetchedData(viewModel: FastNavigation.FetchData.ViewModel)
 }
 
 class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic {
@@ -38,9 +40,11 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
         let interactor = FastNavigationInteractor()
         let presenter = FastNavigationPresenter()
         let router = FastNavigationRouter()
+        let worker = FastNavigationWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
+        interactor.worker = worker
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
@@ -50,11 +54,25 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        fetchData()
     }
     
     // MARK: Actions
     
     @IBAction func backArrowTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension FastNavigationViewController {
+    // MARK: - Fetch Data
+    
+    func fetchData() {
+        interactor?.fetchData(request: .init())
+    }
+    
+    func displayFetchedData(viewModel: FastNavigation.FetchData.ViewModel) {
+        print("*** \(viewModel.subroutes)")
     }
 }

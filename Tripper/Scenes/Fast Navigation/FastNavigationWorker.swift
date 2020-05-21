@@ -13,5 +13,13 @@
 import UIKit
 
 class FastNavigationWorker {
+    private let routePointGateway: RoutePointDataStore
     
+    init(routePointGateway: RoutePointDataStore) {
+        self.routePointGateway = routePointGateway
+    }
+    
+    func fetchAll() -> [RoutePoint] {
+        return routePointGateway.fetchAll()
+    }
 }
