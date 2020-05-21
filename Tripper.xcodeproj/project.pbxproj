@@ -76,6 +76,7 @@
 		0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */; };
 		0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */; };
 		0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */; };
+		0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +176,7 @@
 		0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentGatewayMock.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FastNavigationViewController.xib; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -231,13 +233,13 @@
 		0B042A5823E2D02100E9136F /* Tripper */ = {
 			isa = PBXGroup;
 			children = (
-				0BAD7915246D462300575D4C /* AppDelegate.swift */,
 				0BAD78E8246D462200575D4C /* Models */,
 				0BAD7917246D462300575D4C /* Resources */,
-				0BAD7916246D462300575D4C /* SceneDelegate.swift */,
 				0BAD78F1246D462300575D4C /* Scenes */,
 				0BAD7924246D462300575D4C /* Services */,
 				0BAD78EB246D462200575D4C /* Utils */,
+				0BAD7915246D462300575D4C /* AppDelegate.swift */,
+				0BAD7916246D462300575D4C /* SceneDelegate.swift */,
 				0B042A6723E2D02200E9136F /* Info.plist */,
 			);
 			path = Tripper;
@@ -266,12 +268,12 @@
 		0B7A44FF2473FF1300AA1F5E /* Fast Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */,
+				0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */,
 				0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */,
 				0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */,
 				0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */,
 				0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */,
-				0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */,
-				0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */,
 			);
 			path = "Fast Navigation";
 			sourceTree = "<group>";
@@ -352,8 +354,6 @@
 			isa = PBXGroup;
 			children = (
 				0BAD7908246D462300575D4C /* ListRouteModels.swift */,
-				0BAD7909246D462300575D4C /* xib */,
-				0BAD790C246D462300575D4C /* Table Cells */,
 				0BAD7910246D462300575D4C /* ListRouteWorker.swift */,
 				0BAD7911246D462300575D4C /* ListRouteRouter.swift */,
 				0BAD7912246D462300575D4C /* ListRouteViewController.swift */,
@@ -361,15 +361,6 @@
 				0BAD7914246D462300575D4C /* ListRouteInteractor.swift */,
 			);
 			path = "List Route";
-			sourceTree = "<group>";
-		};
-		0BAD7909246D462300575D4C /* xib */ = {
-			isa = PBXGroup;
-			children = (
-				0BAD790A246D462300575D4C /* RoadCell.xib */,
-				0BAD790B246D462300575D4C /* StayingCell.xib */,
-			);
-			path = xib;
 			sourceTree = "<group>";
 		};
 		0BAD790C246D462300575D4C /* Table Cells */ = {
@@ -385,6 +376,7 @@
 		0BAD7917246D462300575D4C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0BF5E4BE2476777700FBF419 /* xibs */,
 				0BAD7918246D462300575D4C /* Storyboards */,
 				0BAD7919246D462300575D4C /* Data Models */,
 				0BAD7923246D462300575D4C /* Assets.xcassets */,
@@ -490,6 +482,33 @@
 				0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */,
 			);
 			path = "Service Doubles";
+			sourceTree = "<group>";
+		};
+		0BF5E4BE2476777700FBF419 /* xibs */ = {
+			isa = PBXGroup;
+			children = (
+				0BF5E4C02476784F00FBF419 /* Fast Navigation */,
+				0BF5E4BF2476778700FBF419 /* List Route */,
+			);
+			path = xibs;
+			sourceTree = "<group>";
+		};
+		0BF5E4BF2476778700FBF419 /* List Route */ = {
+			isa = PBXGroup;
+			children = (
+				0BAD790C246D462300575D4C /* Table Cells */,
+				0BAD790A246D462300575D4C /* RoadCell.xib */,
+				0BAD790B246D462300575D4C /* StayingCell.xib */,
+			);
+			path = "List Route";
+			sourceTree = "<group>";
+		};
+		0BF5E4C02476784F00FBF419 /* Fast Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */,
+			);
+			path = "Fast Navigation";
 			sourceTree = "<group>";
 		};
 		C5FAC7082B4FBEA6769A9AF7 /* Pods */ = {
@@ -612,6 +631,7 @@
 				0BAD7959246D462300575D4C /* Assets.xcassets in Resources */,
 				0BAD7946246D462300575D4C /* RoadCell.xib in Resources */,
 				0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */,
+				0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */,
 				0BAD7983246D68EC00575D4C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -77,4 +77,9 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
     func displaySomething(viewModel: FastNavigation.Something.ViewModel) {
         //nameTextField.text = viewModel.name
     }
+    
+    
+    @IBAction func backArrowTapped(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
 }

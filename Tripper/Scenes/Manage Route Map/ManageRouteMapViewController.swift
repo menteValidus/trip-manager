@@ -551,6 +551,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
     }
     
+    // MARK: Route Navigation
+    
+    @IBAction func routeButtonTapped(_ sender: Any) {
+        let vc = FastNavigationViewController()
+        
+        present(vc, animated: true, completion: nil)
+    }
+    
     // MARK: Shared Helper Methods
     
     private func getIDOfSelectedRoutePoint() -> String? {
