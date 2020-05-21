@@ -13,12 +13,11 @@
 import UIKit
 
 protocol FastNavigationDisplayLogic: class {
-    func displaySomething(viewModel: FastNavigation.Something.ViewModel)
 }
 
 class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic {
     var interactor: FastNavigationBusinessLogic?
-    var router: (NSObjectProtocol & FastNavigationRoutingLogic & FastNavigationDataPassing)?
+    var router: (FastNavigationRoutingLogic & FastNavigationDataPassing)?
     
     // MARK: Object Lifecycle
     
@@ -47,37 +46,13 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
         router.dataStore = interactor
     }
     
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
-    }
-    
     // MARK: View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
     }
     
-    // MARK: Do Something
-    
-    //@IBOutlet weak var nameTextField: UITextField!
-    
-    func doSomething() {
-        let request = FastNavigation.Something.Request()
-        interactor?.doSomething(request: request)
-    }
-    
-    func displaySomething(viewModel: FastNavigation.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
-    }
-    
+    // MARK: Actions
     
     @IBAction func backArrowTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)

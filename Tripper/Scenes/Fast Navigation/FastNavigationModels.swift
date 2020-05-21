@@ -15,12 +15,5 @@ import UIKit
 enum FastNavigation {
     // MARK: Use Cases
     
-    enum Something {
-        struct Request {
-        }
-        struct Response {
-        }
-        struct ViewModel {
-        }
-    }
+    
 }

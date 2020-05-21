@@ -13,14 +13,14 @@
 import UIKit
 
 @objc protocol FastNavigationRoutingLogic {
-    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    
 }
 
 protocol FastNavigationDataPassing {
     var dataStore: FastNavigationDataStore? { get }
 }
 
-class FastNavigationRouter: NSObject, FastNavigationRoutingLogic, FastNavigationDataPassing {
+class FastNavigationRouter: FastNavigationRoutingLogic, FastNavigationDataPassing {
     weak var viewController: FastNavigationViewController?
     var dataStore: FastNavigationDataStore?
     

@@ -13,6 +13,5 @@
 import UIKit
 
 class FastNavigationWorker {
-    func doSomeWork() {
-    }
+    
 }

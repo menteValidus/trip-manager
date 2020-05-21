@@ -13,11 +13,9 @@
 import UIKit
 
 protocol FastNavigationBusinessLogic {
-    func doSomething(request: FastNavigation.Something.Request)
 }
 
 protocol FastNavigationDataStore {
-    //var name: String { get set }
 }
 
 class FastNavigationInteractor: FastNavigationBusinessLogic, FastNavigationDataStore {
@@ -25,13 +23,4 @@ class FastNavigationInteractor: FastNavigationBusinessLogic, FastNavigationDataS
     var worker: FastNavigationWorker?
     //var name: String = ""
     
-    // MARK: Do Something
-    
-    func doSomething(request: FastNavigation.Something.Request) {
-        worker = FastNavigationWorker()
-        worker?.doSomeWork()
-        
-        let response = FastNavigation.Something.Response()
-        presenter?.presentSomething(response: response)
-    }
 }

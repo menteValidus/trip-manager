@@ -13,16 +13,8 @@
 import UIKit
 
 protocol FastNavigationPresentationLogic {
-    func presentSomething(response: FastNavigation.Something.Response)
 }
 
 class FastNavigationPresenter: FastNavigationPresentationLogic {
     weak var viewController: FastNavigationDisplayLogic?
-    
-    // MARK: Do Something
-    
-    func presentSomething(response: FastNavigation.Something.Response) {
-        let viewModel = FastNavigation.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
-    }
 }
