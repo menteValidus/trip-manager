@@ -21,6 +21,10 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
     var interactor: FastNavigationBusinessLogic?
     var router: (FastNavigationRoutingLogic & FastNavigationDataPassing)?
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    var subroutes: [Subroute] = []
+    
     // MARK: Object Lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -55,6 +59,7 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureDelegates()
         fetchData()
     }
     
@@ -66,6 +71,15 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
 }
 
 extension FastNavigationViewController {
+    // MARK: - Configurators
+    
+    func configureDelegates() {
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+}
+
+extension FastNavigationViewController {
     // MARK: - Fetch Data
     
     func fetchData() {
@@ -73,6 +87,26 @@ extension FastNavigationViewController {
     }
     
     func displayFetchedData(viewModel: FastNavigation.FetchData.ViewModel) {
+        subroutes = viewModel.subroutes
+        tableView.reloadData()
         print("*** \(viewModel.subroutes)")
     }
+}
+
+extension FastNavigationViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        subroutes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = subroutes[indexPath.row].title
+        
+        return cell
+    }
+
+}
+
+extension FastNavigationViewController: UITableViewDelegate {
+
 }
