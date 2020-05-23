@@ -13,7 +13,7 @@
 import UIKit
 
 @objc protocol FastNavigationRoutingLogic {
-    
+    func routeToManageRouteMap(segue: UIStoryboardSegue?)
 }
 
 protocol FastNavigationDataPassing {
@@ -26,29 +26,30 @@ class FastNavigationRouter: FastNavigationRoutingLogic, FastNavigationDataPassin
     
     // MARK: Routing
     
-    //func routeToSomewhere(segue: UIStoryboardSegue?) {
-    //  if let segue = segue {
-    //    let destinationVC = segue.destination as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //  } else {
-    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-    //    var destinationDS = destinationVC.router!.dataStore!
-    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-    //  }
-    //}
+    func routeToManageRouteMap(segue: UIStoryboardSegue?) {
+        let destinationVC = viewController?.parent as! ManageRouteMapViewController
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
+        navigateToManageRouteMap(source: viewController!, destination: destinationVC)
+    }
     
     // MARK: Navigation
     
-    //func navigateToSomewhere(source: FastNavigationViewController, destination: SomewhereViewController) {
-    //  source.show(destination, sender: nil)
-    //}
+    func navigateToManageRouteMap(source: FastNavigationViewController, destination: ManageRouteMapViewController)
+    {
+        source.removeFromParent()
+        UIView.animate(withDuration: 0.3, animations: {
+            source.view.frame = source.view.frame.offsetBy(dx: source.view.frame.width, dy: 0)
+//                CGRect(x: destination.view.frame.width, y: 0, width: source.view.frame.width, height: source.view.frame.height)
+        }, completion: { _ in
+            source.view.removeFromSuperview()
+            destination.popup = nil
+        })
+    }
     
     // MARK: Passing Data
     
-    //func passDataToSomewhere(source: FastNavigationDataStore, destination: inout SomewhereDataStore) {
-    //  destination.name = source.name
-    //}
+    func passDataToManageRouteMap(source: FastNavigationDataStore, destination: inout ManageRouteMapDataStore) {
+        
+    }
 }

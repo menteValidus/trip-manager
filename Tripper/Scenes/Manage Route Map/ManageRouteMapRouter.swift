@@ -17,6 +17,7 @@ import UIKit
     func routeToDetailRoutePoint(segue: UIStoryboardSegue?)
     func routeToEditRoutePoint(segue: UIStoryboardSegue?)
     func routeToListRoute(segue: UIStoryboardSegue?)
+    func routeToFastNavigation(segue: UIStoryboardSegue?)
 }
 
 protocol ManageRouteMapDataPassing {
@@ -86,6 +87,21 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         }
     }
     
+    func routeToFastNavigation(segue: UIStoryboardSegue?) {
+        let destinationVC: FastNavigationViewController
+        
+//        if let viewController = viewController?.popup as? DetailRoutePointViewController {
+//            destinationVC = viewController
+//        } else {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            destinationVC = FastNavigationViewController()
+//        }
+        
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToFastNavigation(source: dataStore!, destination: &destinationDS)
+        navigateToFastNavigation(source: viewController!, destination: destinationVC)
+    }
+    
     // MARK: Navigation
     
     func navigateToCreateRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController)
@@ -126,6 +142,25 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         source.show(destination, sender: nil)
     }
     
+    func navigateToFastNavigation(source: ManageRouteMapViewController, destination: FastNavigationViewController) {
+        let topOffset = source.view.safeAreaInsets.top
+        let bottomOffset = source.view.safeAreaInsets.bottom
+        
+        source.addChild(destination)
+        source.view.addSubview(destination.view)
+        
+        let height = source.view.frame.height - (topOffset + bottomOffset)
+        let width  = source.view.frame.width
+        destination.view.frame = CGRect(x: width, y: topOffset, width: width / 3, height: height)
+        destination.view.isUserInteractionEnabled = true
+        destination.didMove(toParent: source)
+        
+        let xCoordinate = width * 2/3
+        UIView.animate(withDuration: 0.3) {
+            destination.view.frame = CGRect(x: xCoordinate, y: topOffset, width: width / 3, height: height)
+        }
+    }
+    
     // MARK: Passing data
     
     func passDataToCreateRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore)
@@ -143,5 +178,8 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     }
     
     func passDataToListRoute(source: ManageRouteMapDataStore, destination: inout ListRouteDataStore) {
+    }
+    
+    func passDataToFastNavigation(source: ManageRouteMapDataStore, destination: inout FastNavigationDataStore) {
     }
 }

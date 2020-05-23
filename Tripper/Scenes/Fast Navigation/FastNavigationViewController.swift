@@ -66,7 +66,7 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
     // MARK: Actions
     
     @IBAction func backArrowTapped(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        router?.routeToManageRouteMap(segue: nil)
     }
 }
 

@@ -40,6 +40,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     var interactor: ManageRouteMapBusinessLogic?
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
     
+    private var interactionController: UIPercentDrivenInteractiveTransition?
+    
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
     
@@ -87,7 +89,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         router.dataStore = interactor
     }
     
-    // MARK: Routing
+    // MARK: - Routing
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let scene = segue.identifier {
@@ -96,6 +98,12 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
                 router.perform(selector, with: segue)
             }
         }
+    }
+    
+    // MARK: Route Navigation
+    
+    @IBAction func routeButtonTapped(_ sender: Any) {
+        router?.routeToFastNavigation(segue: nil)
     }
     
     // MARK: View lifecycle
@@ -551,15 +559,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
     }
     
-    // MARK: Route Navigation
-    
-    @IBAction func routeButtonTapped(_ sender: Any) {
-        let vc = FastNavigationViewController()
-        
-        present(vc, animated: true, completion: nil)
-    }
-    
-    // MARK: Shared Helper Methods
+    // MARK: - Shared Helper Methods
     
     private func getIDOfSelectedRoutePoint() -> String? {
         let selectedAnnotation = mapView.selectedAnnotations.first
