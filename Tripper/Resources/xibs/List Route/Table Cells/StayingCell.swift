@@ -25,7 +25,7 @@ class StayingCell: UITableViewCell, SubrouteCell {
     // MARK: - Helper Methods
     
     func configure(for subroute: Subroute) {
-        let staying = subroute as! ListRoute.Staying
+        let staying = subroute as! FastNavigation.Staying
         titleLabel.text = String(staying.title)
         
         let timeString = format(seconds: staying.timeInSeconds)

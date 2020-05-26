@@ -31,6 +31,7 @@ protocol ManageRouteMapPresentationLogic {
     func presentFocus(response: ManageRouteMap.Focus.Response)
     func presentFocusOnRoute(response: ManageRouteMap.FocusOnRoute.Response)
     func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response)
+    func presentFocusOnCoordinates(response: ManageRouteMap.FocusOnCoordinates.Response)
     func presentRouteEstimation(response: ManageRouteMap.RouteEstimation.Response)
 }
 
@@ -161,6 +162,13 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response) {
         let viewModel = ManageRouteMap.FocusOnUser.ViewModel(userCoordinate: response.userCoordinate)
         viewController?.displayFocusOnUser(viewModel: viewModel)
+    }
+    
+    // MARK: Focus On Coordinates
+    
+    func presentFocusOnCoordinates(response: ManageRouteMap.FocusOnCoordinates.Response) {
+        viewController?.displayFocusOnCoordinates(viewModel: .init(southWestCoordinate: response.southWestCoordinate,
+                                                                   northEastCoordinate: response.northEastCoordinate))
     }
     
     // MARK: Route Estimation
