@@ -136,7 +136,6 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     }
     
     func displayEdit(viewModel: DetailRoutePoint.Edit.ViewModel) {
-        print("Use case EditRoutePoint is completed")
         router?.routeToManageRouteMapWithEdit(segue: nil)
     }
     
@@ -148,7 +147,6 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     }
     
     func displayDelete(viewModel: DetailRoutePoint.Delete.ViewModel) {
-        print("Use case DeleteRoutePoint is completed")
         router?.routeToManageRouteMapWithDelete(segue: nil)
     }
     

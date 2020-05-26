@@ -10,6 +10,11 @@
 		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
 		0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */; };
 		0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */; };
+		0BA0EDCD247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */; };
+		0BA0EDCE247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDCA247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift */; };
+		0BA0EDCF247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDCB247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift */; };
+		0BA0EDD0247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDCC247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift */; };
+		0BA0EDD6247D43E100A7AF36 /* DetailRoutePointRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */; };
 		0BAD792C246D462300575D4C /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78E9246D462200575D4C /* RoutePoint.swift */; };
 		0BAD792D246D462300575D4C /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EA246D462200575D4C /* RouteFragment.swift */; };
 		0BAD792E246D462300575D4C /* Date+ComparisonWithoutSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */; };
@@ -105,6 +110,11 @@
 		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNumberGeneratorMock.swift; sourceTree = "<group>"; };
 		0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLimiterMock.swift; sourceTree = "<group>"; };
+		0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
+		0BA0EDCA247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointInteractorTests.swift; sourceTree = "<group>"; };
+		0BA0EDCB247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointWorkerTests.swift; sourceTree = "<group>"; };
+		0BA0EDCC247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointPresenterTests.swift; sourceTree = "<group>"; };
+		0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointRouterMock.swift; sourceTree = "<group>"; };
 		0BAD78E9246D462200575D4C /* RoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
 		0BAD78EA246D462200575D4C /* RouteFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
 		0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ComparisonWithoutSeconds.swift"; sourceTree = "<group>"; };
@@ -263,11 +273,22 @@
 			path = UtilTests;
 			sourceTree = "<group>";
 		};
-		0BA0EDC3247D235D00A7AF36 /* Test Doubles */ = {
+		0BA0EDC8247D31BB00A7AF36 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */,
-				0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */,
+				0BA0EDD4247D43BE00A7AF36 /* Test Doubles */,
+				0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */,
+				0BA0EDCA247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift */,
+				0BA0EDCB247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift */,
+				0BA0EDCC247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		0BA0EDD4247D43BE00A7AF36 /* Test Doubles */ = {
+			isa = PBXGroup;
+			children = (
+				0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */,
 			);
 			path = "Test Doubles";
 			sourceTree = "<group>";
@@ -440,6 +461,7 @@
 		0BAD7964246D55F100575D4C /* TripperTests */ = {
 			isa = PBXGroup;
 			children = (
+				0BAD797E246D662100575D4C /* Service Doubles */,
 				0BAD796D246D5C4A00575D4C /* Scenes */,
 				0BAD7965246D55F100575D4C /* TripperTests.swift */,
 				0BAD7967246D55F100575D4C /* Info.plist */,
@@ -450,9 +472,9 @@
 		0BAD796D246D5C4A00575D4C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				0BAD797E246D662100575D4C /* Service Doubles */,
 				0BAD796E246D5C7700575D4C /* Manage Route Map */,
 				0BF2F88E247D197B002FCD6A /* Create Route Point */,
+				0BA0EDC8247D31BB00A7AF36 /* Detail */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -482,6 +504,8 @@
 		0BAD797E246D662100575D4C /* Service Doubles */ = {
 			isa = PBXGroup;
 			children = (
+				0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */,
+				0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */,
 				0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */,
 				0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */,
 			);
@@ -491,7 +515,6 @@
 		0BF2F88E247D197B002FCD6A /* Create Route Point */ = {
 			isa = PBXGroup;
 			children = (
-				0BA0EDC3247D235D00A7AF36 /* Test Doubles */,
 				0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */,
 				0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */,
 				0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */,
@@ -753,13 +776,18 @@
 				0BAD7974246D5CB700575D4C /* ManageRouteMapInteractorTests.swift in Sources */,
 				0BAD797D246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift in Sources */,
 				0BF2F896247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift in Sources */,
+				0BA0EDD6247D43E100A7AF36 /* DetailRoutePointRouterMock.swift in Sources */,
+				0BA0EDCE247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift in Sources */,
 				0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */,
 				0BF2F894247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift in Sources */,
 				0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */,
 				0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */,
+				0BA0EDCD247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift in Sources */,
+				0BA0EDCF247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift in Sources */,
 				0BAD7976246D5CB700575D4C /* ManageRouteMapPresenterTests.swift in Sources */,
 				0BAD7966246D55F100575D4C /* TripperTests.swift in Sources */,
 				0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */,
+				0BA0EDD0247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift in Sources */,
 				0BAD797B246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

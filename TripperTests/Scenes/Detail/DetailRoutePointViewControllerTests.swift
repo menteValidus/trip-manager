@@ -1,5 +1,5 @@
 //
-//  CreateRoutePointViewControllerTests.swift
+//  DetailRoutePointViewControllerTests.swift
 //  Tripper
 //
 //  Created by Denis Cherniy on 26.05.2020.
@@ -13,19 +13,19 @@
 @testable import Tripper
 import XCTest
 
-class CreateRoutePointViewControllerTests: XCTestCase {
+class DetailRoutePointViewControllerTests: XCTestCase {
     // MARK: Subject Under Test
     
-    var sut: CreateRoutePointViewController!
-    var routePointGateway: RoutePointGatewayMock!
+    var sut: DetailRoutePointViewController!
     var window: UIWindow!
+    var routePointGateway: RoutePointGatewayMock!
     
     // MARK: Test Lifecycle
     
     override func setUp() {
-        routePointGateway = RoutePointGatewayMock(initialStorage: [])
         super.setUp()
         window = UIWindow()
+        routePointGateway = RoutePointGatewayMock(initialStorage: [])
     }
     
     override func tearDown() {
@@ -35,20 +35,24 @@ class CreateRoutePointViewControllerTests: XCTestCase {
     
     // MARK: Test Setup
     
-    func setupCreateRoutePointViewController(with routePoint: RoutePoint) {
+    func setupDetailRoutePointViewController(with routePoint: RoutePoint) {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        sut = (storyboard.instantiateViewController(withIdentifier: "CreateRoutePointViewController") as! CreateRoutePointViewController)
+        sut = (storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController)
         
-        let interactor = CreateRoutePointInteractor()
+        let interactor = DetailRoutePointInteractor()
         
-        interactor.pointToSave = routePoint
-        let presenter = CreateRoutePointPresenter()
+        interactor.routePoint = routePoint
+        let presenter = DetailRoutePointPresenter()
         presenter.viewController = sut
         
         interactor.presenter = presenter
-        let worker = CreateRoutePointWorker(routePointGateway: routePointGateway, orderNumberGenerator: OrderNumberGeneratorMock(), dateLimiter: DateLimiterMock())
+        let worker = DetailRoutePointWorker(routePointGateway: routePointGateway)
         interactor.worker = worker
+        
+        let router = DetailRoutePointRouterMock()
+        router.dataStore = interactor
+        sut.router = router
         
         sut.interactor = interactor
     }
@@ -60,26 +64,26 @@ class CreateRoutePointViewControllerTests: XCTestCase {
     
     // MARK: Tests
     
-    func testUIDataSetup() {
+    func testUISetup() {
         let date = Date()
         let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, timeToNextPointInSeconds: 120, distanceToNextPointInMeters: 120)
-        setupCreateRoutePointViewController(with: routePoint)
+        setupDetailRoutePointViewController(with: routePoint)
         
         loadView()
-        sut.formRoutePoint()
         
-        XCTAssertEqual(routePoint.title, sut.titleTextField.text!)
-        XCTAssertEqual(routePoint.subtitle, sut.descriptionTextView.text)
+        XCTAssertTrue(sut.titleLabel.text! == routePoint.title)
+        XCTAssertTrue(sut.descriptionTextView.text == routePoint.subtitle)
     }
     
-    func testRoutePointCreation() {
+    func testDeleteRoutePoint() {
         let date = Date()
         let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, timeToNextPointInSeconds: 120, distanceToNextPointInMeters: 120)
-        setupCreateRoutePointViewController(with: routePoint)
+        setupDetailRoutePointViewController(with: routePoint)
         
         loadView()
-        sut.save(self)
+        (sut.interactor as? DetailRoutePointInteractor)?.worker = DetailRoutePointWorker(routePointGateway: routePointGateway)
+        sut.deleteRoutePoint()
         
-        XCTAssertTrue(routePointGateway.insertedRoutePoint! == routePoint)
+        XCTAssertTrue(routePointGateway.deletedRoutePoint! == routePoint)
     }
 }
