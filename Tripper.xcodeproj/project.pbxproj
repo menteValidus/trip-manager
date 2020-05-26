@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
+		0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */; };
+		0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */; };
 		0BAD792C246D462300575D4C /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78E9246D462200575D4C /* RoutePoint.swift */; };
 		0BAD792D246D462300575D4C /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EA246D462200575D4C /* RouteFragment.swift */; };
 		0BAD792E246D462300575D4C /* Date+ComparisonWithoutSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */; };
@@ -70,6 +72,10 @@
 		0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */; };
 		0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */; };
 		0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */; };
+		0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */; };
+		0BF2F894247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */; };
+		0BF2F895247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F891247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift */; };
+		0BF2F896247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +103,8 @@
 		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0F4131242A4DCD00C769C9 /* UtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
 		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNumberGeneratorMock.swift; sourceTree = "<group>"; };
+		0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLimiterMock.swift; sourceTree = "<group>"; };
 		0BAD78E9246D462200575D4C /* RoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
 		0BAD78EA246D462200575D4C /* RouteFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
 		0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ComparisonWithoutSeconds.swift"; sourceTree = "<group>"; };
@@ -163,6 +171,10 @@
 		0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentGatewayMock.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
+		0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointInteractorTests.swift; sourceTree = "<group>"; };
+		0BF2F891247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointWorkerTests.swift; sourceTree = "<group>"; };
+		0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointPresenterTests.swift; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
@@ -251,6 +263,15 @@
 			path = UtilTests;
 			sourceTree = "<group>";
 		};
+		0BA0EDC3247D235D00A7AF36 /* Test Doubles */ = {
+			isa = PBXGroup;
+			children = (
+				0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */,
+				0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */,
+			);
+			path = "Test Doubles";
+			sourceTree = "<group>";
+		};
 		0BAD78E8246D462200575D4C /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,12 +333,12 @@
 		0BAD7900246D462300575D4C /* Create Route Point */ = {
 			isa = PBXGroup;
 			children = (
+				0BAD7904246D462300575D4C /* CreateRoutePointViewController.swift */,
 				0BAD7901246D462300575D4C /* CreateRoutePointInteractor.swift */,
+				0BAD7906246D462300575D4C /* CreateRoutePointPresenter.swift */,
 				0BAD7902246D462300575D4C /* CreateRoutePointModels.swift */,
 				0BAD7903246D462300575D4C /* CreateRoutePointWorker.swift */,
-				0BAD7904246D462300575D4C /* CreateRoutePointViewController.swift */,
 				0BAD7905246D462300575D4C /* CreateRoutePointRouter.swift */,
-				0BAD7906246D462300575D4C /* CreateRoutePointPresenter.swift */,
 			);
 			path = "Create Route Point";
 			sourceTree = "<group>";
@@ -431,6 +452,7 @@
 			children = (
 				0BAD797E246D662100575D4C /* Service Doubles */,
 				0BAD796E246D5C7700575D4C /* Manage Route Map */,
+				0BF2F88E247D197B002FCD6A /* Create Route Point */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -464,6 +486,18 @@
 				0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */,
 			);
 			path = "Service Doubles";
+			sourceTree = "<group>";
+		};
+		0BF2F88E247D197B002FCD6A /* Create Route Point */ = {
+			isa = PBXGroup;
+			children = (
+				0BA0EDC3247D235D00A7AF36 /* Test Doubles */,
+				0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */,
+				0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */,
+				0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */,
+				0BF2F891247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift */,
+			);
+			path = "Create Route Point";
 			sourceTree = "<group>";
 		};
 		C5FAC7082B4FBEA6769A9AF7 /* Pods */ = {
@@ -713,13 +747,19 @@
 			files = (
 				0BAD7973246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift in Sources */,
 				0BAD7979246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift in Sources */,
+				0BF2F895247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift in Sources */,
 				0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */,
 				0BAD7975246D5CB700575D4C /* ManageRouteMapWorkerTests.swift in Sources */,
 				0BAD7974246D5CB700575D4C /* ManageRouteMapInteractorTests.swift in Sources */,
 				0BAD797D246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift in Sources */,
+				0BF2F896247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift in Sources */,
+				0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */,
+				0BF2F894247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift in Sources */,
 				0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */,
+				0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */,
 				0BAD7976246D5CB700575D4C /* ManageRouteMapPresenterTests.swift in Sources */,
 				0BAD7966246D55F100575D4C /* TripperTests.swift in Sources */,
+				0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */,
 				0BAD797B246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

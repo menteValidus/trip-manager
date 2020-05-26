@@ -29,16 +29,22 @@ class RoutePointGatewayMock: RoutePointDataStore {
         
     }
     
+    var insertedRoutePoint: RoutePoint?
+    
     func insert(_ point: RoutePoint) {
-        
+        insertedRoutePoint = point
     }
+    
+    var updatedRoutePoint: RoutePoint?
     
     func update(_ point: RoutePoint) {
-        
+        updatedRoutePoint = point
     }
     
+    var deletedRoutePoint: RoutePoint?
+    
     func delete(_ point: RoutePoint) {
-        
+        deletedRoutePoint = point
     }
     
 }
