@@ -9,6 +9,10 @@
 @testable import Tripper
 
 class ManageRouteMapDisplayLogicSpy: ManageRouteMapDisplayLogic {
+    func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel) {
+        
+    }
+    
     func displayDataSetup(viewModel: ManageRouteMap.SetupData.ViewModel) {
     }
     

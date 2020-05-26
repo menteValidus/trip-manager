@@ -8,7 +8,7 @@
 
 @testable import Tripper
 
-class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {
+class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {    
     var presenter: ManageRouteMapPresentationLogic!
     var worker: ManageRouteMapWorker!
     
@@ -65,6 +65,10 @@ class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {
     }
     
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request) {
+    }
+    
+    func focusOnCoordinates(request: ManageRouteMap.FocusOnCoordinates.Request) {
+        
     }
     
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request) {

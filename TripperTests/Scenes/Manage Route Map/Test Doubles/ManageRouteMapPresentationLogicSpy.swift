@@ -8,6 +8,9 @@
 @testable import Tripper
 
 class ManageRouteMapPresentationLogicSpy: ManageRouteMapPresentationLogic {
+    func presentFocusOnCoordinates(response: ManageRouteMap.FocusOnCoordinates.Response) {
+    }
+    
     var viewController: ManageRouteMapDisplayLogic!
     
     func presentDataSetup(response: ManageRouteMap.SetupData.Response) {
