@@ -51,9 +51,9 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     }
     
     func setupGateways() {
-        let startRoutePoint = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date(), timeToNextPointInSeconds: 60, distanceToNextPointInMeters: 60)
-        let date = Date().addingTimeInterval(TimeInterval(startRoutePoint.timeToNextPointInSeconds!))
-        let endRoutePoint = RoutePoint(id: "22", orderNumber: 2, title: "Stub #2", subtitle: "S(t)ubtitle", latitude: 1, longitude: 1, arrivalDate: date, departureDate: date, timeToNextPointInSeconds: nil, distanceToNextPointInMeters: nil)
+        let startRoutePoint = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date())
+        let date = Date().addingTimeInterval(TimeInterval(120))
+        let endRoutePoint = RoutePoint(id: "22", orderNumber: 2, title: "Stub #2", subtitle: "S(t)ubtitle", latitude: 1, longitude: 1, arrivalDate: date, departureDate: date)
         routePointGateway = RoutePointGatewayMock(initialStorage: [startRoutePoint, endRoutePoint])
         
         let firstCoord = CLLocationCoordinate2D(latitude: startRoutePoint.latitude, longitude: startRoutePoint.longitude)
@@ -103,7 +103,7 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     func testSetAnnotation() {
         setupEmptyGateways()
         standardSetup()
-        let annotationInfo = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date(), timeToNextPointInSeconds: 60, distanceToNextPointInMeters: 60)
+        let annotationInfo = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date())
         
         loadView()
         sut.interactor?.setRoutePoint(request: .init(annotationInfo: annotationInfo))

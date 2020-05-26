@@ -8,19 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
-		0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */; };
-		0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */; };
-		0BA0EDCD247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */; };
-		0BA0EDCE247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDCA247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift */; };
-		0BA0EDCF247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDCB247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift */; };
-		0BA0EDD0247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDCC247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift */; };
-		0BA0EDD6247D43E100A7AF36 /* DetailRoutePointRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */; };
 		0B7A45062473FF3C00AA1F5E /* FastNavigationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */; };
 		0B7A45072473FF3C00AA1F5E /* FastNavigationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */; };
 		0B7A45082473FF3C00AA1F5E /* FastNavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */; };
 		0B7A45092473FF3C00AA1F5E /* FastNavigationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */; };
 		0B7A450A2473FF3C00AA1F5E /* FastNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */; };
 		0B7A450B2473FF3C00AA1F5E /* FastNavigationInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */; };
+		0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */; };
+		0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */; };
+		0BA0EDCD247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */; };
+		0BA0EDD6247D43E100A7AF36 /* DetailRoutePointRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */; };
+		0BA0EDDC247D5CFE00A7AF36 /* FastNavigationViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA0EDD8247D5CFE00A7AF36 /* FastNavigationViewControllerTests.swift */; };
 		0BAD792C246D462300575D4C /* RoutePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78E9246D462200575D4C /* RoutePoint.swift */; };
 		0BAD792D246D462300575D4C /* RouteFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EA246D462200575D4C /* RouteFragment.swift */; };
 		0BAD792E246D462300575D4C /* Date+ComparisonWithoutSeconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */; };
@@ -67,9 +65,6 @@
 		0BAD795E246D462300575D4C /* MapBoxRouteCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD792A246D462300575D4C /* MapBoxRouteCreator.swift */; };
 		0BAD7966246D55F100575D4C /* TripperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7965246D55F100575D4C /* TripperTests.swift */; };
 		0BAD7973246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD796F246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift */; };
-		0BAD7974246D5CB700575D4C /* ManageRouteMapInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7970246D5CB700575D4C /* ManageRouteMapInteractorTests.swift */; };
-		0BAD7975246D5CB700575D4C /* ManageRouteMapWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7971246D5CB700575D4C /* ManageRouteMapWorkerTests.swift */; };
-		0BAD7976246D5CB700575D4C /* ManageRouteMapPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7972246D5CB700575D4C /* ManageRouteMapPresenterTests.swift */; };
 		0BAD7979246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7978246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift */; };
 		0BAD797B246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD797A246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift */; };
 		0BAD797D246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD797C246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift */; };
@@ -78,9 +73,6 @@
 		0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */; };
 		0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */; };
 		0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */; };
-		0BF2F894247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */; };
-		0BF2F895247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F891247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift */; };
-		0BF2F896247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */; };
 		0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
 /* End PBXBuildFile section */
@@ -109,19 +101,17 @@
 		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0F4131242A4DCD00C769C9 /* UtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
 		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNumberGeneratorMock.swift; sourceTree = "<group>"; };
-		0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLimiterMock.swift; sourceTree = "<group>"; };
-		0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
-		0BA0EDCA247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointInteractorTests.swift; sourceTree = "<group>"; };
-		0BA0EDCB247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointWorkerTests.swift; sourceTree = "<group>"; };
-		0BA0EDCC247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointPresenterTests.swift; sourceTree = "<group>"; };
-		0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointRouterMock.swift; sourceTree = "<group>"; };
 		0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationPresenter.swift; sourceTree = "<group>"; };
 		0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationWorker.swift; sourceTree = "<group>"; };
 		0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationRouter.swift; sourceTree = "<group>"; };
 		0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationModels.swift; sourceTree = "<group>"; };
 		0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationViewController.swift; sourceTree = "<group>"; };
 		0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationInteractor.swift; sourceTree = "<group>"; };
+		0BA0EDC4247D238D00A7AF36 /* OrderNumberGeneratorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderNumberGeneratorMock.swift; sourceTree = "<group>"; };
+		0BA0EDC6247D23EE00A7AF36 /* DateLimiterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateLimiterMock.swift; sourceTree = "<group>"; };
+		0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
+		0BA0EDD5247D43E100A7AF36 /* DetailRoutePointRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRoutePointRouterMock.swift; sourceTree = "<group>"; };
+		0BA0EDD8247D5CFE00A7AF36 /* FastNavigationViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationViewControllerTests.swift; sourceTree = "<group>"; };
 		0BAD78E9246D462200575D4C /* RoutePoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePoint.swift; sourceTree = "<group>"; };
 		0BAD78EA246D462200575D4C /* RouteFragment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragment.swift; sourceTree = "<group>"; };
 		0BAD78EC246D462200575D4C /* Date+ComparisonWithoutSeconds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+ComparisonWithoutSeconds.swift"; sourceTree = "<group>"; };
@@ -170,9 +160,6 @@
 		0BAD7965246D55F100575D4C /* TripperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripperTests.swift; sourceTree = "<group>"; };
 		0BAD7967246D55F100575D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BAD796F246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapViewControllerTests.swift; sourceTree = "<group>"; };
-		0BAD7970246D5CB700575D4C /* ManageRouteMapInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapInteractorTests.swift; sourceTree = "<group>"; };
-		0BAD7971246D5CB700575D4C /* ManageRouteMapWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapWorkerTests.swift; sourceTree = "<group>"; };
-		0BAD7972246D5CB700575D4C /* ManageRouteMapPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapPresenterTests.swift; sourceTree = "<group>"; };
 		0BAD7978246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapPresentationLogicSpy.swift; sourceTree = "<group>"; };
 		0BAD797A246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapBusinessLogicSpy.swift; sourceTree = "<group>"; };
 		0BAD797C246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapDisplayLogicSpy.swift; sourceTree = "<group>"; };
@@ -183,9 +170,6 @@
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
-		0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointInteractorTests.swift; sourceTree = "<group>"; };
-		0BF2F891247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointWorkerTests.swift; sourceTree = "<group>"; };
-		0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointPresenterTests.swift; sourceTree = "<group>"; };
 		0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FastNavigationViewController.xib; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
 		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,14 +259,24 @@
 			path = UtilTests;
 			sourceTree = "<group>";
 		};
+		0B7A44FF2473FF1300AA1F5E /* Fast Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */,
+				0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */,
+				0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */,
+				0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */,
+				0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */,
+				0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */,
+			);
+			path = "Fast Navigation";
+			sourceTree = "<group>";
+		};
 		0BA0EDC8247D31BB00A7AF36 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				0BA0EDD4247D43BE00A7AF36 /* Test Doubles */,
 				0BA0EDC9247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift */,
-				0BA0EDCA247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift */,
-				0BA0EDCB247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift */,
-				0BA0EDCC247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -295,15 +289,10 @@
 			path = "Test Doubles";
 			sourceTree = "<group>";
 		};
-		0B7A44FF2473FF1300AA1F5E /* Fast Navigation */ = {
+		0BA0EDD7247D5CC900A7AF36 /* Fast Navigation */ = {
 			isa = PBXGroup;
 			children = (
-				0B7A45042473FF3C00AA1F5E /* FastNavigationViewController.swift */,
-				0B7A45052473FF3C00AA1F5E /* FastNavigationInteractor.swift */,
-				0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */,
-				0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */,
-				0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */,
-				0B7A45032473FF3C00AA1F5E /* FastNavigationModels.swift */,
+				0BA0EDD8247D5CFE00A7AF36 /* FastNavigationViewControllerTests.swift */,
 			);
 			path = "Fast Navigation";
 			sourceTree = "<group>";
@@ -467,6 +456,7 @@
 				0BAD796E246D5C7700575D4C /* Manage Route Map */,
 				0BF2F88E247D197B002FCD6A /* Create Route Point */,
 				0BA0EDC8247D31BB00A7AF36 /* Detail */,
+				0BA0EDD7247D5CC900A7AF36 /* Fast Navigation */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -476,9 +466,6 @@
 			children = (
 				0BAD7977246D5E5E00575D4C /* Test Doubles */,
 				0BAD796F246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift */,
-				0BAD7970246D5CB700575D4C /* ManageRouteMapInteractorTests.swift */,
-				0BAD7971246D5CB700575D4C /* ManageRouteMapWorkerTests.swift */,
-				0BAD7972246D5CB700575D4C /* ManageRouteMapPresenterTests.swift */,
 			);
 			path = "Manage Route Map";
 			sourceTree = "<group>";
@@ -508,9 +495,6 @@
 			isa = PBXGroup;
 			children = (
 				0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */,
-				0BF2F890247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift */,
-				0BF2F892247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift */,
-				0BF2F891247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift */,
 			);
 			path = "Create Route Point";
 			sourceTree = "<group>";
@@ -790,24 +774,16 @@
 			files = (
 				0BAD7973246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift in Sources */,
 				0BAD7979246D5E7C00575D4C /* ManageRouteMapPresentationLogicSpy.swift in Sources */,
-				0BF2F895247D1A0A002FCD6A /* CreateRoutePointWorkerTests.swift in Sources */,
 				0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */,
-				0BAD7975246D5CB700575D4C /* ManageRouteMapWorkerTests.swift in Sources */,
-				0BAD7974246D5CB700575D4C /* ManageRouteMapInteractorTests.swift in Sources */,
+				0BA0EDDC247D5CFE00A7AF36 /* FastNavigationViewControllerTests.swift in Sources */,
 				0BAD797D246D616700575D4C /* ManageRouteMapDisplayLogicSpy.swift in Sources */,
-				0BF2F896247D1A0A002FCD6A /* CreateRoutePointPresenterTests.swift in Sources */,
 				0BA0EDD6247D43E100A7AF36 /* DetailRoutePointRouterMock.swift in Sources */,
-				0BA0EDCE247D333C00A7AF36 /* DetailRoutePointInteractorTests.swift in Sources */,
 				0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */,
-				0BF2F894247D1A0A002FCD6A /* CreateRoutePointInteractorTests.swift in Sources */,
 				0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */,
 				0BA0EDC5247D238D00A7AF36 /* OrderNumberGeneratorMock.swift in Sources */,
 				0BA0EDCD247D333C00A7AF36 /* DetailRoutePointViewControllerTests.swift in Sources */,
-				0BA0EDCF247D333C00A7AF36 /* DetailRoutePointWorkerTests.swift in Sources */,
-				0BAD7976246D5CB700575D4C /* ManageRouteMapPresenterTests.swift in Sources */,
 				0BAD7966246D55F100575D4C /* TripperTests.swift in Sources */,
 				0BA0EDC7247D23EE00A7AF36 /* DateLimiterMock.swift in Sources */,
-				0BA0EDD0247D333C00A7AF36 /* DetailRoutePointPresenterTests.swift in Sources */,
 				0BAD797B246D600400575D4C /* ManageRouteMapBusinessLogicSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

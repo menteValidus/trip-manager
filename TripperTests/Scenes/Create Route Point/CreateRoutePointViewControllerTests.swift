@@ -62,7 +62,7 @@ class CreateRoutePointViewControllerTests: XCTestCase {
     
     func testUIDataSetup() {
         let date = Date()
-        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, timeToNextPointInSeconds: 120, distanceToNextPointInMeters: 120)
+        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date)
         setupCreateRoutePointViewController(with: routePoint)
         
         loadView()
@@ -74,7 +74,7 @@ class CreateRoutePointViewControllerTests: XCTestCase {
     
     func testRoutePointCreation() {
         let date = Date()
-        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, timeToNextPointInSeconds: 120, distanceToNextPointInMeters: 120)
+        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date)
         setupCreateRoutePointViewController(with: routePoint)
         
         loadView()
