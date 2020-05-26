@@ -11,9 +11,12 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol FastNavigationPresentationLogic {
     func presentFetchedData(response: FastNavigation.FetchData.Response)
+    func presentSelectedStaying(response: FastNavigation.SelectSubroute.Response)
+    func presentSelectedInRoad(response: FastNavigation.SelectSubroute.Response)
 }
 
 class FastNavigationPresenter: FastNavigationPresentationLogic {
@@ -22,22 +25,20 @@ class FastNavigationPresenter: FastNavigationPresentationLogic {
     // MARK: - Fetch Data
     
     func presentFetchedData(response: FastNavigation.FetchData.Response) {
-        var subroutes = [Subroute]()
+        viewController?.displayFetchedData(viewModel: .init(subroutes: response.subroutes))
+    }
+    
+    // MARK: Select Subroute
+    
+    func presentSelectedStaying(response: FastNavigation.SelectSubroute.Response) {
+        let coordinate = (response.subroute as! FastNavigation.Staying).coordinate
         
-        let fetchedRoutePoints = response.routePoints
-        for index in 0..<(fetchedRoutePoints.count) {
-            let routePoint = fetchedRoutePoints[index]
-            let timeToStayInSeconds = Int(routePoint.departureDate.timeIntervalSince(routePoint.arrivalDate))
-            let staying = ListRoute.Staying(title: routePoint.title, timeInSeconds: timeToStayInSeconds, description: routePoint.subtitle)
-            subroutes.append(staying)
-            
-            if index < fetchedRoutePoints.count - 1 {
-                let inRoad = ListRoute.InRoad(seconds: routePoint.timeToNextPointInSeconds ?? 0,
-                                              metres: routePoint.distanceToNextPointInMeters ?? 0)
-                subroutes.append(inRoad)
-            }
-        }
+        viewController?.displaySelectedSubroute(viewModel: .init(coordinates: [coordinate]))
+    }
+    
+    func presentSelectedInRoad(response: FastNavigation.SelectSubroute.Response) {
+        let coordinates = (response.subroute as! FastNavigation.InRoad).coordinates
         
-        viewController?.displayFetchedData(viewModel: .init(subroutes: subroutes))
+        viewController?.displaySelectedSubroute(viewModel: .init(coordinates: coordinates))
     }
 }

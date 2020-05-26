@@ -242,12 +242,10 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
         let longitude = data.tappedCoordinate.longitude
         let arrivalDate = worker!.getLeftDateLimit(by: orderNumber)?.addingTimeInterval(TimeInterval(data.timeToNextPointInSeconds)) ?? Date()
         let departureDate = arrivalDate
-        let distance = data.distanceToNextPointInMeters
         let routePoint = RoutePoint(id: id, orderNumber: orderNumber,
                                     title: title, subtitle: subtitle,
                                     latitude: latitude, longitude: longitude,
-                                    arrivalDate: arrivalDate, departureDate: departureDate,
-                                    distanceToNextPointInMeters: distance)
+                                    arrivalDate: arrivalDate, departureDate: departureDate)
         return routePoint
     }
 }

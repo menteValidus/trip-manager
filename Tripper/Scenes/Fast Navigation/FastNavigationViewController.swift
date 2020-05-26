@@ -11,19 +11,26 @@
 //
 
 import UIKit
+import CoreLocation
 import Swinject
 
 protocol FastNavigationDisplayLogic: class {
     func displayFetchedData(viewModel: FastNavigation.FetchData.ViewModel)
+    func displaySelectedSubroute(viewModel: FastNavigation.SelectSubroute.ViewModel)
 }
 
-class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic {
+protocol FastNavigationDelegate: class {
+    func fastNavigation(didSelected coordinates: [CLLocationCoordinate2D])
+}
+
+class FastNavigationViewController: UIViewController {
     var interactor: FastNavigationBusinessLogic?
     var router: (FastNavigationRoutingLogic & FastNavigationDataPassing)?
     
     @IBOutlet weak var tableView: UITableView!
     
     var subroutes: [Subroute] = []
+    var delegate: FastNavigationDelegate?
     
     // MARK: Object Lifecycle
     
@@ -44,7 +51,8 @@ class FastNavigationViewController: UIViewController, FastNavigationDisplayLogic
         let interactor = FastNavigationInteractor()
         let presenter = FastNavigationPresenter()
         let router = FastNavigationRouter()
-        let worker = FastNavigationWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!)
+        let worker = FastNavigationWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
+                                          routeFragmentGateway: Container.shared.resolve(RouteFragmentDatastore.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
@@ -79,7 +87,7 @@ extension FastNavigationViewController {
     }
 }
 
-extension FastNavigationViewController {
+extension FastNavigationViewController: FastNavigationDisplayLogic {
     // MARK: - Fetch Data
     
     func fetchData() {
@@ -90,6 +98,12 @@ extension FastNavigationViewController {
         subroutes = viewModel.subroutes
         tableView.reloadData()
         print("*** \(viewModel.subroutes)")
+    }
+    
+    // MARK: Select Subroute
+    
+    func displaySelectedSubroute(viewModel: FastNavigation.SelectSubroute.ViewModel) {
+        delegate?.fastNavigation(didSelected: viewModel.coordinates)
     }
 }
 
@@ -108,5 +122,13 @@ extension FastNavigationViewController: UITableViewDataSource {
 }
 
 extension FastNavigationViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        interactor?.selectSubroute(request: .init(index: indexPath.row))
+    }
+}
 
+extension FastNavigationViewController: DismissablePopup {
+    func dismissPopup() {
+        router?.routeToManageRouteMap(segue: nil)
+    }
 }

@@ -315,10 +315,10 @@
 			isa = PBXGroup;
 			children = (
 				0BAD78F3246D462300575D4C /* ManageRouteMapViewController.swift */,
+				0BAD78F7246D462300575D4C /* ManageRouteMapInteractor.swift */,
 				0BAD78F4246D462300575D4C /* ManageRouteMapPresenter.swift */,
 				0BAD78F5246D462300575D4C /* ManageRouteMapModels.swift */,
 				0BAD78F6246D462300575D4C /* ManageRouteMapRouter.swift */,
-				0BAD78F7246D462300575D4C /* ManageRouteMapInteractor.swift */,
 				0BAD78F8246D462300575D4C /* ManageRouteMapWorker.swift */,
 			);
 			path = "Manage Route Map";

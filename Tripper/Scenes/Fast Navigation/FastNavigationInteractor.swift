@@ -14,6 +14,7 @@ import UIKit
 
 protocol FastNavigationBusinessLogic {
     func fetchData(request: FastNavigation.FetchData.Request)
+    func selectSubroute(request: FastNavigation.SelectSubroute.Request)
 }
 
 protocol FastNavigationDataStore {
@@ -22,13 +23,23 @@ protocol FastNavigationDataStore {
 class FastNavigationInteractor: FastNavigationBusinessLogic, FastNavigationDataStore {
     var presenter: FastNavigationPresentationLogic?
     var worker: FastNavigationWorker!
-    //var name: String = ""
     
     // MARK: - Fetch Data
+    var subroutes = [Subroute]()
     
     func fetchData(request: FastNavigation.FetchData.Request) {
-        let routePoints = worker!.fetchAll()
+        subroutes = worker.fetchSubroutes()
         
-        presenter?.presentFetchedData(response: .init(routePoints: routePoints))
+        presenter?.presentFetchedData(response: .init(subroutes: subroutes))
+    }
+    
+    // MARK: Select Subroute
+    
+    func selectSubroute(request: FastNavigation.SelectSubroute.Request) {
+        if request.index % 2 == 0 {
+            presenter?.presentSelectedStaying(response: .init(subroute: subroutes[request.index]))
+        } else {
+            presenter?.presentSelectedInRoad(response: .init(subroute: subroutes[request.index]))
+        }
     }
 }

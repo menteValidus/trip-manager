@@ -11,11 +11,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-protocol Subroute {
-    var title: String { get }
-    var timeInSeconds: Int { get }
-}
+
 
 enum ListRoute {
     
@@ -23,18 +21,14 @@ enum ListRoute {
         var title: String
         var timeInSeconds: Int
         var description: String
+        var coordinate: CLLocationCoordinate2D
     }
     
     struct InRoad: Subroute {
-        var title: String
+        var title: String = "In Road"
         var timeInSeconds: Int
         var metres: Int
-        
-        init(title: String = "In Road", seconds: Int, metres: Int) {
-            self.title = title
-            timeInSeconds = seconds
-            self.metres = metres
-        }
+        var coordinates: [CLLocationCoordinate2D]
     }
     
     // MARK: Use Cases

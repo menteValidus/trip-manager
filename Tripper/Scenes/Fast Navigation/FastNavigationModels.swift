@@ -11,18 +11,50 @@
 //
 
 import UIKit
+import CoreLocation
+
+protocol Subroute {
+    var title: String { get }
+    var timeInSeconds: Int { get }
+}
 
 enum FastNavigation {
+    struct Staying: Subroute {
+        var title: String
+        var timeInSeconds: Int
+        var description: String
+        var coordinate: CLLocationCoordinate2D
+    }
+    
+    struct InRoad: Subroute {
+        var title: String = "In Road"
+        var timeInSeconds: Int
+        var metres: Int
+        var coordinates: [CLLocationCoordinate2D]
+    }
+    
     // MARK: Use Cases
     
     struct FetchData {
         struct Request {
         }
         struct Response {
-            let routePoints: [RoutePoint]
+            let subroutes: [Subroute]
         }
         struct ViewModel {
             let subroutes: [Subroute]
+        }
+    }
+    
+    struct SelectSubroute {
+        struct Request {
+            let index: Int
+        }
+        struct Response {
+            let subroute: Subroute
+        }
+        struct ViewModel {
+            let coordinates: [CLLocationCoordinate2D]
         }
     }
 }

@@ -33,6 +33,7 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayFocus(viewModel: ManageRouteMap.Focus.ViewModel)
     func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel)
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
+    func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel)
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
 }
 
@@ -45,9 +46,9 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
     
-    var popup: Popup? {
+    var detailsPopup: Popup? {
         didSet {
-            if popup == nil {
+            if detailsPopup == nil {
                 deselectAnnotation()
                 fetchDifference()
             } else {
@@ -55,6 +56,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             }
         }
     }
+    
+    weak var fastNavigationPopup: DismissablePopup?
     
     var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     private var isLoaded: Bool = false
@@ -103,7 +106,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Route Navigation
     
     @IBAction func routeButtonTapped(_ sender: Any) {
-        router?.routeToFastNavigation(segue: nil)
+        if let popup = fastNavigationPopup {
+            popup.dismissPopup()
+        } else {
+            router?.routeToFastNavigation(segue: nil)
+        }
     }
     
     // MARK: View lifecycle
@@ -186,7 +193,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         interactor?.toggleUserInput(request: requestToToggle)
         
         if viewModel.isSucceed {
-            popup?.dismissPopup()
+            detailsPopup?.dismissPopup()
             router?.routeToCreateRoutePoint(segue: nil)
         } else {
             showCreationFailure(title: "Route Creation Error!", message: "Route between last an new point can't be calculated.")
@@ -383,7 +390,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
         fetchDifference()
-        popup?.dismissPopup()
+        detailsPopup?.dismissPopup()
     }
     
     // MARK: Toggle User Input
@@ -481,7 +488,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             let topOffset = offset + navigationController!.navigationBar.frame.height
             var bottomOffset = offset
             
-            if let popup = popup {
+            if let popup = detailsPopup {
                 bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
             }
             
@@ -519,6 +526,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel) {
         let zoomLevel = 6.0
         mapView.setCenter(viewModel.userCoordinate, zoomLevel: zoomLevel, animated: true)
+    }
+    
+    // MARK: Focus On Coordinates
+    
+    func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel) {
+        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate,
+                                                                                ne: viewModel.northEastCoordinate))
+        mapView.setCamera(camera, animated: true)
     }
     
     // MARK: Route Estimation
@@ -624,5 +639,11 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         annotation.coordinate = coordinate
         mapView.addAnnotation(annotation)
         annotationsID[annotation] = annotationInfo.id
+    }
+}
+
+extension ManageRouteMapViewController: FastNavigationDelegate {
+    func fastNavigation(didSelected coordinates: [CLLocationCoordinate2D]) {
+        interactor?.focusOnCoordinates(request: .init(coordinates: coordinates))
     }
 }

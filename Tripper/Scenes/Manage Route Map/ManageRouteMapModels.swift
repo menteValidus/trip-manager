@@ -239,6 +239,20 @@ enum ManageRouteMap {
         }
     }
     
+    enum FocusOnCoordinates {
+        struct Request {
+            let coordinates: [CLLocationCoordinate2D]
+        }
+        struct Response {
+            let southWestCoordinate: CLLocationCoordinate2D
+            let northEastCoordinate: CLLocationCoordinate2D
+        }
+        struct ViewModel {
+            let southWestCoordinate: CLLocationCoordinate2D
+            let northEastCoordinate: CLLocationCoordinate2D
+        }
+    }
+    
     enum RouteEstimation {
         struct Request {
         }

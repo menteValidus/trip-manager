@@ -27,10 +27,12 @@ class FastNavigationRouter: FastNavigationRoutingLogic, FastNavigationDataPassin
     // MARK: Routing
     
     func routeToManageRouteMap(segue: UIStoryboardSegue?) {
-        let destinationVC = viewController?.parent as! ManageRouteMapViewController
-        var destinationDS = destinationVC.router!.dataStore!
-        passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
-        navigateToManageRouteMap(source: viewController!, destination: destinationVC)
+        if let parent = viewController?.parent as? ManageRouteMapViewController {
+            let destinationVC = viewController?.parent as! ManageRouteMapViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
+            navigateToManageRouteMap(source: viewController!, destination: destinationVC)
+        }
     }
     
     // MARK: Navigation
@@ -43,7 +45,7 @@ class FastNavigationRouter: FastNavigationRoutingLogic, FastNavigationDataPassin
 //                CGRect(x: destination.view.frame.width, y: 0, width: source.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
-            destination.popup = nil
+            destination.detailsPopup = nil
         })
     }
     

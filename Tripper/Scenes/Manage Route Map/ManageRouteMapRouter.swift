@@ -52,7 +52,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         } else {
             let destinationVC: DetailRoutePointViewController
             
-            if let viewController = viewController?.popup as? DetailRoutePointViewController {
+            if let viewController = viewController?.detailsPopup as? DetailRoutePointViewController {
                 destinationVC = viewController
             } else {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -88,14 +88,9 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     }
     
     func routeToFastNavigation(segue: UIStoryboardSegue?) {
-        let destinationVC: FastNavigationViewController
-        
-//        if let viewController = viewController?.popup as? DetailRoutePointViewController {
-//            destinationVC = viewController
-//        } else {
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            destinationVC = FastNavigationViewController()
-//        }
+        let destinationVC = FastNavigationViewController()
+        destinationVC.delegate = viewController!
+        viewController?.fastNavigationPopup = destinationVC
         
         var destinationDS = destinationVC.router!.dataStore!
         passDataToFastNavigation(source: dataStore!, destination: &destinationDS)
@@ -111,7 +106,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func navigateToDetailRoutePoint(source: ManageRouteMapViewController, destination: DetailRoutePointViewController)
     {
-        if let popup = source.popup {
+        if let popup = source.detailsPopup {
             popup.updateUI()
         } else {
             let height = source.view.frame.height
@@ -130,7 +125,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
                 destination.view.frame = CGRect(x: 0, y: yCoordinate, width: width, height: height - topOffset)
             }
             
-            source.popup = destination
+            source.detailsPopup = destination
         }
     }
     

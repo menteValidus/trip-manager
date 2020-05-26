@@ -141,14 +141,12 @@ class RoutePointCoreDataStore: RoutePointDataStore {
     // MARK: - Converters
     
     private func convertEntityToRoutePoint(_ entity: RoutePointEntity) -> RoutePoint {
-        if let nextFragment = entity.nextFragment {
+        if entity.nextFragment != nil {
             let point = RoutePoint(
                 id: entity.id, orderNumber: Int(entity.orderNumber),
                 title: entity.title, subtitle: entity.subtitle,
                 latitude: entity.latitude, longitude: entity.longitude,
-                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
-                timeToNextPointInSeconds: Int(nextFragment.timeInSeconds),
-                distanceToNextPointInMeters: Int(nextFragment.distanceInMeters))
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
             return point
         } else {
             let point = RoutePoint(
@@ -169,8 +167,6 @@ class RoutePointCoreDataStore: RoutePointDataStore {
         entity.setValue(routePoint.subtitle, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
         entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
-//        entity.setValue(routePoint.timeToNextPointInSeconds, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.timeToNextPointInSeconds)
-//        entity.setValue(routePoint.distanceToNextPointInMeters, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.distanceToNextPointInMeters)
     }
     
 }

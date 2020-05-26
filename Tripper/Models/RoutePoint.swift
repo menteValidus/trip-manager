@@ -26,11 +26,6 @@ struct RoutePoint: AnnotationInfo {
     var longitude: Double
     var arrivalDate: Date
     var departureDate: Date
-    
-    // Nullable in case it's the end of trip.
-    var timeToNextPointInSeconds: Int?
-    // Nullable in case it's the end of trip.
-    var distanceToNextPointInMeters: Int?
 }
 
 func ==(lhs: RoutePoint, rhs: RoutePoint) -> Bool

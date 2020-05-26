@@ -24,34 +24,12 @@
                         <outlet property="dataSource" destination="-1" id="G5J-MN-dYl"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkK-ta-QIb">
-                    <rect key="frame" x="10" y="10" width="22" height="22"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="22" id="Ogd-HH-vUZ"/>
-                        <constraint firstAttribute="height" constant="22" id="zNo-2I-Ttv"/>
-                    </constraints>
-                    <state key="normal" image="arrow.left" catalog="system"/>
-                    <connections>
-                        <action selector="backArrowTapped:" destination="-1" eventType="touchUpInside" id="S6t-rJ-BUk"/>
-                    </connections>
-                </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Route" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfc-Vj-AgL">
-                    <rect key="frame" x="80" y="11" width="160" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="zfc-Vj-AgL" secondAttribute="trailing" constant="80" id="42b-BL-vc6"/>
-                <constraint firstItem="zfc-Vj-AgL" firstAttribute="leading" secondItem="kg3-LH-icw" secondAttribute="leading" constant="80" id="CaQ-bd-eGM"/>
+                <constraint firstItem="kg3-LH-icw" firstAttribute="top" secondItem="CzN-ho-UFG" secondAttribute="top" constant="2" id="76B-kL-VlA"/>
                 <constraint firstItem="CzN-ho-UFG" firstAttribute="leading" secondItem="kg3-LH-icw" secondAttribute="leading" id="GFp-bZ-0IF"/>
-                <constraint firstItem="HkK-ta-QIb" firstAttribute="leading" secondItem="3Di-Wc-7LN" secondAttribute="leading" constant="10" id="Gda-ja-3fC"/>
-                <constraint firstItem="zfc-Vj-AgL" firstAttribute="firstBaseline" secondItem="HkK-ta-QIb" secondAttribute="firstBaseline" id="QbF-pq-XFw"/>
                 <constraint firstItem="kg3-LH-icw" firstAttribute="trailing" secondItem="CzN-ho-UFG" secondAttribute="trailing" id="Wic-OA-PwW"/>
-                <constraint firstItem="HkK-ta-QIb" firstAttribute="top" secondItem="3Di-Wc-7LN" secondAttribute="top" constant="10" id="aOY-o6-ftt"/>
-                <constraint firstItem="CzN-ho-UFG" firstAttribute="top" secondItem="HkK-ta-QIb" secondAttribute="bottom" constant="10" id="dbY-8B-JpZ"/>
                 <constraint firstItem="kg3-LH-icw" firstAttribute="bottom" secondItem="CzN-ho-UFG" secondAttribute="bottom" id="vbA-LN-fV6"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
@@ -61,7 +39,4 @@
             <point key="canvasLocation" x="215" y="79"/>
         </view>
     </objects>
-    <resources>
-        <image name="arrow.left" catalog="system" width="128" height="98"/>
-    </resources>
 </document>
