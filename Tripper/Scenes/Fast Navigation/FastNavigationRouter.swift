@@ -27,8 +27,7 @@ class FastNavigationRouter: FastNavigationRoutingLogic, FastNavigationDataPassin
     // MARK: Routing
     
     func routeToManageRouteMap(segue: UIStoryboardSegue?) {
-        if let parent = viewController?.parent as? ManageRouteMapViewController {
-            let destinationVC = viewController?.parent as! ManageRouteMapViewController
+        if let destinationVC = viewController?.parent as? ManageRouteMapViewController {
             var destinationDS = destinationVC.router!.dataStore!
             passDataToManageRouteMap(source: dataStore!, destination: &destinationDS)
             navigateToManageRouteMap(source: viewController!, destination: destinationVC)
@@ -42,10 +41,9 @@ class FastNavigationRouter: FastNavigationRoutingLogic, FastNavigationDataPassin
         source.removeFromParent()
         UIView.animate(withDuration: 0.3, animations: {
             source.view.frame = source.view.frame.offsetBy(dx: source.view.frame.width, dy: 0)
-//                CGRect(x: destination.view.frame.width, y: 0, width: source.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
-            destination.detailsPopup = nil
+            destination.fastNavigationPopup = nil
         })
     }
     

@@ -16,7 +16,6 @@ import UIKit
     func routeToCreateRoutePoint(segue: UIStoryboardSegue?)
     func routeToDetailRoutePoint(segue: UIStoryboardSegue?)
     func routeToEditRoutePoint(segue: UIStoryboardSegue?)
-    func routeToListRoute(segue: UIStoryboardSegue?)
     func routeToFastNavigation(segue: UIStoryboardSegue?)
 }
 
@@ -73,20 +72,6 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         navigateToEditRoutePoint(source: viewController!, destination: destinationVC)
     }
     
-    func routeToListRoute(segue: UIStoryboardSegue?) {
-        if let segue = segue {
-            let destinationVC = segue.destination as! ListRouteViewController
-            var destinationDS = destinationVC.router!.dataStore!
-            passDataToListRoute(source: dataStore!, destination: &destinationDS)
-        } else {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let destinationVC = storyboard.instantiateViewController(withIdentifier: "ListRouteViewController") as! ListRouteViewController
-            var destinationDS = destinationVC.router!.dataStore!
-            passDataToListRoute(source: dataStore!, destination: &destinationDS)
-            navigateToListRoute(source: viewController!, destination: destinationVC)
-        }
-    }
-    
     func routeToFastNavigation(segue: UIStoryboardSegue?) {
         let destinationVC = FastNavigationViewController()
         destinationVC.delegate = viewController!
@@ -133,10 +118,6 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         source.show(destination, sender: nil)
     }
     
-    func navigateToListRoute(source: ManageRouteMapViewController, destination: ListRouteViewController) {
-        source.show(destination, sender: nil)
-    }
-    
     func navigateToFastNavigation(source: ManageRouteMapViewController, destination: FastNavigationViewController) {
         let topOffset = source.view.safeAreaInsets.top
         let bottomOffset = source.view.safeAreaInsets.bottom
@@ -170,9 +151,6 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     
     func passDataToEditRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore) {
         destination.pointToSave = source.routePointToEdit
-    }
-    
-    func passDataToListRoute(source: ManageRouteMapDataStore, destination: inout ListRouteDataStore) {
     }
     
     func passDataToFastNavigation(source: ManageRouteMapDataStore, destination: inout FastNavigationDataStore) {

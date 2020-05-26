@@ -109,6 +109,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         if let popup = fastNavigationPopup {
             popup.dismissPopup()
         } else {
+            detailsPopup?.dismissPopup()
             router?.routeToFastNavigation(segue: nil)
         }
     }
@@ -194,6 +195,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
         if viewModel.isSucceed {
             detailsPopup?.dismissPopup()
+            fastNavigationPopup?.dismissPopup()
             router?.routeToCreateRoutePoint(segue: nil)
         } else {
             showCreationFailure(title: "Route Creation Error!", message: "Route between last an new point can't be calculated.")
@@ -264,6 +266,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func displayShowDetail(viewModel: ManageRouteMap.ShowDetail.ViewModel) {
+        fastNavigationPopup?.dismissPopup()
         router?.routeToDetailRoutePoint(segue: nil)
     }
     
