@@ -65,7 +65,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
-            destination.popup = nil
+            destination.detailsPopup = nil
         })
     }
     
@@ -76,7 +76,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
-            destination.popup = nil
+            destination.detailsPopup = nil
             // TODO: Need to get rid of this dependency.
             destination.editSelectedRoutePoint()
         })
@@ -89,7 +89,7 @@ class DetailRoutePointRouter: NSObject, DetailRoutePointRoutingLogic, DetailRout
             source.view.frame = CGRect(x: 0, y: destination.view.frame.height, width: destination.view.frame.width, height: source.view.frame.height)
         }, completion: { _ in
             source.view.removeFromSuperview()
-            destination.popup = nil
+            destination.detailsPopup = nil
         })
     }
     

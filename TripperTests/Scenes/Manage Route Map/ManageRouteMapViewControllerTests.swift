@@ -130,7 +130,7 @@ class ManageRouteMapViewControllerTests: XCTestCase {
         loadView()
         sut.interactor?.selectAnnotation(request: .init(identifier: selectedAnnotationID))
         
-        XCTAssertTrue(sut.popup != nil)
+        XCTAssertTrue(sut.detailsPopup != nil)
     }
     
     func testDeselectAnnotation() {

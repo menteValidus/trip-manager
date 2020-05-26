@@ -104,7 +104,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Route" id="3YU-Yf-sPd">
                             <connections>
-                                <segue destination="OXZ-HK-1RU" kind="show" identifier="ListRoute" id="FzE-9f-Hug"/>
+                                <action selector="routeButtonTapped:" destination="4Cc-Fh-swH" id="90E-5u-AIF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

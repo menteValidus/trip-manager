@@ -33,6 +33,7 @@ protocol ManageRouteMapBusinessLogic {
     func focus(request: ManageRouteMap.Focus.Request)
     func focusOnRoute(request: ManageRouteMap.FocusOnRoute.Request)
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
+    func focusOnCoordinates(request: ManageRouteMap.FocusOnCoordinates.Request)
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request)
 }
 
@@ -391,40 +392,13 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     func focusOnRoute(request: ManageRouteMap.FocusOnRoute.Request) {
         let coordinates = prepareAllCoordinatesArray()
         
-        if coordinates.count == 0 {
-            return
+        do {
+            let (locSouthWest, locNorthEast) = try getCornerCoordinates(from: coordinates)
+            let response = ManageRouteMap.FocusOnRoute.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
+            presenter?.presentFocusOnRoute(response: response)
+        } catch {
+            print(error)
         }
-        
-        var minimalCoordinate = CLLocationCoordinate2D()
-        var maximalCoordinate = CLLocationCoordinate2D()
-        var minMaxInitialized = false
-        var numberOfValidAnnotations = 0
-
-        for coordinate in coordinates {
-            
-            if !minMaxInitialized {
-                minimalCoordinate = coordinate;
-                maximalCoordinate = coordinate;
-                minMaxInitialized = true;
-            } else {
-                minimalCoordinate.latitude = min( minimalCoordinate.latitude, coordinate.latitude )
-                minimalCoordinate.longitude = min(minimalCoordinate.longitude, coordinate.longitude )
-
-                maximalCoordinate.latitude = max( maximalCoordinate.latitude, coordinate.latitude )
-                maximalCoordinate.longitude = max( maximalCoordinate.longitude, coordinate.longitude )
-            }
-            numberOfValidAnnotations += 1
-        }
-        
-        if numberOfValidAnnotations == 0 {
-            return
-        }
-        
-        let locSouthWest = CLLocationCoordinate2D(latitude: minimalCoordinate.latitude, longitude: minimalCoordinate.longitude)
-        let locNorthEast = CLLocationCoordinate2D(latitude: maximalCoordinate.latitude, longitude: maximalCoordinate.longitude)
-
-        let response = ManageRouteMap.FocusOnRoute.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
-        presenter?.presentFocusOnRoute(response: response)
     }
     
     private func prepareAllCoordinatesArray() -> [CLLocationCoordinate2D] {
@@ -451,6 +425,18 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         presenter?.presentFocusOnUser(response: response)
     }
     
+    // MARK: Focus On Coordinates
+    
+    func focusOnCoordinates(request: ManageRouteMap.FocusOnCoordinates.Request) {
+        do {
+            let (locSouthWest, locNorthEast) = try getCornerCoordinates(from: request.coordinates)
+            let response = ManageRouteMap.FocusOnCoordinates.Response(southWestCoordinate: locSouthWest, northEastCoordinate: locNorthEast)
+            presenter?.presentFocusOnCoordinates(response: response)
+        } catch {
+            print(error)
+        }
+    }
+    
     // MARK: Route Estimation
     
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request) {
@@ -464,5 +450,48 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         
         let response = ManageRouteMap.RouteEstimation.Response(timeInSeconds: timeInSeconds, distanceInMeters: distanceInMeters)
         presenter?.presentRouteEstimation(response: response)
+    }
+    
+    // MARK: - Shared Methods
+    
+    enum CornersEstimationError: Error {
+        case emptyArray
+        case invalidAnnotations
+    }
+    
+    private func getCornerCoordinates(from coordinates: [CLLocationCoordinate2D]) throws -> (CLLocationCoordinate2D, CLLocationCoordinate2D) {
+        if coordinates.count == 0 {
+            throw CornersEstimationError.emptyArray
+        }
+        
+        var minimalCoordinate = CLLocationCoordinate2D()
+        var maximalCoordinate = CLLocationCoordinate2D()
+        var minMaxInitialized = false
+        var numberOfValidAnnotations = 0
+
+        for coordinate in coordinates {
+            
+            if !minMaxInitialized {
+                minimalCoordinate = coordinate;
+                maximalCoordinate = coordinate;
+                minMaxInitialized = true;
+            } else {
+                minimalCoordinate.latitude = min( minimalCoordinate.latitude, coordinate.latitude )
+                minimalCoordinate.longitude = min(minimalCoordinate.longitude, coordinate.longitude )
+
+                maximalCoordinate.latitude = max( maximalCoordinate.latitude, coordinate.latitude )
+                maximalCoordinate.longitude = max( maximalCoordinate.longitude, coordinate.longitude )
+            }
+            numberOfValidAnnotations += 1
+        }
+        
+        if numberOfValidAnnotations == 0 {
+            throw CornersEstimationError.invalidAnnotations
+        }
+        
+        let locSouthWest = CLLocationCoordinate2D(latitude: minimalCoordinate.latitude, longitude: minimalCoordinate.longitude)
+        let locNorthEast = CLLocationCoordinate2D(latitude: maximalCoordinate.latitude, longitude: maximalCoordinate.longitude)
+        
+        return (locSouthWest, locNorthEast)
     }
 }
