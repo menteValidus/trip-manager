@@ -218,11 +218,8 @@ extension RoutePointCoreDataStore: DateLimiter {
         do {
             let fetchResult = try managedObjectContext.fetch(fetchRequest)
             
-            if  let routePointEntity = fetchResult.last as? RoutePointEntity,
-                let timeToNextPoint = routePointEntity.nextFragment?.timeInSeconds {
-                
-                let timeIntervalToAdd = TimeInterval(timeToNextPoint)
-                return routePointEntity.departureDate.addingTimeInterval(timeIntervalToAdd)
+            if  let routePointEntity = fetchResult.last as? RoutePointEntity {
+                return routePointEntity.departureDate
             } else {
                 return nil
             }
