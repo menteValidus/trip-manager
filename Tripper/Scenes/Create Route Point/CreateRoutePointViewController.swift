@@ -74,7 +74,9 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         formRoutePoint()
+        titleTextField.becomeFirstResponder()
     }
     
     // MARK: - Form Route Point

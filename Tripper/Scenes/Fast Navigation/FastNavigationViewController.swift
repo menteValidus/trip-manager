@@ -23,6 +23,10 @@ protocol FastNavigationDelegate: class {
     func fastNavigation(didSelected coordinates: [CLLocationCoordinate2D])
 }
 
+protocol SidePopup: DismissablePopup {
+    var width: CGFloat { get }
+}
+
 class FastNavigationViewController: UIViewController {
     var interactor: FastNavigationBusinessLogic?
     var router: (FastNavigationRoutingLogic & FastNavigationDataPassing)?
@@ -127,7 +131,11 @@ extension FastNavigationViewController: UITableViewDelegate {
     }
 }
 
-extension FastNavigationViewController: DismissablePopup {
+extension FastNavigationViewController: SidePopup {
+    var width: CGFloat {
+        return view.frame.width
+    }
+    
     func dismissPopup() {
         router?.routeToManageRouteMap(segue: nil)
     }
