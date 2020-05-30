@@ -57,7 +57,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
     }
     
-    weak var fastNavigationPopup: DismissablePopup?
+    weak var fastNavigationPopup: SidePopup?
     
     var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
     private var isLoaded: Bool = false
@@ -394,6 +394,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
         fetchDifference()
         detailsPopup?.dismissPopup()
+        fastNavigationPopup?.dismissPopup()
     }
     
     // MARK: Toggle User Input
@@ -486,22 +487,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func displayFocusOnRoute(viewModel: ManageRouteMap.FocusOnRoute.ViewModel) {
-        if viewModel.northEastCoordinate != viewModel.southWestCoordinate {
-            let offset = CGFloat(60)
-            let topOffset = offset + navigationController!.navigationBar.frame.height
-            var bottomOffset = offset
-            
-            if let popup = detailsPopup {
-                bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
-            }
-            
-            let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate, ne: viewModel.northEastCoordinate), edgePadding: UIEdgeInsets(top: topOffset, left: offset, bottom: bottomOffset, right: offset))
-            
-            mapView.setCamera(camera, animated: true)
-        } else { // Just one point
-            let zoomLevel = 6.0
-            mapView.setCenter(viewModel.northEastCoordinate, zoomLevel: zoomLevel, animated: true)
-        }
+        focusOn(swCoord: viewModel.southWestCoordinate, neCoord: viewModel.northEastCoordinate)
     }
     
     // MARK: Focus On User
@@ -534,9 +520,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Focus On Coordinates
     
     func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel) {
-        let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: viewModel.southWestCoordinate,
-                                                                                ne: viewModel.northEastCoordinate))
-        mapView.setCamera(camera, animated: true)
+        focusOn(swCoord: viewModel.southWestCoordinate, neCoord: viewModel.northEastCoordinate)
     }
     
     // MARK: Route Estimation
@@ -597,6 +581,31 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             routeEstimation()
         } else {
             fatalError("*** There are route points that are not counted in routeFragmentsToProcess!")
+        }
+    }
+    
+    private func focusOn(swCoord: CLLocationCoordinate2D, neCoord: CLLocationCoordinate2D) {
+        if neCoord != swCoord {
+            let offset = CGFloat(60)
+            let topOffset = offset + navigationController!.navigationBar.frame.height
+            var bottomOffset = offset
+            var rightSideOffset = offset
+            
+            
+            if let popup = detailsPopup {
+                bottomOffset += CGFloat(popup.state.rawValue) * view.frame.height
+            }
+            
+            if let popup = fastNavigationPopup {
+                rightSideOffset += popup.width
+            }
+            
+            let camera = mapView.cameraThatFitsCoordinateBounds(MGLCoordinateBounds(sw: swCoord, ne: neCoord), edgePadding: UIEdgeInsets(top: topOffset, left: offset, bottom: bottomOffset, right: rightSideOffset))
+            
+            mapView.setCamera(camera, animated: true)
+        } else { // Just one point
+            let zoomLevel = 8.0
+            mapView.setCenter(neCoord, zoomLevel: zoomLevel, animated: true)
         }
     }
 }
