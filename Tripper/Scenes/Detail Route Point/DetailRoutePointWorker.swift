@@ -14,9 +14,9 @@ import UIKit
 import Swinject
 
 class DetailRoutePointWorker {
-    let routePointGateway: RoutePointDataStore
+    let routePointGateway: RoutePointGateway
     
-    init(routePointGateway: RoutePointDataStore) {
+    init(routePointGateway: RoutePointGateway) {
         self.routePointGateway = routePointGateway
     }
     

@@ -13,11 +13,11 @@
 import UIKit
 
 class CreateRoutePointWorker {
-    private let routePointGateway: RoutePointDataStore
+    private let routePointGateway: RoutePointGateway
     private let orderNumberGenerator: OrderNumberGenerator
     private let dateLimiter: DateLimiter
     
-    init(routePointGateway: RoutePointDataStore, orderNumberGenerator: OrderNumberGenerator, dateLimiter: DateLimiter) {
+    init(routePointGateway: RoutePointGateway, orderNumberGenerator: OrderNumberGenerator, dateLimiter: DateLimiter) {
         self.routePointGateway = routePointGateway
         self.orderNumberGenerator = orderNumberGenerator
         self.dateLimiter = dateLimiter

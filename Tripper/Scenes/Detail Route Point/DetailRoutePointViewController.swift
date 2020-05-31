@@ -65,7 +65,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         let interactor = DetailRoutePointInteractor()
         let presenter = DetailRoutePointPresenter()
         let router = DetailRoutePointRouter()
-        let worker = DetailRoutePointWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!)
+        let worker = DetailRoutePointWorker(routePointGateway: Container.shared.resolve(RoutePointGateway.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter

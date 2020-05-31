@@ -55,8 +55,8 @@ class FastNavigationViewController: UIViewController {
         let interactor = FastNavigationInteractor()
         let presenter = FastNavigationPresenter()
         let router = FastNavigationRouter()
-        let worker = FastNavigationWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
-                                          routeFragmentGateway: Container.shared.resolve(RouteFragmentDatastore.self)!)
+        let worker = FastNavigationWorker(routePointGateway: Container.shared.resolve(RoutePointGateway.self)!,
+                                          routeFragmentGateway: Container.shared.resolve(RouteFragmentGateway.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter

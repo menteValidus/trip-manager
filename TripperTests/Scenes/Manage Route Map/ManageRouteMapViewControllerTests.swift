@@ -19,8 +19,8 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     
     var sut: ManageRouteMapViewController!
     var window: UIWindow!
-    var routePointGateway: RoutePointDataStore!
-    var routeFragmentGateway: RouteFragmentDatastore!
+    var routePointGateway: RoutePointGateway!
+    var routeFragmentGateway: RouteFragmentGateway!
     
     // MARK: Test Lifecycle
     

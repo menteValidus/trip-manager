@@ -47,7 +47,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         let interactor = CreateRoutePointInteractor()
         let presenter = CreateRoutePointPresenter()
         let router = CreateRoutePointRouter()
-        let worker = CreateRoutePointWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
+        let worker = CreateRoutePointWorker(routePointGateway: Container.shared.resolve(RoutePointGateway.self)!,
                                             orderNumberGenerator: Container.shared.resolve(OrderNumberGenerator.self)!,
                                             dateLimiter: Container.shared.resolve(DateLimiter.self)!)
         viewController.interactor = interactor

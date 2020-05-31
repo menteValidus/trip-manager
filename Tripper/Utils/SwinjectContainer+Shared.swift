@@ -12,17 +12,17 @@ extension Container {
     static let shared: Container = {
         let container = Container()
         
-        container.register(RoutePointDataStore.self) { _ in RoutePointCoreDataStore()}
-        container.register(RouteFragmentDatastore.self) { _ in
-            guard let routePointGateway = container.resolve(RoutePointDataStore.self) else {
+        container.register(RoutePointGateway.self) { _ in RoutePointCoreDataGateway()}
+        container.register(RouteFragmentGateway.self) { _ in
+            guard let routePointGateway = container.resolve(RoutePointGateway.self) else {
                 fatalError("*** RoutePointGateway can't be resolved!")
             }
             
-            return RouteFragmentCoreDataStore(routePointGateway: routePointGateway)
+            return RouteFragmentCoreDataGateway(routePointGateway: routePointGateway)
         }
         
         container.register(DateLimiter.self) { _ in
-            guard let routePointCoreDataStore = container.resolve(RoutePointDataStore.self) as? RoutePointCoreDataStore else {
+            guard let routePointCoreDataStore = container.resolve(RoutePointGateway.self) as? RoutePointCoreDataGateway else {
                 fatalError("*** RoutePointGateway can't be resolved")
             }
             
@@ -30,7 +30,7 @@ extension Container {
         }
         
         container.register(OrderNumberGenerator.self) { _ in
-            guard let routePointCoreDataStore = container.resolve(RoutePointDataStore.self) as? RoutePointCoreDataStore else {
+            guard let routePointCoreDataStore = container.resolve(RoutePointGateway.self) as? RoutePointCoreDataGateway else {
                 fatalError("*** RoutePointGateway can't be resolved")
             }
             

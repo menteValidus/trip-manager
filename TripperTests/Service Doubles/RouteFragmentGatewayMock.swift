@@ -9,7 +9,7 @@
 @testable import Tripper
 import Foundation
 
-class RouteFragmentGatewayMock: RouteFragmentDatastore {
+class RouteFragmentGatewayMock: RouteFragmentGateway {
     
     var storage: [RouteFragment]
     

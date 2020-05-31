@@ -81,8 +81,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         let interactor = ManageRouteMapInteractor()
         let presenter = ManageRouteMapPresenter()
         let router = ManageRouteMapRouter()
-        let worker = ManageRouteMapWorker(routePointGateway: Container.shared.resolve(RoutePointDataStore.self)!,
-                                          routeFragmentGateway: Container.shared.resolve(RouteFragmentDatastore.self)!)
+        let worker = ManageRouteMapWorker(routePointGateway: Container.shared.resolve(RoutePointGateway.self)!,
+                                          routeFragmentGateway: Container.shared.resolve(RouteFragmentGateway.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
@@ -111,6 +111,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         } else {
             detailsPopup?.dismissPopup()
             router?.routeToFastNavigation(segue: nil)
+            focusOnRoute(nil)
         }
     }
     

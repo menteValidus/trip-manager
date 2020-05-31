@@ -14,10 +14,10 @@ import UIKit
 import CoreLocation
 
 class FastNavigationWorker {
-    private let routePointGateway: RoutePointDataStore
-    private let routeFragmentGateway: RouteFragmentDatastore
+    private let routePointGateway: RoutePointGateway
+    private let routeFragmentGateway: RouteFragmentGateway
     
-    init(routePointGateway: RoutePointDataStore, routeFragmentGateway: RouteFragmentDatastore) {
+    init(routePointGateway: RoutePointGateway, routeFragmentGateway: RouteFragmentGateway) {
         self.routePointGateway = routePointGateway
         self.routeFragmentGateway = routeFragmentGateway
     }

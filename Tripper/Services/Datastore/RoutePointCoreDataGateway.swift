@@ -8,7 +8,7 @@
 
 import CoreData
 
-protocol RoutePointDataStore: class {
+protocol RoutePointGateway: class {
     func fetchAll() -> [RoutePoint]
     func fetch(with identifier: String) -> RoutePoint?
     func deleteAll()
@@ -26,7 +26,7 @@ protocol DateLimiter {
     func fetchRightLimit(by orderNumber: Int) -> Date?
 }
 
-class RoutePointCoreDataStore: RoutePointDataStore {
+class RoutePointCoreDataGateway: RoutePointGateway {
     
     lazy var managedObjectContext: NSManagedObjectContext = {
         return NSManagedObjectContext.shared
@@ -171,7 +171,7 @@ class RoutePointCoreDataStore: RoutePointDataStore {
     
 }
 
-extension RoutePointCoreDataStore: OrderNumberGenerator {
+extension RoutePointCoreDataGateway: OrderNumberGenerator {
     // MARK: - Order Number Generator
     
     func getNewOrderNumber() -> Int {
@@ -201,7 +201,7 @@ extension RoutePointCoreDataStore: OrderNumberGenerator {
     }
 }
 
-extension RoutePointCoreDataStore: DateLimiter {
+extension RoutePointCoreDataGateway: DateLimiter {
     // MARK: - Date Limiter
     
     func fetchLeftLimit(by orderNumber: Int) -> Date? {

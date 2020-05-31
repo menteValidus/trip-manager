@@ -10,20 +10,20 @@ import Foundation
 import CoreData
 import CoreLocation
 
-protocol RouteFragmentDatastore: class {
+protocol RouteFragmentGateway: class {
     func fetchAll() -> [RouteFragment]
     func insert(_ fragment: RouteFragment)
 }
 
-class RouteFragmentCoreDataStore: RouteFragmentDatastore {
+class RouteFragmentCoreDataGateway: RouteFragmentGateway {
     
     private lazy var managedObjectContext: NSManagedObjectContext = {
         return NSManagedObjectContext.shared
     }()
     
-    private let routePointGateway: RoutePointDataStore
+    private let routePointGateway: RoutePointGateway
     
-    init(routePointGateway: RoutePointDataStore) {
+    init(routePointGateway: RoutePointGateway) {
         self.routePointGateway = routePointGateway
     }
     

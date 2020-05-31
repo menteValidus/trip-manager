@@ -16,12 +16,12 @@ import UIKit
 typealias FetchedDifference = ([AnnotationInfo], [AnnotationInfo])
 
 class ManageRouteMapWorker {
-    private let routePointGateway: RoutePointDataStore
-    private let routeFragmentGateway: RouteFragmentDatastore
+    private let routePointGateway: RoutePointGateway
+    private let routeFragmentGateway: RouteFragmentGateway
     
     private var lastFetchedRoutePoints: [RoutePoint]
     
-    init(routePointGateway: RoutePointDataStore, routeFragmentGateway: RouteFragmentDatastore) {
+    init(routePointGateway: RoutePointGateway, routeFragmentGateway: RouteFragmentGateway) {
         self.routePointGateway = routePointGateway
         self.routeFragmentGateway = routeFragmentGateway
         

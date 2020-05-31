@@ -60,8 +60,8 @@
 		0BAD7958246D462300575D4C /* RouteFragmentEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7922246D462300575D4C /* RouteFragmentEntity+CoreDataProperties.swift */; };
 		0BAD7959246D462300575D4C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD7923246D462300575D4C /* Assets.xcassets */; };
 		0BAD795A246D462300575D4C /* IDGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7925246D462300575D4C /* IDGenerator.swift */; };
-		0BAD795B246D462300575D4C /* RouteFragmentDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7927246D462300575D4C /* RouteFragmentDatastore.swift */; };
-		0BAD795C246D462300575D4C /* RoutePointDatastore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7928246D462300575D4C /* RoutePointDatastore.swift */; };
+		0BAD795B246D462300575D4C /* RouteFragmentGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7927246D462300575D4C /* RouteFragmentGateway.swift */; };
+		0BAD795C246D462300575D4C /* RoutePointCoreDataGateway.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7928246D462300575D4C /* RoutePointCoreDataGateway.swift */; };
 		0BAD795E246D462300575D4C /* MapBoxRouteCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD792A246D462300575D4C /* MapBoxRouteCreator.swift */; };
 		0BAD7966246D55F100575D4C /* TripperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7965246D55F100575D4C /* TripperTests.swift */; };
 		0BAD7973246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD796F246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift */; };
@@ -153,8 +153,8 @@
 		0BAD7922246D462300575D4C /* RouteFragmentEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RouteFragmentEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0BAD7923246D462300575D4C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0BAD7925246D462300575D4C /* IDGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDGenerator.swift; sourceTree = "<group>"; };
-		0BAD7927246D462300575D4C /* RouteFragmentDatastore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragmentDatastore.swift; sourceTree = "<group>"; };
-		0BAD7928246D462300575D4C /* RoutePointDatastore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePointDatastore.swift; sourceTree = "<group>"; };
+		0BAD7927246D462300575D4C /* RouteFragmentGateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragmentGateway.swift; sourceTree = "<group>"; };
+		0BAD7928246D462300575D4C /* RoutePointCoreDataGateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePointCoreDataGateway.swift; sourceTree = "<group>"; };
 		0BAD792A246D462300575D4C /* MapBoxRouteCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreator.swift; sourceTree = "<group>"; };
 		0BAD7963246D55F100575D4C /* TripperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BAD7965246D55F100575D4C /* TripperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripperTests.swift; sourceTree = "<group>"; };
@@ -433,8 +433,8 @@
 		0BAD7926246D462300575D4C /* Datastore */ = {
 			isa = PBXGroup;
 			children = (
-				0BAD7927246D462300575D4C /* RouteFragmentDatastore.swift */,
-				0BAD7928246D462300575D4C /* RoutePointDatastore.swift */,
+				0BAD7928246D462300575D4C /* RoutePointCoreDataGateway.swift */,
+				0BAD7927246D462300575D4C /* RouteFragmentGateway.swift */,
 			);
 			path = Datastore;
 			sourceTree = "<group>";
@@ -715,7 +715,7 @@
 				0BAD795A246D462300575D4C /* IDGenerator.swift in Sources */,
 				0BAD792E246D462300575D4C /* Date+ComparisonWithoutSeconds.swift in Sources */,
 				0BAD7931246D462300575D4C /* Formatters.swift in Sources */,
-				0BAD795B246D462300575D4C /* RouteFragmentDatastore.swift in Sources */,
+				0BAD795B246D462300575D4C /* RouteFragmentGateway.swift in Sources */,
 				0BAD795E246D462300575D4C /* MapBoxRouteCreator.swift in Sources */,
 				0B7A450A2473FF3C00AA1F5E /* FastNavigationViewController.swift in Sources */,
 				0B7A45082473FF3C00AA1F5E /* FastNavigationRouter.swift in Sources */,
@@ -749,7 +749,7 @@
 				0BAD7932246D462300575D4C /* UINavigationController+PopCompletion.swift in Sources */,
 				0BAD7952246D462300575D4C /* DataModel.xcdatamodeld in Sources */,
 				0B7A45092473FF3C00AA1F5E /* FastNavigationModels.swift in Sources */,
-				0BAD795C246D462300575D4C /* RoutePointDatastore.swift in Sources */,
+				0BAD795C246D462300575D4C /* RoutePointCoreDataGateway.swift in Sources */,
 				0BAD793B246D462300575D4C /* DetailRoutePointWorker.swift in Sources */,
 				0BAD7939246D462300575D4C /* DetailRoutePointInteractor.swift in Sources */,
 				0BAD7940246D462300575D4C /* CreateRoutePointModels.swift in Sources */,
