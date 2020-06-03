@@ -57,7 +57,7 @@ struct DataModelDB {
 
 extension NSManagedObjectContext {
 
-    static var shared: NSManagedObjectContext {
+    static var shared: NSManagedObjectContext = {
         let container = NSPersistentContainer(name: DataModelDB.name)
         container.loadPersistentStores(completionHandler: { storeDescription, error in
             if let error = error {
@@ -66,6 +66,6 @@ extension NSManagedObjectContext {
         })
         
         return container.viewContext
-    }
+    }()
     
 }
