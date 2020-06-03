@@ -69,7 +69,7 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Select Annotation
     
     func presentSelectAnnotation(response: ManageRouteMap.SelectAnnotation.Response) {
-        let viewModel = ManageRouteMap.SelectAnnotation.ViewModel(identifier: response.identifier)
+        let viewModel = ManageRouteMap.SelectAnnotation.ViewModel(identifier: response.identifier, coordinate: response.coordinate)
         viewController?.displaySelectAnnotation(viewModel: viewModel)
     }
     

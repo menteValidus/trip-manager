@@ -71,12 +71,15 @@ enum ManageRouteMap {
     enum SelectAnnotation {
         struct Request {
             let identifier: String?
+            let coordinate: CLLocationCoordinate2D
         }
         struct Response {
             let identifier: String?
+            let coordinate: CLLocationCoordinate2D
         }
         struct ViewModel {
             let identifier: String?
+            let coordinate: CLLocationCoordinate2D
         }
     }
     

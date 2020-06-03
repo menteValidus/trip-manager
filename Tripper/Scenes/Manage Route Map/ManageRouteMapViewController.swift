@@ -41,6 +41,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     var interactor: ManageRouteMapBusinessLogic?
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
     
+    private let zoomLevel = 10.0
+    
     private var interactionController: UIPercentDrivenInteractiveTransition?
     
     @IBOutlet weak var mapView: MGLMapView!
@@ -241,6 +243,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
         if viewModel.identifier != nil {
             showDetail()
+            
+            interactor?.focusOnCoordinates(request: .init(coordinates: [viewModel.coordinate]))
         }
     }
     
@@ -514,8 +518,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel) {
-        let zoomLevel = 6.0
         mapView.setCenter(viewModel.userCoordinate, zoomLevel: zoomLevel, animated: true)
+        detailsPopup?.dismissPopup()
     }
     
     // MARK: Focus On Coordinates
@@ -605,7 +609,6 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
             
             mapView.setCamera(camera, animated: true)
         } else { // Just one point
-            let zoomLevel = 8.0
             mapView.setCenter(neCoord, zoomLevel: zoomLevel, animated: true)
         }
     }
@@ -618,7 +621,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
         let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
         // Pass optional value if it's nil show error in presenter.
-        let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation)
+        let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation, coordinate: annotation.coordinate)
         
         interactor?.selectAnnotation(request: request)
     }
@@ -638,7 +641,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         let longPressedPoint: CGPoint = sender.location(in: mapView)
         let coordinate: CLLocationCoordinate2D = mapView.convert(longPressedPoint, toCoordinateFrom: mapView)
         
-        let requestToSelect = ManageRouteMap.SelectAnnotation.Request(identifier: nil)
+        let requestToSelect = ManageRouteMap.SelectAnnotation.Request(identifier: nil, coordinate: coordinate)
         interactor?.selectAnnotation(request: requestToSelect)
         
         createRoutePoint(at: coordinate)

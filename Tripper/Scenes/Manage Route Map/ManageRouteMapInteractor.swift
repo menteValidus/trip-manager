@@ -172,7 +172,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request) {
         idOfSelectedAnnotation = request.identifier
-        let response = ManageRouteMap.SelectAnnotation.Response(identifier: idOfSelectedAnnotation)
+        let response = ManageRouteMap.SelectAnnotation.Response(identifier: idOfSelectedAnnotation, coordinate: request.coordinate)
         presenter?.presentSelectAnnotation(response: response)
     }
     

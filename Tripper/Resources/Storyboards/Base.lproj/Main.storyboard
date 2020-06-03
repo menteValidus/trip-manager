@@ -26,7 +26,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jY-fq-IJ2">
-                                <rect key="frame" x="277" y="260" width="74" height="132"/>
+                                <rect key="frame" x="277" y="267.5" width="74" height="132"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D45-N3-msk">
                                         <rect key="frame" x="12" y="12" width="50" height="50"/>
@@ -85,11 +85,11 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="8jY-fq-IJ2" firstAttribute="top" secondItem="XLC-aH-rfK" secondAttribute="bottom" constant="120" id="KGq-MU-W01"/>
                             <constraint firstItem="xLl-8K-ctK" firstAttribute="top" secondItem="GF8-cM-mMC" secondAttribute="top" id="MdB-d7-P8L"/>
                             <constraint firstItem="XLC-aH-rfK" firstAttribute="centerX" secondItem="kbD-OJ-czS" secondAttribute="centerX" id="NCX-Ml-rrD"/>
                             <constraint firstItem="GF8-cM-mMC" firstAttribute="trailing" secondItem="xLl-8K-ctK" secondAttribute="trailing" id="Quv-C1-v5v"/>
                             <constraint firstItem="GF8-cM-mMC" firstAttribute="bottom" secondItem="xLl-8K-ctK" secondAttribute="bottom" id="RrO-2i-vbn"/>
+                            <constraint firstItem="8jY-fq-IJ2" firstAttribute="centerY" secondItem="kbD-OJ-czS" secondAttribute="centerY" id="fMy-KW-JX7"/>
                             <constraint firstItem="xLl-8K-ctK" firstAttribute="leading" secondItem="GF8-cM-mMC" secondAttribute="leading" id="fcD-Ly-ql5"/>
                             <constraint firstItem="GF8-cM-mMC" firstAttribute="trailing" secondItem="8jY-fq-IJ2" secondAttribute="trailing" constant="24" id="r3M-QI-BBI"/>
                             <constraint firstItem="XLC-aH-rfK" firstAttribute="top" secondItem="GF8-cM-mMC" secondAttribute="top" constant="10" id="wop-WW-rin"/>
