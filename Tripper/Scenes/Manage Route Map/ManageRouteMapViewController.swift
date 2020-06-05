@@ -440,7 +440,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     private func showSpinner() {
-        let spinner = UIActivityIndicatorView(style: .large)
+        let spinner = UIActivityIndicatorView(style: .gray)
         spinner.center = CGPoint(x: dimmingView.bounds.midX + 0.5, y: dimmingView.bounds.midY + 0.5)
         spinner.tag = 1000
         dimmingView.addSubview(spinner)
@@ -518,7 +518,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel) {
-        mapView.setCenter(viewModel.userCoordinate, zoomLevel: zoomLevel, animated: true)
+        interactor?.focusOnCoordinates(request: .init(coordinates: [viewModel.userCoordinate]))
         detailsPopup?.dismissPopup()
     }
     
