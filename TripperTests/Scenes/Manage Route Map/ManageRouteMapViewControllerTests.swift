@@ -125,10 +125,11 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     func testPopup() {
         setupGateways()
         standardSetup()
-        let selectedAnnotationID = routePointGateway.fetchAll().first?.id
+        let selectedRoutePoint = routePointGateway.fetchAll().first!
+        let coordinate = CLLocationCoordinate2D(latitude: selectedRoutePoint.latitude, longitude: selectedRoutePoint.longitude)
         
         loadView()
-        sut.interactor?.selectAnnotation(request: .init(identifier: selectedAnnotationID))
+        sut.interactor?.selectAnnotation(request: .init(identifier: selectedRoutePoint.id, coordinate: coordinate))
         
         XCTAssertTrue(sut.detailsPopup != nil)
     }
