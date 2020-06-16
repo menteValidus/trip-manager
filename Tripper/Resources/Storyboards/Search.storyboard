@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gxL-QF-sjt">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search View Controller-->
+        <scene sceneID="WKB-cR-0kL">
+            <objects>
+                <viewController id="gxL-QF-sjt" customClass="SearchViewController" customModule="Tripper" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bdS-Wy-TS7">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZYe-3M-Z8s">
+                                <rect key="frame" x="8" y="52" width="398" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="GS7-k4-lDh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eJ-3j-2k6">
+                                <rect key="frame" x="0.0" y="108" width="414" height="754"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ZYe-3M-Z8s" firstAttribute="top" secondItem="76a-18-sdp" secondAttribute="top" constant="8" id="2Tn-Tj-dZh"/>
+                            <constraint firstItem="0eJ-3j-2k6" firstAttribute="leading" secondItem="76a-18-sdp" secondAttribute="leading" id="BkZ-yE-qpZ"/>
+                            <constraint firstItem="76a-18-sdp" firstAttribute="trailing" secondItem="0eJ-3j-2k6" secondAttribute="trailing" id="Ex2-ii-Rzi"/>
+                            <constraint firstItem="76a-18-sdp" firstAttribute="trailing" secondItem="ZYe-3M-Z8s" secondAttribute="trailing" constant="8" id="KVs-n4-P6h"/>
+                            <constraint firstItem="ZYe-3M-Z8s" firstAttribute="leading" secondItem="76a-18-sdp" secondAttribute="leading" constant="8" id="SGX-rl-58s"/>
+                            <constraint firstItem="76a-18-sdp" firstAttribute="bottom" secondItem="0eJ-3j-2k6" secondAttribute="bottom" id="aLm-0t-O23"/>
+                            <constraint firstItem="0eJ-3j-2k6" firstAttribute="top" secondItem="ZYe-3M-Z8s" secondAttribute="bottom" constant="8" id="du0-98-zQX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="76a-18-sdp"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Sw-JF-v2d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="24" y="165"/>
+        </scene>
+    </scenes>
+</document>

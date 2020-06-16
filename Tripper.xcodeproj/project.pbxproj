@@ -72,6 +72,13 @@
 		0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */; };
 		0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */; };
 		0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */; };
+		0BE4A2B52498943B00B7B0C8 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B42498943B00B7B0C8 /* Search.storyboard */; };
+		0BE4A2BD249898BD00B7B0C8 /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B7249898BD00B7B0C8 /* SearchPresenter.swift */; };
+		0BE4A2BE249898BD00B7B0C8 /* SearchWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B8249898BD00B7B0C8 /* SearchWorker.swift */; };
+		0BE4A2BF249898BD00B7B0C8 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B9249898BD00B7B0C8 /* SearchRouter.swift */; };
+		0BE4A2C0249898BD00B7B0C8 /* SearchModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2BA249898BD00B7B0C8 /* SearchModels.swift */; };
+		0BE4A2C1249898BD00B7B0C8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2BB249898BD00B7B0C8 /* SearchViewController.swift */; };
+		0BE4A2C2249898BD00B7B0C8 /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2BC249898BD00B7B0C8 /* SearchInteractor.swift */; };
 		0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */; };
 		0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */; };
 		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
@@ -169,6 +176,13 @@
 		0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentGatewayMock.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BE4A2B42498943B00B7B0C8 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
+		0BE4A2B7249898BD00B7B0C8 /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		0BE4A2B8249898BD00B7B0C8 /* SearchWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWorker.swift; sourceTree = "<group>"; };
+		0BE4A2B9249898BD00B7B0C8 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		0BE4A2BA249898BD00B7B0C8 /* SearchModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModels.swift; sourceTree = "<group>"; };
+		0BE4A2BB249898BD00B7B0C8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		0BE4A2BC249898BD00B7B0C8 /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
 		0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
 		0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FastNavigationViewController.xib; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
@@ -321,6 +335,7 @@
 		0BAD78F1246D462300575D4C /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				0BE4A2B6249898A500B7B0C8 /* Search */,
 				0B7A44FF2473FF1300AA1F5E /* Fast Navigation */,
 				0BAD78F2246D462300575D4C /* Manage Route Map */,
 				0BAD78F9246D462300575D4C /* Detail Route Point */,
@@ -394,6 +409,7 @@
 			children = (
 				0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */,
 				0BAD797F246D68EC00575D4C /* Main.storyboard */,
+				0BE4A2B42498943B00B7B0C8 /* Search.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -489,6 +505,19 @@
 				0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */,
 			);
 			path = "Service Doubles";
+			sourceTree = "<group>";
+		};
+		0BE4A2B6249898A500B7B0C8 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				0BE4A2BB249898BD00B7B0C8 /* SearchViewController.swift */,
+				0BE4A2BC249898BD00B7B0C8 /* SearchInteractor.swift */,
+				0BE4A2B7249898BD00B7B0C8 /* SearchPresenter.swift */,
+				0BE4A2B8249898BD00B7B0C8 /* SearchWorker.swift */,
+				0BE4A2B9249898BD00B7B0C8 /* SearchRouter.swift */,
+				0BE4A2BA249898BD00B7B0C8 /* SearchModels.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		0BF2F88E247D197B002FCD6A /* Create Route Point */ = {
@@ -646,6 +675,7 @@
 				0BAD7959246D462300575D4C /* Assets.xcassets in Resources */,
 				0BAD7946246D462300575D4C /* RoadCell.xib in Resources */,
 				0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */,
+				0BE4A2B52498943B00B7B0C8 /* Search.storyboard in Resources */,
 				0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */,
 				0BAD7983246D68EC00575D4C /* Main.storyboard in Resources */,
 			);
@@ -712,9 +742,11 @@
 			files = (
 				0BAD793C246D462300575D4C /* DetailRoutePointRouter.swift in Sources */,
 				0BAD794A246D462300575D4C /* SubrouteCell.swift in Sources */,
+				0BE4A2C0249898BD00B7B0C8 /* SearchModels.swift in Sources */,
 				0BAD795A246D462300575D4C /* IDGenerator.swift in Sources */,
 				0BAD792E246D462300575D4C /* Date+ComparisonWithoutSeconds.swift in Sources */,
 				0BAD7931246D462300575D4C /* Formatters.swift in Sources */,
+				0BE4A2C2249898BD00B7B0C8 /* SearchInteractor.swift in Sources */,
 				0BAD795B246D462300575D4C /* RouteFragmentGateway.swift in Sources */,
 				0BAD795E246D462300575D4C /* MapBoxRouteCreator.swift in Sources */,
 				0B7A450A2473FF3C00AA1F5E /* FastNavigationViewController.swift in Sources */,
@@ -724,6 +756,7 @@
 				0BAD792C246D462300575D4C /* RoutePoint.swift in Sources */,
 				0BAD7957246D462300575D4C /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				0BAD7944246D462300575D4C /* CreateRoutePointPresenter.swift in Sources */,
+				0BE4A2BD249898BD00B7B0C8 /* SearchPresenter.swift in Sources */,
 				0BAD7930246D462300575D4C /* SwinjectContainer+Shared.swift in Sources */,
 				0BAD7951246D462300575D4C /* SceneDelegate.swift in Sources */,
 				0BAD793F246D462300575D4C /* CreateRoutePointInteractor.swift in Sources */,
@@ -735,13 +768,16 @@
 				0B7A450B2473FF3C00AA1F5E /* FastNavigationInteractor.swift in Sources */,
 				0BAD7958246D462300575D4C /* RouteFragmentEntity+CoreDataProperties.swift in Sources */,
 				0BAD7942246D462300575D4C /* CreateRoutePointViewController.swift in Sources */,
+				0BE4A2BF249898BD00B7B0C8 /* SearchRouter.swift in Sources */,
 				0BAD7935246D462300575D4C /* ManageRouteMapModels.swift in Sources */,
 				0BAD7950246D462300575D4C /* AppDelegate.swift in Sources */,
 				0BAD7934246D462300575D4C /* ManageRouteMapPresenter.swift in Sources */,
 				0BAD7941246D462300575D4C /* CreateRoutePointWorker.swift in Sources */,
 				0B7A45062473FF3C00AA1F5E /* FastNavigationPresenter.swift in Sources */,
 				0BAD7949246D462300575D4C /* RoadCell.swift in Sources */,
+				0BE4A2C1249898BD00B7B0C8 /* SearchViewController.swift in Sources */,
 				0BAD7948246D462300575D4C /* StayingCell.swift in Sources */,
+				0BE4A2BE249898BD00B7B0C8 /* SearchWorker.swift in Sources */,
 				0B7A45072473FF3C00AA1F5E /* FastNavigationWorker.swift in Sources */,
 				0BAD7938246D462300575D4C /* ManageRouteMapWorker.swift in Sources */,
 				0BAD793A246D462300575D4C /* DetailRoutePointViewController.swift in Sources */,

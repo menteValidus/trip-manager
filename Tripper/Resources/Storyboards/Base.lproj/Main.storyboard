@@ -18,7 +18,36 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-8K-ctK" customClass="MGLMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHU-Df-oy8">
+                                        <rect key="frame" x="311" y="24" width="40" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TCE-YC-6OH">
+                                                <rect key="frame" x="8" y="8" width="24" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="24" id="BMu-aC-s92"/>
+                                                    <constraint firstAttribute="width" constant="24" id="xjv-fK-nyY"/>
+                                                </constraints>
+                                                <state key="normal" image="ic_search"/>
+                                                <connections>
+                                                    <segue destination="Lni-qh-IRS" kind="presentation" id="HkS-DD-5vQ"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="TCE-YC-6OH" secondAttribute="trailing" constant="8" id="4Vz-f8-0fq"/>
+                                            <constraint firstItem="TCE-YC-6OH" firstAttribute="leading" secondItem="tHU-Df-oy8" secondAttribute="leading" constant="8" id="Pcy-Vy-05g"/>
+                                            <constraint firstItem="TCE-YC-6OH" firstAttribute="top" secondItem="tHU-Df-oy8" secondAttribute="top" constant="8" id="ngN-oc-OZs"/>
+                                            <constraint firstAttribute="bottom" secondItem="TCE-YC-6OH" secondAttribute="bottom" constant="8" id="sa1-kG-tjv"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstItem="tHU-Df-oy8" firstAttribute="top" secondItem="xLl-8K-ctK" secondAttribute="top" constant="24" id="Ggn-fI-aOR"/>
+                                    <constraint firstAttribute="trailing" secondItem="tHU-Df-oy8" secondAttribute="trailing" constant="24" id="GyX-Wf-hMJ"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showsUserLocation" value="YES"/>
@@ -122,7 +151,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Coc-8S-RBj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1102.8985507246377" y="-582.58928571428567"/>
+            <point key="canvasLocation" x="1101.5999999999999" y="-583.3583208395803"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="hFR-L5-nDq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Search" id="Lni-qh-IRS" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p6d-OL-aWp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1102" y="-111"/>
         </scene>
         <!--Detail Route Point View Controller-->
         <scene sceneID="y9b-BA-uiU">
@@ -485,6 +522,7 @@
     </scenes>
     <resources>
         <image name="ic_route_50" width="50" height="50"/>
+        <image name="ic_search" width="50" height="50"/>
         <image name="ic_user_50" width="50" height="50"/>
         <image name="ic_user_selected" width="80" height="80"/>
     </resources>
