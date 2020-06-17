@@ -13,6 +13,15 @@
 import UIKit
 
 class SearchWorker {
-    func doSomeWork() {
+    let searchApiGateway: SearchApiGateway
+    
+    init(searchApiGateway: SearchApiGateway) {
+        self.searchApiGateway = searchApiGateway
+    }
+    
+    func search(with query: String, completionHandler: @escaping ([PointInfo]) -> Void) {
+        searchApiGateway.performSearch(with: query) { pointsInfo in
+            completionHandler(pointsInfo)
+        }
     }
 }

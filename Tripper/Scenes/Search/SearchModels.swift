@@ -15,12 +15,15 @@ import UIKit
 enum Search {
     // MARK: Use Cases
     
-    enum Something {
+    enum PerformSearch {
         struct Request {
+            var query: String
         }
         struct Response {
+            var pointsInfo: [PointInfo]
         }
         struct ViewModel {
+            var points: [String]
         }
     }
 }

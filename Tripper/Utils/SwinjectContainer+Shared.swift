@@ -39,6 +39,8 @@ extension Container {
         
         container.register(RouteCreator.self) { _ in MapboxRouteCreator() }
         
+        container.register(SearchApiGateway.self) { _ in MapboxSearchApiGateway() }
+        
         return container
     }()
 }

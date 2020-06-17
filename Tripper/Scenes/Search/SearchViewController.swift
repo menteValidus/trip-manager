@@ -11,14 +11,17 @@
 //
 
 import UIKit
+import Swinject
 
 protocol SearchDisplayLogic: class {
-    func displaySomething(viewModel: Search.Something.ViewModel)
+    func displayPerformedSearch(viewModel: Search.PerformSearch.ViewModel)
 }
 
 class SearchViewController: UIViewController, SearchDisplayLogic {
     var interactor: SearchBusinessLogic?
     var router: (NSObjectProtocol & SearchRoutingLogic & SearchDataPassing)?
+    
+    var delegate: HasFocusableMap?
     
     // MARK: Object Lifecycle
     
@@ -39,53 +42,76 @@ class SearchViewController: UIViewController, SearchDisplayLogic {
         let interactor = SearchInteractor()
         let presenter = SearchPresenter()
         let router = SearchRouter()
+        let worker = SearchWorker(searchApiGateway: Container.shared.resolve(SearchApiGateway.self)!)
         viewController.interactor = interactor
         viewController.router = router
         interactor.presenter = presenter
+        interactor.worker = worker
         presenter.viewController = viewController
         router.viewController = viewController
         router.dataStore = interactor
-    }
-    
-    // MARK: Routing
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let scene = segue.identifier {
-            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
-            if let router = router, router.responds(to: selector) {
-                router.perform(selector, with: segue)
-            }
-        }
     }
     
     // MARK: View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        doSomething()
+        
+        configureDelegates()
     }
     
-    // MARK: Do Something
+    // MARK: Search
     
-    //@IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var tableView: UITableView!
     
-    func doSomething() {
-        let request = Search.Something.Request()
-        interactor?.doSomething(request: request)
+    var points: [String] = []
+    
+    @IBAction func searchTextFieldEditingDidChanged(_ sender: Any) {
+        performSearch()
     }
     
-    func displaySomething(viewModel: Search.Something.ViewModel) {
-        //nameTextField.text = viewModel.name
+    func performSearch() {
+        interactor?.performSearch(request: .init(query: searchTextField.text!))
+    }
+    
+    func displayPerformedSearch(viewModel: Search.PerformSearch.ViewModel) {
+        points = viewModel.points
+        tableView.reloadData()
+//        tableView.reload
+    }
+}
+
+extension SearchViewController {
+    func configureDelegates() {
+        tableView.dataSource = self
+        tableView.delegate = self
+//        searchTextField.delegate = self
     }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return points.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = UITableViewCell()
+        
+        cell.textLabel?.text = points[indexPath.row]
+        
+        return cell
     }
     
 }
+
+//extension SearchViewController: UITextFieldDelegate {
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        performSearch()
+//    }
+//
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        searchTextField.resignFirstResponder()
+//        return true
+//    }
+//}

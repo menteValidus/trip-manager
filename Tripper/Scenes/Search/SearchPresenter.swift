@@ -13,16 +13,18 @@
 import UIKit
 
 protocol SearchPresentationLogic {
-    func presentSomething(response: Search.Something.Response)
+    func presentPerformedSearch(response: Search.PerformSearch.Response)
 }
 
 class SearchPresenter: SearchPresentationLogic {
     weak var viewController: SearchDisplayLogic?
     
-    // MARK: Do Something
+    // MARK: Perform Search
     
-    func presentSomething(response: Search.Something.Response) {
-        let viewModel = Search.Something.ViewModel()
-        viewController?.displaySomething(viewModel: viewModel)
+    func presentPerformedSearch(response: Search.PerformSearch.Response) {
+        let points = response.pointsInfo.map({ $0.name })
+        DispatchQueue.main.async {
+            self.viewController?.displayPerformedSearch(viewModel: .init(points: points))
+        }
     }
 }

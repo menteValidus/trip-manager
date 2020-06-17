@@ -13,25 +13,21 @@
 import UIKit
 
 protocol SearchBusinessLogic {
-    func doSomething(request: Search.Something.Request)
+    func performSearch(request: Search.PerformSearch.Request)
 }
 
 protocol SearchDataStore {
-    //var name: String { get set }
 }
 
 class SearchInteractor: SearchBusinessLogic, SearchDataStore {
     var presenter: SearchPresentationLogic?
     var worker: SearchWorker?
-    //var name: String = ""
     
-    // MARK: Do Something
+    // MARK: - Perform Search
     
-    func doSomething(request: Search.Something.Request) {
-        worker = SearchWorker()
-        worker?.doSomeWork()
-        
-        let response = Search.Something.Response()
-        presenter?.presentSomething(response: response)
+    func performSearch(request: Search.PerformSearch.Request) {
+        worker!.search(with: request.query, completionHandler: { pointsInfo in
+            self.presenter?.presentPerformedSearch(response: .init(pointsInfo: pointsInfo))
+        })
     }
 }
