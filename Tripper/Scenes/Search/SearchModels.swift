@@ -11,19 +11,34 @@
 //
 
 import UIKit
+import CoreLocation
 
 enum Search {
     // MARK: Use Cases
     
     enum PerformSearch {
         struct Request {
-            var query: String
+            let query: String
         }
         struct Response {
-            var pointsInfo: [PointInfo]
+            let pointsInfo: [PointInfo]
         }
         struct ViewModel {
-            var points: [String]
+            let points: [String]
         }
     }
+    
+    enum SelectEntry {
+        struct Request {
+            let entryNumber: Int
+        }
+        struct Response {
+            let latitude: Double
+            let longitude: Double
+        }
+        struct ViewModel {
+            let coordinate: CLLocationCoordinate2D
+        }
+    }
+
 }

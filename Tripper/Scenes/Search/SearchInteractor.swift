@@ -14,6 +14,7 @@ import UIKit
 
 protocol SearchBusinessLogic {
     func performSearch(request: Search.PerformSearch.Request)
+    func selectEntry(request: Search.SelectEntry.Request)
 }
 
 protocol SearchDataStore {
@@ -25,9 +26,19 @@ class SearchInteractor: SearchBusinessLogic, SearchDataStore {
     
     // MARK: - Perform Search
     
+    var pointsInfo: [PointInfo] = []
+    
     func performSearch(request: Search.PerformSearch.Request) {
         worker!.search(with: request.query, completionHandler: { pointsInfo in
+            self.pointsInfo = pointsInfo
             self.presenter?.presentPerformedSearch(response: .init(pointsInfo: pointsInfo))
         })
+    }
+    
+    // MARK: SelectEntry
+    
+    func selectEntry(request: Search.SelectEntry.Request) {
+        let entry = pointsInfo[request.entryNumber]
+        presenter?.presentEntrySelection(response: .init(latitude: entry.latitude, longitude: entry.longitude))
     }
 }

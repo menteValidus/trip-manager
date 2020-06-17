@@ -17,6 +17,7 @@ import UIKit
     func routeToDetailRoutePoint(segue: UIStoryboardSegue?)
     func routeToEditRoutePoint(segue: UIStoryboardSegue?)
     func routeToFastNavigation(segue: UIStoryboardSegue?)
+    func routeToSearch(segue: UIStoryboardSegue?)
 }
 
 protocol ManageRouteMapDataPassing {
@@ -82,6 +83,16 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         navigateToFastNavigation(source: viewController!, destination: destinationVC)
     }
     
+    func routeToSearch(segue: UIStoryboardSegue?) {
+        if let segue = segue {
+            let destinationVC = segue.destination as! SearchViewController
+            destinationVC.delegate = viewController
+            
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToSearch(source: dataStore!, destination: &destinationDS)
+        }
+    }
+    
     // MARK: Navigation
     
     func navigateToCreateRoutePoint(source: ManageRouteMapViewController, destination: CreateRoutePointViewController)
@@ -137,6 +148,10 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
         }
     }
     
+    func navigateToSearch(source: ManageRouteMapViewController, destination: SearchViewController) {
+        
+    }
+    
     // MARK: Passing data
     
     func passDataToCreateRoutePoint(source: ManageRouteMapDataStore, destination: inout CreateRoutePointDataStore)
@@ -154,5 +169,9 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
     }
     
     func passDataToFastNavigation(source: ManageRouteMapDataStore, destination: inout FastNavigationDataStore) {
+    }
+    
+    func passDataToSearch(source: ManageRouteMapDataStore, destination: inout SearchDataStore) {
+        
     }
 }

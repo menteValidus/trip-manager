@@ -19,9 +19,7 @@ protocol FastNavigationDisplayLogic: class {
     func displaySelectedSubroute(viewModel: FastNavigation.SelectSubroute.ViewModel)
 }
 
-protocol FastNavigationDelegate: class {
-    func fastNavigation(didSelected coordinates: [CLLocationCoordinate2D])
-}
+
 
 protocol SidePopup: DismissablePopup {
     var width: CGFloat { get }
@@ -34,7 +32,7 @@ class FastNavigationViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var subroutes: [Subroute] = []
-    var delegate: FastNavigationDelegate?
+    var delegate: HasFocusableMap?
     
     // MARK: Object Lifecycle
     
@@ -107,7 +105,7 @@ extension FastNavigationViewController: FastNavigationDisplayLogic {
     // MARK: Select Subroute
     
     func displaySelectedSubroute(viewModel: FastNavigation.SelectSubroute.ViewModel) {
-        delegate?.fastNavigation(didSelected: viewModel.coordinates)
+        delegate?.focusableMap(didSelected: viewModel.coordinates)
     }
 }
 

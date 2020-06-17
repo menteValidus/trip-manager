@@ -31,8 +31,8 @@ struct PointInfo: Codable {
         if let featureContainer = try? decoder.container(keyedBy: FeatureKeys.self) {
             self.name = try featureContainer.decode(String.self, forKey: .name)
             let coordinate = try featureContainer.decode([Double].self, forKey: .center)
-            self.latitude = coordinate.first!
-            self.longitude = coordinate.last!
+            self.latitude = coordinate.last!
+            self.longitude = coordinate.first!
         }
     }
     

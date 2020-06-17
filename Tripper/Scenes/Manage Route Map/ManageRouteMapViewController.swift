@@ -37,6 +37,10 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
 }
 
+protocol HasFocusableMap: class {
+    func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
+}
+
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
     var interactor: ManageRouteMapBusinessLogic?
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
@@ -658,8 +662,8 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     }
 }
 
-extension ManageRouteMapViewController: FastNavigationDelegate {
-    func fastNavigation(didSelected coordinates: [CLLocationCoordinate2D]) {
+extension ManageRouteMapViewController: HasFocusableMap {
+    func focusableMap(didSelected coordinates: [CLLocationCoordinate2D]) {
         interactor?.focusOnCoordinates(request: .init(coordinates: coordinates))
     }
 }

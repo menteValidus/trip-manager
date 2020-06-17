@@ -11,9 +11,11 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol SearchPresentationLogic {
     func presentPerformedSearch(response: Search.PerformSearch.Response)
+    func presentEntrySelection(response: Search.SelectEntry.Response)
 }
 
 class SearchPresenter: SearchPresentationLogic {
@@ -26,5 +28,12 @@ class SearchPresenter: SearchPresentationLogic {
         DispatchQueue.main.async {
             self.viewController?.displayPerformedSearch(viewModel: .init(points: points))
         }
+    }
+    
+    // MARK: Select Entry
+    
+    func presentEntrySelection(response: Search.SelectEntry.Response) {
+        let coordinate = CLLocationCoordinate2D(latitude: response.latitude, longitude: response.longitude)
+        viewController?.displayEntrySelection(viewModel: .init(coordinate: coordinate))
     }
 }

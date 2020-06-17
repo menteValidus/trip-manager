@@ -15,6 +15,7 @@ import Swinject
 
 protocol SearchDisplayLogic: class {
     func displayPerformedSearch(viewModel: Search.PerformSearch.ViewModel)
+    func displayEntrySelection(viewModel: Search.SelectEntry.ViewModel)
 }
 
 class SearchViewController: UIViewController, SearchDisplayLogic {
@@ -78,7 +79,16 @@ class SearchViewController: UIViewController, SearchDisplayLogic {
     func displayPerformedSearch(viewModel: Search.PerformSearch.ViewModel) {
         points = viewModel.points
         tableView.reloadData()
-//        tableView.reload
+    }
+    
+    // MARK: Select Entry
+    
+    func selectEntry(_ entryNumber: Int) {
+        interactor?.selectEntry(request: .init(entryNumber: entryNumber))
+    }
+    
+    func displayEntrySelection(viewModel: Search.SelectEntry.ViewModel) {
+        delegate?.focusableMap(didSelected: [viewModel.coordinate])
     }
 }
 
@@ -86,7 +96,6 @@ extension SearchViewController {
     func configureDelegates() {
         tableView.dataSource = self
         tableView.delegate = self
-//        searchTextField.delegate = self
     }
 }
 
@@ -103,15 +112,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        dismiss(animated: true) {
+            self.selectEntry(indexPath.row)
+        }
+    }
+    
 }
-
-//extension SearchViewController: UITextFieldDelegate {
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        performSearch()
-//    }
-//
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        searchTextField.resignFirstResponder()
-//        return true
-//    }
-//}

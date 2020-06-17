@@ -23,6 +23,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="searchTextFieldEditingDidChanged:" destination="gxL-QF-sjt" eventType="editingChanged" id="e9Q-Ly-oco"/>
+                                </connections>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0eJ-3j-2k6">
                                 <rect key="frame" x="0.0" y="108" width="414" height="754"/>
@@ -41,6 +44,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="76a-18-sdp"/>
                     </view>
+                    <connections>
+                        <outlet property="searchTextField" destination="ZYe-3M-Z8s" id="eof-gl-e8r"/>
+                        <outlet property="tableView" destination="0eJ-3j-2k6" id="HgB-Kn-SXo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Sw-JF-v2d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
