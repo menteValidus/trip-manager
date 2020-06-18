@@ -6,5 +6,4 @@ use_frameworks!
 target 'Tripper' do
   pod 'MapboxNavigation', '~> 0.38.0'
   pod 'Swinject'
-  pod 'R.swift'
 end
