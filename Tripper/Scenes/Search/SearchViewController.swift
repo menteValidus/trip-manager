@@ -59,6 +59,7 @@ class SearchViewController: UIViewController, SearchDisplayLogic {
         super.viewDidLoad()
         
         configureDelegates()
+        searchTextField.becomeFirstResponder()
     }
     
     // MARK: Search
@@ -93,13 +94,18 @@ class SearchViewController: UIViewController, SearchDisplayLogic {
 }
 
 extension SearchViewController {
+    // MARK: - Configurators
+    
     func configureDelegates() {
         tableView.dataSource = self
         tableView.delegate = self
+        searchTextField.delegate = self
     }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
+    // MARK: - Table View's Delegate
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return points.count
     }
@@ -120,4 +126,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+}
+
+extension SearchViewController: UITextFieldDelegate {
+    // MARK: - Text Field's Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchTextField.resignFirstResponder()
+        return true
+    }
 }
