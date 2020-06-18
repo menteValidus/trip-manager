@@ -51,6 +51,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
+    @IBOutlet weak var searchView: UIView!
     
     var detailsPopup: Popup? {
         didSet {
@@ -146,6 +147,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     private func configureAppearance() {
         routeEstimationView.layer.cornerRadius = 16
+        searchView.layer.cornerRadius = 16
         userInteractionView.layer.cornerRadius = 32
     }
     
