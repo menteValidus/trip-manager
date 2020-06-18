@@ -88,7 +88,7 @@ class SearchViewController: UIViewController, SearchDisplayLogic {
     }
     
     func displayEntrySelection(viewModel: Search.SelectEntry.ViewModel) {
-        delegate?.focusableMap(didSelected: [viewModel.coordinate])
+        delegate?.focusableMap(didSelected: [viewModel.southWestCoordinate, viewModel.northSouthCoordinate])
     }
 }
 

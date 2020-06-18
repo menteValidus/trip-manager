@@ -33,7 +33,8 @@ class SearchPresenter: SearchPresentationLogic {
     // MARK: Select Entry
     
     func presentEntrySelection(response: Search.SelectEntry.Response) {
-        let coordinate = CLLocationCoordinate2D(latitude: response.latitude, longitude: response.longitude)
-        viewController?.displayEntrySelection(viewModel: .init(coordinate: coordinate))
+        viewController?.displayEntrySelection(viewModel: .init(center: response.center,
+                                                               southWestCoordinate: response.southWestCoordinate,
+                                                               northSouthCoordinate: response.northSouthCoordinate))
     }
 }
