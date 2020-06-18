@@ -37,6 +37,10 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
 }
 
+protocol HasFocusableMap: class {
+    func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
+}
+
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
     var interactor: ManageRouteMapBusinessLogic?
     var router: (NSObjectProtocol & ManageRouteMapRoutingLogic & ManageRouteMapDataPassing)?
@@ -47,6 +51,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
+    @IBOutlet weak var searchView: UIView!
     
     var detailsPopup: Popup? {
         didSet {
@@ -142,6 +147,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     private func configureAppearance() {
         routeEstimationView.layer.cornerRadius = 16
+        searchView.layer.cornerRadius = 16
         userInteractionView.layer.cornerRadius = 32
     }
     
@@ -658,8 +664,8 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     }
 }
 
-extension ManageRouteMapViewController: FastNavigationDelegate {
-    func fastNavigation(didSelected coordinates: [CLLocationCoordinate2D]) {
+extension ManageRouteMapViewController: HasFocusableMap {
+    func focusableMap(didSelected coordinates: [CLLocationCoordinate2D]) {
         interactor?.focusOnCoordinates(request: .init(coordinates: coordinates))
     }
 }
