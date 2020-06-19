@@ -590,6 +590,8 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         clearAllBarButtonItem.isEnabled = false
         toRouteBarButtonItem.isEnabled = false
         
+        detailsPopup?.dismissPopup()
+        
         setTemporaryAnnotation(at: viewModel.coordinate)
         temporaryPointTitleLabel.text = viewModel.title
     }
@@ -599,6 +601,14 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         annotation.coordinate = coordinate
         temporaryAnnotation = annotation
         mapView.addAnnotation(temporaryAnnotation!)
+    }
+    
+    @IBAction func createRoutePointButtonTapped() {
+        createTemporaryPointView.isHidden = true
+        removeTemporaryPoint()
+        interactor?.createRoutePoint(request: .init(title: temporaryPointTitleLabel.text!,
+                                                    latitude: temporaryAnnotation!.coordinate.latitude,
+                                                    longitude: temporaryAnnotation!.coordinate.longitude))
     }
     
     // MARK: Remove Temprorary Point

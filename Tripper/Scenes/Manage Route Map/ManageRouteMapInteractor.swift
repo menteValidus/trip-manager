@@ -40,6 +40,7 @@ protocol ManageRouteMapBusinessLogic {
 }
 
 struct SimpleRoutePointInfo {
+    var title: String? = nil
     let tappedCoordinate: CLLocationCoordinate2D
     let timeToNextPointInSeconds: Int
     let distanceToNextPointInMeters: Int
@@ -119,7 +120,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 }
             })
         } else {
-            dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
+            dataToCreateRoutePoint = SimpleRoutePointInfo(title: request.title, tappedCoordinate: tappedCoordinate,
+                                                          timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
             
             let response = ManageRouteMap.CreateRoutePoint.Response(isSucceed: true)
             presenter?.presentCreateRoutePoint(response: response)
