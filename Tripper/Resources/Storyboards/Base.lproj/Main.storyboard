@@ -80,16 +80,16 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XLC-aH-rfK">
-                                <rect key="frame" x="166.5" y="98" width="81.5" height="86"/>
+                                <rect key="frame" x="166.5" y="98" width="81.5" height="85"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000 m" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tq2-Fz-S8N">
-                                        <rect key="frame" x="12" y="20" width="57.5" height="21"/>
+                                        <rect key="frame" x="12" y="20" width="57.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 min" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zke-0f-ISY">
-                                        <rect key="frame" x="12" y="45" width="57.5" height="21"/>
+                                        <rect key="frame" x="12" y="44.5" width="57.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -107,30 +107,38 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfD-2b-4mF">
-                                <rect key="frame" x="162" y="756" width="90" height="74"/>
+                                <rect key="frame" x="162" y="719.5" width="90" height="110.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tt-0a-VbQ">
-                                        <rect key="frame" x="16" y="4" width="58" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Create"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnt-mO-zhV">
-                                        <rect key="frame" x="16" y="40" width="58" height="30"/>
-                                        <state key="normal" title="Cancel"/>
-                                        <connections>
-                                            <action selector="removeTemporaryPoint" destination="4Cc-Fh-swH" eventType="touchUpInside" id="ClL-Yo-pBl"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Ofw-K5-SEL">
+                                        <rect key="frame" x="16" y="16" width="58" height="86.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dq-RS-9mX">
+                                                <rect key="frame" x="12.5" y="0.0" width="33.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tt-0a-VbQ">
+                                                <rect key="frame" x="0.0" y="20.5" width="58" height="36"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <state key="normal" title="Create"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnt-mO-zhV">
+                                                <rect key="frame" x="5" y="56.5" width="48" height="30"/>
+                                                <state key="normal" title="Cancel"/>
+                                                <connections>
+                                                    <action selector="removeTemporaryPoint" destination="4Cc-Fh-swH" eventType="touchUpInside" id="ClL-Yo-pBl"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
-                                    <constraint firstItem="8tt-0a-VbQ" firstAttribute="top" secondItem="kfD-2b-4mF" secondAttribute="top" constant="4" id="B1H-sk-aqj"/>
-                                    <constraint firstItem="hnt-mO-zhV" firstAttribute="top" secondItem="8tt-0a-VbQ" secondAttribute="bottom" id="EcR-9g-6Xs"/>
-                                    <constraint firstAttribute="trailing" secondItem="8tt-0a-VbQ" secondAttribute="trailing" constant="16" id="IPg-nB-T12"/>
-                                    <constraint firstItem="hnt-mO-zhV" firstAttribute="leading" secondItem="kfD-2b-4mF" secondAttribute="leading" constant="16" id="Qkv-y1-j2E"/>
-                                    <constraint firstAttribute="bottom" secondItem="hnt-mO-zhV" secondAttribute="bottom" constant="4" id="UdY-9f-yLq"/>
-                                    <constraint firstItem="8tt-0a-VbQ" firstAttribute="leading" secondItem="kfD-2b-4mF" secondAttribute="leading" constant="16" id="ajO-Wu-0cR"/>
-                                    <constraint firstAttribute="trailing" secondItem="hnt-mO-zhV" secondAttribute="trailing" constant="16" id="iMO-8Y-Wrd"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ofw-K5-SEL" secondAttribute="trailing" constant="16" id="9Xv-YR-sMl"/>
+                                    <constraint firstItem="Ofw-K5-SEL" firstAttribute="leading" secondItem="kfD-2b-4mF" secondAttribute="leading" constant="16" id="AmK-Xi-qtk"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ofw-K5-SEL" secondAttribute="bottom" constant="8" id="e9S-OF-Vvv"/>
+                                    <constraint firstItem="Ofw-K5-SEL" firstAttribute="top" secondItem="kfD-2b-4mF" secondAttribute="top" constant="16" id="kQh-ik-zAI"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -146,6 +154,8 @@
                             <constraint firstItem="kfD-2b-4mF" firstAttribute="centerX" secondItem="GF8-cM-mMC" secondAttribute="centerX" id="a9R-Be-CI8"/>
                             <constraint firstItem="8jY-fq-IJ2" firstAttribute="centerY" secondItem="kbD-OJ-czS" secondAttribute="centerY" id="fMy-KW-JX7"/>
                             <constraint firstItem="xLl-8K-ctK" firstAttribute="leading" secondItem="GF8-cM-mMC" secondAttribute="leading" id="fcD-Ly-ql5"/>
+                            <constraint firstItem="kfD-2b-4mF" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="GF8-cM-mMC" secondAttribute="leading" constant="40" id="j81-mo-dZj"/>
+                            <constraint firstItem="GF8-cM-mMC" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kfD-2b-4mF" secondAttribute="trailing" constant="40" id="qyZ-fm-Gi2"/>
                             <constraint firstItem="GF8-cM-mMC" firstAttribute="trailing" secondItem="8jY-fq-IJ2" secondAttribute="trailing" constant="24" id="r3M-QI-BBI"/>
                             <constraint firstItem="XLC-aH-rfK" firstAttribute="top" secondItem="GF8-cM-mMC" secondAttribute="top" constant="10" id="wop-WW-rin"/>
                         </constraints>
@@ -171,6 +181,7 @@
                         <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="bTl-5H-0xS"/>
                         <outlet property="routeTimeLabel" destination="Zke-0f-ISY" id="kx8-C4-DGO"/>
                         <outlet property="searchView" destination="tHU-Df-oy8" id="ND0-8y-2xP"/>
+                        <outlet property="temporaryPointTitleLabel" destination="0dq-RS-9mX" id="9PY-Yw-R06"/>
                         <outlet property="toRouteBarButtonItem" destination="3YU-Yf-sPd" id="BJC-nU-vFA"/>
                         <outlet property="userInteractionView" destination="8jY-fq-IJ2" id="j7f-l9-DD2"/>
                         <segue destination="CC2-X3-ZR1" kind="show" identifier="CreateRoutePoint" id="OLt-wK-K95"/>

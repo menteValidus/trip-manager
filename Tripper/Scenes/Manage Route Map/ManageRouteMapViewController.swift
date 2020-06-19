@@ -579,6 +579,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: Create Temprorary Point
     
+    @IBOutlet weak var temporaryPointTitleLabel: UILabel!
     var temporaryAnnotation: MGLPointAnnotation?
     
     func displayTemporaryPoint(viewModel: ManageRouteMap.CreateTemporaryPoint.ViewModel) {
@@ -590,6 +591,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         toRouteBarButtonItem.isEnabled = false
         
         setTemporaryAnnotation(at: viewModel.coordinate)
+        temporaryPointTitleLabel.text = viewModel.title
     }
     
     private func setTemporaryAnnotation(at coordinate: CLLocationCoordinate2D) {
