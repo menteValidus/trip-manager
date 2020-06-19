@@ -271,12 +271,18 @@ enum ManageRouteMap {
         }
     }
     
-    enum CreateTemproraryPoint {
+    enum CreateTemporaryPoint {
         struct Request {
+            let coordinate: CLLocationCoordinate2D
+            let title: String
         }
         struct Response {
+            let coordinate: CLLocationCoordinate2D
+            let title: String
         }
         struct ViewModel {
+            let coordinate: CLLocationCoordinate2D
+            let title: String
         }
     }
 }

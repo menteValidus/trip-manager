@@ -35,7 +35,7 @@ protocol ManageRouteMapBusinessLogic {
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
     func focusOnCoordinates(request: ManageRouteMap.FocusOnCoordinates.Request)
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request)
-    func createTemproraryPoint(request: ManageRouteMap.CreateTemproraryPoint.Request)
+    func createTemproraryPoint(request: ManageRouteMap.CreateTemporaryPoint.Request)
 }
 
 struct SimpleRoutePointInfo {
@@ -455,8 +455,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     // MARK: Create Temprorary Point
     
-    func createTemproraryPoint(request: ManageRouteMap.CreateTemproraryPoint.Request) {
-        presenter?.presentTemproraryPoint(response: .init())
+    func createTemproraryPoint(request: ManageRouteMap.CreateTemporaryPoint.Request) {
+        presenter?.presentTemproraryPoint(response: .init(coordinate: request.coordinate, title: request.title))
     }
     
     // MARK: - Shared Methods

@@ -35,17 +35,12 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
     func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel)
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
-    func displayTemproraryPoint(viewModel: ManageRouteMap.CreateTemproraryPoint.ViewModel)
+    func displayTemporaryPoint(viewModel: ManageRouteMap.CreateTemporaryPoint.ViewModel)
 }
 
 protocol HasFocusableMap: class {
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
-    func focusableMap(temporaryCreated routePoint: RoutePointInfo)
-}
-
-struct RoutePointInfo {
-    let title: String
-    let coordinate: CLLocationCoordinate2D
+    func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -59,7 +54,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
     @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var createTemroraryPointView: UIView!
+    @IBOutlet weak var createTemporaryPointView: UIView!
     
     var detailsPopup: Popup? {
         didSet {
@@ -157,7 +152,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         routeEstimationView.layer.cornerRadius = 16
         searchView.layer.cornerRadius = 16
         userInteractionView.layer.cornerRadius = 32
-        createTemroraryPointView.layer.cornerRadius = 32
+        createTemporaryPointView.layer.cornerRadius = 32
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -583,8 +578,19 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     // MARK: - Create Temprorary Point
     
-    func displayTemproraryPoint(viewModel: ManageRouteMap.CreateTemproraryPoint.ViewModel) {
-        createTemroraryPointView.isHidden = false
+    var temporaryAnnotation: MGLPointAnnotation?
+    
+    func displayTemporaryPoint(viewModel: ManageRouteMap.CreateTemporaryPoint.ViewModel) {
+        createTemporaryPointView.isHidden = false
+        
+        setTemporaryAnnotation(at: viewModel.coordinate)
+    }
+    
+    private func setTemporaryAnnotation(at coordinate: CLLocationCoordinate2D) {
+        let annotation = MGLPointAnnotation()
+        annotation.coordinate = coordinate
+        temporaryAnnotation = annotation
+        mapView.addAnnotation(temporaryAnnotation!)
     }
     
     // MARK: - Shared Helper Methods
@@ -677,6 +683,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         mapView.addAnnotation(annotation)
         annotationsID[annotation] = annotationInfo.id
     }
+    
 }
 
 extension ManageRouteMapViewController: HasFocusableMap {
@@ -686,7 +693,7 @@ extension ManageRouteMapViewController: HasFocusableMap {
         interactor?.focusOnCoordinates(request: .init(coordinates: coordinates))
     }
     
-    func focusableMap(temporaryCreated routePoint: RoutePointInfo) {
-        interactor?.createTemproraryPoint(request: .init())
+    func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String) {
+        interactor?.createTemproraryPoint(request: .init(coordinate: coordinate, title: title))
     }
 }
