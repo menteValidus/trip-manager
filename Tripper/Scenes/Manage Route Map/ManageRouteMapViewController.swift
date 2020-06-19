@@ -403,14 +403,31 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Clear All
     
     @IBAction func clearAll() {
-        let request = ManageRouteMap.ClearAll.Request()
-        interactor?.clearAll(request: request)
+        displayAlertToClearAll()
     }
     
     func displayClearAll(viewModel: ManageRouteMap.ClearAll.ViewModel) {
         fetchDifference()
         detailsPopup?.dismissPopup()
         fastNavigationPopup?.dismissPopup()
+    }
+    
+    // MARK: Helper Methods
+    
+    private func displayAlertToClearAll() {
+        let alert = UIAlertController(title: "Do you want to delete whole route?", message: "It isn't possible to restore route.", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Yes", style: .default) { _ in
+            self.clearRoute()
+            })
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+
+        self.present(alert, animated: true)
+    }
+    
+    @objc func clearRoute() {
+        let request = ManageRouteMap.ClearAll.Request()
+        interactor?.clearAll(request: request)
     }
     
     // MARK: Toggle User Input
