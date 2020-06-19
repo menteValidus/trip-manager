@@ -18,6 +18,7 @@ protocol DetailRoutePointBusinessLogic {
     func edit(request: DetailRoutePoint.Edit.Request)
     func delete(request: DetailRoutePoint.Delete.Request)
     func toggleView(request: DetailRoutePoint.ToggleView.Request)
+    func launchNavigator(request: DetailRoutePoint.LaunchNavigator.Request)
 }
 
 protocol DetailRoutePointDataStore {
@@ -85,5 +86,13 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
         }
         
         presenter?.presentToggleView(response: response)
+    }
+    
+    // MARK: Launch Navigator
+    
+    func launchNavigator(request: DetailRoutePoint.LaunchNavigator.Request) {
+        if let routePoint = routePoint {
+            presenter?.presentLaunchedNavigator(response: .init(routePoint: routePoint))
+        }
     }
 }

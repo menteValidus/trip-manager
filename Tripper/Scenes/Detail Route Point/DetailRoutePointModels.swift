@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 enum DetailRoutePoint {
     // MARK: Use cases
@@ -69,6 +70,19 @@ enum DetailRoutePoint {
         }
         struct ViewModel {
             let screenCoverage: PopupCoverage
+        }
+    }
+    
+    enum LaunchNavigator {
+        struct Request {
+            
+        }
+        struct Response {
+            let routePoint: RoutePoint
+        }
+        struct ViewModel {
+            let title: String
+            let coordinate: CLLocationCoordinate2D
         }
     }
 }

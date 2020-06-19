@@ -55,7 +55,7 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
             if let viewController = viewController?.detailsPopup as? DetailRoutePointViewController {
                 destinationVC = viewController
             } else {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let storyboard = UIStoryboard(name: "Details", bundle: nil)
                 destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
             }
             

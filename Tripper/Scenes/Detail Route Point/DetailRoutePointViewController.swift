@@ -11,6 +11,7 @@
 //
 
 import UIKit
+import MapKit
 import Swinject
 
 protocol DetailRoutePointDisplayLogic: class {
@@ -19,6 +20,7 @@ protocol DetailRoutePointDisplayLogic: class {
     func displayEdit(viewModel: DetailRoutePoint.Edit.ViewModel)
     func displayDelete(viewModel: DetailRoutePoint.Delete.ViewModel)
     func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel)
+    func displayLaunchedNavigator(viewModel: DetailRoutePoint.LaunchNavigator.ViewModel)
 }
 
 typealias Popup = DismissablePopup & ChangeablePopup
@@ -168,6 +170,28 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         }
     }
     
+    // MARK: Launch Navigator
+    
+    @IBAction func launchNavigator() {
+        interactor?.launchNavigator(request: .init())
+    }
+    
+    func displayLaunchedNavigator(viewModel: DetailRoutePoint.LaunchNavigator.ViewModel) {
+        let regionDistance: CLLocationDistance = 1000
+        let region = MKCoordinateRegion(center: viewModel.coordinate,
+                                        latitudinalMeters: regionDistance, longitudinalMeters: regionDistance)
+        
+        let options = [MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: region.center),
+                       MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: region.span)]
+        
+        let placemark = MKPlacemark(coordinate: region.center)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = viewModel.title
+        mapItem.openInMaps(launchOptions: options)
+    }
+}
+
+extension DetailRoutePointViewController {
     // MARK: - Gesture Actions
     
     @objc func onPan(recognizer: UIPanGestureRecognizer) {
