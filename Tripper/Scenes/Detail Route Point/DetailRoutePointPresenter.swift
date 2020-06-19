@@ -18,6 +18,7 @@ protocol DetailRoutePointPresentationLogic {
     func presentEdit(response: DetailRoutePoint.Edit.Response)
     func presentDelete(response: DetailRoutePoint.Delete.Response)
     func presentToggleView(response: DetailRoutePoint.ToggleView.Response)
+    func presentLaunchedNavigator(response: DetailRoutePoint.LaunchNavigator.Response)
 }
 
 class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
@@ -67,5 +68,12 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     func presentToggleView(response: DetailRoutePoint.ToggleView.Response) {
         let viewModel = DetailRoutePoint.ToggleView.ViewModel(screenCoverage: response.screenCoverage)
         viewController?.displayToggleView(viewModel: viewModel)
+    }
+    
+    // MARK: Launch Navigator
+    
+    func presentLaunchedNavigator(response: DetailRoutePoint.LaunchNavigator.Response) {
+        viewController?.displayLaunchedNavigator(viewModel: .init(title: response.routePoint.title,
+                                                                  coordinate: response.routePoint.coordinate))
     }
 }

@@ -26,6 +26,11 @@ struct RoutePoint: AnnotationInfo {
     var longitude: Double
     var arrivalDate: Date
     var departureDate: Date
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
+    
 }
 
 func ==(lhs: RoutePoint, rhs: RoutePoint) -> Bool
