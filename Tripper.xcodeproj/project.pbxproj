@@ -73,6 +73,7 @@
 		0BAD7984246D68EC00575D4C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */; };
 		0BAD7986246D82A200575D4C /* RoutePointGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7985246D82A200575D4C /* RoutePointGatewayMock.swift */; };
 		0BAD798A246D860500575D4C /* RouteFragmentGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */; };
+		0BDB39BA249C87D300B4CCDB /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BDB39B9249C87D300B4CCDB /* Details.storyboard */; };
 		0BE4A2B52498943B00B7B0C8 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B42498943B00B7B0C8 /* Search.storyboard */; };
 		0BE4A2BD249898BD00B7B0C8 /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B7249898BD00B7B0C8 /* SearchPresenter.swift */; };
 		0BE4A2BE249898BD00B7B0C8 /* SearchWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2B8249898BD00B7B0C8 /* SearchWorker.swift */; };
@@ -179,6 +180,7 @@
 		0BAD7989246D860500575D4C /* RouteFragmentGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFragmentGatewayMock.swift; sourceTree = "<group>"; };
 		0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libMapboxMobileEvents.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MapboxMobileEvents.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BDB39B9249C87D300B4CCDB /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		0BE4A2B42498943B00B7B0C8 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		0BE4A2B7249898BD00B7B0C8 /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		0BE4A2B8249898BD00B7B0C8 /* SearchWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWorker.swift; sourceTree = "<group>"; };
@@ -365,12 +367,12 @@
 		0BAD78F9246D462300575D4C /* Detail Route Point */ = {
 			isa = PBXGroup;
 			children = (
-				0BAD78FA246D462300575D4C /* DetailRoutePointInteractor.swift */,
 				0BAD78FB246D462300575D4C /* DetailRoutePointViewController.swift */,
+				0BAD78FA246D462300575D4C /* DetailRoutePointInteractor.swift */,
+				0BAD78FF246D462300575D4C /* DetailRoutePointPresenter.swift */,
 				0BAD78FC246D462300575D4C /* DetailRoutePointWorker.swift */,
 				0BAD78FD246D462300575D4C /* DetailRoutePointRouter.swift */,
 				0BAD78FE246D462300575D4C /* DetailRoutePointModels.swift */,
-				0BAD78FF246D462300575D4C /* DetailRoutePointPresenter.swift */,
 			);
 			path = "Detail Route Point";
 			sourceTree = "<group>";
@@ -415,6 +417,7 @@
 				0BAD7981246D68EC00575D4C /* LaunchScreen.storyboard */,
 				0BAD797F246D68EC00575D4C /* Main.storyboard */,
 				0BE4A2B42498943B00B7B0C8 /* Search.storyboard */,
+				0BDB39B9249C87D300B4CCDB /* Details.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -692,6 +695,7 @@
 				0BE4A2B52498943B00B7B0C8 /* Search.storyboard in Resources */,
 				0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */,
 				0BAD7983246D68EC00575D4C /* Main.storyboard in Resources */,
+				0BDB39BA249C87D300B4CCDB /* Details.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
