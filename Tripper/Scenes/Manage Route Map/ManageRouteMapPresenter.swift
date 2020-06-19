@@ -33,7 +33,8 @@ protocol ManageRouteMapPresentationLogic {
     func presentFocusOnUser(response: ManageRouteMap.FocusOnUser.Response)
     func presentFocusOnCoordinates(response: ManageRouteMap.FocusOnCoordinates.Response)
     func presentRouteEstimation(response: ManageRouteMap.RouteEstimation.Response)
-    func presentTemproraryPoint(response: ManageRouteMap.CreateTemporaryPoint.Response)
+    func presentTemporaryPoint(response: ManageRouteMap.CreateTemporaryPoint.Response)
+    func presentTemporaryPointDeletion(response: ManageRouteMap.RemoveTemporaryPoint.Response)
 }
 
 class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
@@ -206,7 +207,13 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     
     // MARK: Create Temprorary Point
     
-    func presentTemproraryPoint(response: ManageRouteMap.CreateTemporaryPoint.Response) {
+    func presentTemporaryPoint(response: ManageRouteMap.CreateTemporaryPoint.Response) {
         viewController?.displayTemporaryPoint(viewModel: .init(coordinate: response.coordinate, title: response.title))
+    }
+    
+    // MARK: Remove Temporary Point
+    
+    func presentTemporaryPointDeletion(response: ManageRouteMap.RemoveTemporaryPoint.Response) {
+        viewController?.displayTemporaryPointDeletion(viewModel: .init())
     }
 }

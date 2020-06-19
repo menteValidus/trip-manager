@@ -285,4 +285,13 @@ enum ManageRouteMap {
             let title: String
         }
     }
+    
+    enum RemoveTemporaryPoint {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
+        }
+    }
 }
