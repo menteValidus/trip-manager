@@ -39,7 +39,7 @@ class SearchInteractor: SearchBusinessLogic, SearchDataStore {
     
     func selectEntry(request: Search.SelectEntry.Request) {
         let entry = pointsInfo[request.entryNumber]
-        presenter?.presentEntrySelection(response: .init(center: entry.center,
+        presenter?.presentEntrySelection(response: .init(title: entry.name, center: entry.center,
                                                          southWestCoordinate: entry.southWestCoordinate,
                                                          northSouthCoordinate: entry.northEastCoordinate))
     }

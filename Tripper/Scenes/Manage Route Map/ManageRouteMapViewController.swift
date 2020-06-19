@@ -35,10 +35,13 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
     func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel)
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
+    func displayTemporaryPoint(viewModel: ManageRouteMap.CreateTemporaryPoint.ViewModel)
+    func displayTemporaryPointDeletion(viewModel: ManageRouteMap.RemoveTemporaryPoint.ViewModel)
 }
 
 protocol HasFocusableMap: class {
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
+    func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -52,6 +55,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var createTemporaryPointView: UIView!
     
     var detailsPopup: Popup? {
         didSet {
@@ -149,6 +153,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         routeEstimationView.layer.cornerRadius = 16
         searchView.layer.cornerRadius = 16
         userInteractionView.layer.cornerRadius = 32
+        createTemporaryPointView.layer.cornerRadius = 32
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -572,6 +577,58 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
     }
     
+    // MARK: Create Temprorary Point
+    
+    @IBOutlet weak var temporaryPointTitleLabel: UILabel!
+    var temporaryAnnotation: MGLPointAnnotation?
+    
+    func displayTemporaryPoint(viewModel: ManageRouteMap.CreateTemporaryPoint.ViewModel) {
+        createTemporaryPointView.isHidden = false
+        mapView.isUserInteractionEnabled = false
+        searchView.isHidden = true
+        userInteractionView.isHidden = true
+        clearAllBarButtonItem.isEnabled = false
+        toRouteBarButtonItem.isEnabled = false
+        
+        detailsPopup?.dismissPopup()
+        
+        setTemporaryAnnotation(at: viewModel.coordinate)
+        temporaryPointTitleLabel.text = viewModel.title
+    }
+    
+    private func setTemporaryAnnotation(at coordinate: CLLocationCoordinate2D) {
+        let annotation = MGLPointAnnotation()
+        annotation.coordinate = coordinate
+        temporaryAnnotation = annotation
+        mapView.addAnnotation(temporaryAnnotation!)
+    }
+    
+    @IBAction func createRoutePointButtonTapped() {
+        createTemporaryPointView.isHidden = true
+        removeTemporaryPoint()
+        interactor?.createRoutePoint(request: .init(title: temporaryPointTitleLabel.text!,
+                                                    latitude: temporaryAnnotation!.coordinate.latitude,
+                                                    longitude: temporaryAnnotation!.coordinate.longitude))
+    }
+    
+    // MARK: Remove Temprorary Point
+    
+    @IBAction func removeTemporaryPoint() {
+        interactor?.removeTemporaryPoint(request: .init())
+    }
+    
+    func displayTemporaryPointDeletion(viewModel: ManageRouteMap.RemoveTemporaryPoint.ViewModel) {
+        if let annotation = temporaryAnnotation {
+            mapView.removeAnnotation(annotation)
+        }
+        createTemporaryPointView.isHidden = true
+        mapView.isUserInteractionEnabled = true
+        searchView.isHidden = false
+        userInteractionView.isHidden = false
+        clearAllBarButtonItem.isEnabled = true
+        toRouteBarButtonItem.isEnabled = true
+    }
+    
     // MARK: - Shared Helper Methods
     
     private func getIDOfSelectedRoutePoint() -> String? {
@@ -662,10 +719,17 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
         mapView.addAnnotation(annotation)
         annotationsID[annotation] = annotationInfo.id
     }
+    
 }
 
 extension ManageRouteMapViewController: HasFocusableMap {
+    // MARK: - Focusable Map's Delegate
+    
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D]) {
         interactor?.focusOnCoordinates(request: .init(coordinates: coordinates))
+    }
+    
+    func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String) {
+        interactor?.createTemporaryPoint(request: .init(coordinate: coordinate, title: title))
     }
 }

@@ -35,9 +35,12 @@ protocol ManageRouteMapBusinessLogic {
     func focusOnUser(request: ManageRouteMap.FocusOnUser.Request)
     func focusOnCoordinates(request: ManageRouteMap.FocusOnCoordinates.Request)
     func routeEstimation(request: ManageRouteMap.RouteEstimation.Request)
+    func createTemporaryPoint(request: ManageRouteMap.CreateTemporaryPoint.Request)
+    func removeTemporaryPoint(request: ManageRouteMap.RemoveTemporaryPoint.Request)
 }
 
 struct SimpleRoutePointInfo {
+    var title: String? = nil
     let tappedCoordinate: CLLocationCoordinate2D
     let timeToNextPointInSeconds: Int
     let distanceToNextPointInMeters: Int
@@ -117,7 +120,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 }
             })
         } else {
-            dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
+            dataToCreateRoutePoint = SimpleRoutePointInfo(title: request.title, tappedCoordinate: tappedCoordinate,
+                                                          timeToNextPointInSeconds: 0, distanceToNextPointInMeters: 0)
             
             let response = ManageRouteMap.CreateRoutePoint.Response(isSucceed: true)
             presenter?.presentCreateRoutePoint(response: response)
@@ -450,6 +454,18 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         
         let response = ManageRouteMap.RouteEstimation.Response(timeInSeconds: timeInSeconds, distanceInMeters: distanceInMeters)
         presenter?.presentRouteEstimation(response: response)
+    }
+    
+    // MARK: Create Temprorary Point
+    
+    func createTemporaryPoint(request: ManageRouteMap.CreateTemporaryPoint.Request) {
+        presenter?.presentTemporaryPoint(response: .init(coordinate: request.coordinate, title: request.title))
+    }
+    
+    // MARK: Remove Temporary Point
+    
+    func removeTemporaryPoint(request: ManageRouteMap.RemoveTemporaryPoint.Request) {
+        presenter?.presentTemporaryPointDeletion(response: .init())
     }
     
     // MARK: - Shared Methods

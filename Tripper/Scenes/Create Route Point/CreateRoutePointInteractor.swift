@@ -236,7 +236,7 @@ class CreateRoutePointInteractor: CreateRoutePointBusinessLogic, CreateRoutePoin
     private func createNewRoutePoint(with data: SimpleRoutePointInfo) -> RoutePoint {
         let id = idGenerator.generate()
         let orderNumber = worker!.getNewOrderNumber()
-        let title = "Route Point #\(orderNumber)"
+        let title = data.title == nil ? "Route Point #\(orderNumber)" : data.title!
         let subtitle = ""
         let latitude = data.tappedCoordinate.latitude
         let longitude = data.tappedCoordinate.longitude
