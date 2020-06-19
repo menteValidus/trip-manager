@@ -18,7 +18,37 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xLl-8K-ctK" customClass="MGLMapView">
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfD-2b-4mF">
+                                        <rect key="frame" x="142.5" y="506" width="90" height="74"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tt-0a-VbQ">
+                                                <rect key="frame" x="16" y="4" width="58" height="36"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <state key="normal" title="Create"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hnt-mO-zhV">
+                                                <rect key="frame" x="16" y="40" width="58" height="30"/>
+                                                <state key="normal" title="Cancel"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="8tt-0a-VbQ" firstAttribute="top" secondItem="kfD-2b-4mF" secondAttribute="top" constant="4" id="B1H-sk-aqj"/>
+                                            <constraint firstItem="hnt-mO-zhV" firstAttribute="top" secondItem="8tt-0a-VbQ" secondAttribute="bottom" id="EcR-9g-6Xs"/>
+                                            <constraint firstAttribute="trailing" secondItem="8tt-0a-VbQ" secondAttribute="trailing" constant="16" id="IPg-nB-T12"/>
+                                            <constraint firstItem="hnt-mO-zhV" firstAttribute="leading" secondItem="kfD-2b-4mF" secondAttribute="leading" constant="16" id="Qkv-y1-j2E"/>
+                                            <constraint firstAttribute="bottom" secondItem="hnt-mO-zhV" secondAttribute="bottom" constant="4" id="UdY-9f-yLq"/>
+                                            <constraint firstItem="8tt-0a-VbQ" firstAttribute="leading" secondItem="kfD-2b-4mF" secondAttribute="leading" constant="16" id="ajO-Wu-0cR"/>
+                                            <constraint firstAttribute="trailing" secondItem="hnt-mO-zhV" secondAttribute="trailing" constant="16" id="iMO-8Y-Wrd"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstItem="kfD-2b-4mF" firstAttribute="centerX" secondItem="xLl-8K-ctK" secondAttribute="centerX" id="Dc1-de-QAc"/>
+                                    <constraint firstAttribute="bottom" secondItem="kfD-2b-4mF" secondAttribute="bottom" constant="43" id="dAa-bB-Dcz"/>
+                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="string" keyPath="styleURL__" value="mapbox://styles/mapbox/streets-v11"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showsUserLocation" value="YES"/>
@@ -136,6 +166,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="clearAllBarButtonItem" destination="iLe-Zf-5sl" id="MbU-9A-JMs"/>
+                        <outlet property="createTemroraryPointView" destination="kfD-2b-4mF" id="h3d-v4-6D7"/>
                         <outlet property="mapView" destination="xLl-8K-ctK" id="OnC-x8-mW2"/>
                         <outlet property="routeEstimationView" destination="XLC-aH-rfK" id="ldd-SN-1uX"/>
                         <outlet property="routeLengthLabel" destination="tq2-Fz-S8N" id="bTl-5H-0xS"/>

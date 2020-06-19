@@ -35,10 +35,17 @@ protocol ManageRouteMapDisplayLogic: class {
     func displayFocusOnUser(viewModel: ManageRouteMap.FocusOnUser.ViewModel)
     func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel)
     func displayRouteEstimation(viewModel: ManageRouteMap.RouteEstimation.ViewModel)
+    func displayTemproraryPoint(viewModel: ManageRouteMap.CreateTemproraryPoint.ViewModel)
 }
 
 protocol HasFocusableMap: class {
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
+    func focusableMap(temporaryCreated routePoint: RoutePointInfo)
+}
+
+struct RoutePointInfo {
+    let title: String
+    let coordinate: CLLocationCoordinate2D
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -52,6 +59,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     @IBOutlet weak var mapView: MGLMapView!
     @IBOutlet weak var userInteractionView: UIView!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var createTemroraryPointView: UIView!
     
     var detailsPopup: Popup? {
         didSet {
@@ -149,6 +157,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         routeEstimationView.layer.cornerRadius = 16
         searchView.layer.cornerRadius = 16
         userInteractionView.layer.cornerRadius = 32
+        createTemroraryPointView.layer.cornerRadius = 32
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -572,6 +581,12 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
     }
     
+    // MARK: - Create Temprorary Point
+    
+    func displayTemproraryPoint(viewModel: ManageRouteMap.CreateTemproraryPoint.ViewModel) {
+        createTemroraryPointView.isHidden = false
+    }
+    
     // MARK: - Shared Helper Methods
     
     private func getIDOfSelectedRoutePoint() -> String? {
@@ -665,7 +680,13 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
 }
 
 extension ManageRouteMapViewController: HasFocusableMap {
+    // MARK: - Focusable Map's Delegate
+    
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D]) {
         interactor?.focusOnCoordinates(request: .init(coordinates: coordinates))
+    }
+    
+    func focusableMap(temporaryCreated routePoint: RoutePointInfo) {
+        interactor?.createTemproraryPoint(request: .init())
     }
 }

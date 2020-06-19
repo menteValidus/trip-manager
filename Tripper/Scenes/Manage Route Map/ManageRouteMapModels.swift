@@ -45,6 +45,7 @@ enum ManageRouteMap {
     
     enum CreateRoutePoint {
         struct Request {
+            var title: String? = nil
             let latitude: Double
             let longitude: Double
         }
@@ -267,6 +268,15 @@ enum ManageRouteMap {
             let toShow: Bool
             let timeEstimation: String
             let distanceEstimation: String
+        }
+    }
+    
+    enum CreateTemproraryPoint {
+        struct Request {
+        }
+        struct Response {
+        }
+        struct ViewModel {
         }
     }
 }

@@ -33,11 +33,13 @@ enum Search {
             let entryNumber: Int
         }
         struct Response {
+            let title: String
             let center: CLLocationCoordinate2D
             let southWestCoordinate: CLLocationCoordinate2D
             let northSouthCoordinate: CLLocationCoordinate2D
         }
         struct ViewModel {
+            let title: String
             let center: CLLocationCoordinate2D
             let southWestCoordinate: CLLocationCoordinate2D
             let northSouthCoordinate: CLLocationCoordinate2D

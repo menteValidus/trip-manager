@@ -33,7 +33,7 @@ class SearchPresenter: SearchPresentationLogic {
     // MARK: Select Entry
     
     func presentEntrySelection(response: Search.SelectEntry.Response) {
-        viewController?.displayEntrySelection(viewModel: .init(center: response.center,
+        viewController?.displayEntrySelection(viewModel: .init(title: response.title, center: response.center,
                                                                southWestCoordinate: response.southWestCoordinate,
                                                                northSouthCoordinate: response.northSouthCoordinate))
     }
