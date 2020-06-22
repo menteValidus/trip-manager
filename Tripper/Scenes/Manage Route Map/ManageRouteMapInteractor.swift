@@ -233,7 +233,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
                 let routeFragment = ConcreteRouteFragment(startPointID: startPointID, endPointID: endPointID,
                                                           coordinates: routeInfo.coordinates,
                                                           travelTimeInSeconds: routeInfo.timeInSeconds,
-                                                          travelDistanceInMeters: routeInfo.distanceInMeters)
+                                                          travelDistanceInMeters: routeInfo.distanceInMeters,
+                                                          isFinished: false)
                 self.routeFragments.append(routeFragment)
                 
                 self.worker?.insert(routeFragment: routeFragment)

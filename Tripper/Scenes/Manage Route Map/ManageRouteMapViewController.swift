@@ -332,7 +332,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
         // Customize the route line color and width
         let lineStyle = MGLLineStyleLayer(identifier: identifier, source: source)
-        lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        if viewModel.routeFragment.isFinished {
+            lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
+        } else {
+            lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1))
+        }
         lineStyle.lineWidth = NSExpression(forConstantValue: 3)
         
         mapView.style?.addSource(source)
