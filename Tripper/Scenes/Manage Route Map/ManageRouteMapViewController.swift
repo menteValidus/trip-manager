@@ -699,6 +699,8 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
+        guard annotation is MGLPointAnnotation else { return }
+        
         let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
         // Pass optional value if it's nil show error in presenter.
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation, coordinate: annotation.coordinate)
@@ -709,6 +711,22 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         setupData()
         focus()
+    }
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        guard annotation is CustomAnnotation else { return nil }
+        
+        let reuseIdentifier = "\(annotation.coordinate.latitude)"
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? CustomAnnotationView
+        
+        if annotationView == nil {
+            annotationView = CustomAnnotationView(reuseIdentifier: reuseIdentifier)
+            annotationView!.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+            annotationView?.setUIAppearance(finished: (annotation as! CustomAnnotation).isFinishedMilestone)
+        }
+        
+        return annotationView
     }
     
     // MARK: Gesture Handlers
@@ -730,9 +748,10 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Helper Methods
     
     private func setAnnotation(annotationInfo: AnnotationInfo) {
-        let annotation = MGLPointAnnotation()
+        let annotation = CustomAnnotation()
         let coordinate = CLLocationCoordinate2D(latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
         annotation.coordinate = coordinate
+        annotation.isFinishedMilestone = annotationInfo.isFinished
         mapView.addAnnotation(annotation)
         annotationsID[annotation] = annotationInfo.id
     }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B0F4132242A4DCD00C769C9 /* UtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0F4131242A4DCD00C769C9 /* UtilTests.swift */; };
+		0B439F4F24A0D93A00F21DAF /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B439F4E24A0D93A00F21DAF /* CustomAnnotation.swift */; };
+		0B439F5124A0DD2C00F21DAF /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B439F5024A0DD2C00F21DAF /* CustomAnnotationView.swift */; };
 		0B7A45062473FF3C00AA1F5E /* FastNavigationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */; };
 		0B7A45072473FF3C00AA1F5E /* FastNavigationWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */; };
 		0B7A45082473FF3C00AA1F5E /* FastNavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */; };
@@ -111,6 +113,8 @@
 		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0F4131242A4DCD00C769C9 /* UtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTests.swift; sourceTree = "<group>"; };
 		0B0F4133242A4DCD00C769C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B439F4E24A0D93A00F21DAF /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		0B439F5024A0DD2C00F21DAF /* CustomAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		0B7A45002473FF3C00AA1F5E /* FastNavigationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationPresenter.swift; sourceTree = "<group>"; };
 		0B7A45012473FF3C00AA1F5E /* FastNavigationWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationWorker.swift; sourceTree = "<group>"; };
 		0B7A45022473FF3C00AA1F5E /* FastNavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastNavigationRouter.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 				0BAD78F1246D462300575D4C /* Scenes */,
 				0BAD7924246D462300575D4C /* Services */,
 				0BAD78EB246D462200575D4C /* Utils */,
+				0B439F4D24A0D89900F21DAF /* Custom Views */,
 				0BAD7915246D462300575D4C /* AppDelegate.swift */,
 				0BAD7916246D462300575D4C /* SceneDelegate.swift */,
 				0B042A6723E2D02200E9136F /* Info.plist */,
@@ -277,6 +282,14 @@
 				0B0F4133242A4DCD00C769C9 /* Info.plist */,
 			);
 			path = UtilTests;
+			sourceTree = "<group>";
+		};
+		0B439F4D24A0D89900F21DAF /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				0B439F5024A0DD2C00F21DAF /* CustomAnnotationView.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		0B7A44FF2473FF1300AA1F5E /* Fast Navigation */ = {
@@ -320,6 +333,7 @@
 		0BAD78E8246D462200575D4C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0B439F4E24A0D93A00F21DAF /* CustomAnnotation.swift */,
 				0BAD78E9246D462200575D4C /* RoutePoint.swift */,
 				0BAD78EA246D462200575D4C /* RouteFragment.swift */,
 				0BE4A2C62498D11E00B7B0C8 /* SearchResult.swift */,
@@ -786,6 +800,7 @@
 				0BAD7937246D462300575D4C /* ManageRouteMapInteractor.swift in Sources */,
 				0B7A450B2473FF3C00AA1F5E /* FastNavigationInteractor.swift in Sources */,
 				0BAD7958246D462300575D4C /* RouteFragmentEntity+CoreDataProperties.swift in Sources */,
+				0B439F5124A0DD2C00F21DAF /* CustomAnnotationView.swift in Sources */,
 				0BAD7942246D462300575D4C /* CreateRoutePointViewController.swift in Sources */,
 				0BE4A2BF249898BD00B7B0C8 /* SearchRouter.swift in Sources */,
 				0BAD7935246D462300575D4C /* ManageRouteMapModels.swift in Sources */,
@@ -813,6 +828,7 @@
 				0BAD792D246D462300575D4C /* RouteFragment.swift in Sources */,
 				0BAD7955246D462300575D4C /* RouteFragmentEntity+CoreDataClass.swift in Sources */,
 				0BAD793E246D462300575D4C /* DetailRoutePointPresenter.swift in Sources */,
+				0B439F4F24A0D93A00F21DAF /* CustomAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
