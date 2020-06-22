@@ -35,7 +35,7 @@ protocol ChangeablePopup: class {
 }
 
 enum PopupCoverage: Float {
-    case mostPart = 0.75
+    case mostPart = 0.5
     case smallPart = 0.25
     case toDismiss = 0
 }
@@ -189,6 +189,16 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         mapItem.name = viewModel.title
         mapItem.openInMaps(launchOptions: options)
     }
+    
+    // MARK: Finish Milestone
+    
+    @IBOutlet weak var isFinishedButton: UIButton!
+    
+    @IBAction func isFinishButtonTapped(_ sender: Any) {
+        isFinishedButton.isSelected = !isFinishedButton.isSelected
+    }
+    
+    
 }
 
 extension DetailRoutePointViewController {
