@@ -23,4 +23,18 @@ class DetailRoutePointWorker {
     func delete(routePoint: RoutePoint) {
         routePointGateway.delete(routePoint)
     }
+    
+    func update(routePoint: RoutePoint) {
+        routePointGateway.update(routePoint)
+    }
+    
+    func fetchRoutePointsLower(than orderNumber: Int) -> [RoutePoint] {
+        let routePoints = routePointGateway.fetchAll().filter { $0.orderNumber < orderNumber }
+        return routePoints
+    }
+    
+    func fetchRoutePointsHigher(than orderNumber: Int) -> [RoutePoint] {
+        let routePoints = routePointGateway.fetchAll().filter { $0.orderNumber > orderNumber }
+        return routePoints
+    }
 }
