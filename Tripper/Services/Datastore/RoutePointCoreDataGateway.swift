@@ -146,14 +146,16 @@ class RoutePointCoreDataGateway: RoutePointGateway {
                 id: entity.id, orderNumber: Int(entity.orderNumber),
                 title: entity.title, subtitle: entity.subtitle,
                 latitude: entity.latitude, longitude: entity.longitude,
-                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
+                isFinished: entity.isFinished)
             return point
         } else {
             let point = RoutePoint(
                 id: entity.id, orderNumber: Int(entity.orderNumber),
                 title: entity.title, subtitle: entity.subtitle,
                 latitude: entity.latitude, longitude: entity.longitude,
-                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
+                isFinished: entity.isFinished)
             return point
         }
     }
@@ -167,6 +169,7 @@ class RoutePointCoreDataGateway: RoutePointGateway {
         entity.setValue(routePoint.subtitle, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
         entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
+        entity.setValue(routePoint.isFinished, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.isFinished)
     }
     
 }

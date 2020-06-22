@@ -19,6 +19,7 @@ protocol DetailRoutePointBusinessLogic {
     func delete(request: DetailRoutePoint.Delete.Request)
     func toggleView(request: DetailRoutePoint.ToggleView.Request)
     func launchNavigator(request: DetailRoutePoint.LaunchNavigator.Request)
+    func finishMilestone(request: DetailRoutePoint.FinishMilestone.Request)
 }
 
 protocol DetailRoutePointDataStore {
@@ -36,7 +37,8 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
         if let routePoint = routePoint {
             let response = DetailRoutePoint.SetupUI.Response(
                 title: routePoint.title, description: routePoint.subtitle,
-                arrivalDate: routePoint.arrivalDate, departureDate: routePoint.departureDate)
+                arrivalDate: routePoint.arrivalDate, departureDate: routePoint.departureDate,
+                isFinished: routePoint.isFinished)
             
             presenter?.presentSetupUI(response: response)
         }
@@ -94,5 +96,13 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
         if let routePoint = routePoint {
             presenter?.presentLaunchedNavigator(response: .init(routePoint: routePoint))
         }
+    }
+    
+    // MARK: Finish Milestone
+    
+    func finishMilestone(request: DetailRoutePoint.FinishMilestone.Request) {
+        routePoint?.isFinished = request.isFinished
+        worker?.update(routePoint: routePoint!)
+        presenter?.presentFinishedMilestone(response: .init(isFinished: request.isFinished))
     }
 }

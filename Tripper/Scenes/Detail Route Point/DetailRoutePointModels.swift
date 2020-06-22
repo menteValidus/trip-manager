@@ -24,12 +24,14 @@ enum DetailRoutePoint {
             let description: String
             let arrivalDate: Date
             let departureDate: Date
+            let isFinished: Bool
         }
         struct ViewModel {
             let title: String
             let description: String
             let arrivalDateText: String
             let departureDateText: String
+            let isFinished: Bool
         }
     }
     
@@ -83,6 +85,18 @@ enum DetailRoutePoint {
         struct ViewModel {
             let title: String
             let coordinate: CLLocationCoordinate2D
+        }
+    }
+    
+    enum FinishMilestone {
+        struct Request {
+            let isFinished: Bool
+        }
+        struct Response {
+            let isFinished: Bool
+        }
+        struct ViewModel {
+            let isFinished: Bool
         }
     }
 }

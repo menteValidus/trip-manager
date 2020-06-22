@@ -21,6 +21,7 @@ protocol DetailRoutePointDisplayLogic: class {
     func displayDelete(viewModel: DetailRoutePoint.Delete.ViewModel)
     func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel)
     func displayLaunchedNavigator(viewModel: DetailRoutePoint.LaunchNavigator.ViewModel)
+    func displayFinishedMilestone(viewModel: DetailRoutePoint.FinishMilestone.ViewModel)
 }
 
 typealias Popup = DismissablePopup & ChangeablePopup
@@ -122,6 +123,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         descriptionTextView.text = viewModel.description
         arrivalDateLabel.text = viewModel.arrivalDateText
         departureDateLabel.text = viewModel.departureDateText
+        isFinishedButton.isSelected = viewModel.isFinished
     }
     
     // MARK: Dismiss
@@ -195,10 +197,12 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     @IBOutlet weak var isFinishedButton: UIButton!
     
     @IBAction func isFinishButtonTapped(_ sender: Any) {
-        isFinishedButton.isSelected = !isFinishedButton.isSelected
+        interactor?.finishMilestone(request: .init(isFinished: !isFinishedButton.isSelected))
     }
     
-    
+    func displayFinishedMilestone(viewModel: DetailRoutePoint.FinishMilestone.ViewModel) {
+        isFinishedButton.isSelected = viewModel.isFinished
+    }
 }
 
 extension DetailRoutePointViewController {

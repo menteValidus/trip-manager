@@ -27,6 +27,7 @@ struct DataModelDB {
                 static let departureDate = "departureDate"
                 static let distanceToNextPointInMeters = "distanceToNextPointInMeters"
                 static let timeToNextPointInSeconds = "timeToNextPointInSeconds"
+                static let isFinished = "isFinished"
             }
         }
         
