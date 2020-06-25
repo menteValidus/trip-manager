@@ -17,6 +17,7 @@ import Swinject
 protocol ManageRouteMapBusinessLogic {
     func setupData(request: ManageRouteMap.SetupData.Request)
     func fetchDifference(request: ManageRouteMap.FetchDifference.Request)
+    func updateRouteProgress(request: ManageRouteMap.UpdateRouteProgress.Request)
     func createRoutePoint(request: ManageRouteMap.CreateRoutePoint.Request)
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request)
     func selectAnnotation(request: ManageRouteMap.SelectAnnotation.Request)
@@ -128,7 +129,8 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         }
     }
     
-    // MARK: Fetch Difference
+    // MARK: - Fetch Difference
+    
     var annotationsInfo: [AnnotationInfo]
     
     func fetchDifference(request: ManageRouteMap.FetchDifference.Request) {
@@ -149,20 +151,11 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         }
     }
     
-    private var idOfAlreadySettedRoutePoints: [String] {
-        let idList: [String]
+    // MARK: Update Route Progress
+    
+    func updateRouteProgress(request: ManageRouteMap.UpdateRouteProgress.Request) {
         
-        if annotationsInfo.count > 0 {
-            idList = annotationsInfo.map({
-                return $0.id
-            })
-            
-            return idList
-        } else {
-            idList = []
-            
-            return idList
-        }
+        
     }
     
     // MARK: Set route point

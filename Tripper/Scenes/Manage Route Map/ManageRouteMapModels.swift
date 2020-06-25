@@ -43,6 +43,18 @@ enum ManageRouteMap {
         }
     }
     
+    enum UpdateRouteProgress {
+        struct Request {
+            let routePoint: RoutePoint
+        }
+        struct Response {
+            let updatedRoutePoints: [RoutePoint]
+            let updatedRouteFragments: [RouteFragment]
+        }
+        struct ViewModel {
+        }
+    }
+    
     enum CreateRoutePoint {
         struct Request {
             var title: String? = nil

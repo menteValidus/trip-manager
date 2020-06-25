@@ -59,6 +59,8 @@ class ManageRouteMapRouter: NSObject, ManageRouteMapRoutingLogic, ManageRouteMap
                 destinationVC = storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController
             }
             
+            destinationVC.delegate = viewController
+            
             var destinationDS = destinationVC.router!.dataStore!
             passDataToDetailRoutePoint(source: dataStore!, destination: &destinationDS)
             navigateToDetailRoutePoint(source: viewController!, destination: destinationVC)

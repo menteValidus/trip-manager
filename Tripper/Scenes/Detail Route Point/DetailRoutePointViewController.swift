@@ -36,7 +36,7 @@ protocol ChangeablePopup: class {
 }
 
 enum PopupCoverage: Float {
-    case mostPart = 0.5
+    case mostPart = 0.7
     case smallPart = 0.25
     case toDismiss = 0
 }
@@ -44,6 +44,8 @@ enum PopupCoverage: Float {
 class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayLogic {
     var interactor: DetailRoutePointBusinessLogic?
     var router: (NSObjectProtocol & DetailRoutePointRoutingLogic & DetailRoutePointDataPassing)?
+    
+    var delegate: TrackableMapDelegate?
     
     var state: PopupCoverage = .smallPart
     
@@ -202,6 +204,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     
     func displayFinishedMilestone(viewModel: DetailRoutePoint.FinishMilestone.ViewModel) {
         isFinishedButton.isSelected = viewModel.isFinished
+//        delegate?.didUpdatedTrackableMap()
     }
 }
 

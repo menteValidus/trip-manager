@@ -17,6 +17,7 @@ import Swinject
 protocol ManageRouteMapDisplayLogic: class {
     func displayDataSetup(viewModel: ManageRouteMap.SetupData.ViewModel)
     func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel)
+    func displayUpdatedRouteProgress(viewModel: ManageRouteMap.UpdateRouteProgress.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
@@ -42,6 +43,10 @@ protocol ManageRouteMapDisplayLogic: class {
 protocol HasFocusableMap: class {
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
     func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String)
+}
+
+protocol TrackableMapDelegate: class {
+    func didUpdatedTrackableMap(with routePoint: RoutePoint)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -223,7 +228,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         setAnnotation(annotationInfo: viewModel.annotationInfo)
     }
     
-    // MARK: Fetch Difference
+    // MARK: - Fetch Difference
     
     func fetchDifference() {
         let request = ManageRouteMap.FetchDifference.Request()
@@ -249,7 +254,13 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
     }
     
-    // MARK: Select Annotation
+    // MARK: Update Route Progress
+    
+    func displayUpdatedRouteProgress(viewModel: ManageRouteMap.UpdateRouteProgress.ViewModel) {
+        
+    }
+    
+    // MARK: - Select Annotation
     
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
         if viewModel.identifier != nil {
@@ -544,7 +555,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     private func focusOnUser() {
-        if let userCoordinate = mapView.userLocation?.coordinate {
+        if let userCoordinate = mapView.userLocation?.coordinate, userCoordinate.latitude != -180, userCoordinate.longitude != -180{
             interactor?.focusOnUser(request: .init(userCoordinate: userCoordinate))
         }
     }
@@ -771,5 +782,13 @@ extension ManageRouteMapViewController: HasFocusableMap {
     
     func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String) {
         interactor?.createTemporaryPoint(request: .init(coordinate: coordinate, title: title))
+    }
+}
+
+extension ManageRouteMapViewController: TrackableMapDelegate {
+    // MARK: - Trackable Map's Delegate
+    
+    func didUpdatedTrackableMap(with routePoint: RoutePoint) {
+        interactor?.updateRouteProgress(request: .init(routePoint: routePoint))
     }
 }
