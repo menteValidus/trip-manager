@@ -157,6 +157,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         let routePoint = request.routePoint
         
         let routePointsProgressInfo = createRoutePointsProgressInfo(with: routePoint)
+        worker?.updateProgress(with: routePointsProgressInfo)
         let routeFragmentsProgressInfo = createRouteFragmentsProgressInfo(from: routePointsProgressInfo)
         
         presenter?.presentUpdatedRouteProgress(response: .init(routePointProgressInfo: routePointsProgressInfo,
@@ -196,7 +197,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     
     private func createRouteFragmentsProgressInfo(from routePointsProgressInfo: [ManageRouteMap.RoutePointProgressInfo]) -> [ManageRouteMap.RouteFragmentProgressInfo] {
         let routePointsProgressInfo = routePointsProgressInfo.sorted(by: { lhs, rhs in
-            lhs.orderNumber > rhs.orderNumber
+            lhs.orderNumber < rhs.orderNumber
         })
         
         if routePointsProgressInfo.count > 0 {

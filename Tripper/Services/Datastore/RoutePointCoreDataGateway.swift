@@ -14,6 +14,7 @@ protocol RoutePointGateway: class {
     func deleteAll()
     func insert(_ point: RoutePoint)
     func update(_ point: RoutePoint)
+    func update(with routePointProgressInfo: ProgressInfo)
     func delete(_ point: RoutePoint)
 }
 
@@ -105,6 +106,18 @@ class RoutePointCoreDataGateway: RoutePointGateway {
             }
         } catch {
             fatalError("*** Update's Fetch Error: \(error)")
+        }
+    }
+    
+    func update(with routePointProgressInfo: ProgressInfo) {
+        let routePointEntity = fetchRoutePointEntity(with: routePointProgressInfo.id)
+        
+        routePointEntity?.isFinished = routePointProgressInfo.isFinished
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalError("*** Update Progress Error: \(error)")
         }
     }
     

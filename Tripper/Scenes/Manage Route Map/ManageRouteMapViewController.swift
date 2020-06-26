@@ -290,7 +290,28 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     func updateLayers(with routeFragmentProgressInfo: ProgressInfo) {
-        
+        for lineStyle in mapView.style!.layers {
+            if lineStyle.identifier == routeFragmentProgressInfo.id {
+                let source = mapView.style?.source(withIdentifier: routeFragmentProgressInfo.id)
+                
+                if let lineSource = source {
+                    mapView.style?.removeLayer(lineStyle)
+                    
+                    let newLineStyle = MGLLineStyleLayer(identifier: routeFragmentProgressInfo.id, source: lineSource)
+                    if routeFragmentProgressInfo.isFinished {
+                        newLineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
+                    } else {
+                        newLineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1))
+                    }
+
+                    newLineStyle.lineWidth = NSExpression(forConstantValue: 3)
+                    
+                    mapView.style?.addLayer(newLineStyle)
+                }
+                
+                return
+            }
+        }
     }
     // MARK: - Select Annotation
     

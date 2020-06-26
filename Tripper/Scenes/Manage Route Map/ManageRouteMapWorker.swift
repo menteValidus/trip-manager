@@ -73,26 +73,11 @@ extension ManageRouteMapWorker {
         routePointGateway.deleteAll()
     }
     
-    func fetchRouteProgressDifference() -> FetchedProgress {
-        let routePoints = routePointGateway.fetchAll()
-        var differentRoutePoints: [RoutePoint] = []
-//        let result = zip(routePoints, lastFetchedRoutePoints).enumerated().filter {
-//            $1.0.isFinished == $1.1.isFinished
-//        }.map {
-//            $0.0
-//        }
-//        for routePoint in routePoints {
-//            if lastFetchedRoutePoints.count > 0 {
-//                <#code#>
-//            }
-//        }
-        
-        let routeFragments = fetchRouteFragments()
-        
-        return (routePoints, routeFragments)
+    func updateProgress(with routePointsProgressInfo: [ProgressInfo]) {
+        for routePointProgressInfo in routePointsProgressInfo {
+            routePointGateway.update(with: routePointProgressInfo)
+        }
     }
-    
-//    private func findProgress(within passedRoutePoints: [RoutePoint], with routePointsToCompare: [RoutePoint])
     
     // MARK: - Helper Methods
     
