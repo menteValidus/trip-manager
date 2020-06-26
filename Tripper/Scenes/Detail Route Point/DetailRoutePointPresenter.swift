@@ -82,6 +82,6 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     // MARK: Finish Milestone
     
     func presentFinishedMilestone(response: DetailRoutePoint.FinishMilestone.Response) {
-        viewController?.displayFinishedMilestone(viewModel: .init(isFinished: response.isFinished))
+        viewController?.displayFinishedMilestone(viewModel: .init(routePoint: response.routePoint))
     }
 }

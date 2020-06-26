@@ -75,7 +75,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     weak var fastNavigationPopup: SidePopup?
     
-    var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
+    var annotationsID: Dictionary<CustomAnnotation, String> = Dictionary()
     private var isLoaded: Bool = false
     
     // MARK: Object lifecycle
@@ -257,9 +257,41 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     // MARK: Update Route Progress
     
     func displayUpdatedRouteProgress(viewModel: ManageRouteMap.UpdateRouteProgress.ViewModel) {
-        
+        for subrouteProgressInfo in viewModel.subroutesProgressInfo {
+            updateMap(with: subrouteProgressInfo)
+        }
     }
     
+    // MARK: Helper Methods
+    
+    func updateMap(with subrouteProgressInfo: ProgressInfo) {
+        switch subrouteProgressInfo.type {
+        case .routePoint:
+            updateAnnotations(with: subrouteProgressInfo)
+            
+        case .routeFragment:
+            updateLayers(with: subrouteProgressInfo)
+            
+        }
+    }
+    
+    func updateAnnotations(with routePointProgressInfo: ProgressInfo) {
+        for (annotation, id) in annotationsID {
+            if id == routePointProgressInfo.id && annotation.isFinishedMilestone != routePointProgressInfo.isFinished {
+                mapView.removeAnnotation(annotation)
+                
+                let newAnnotation = CustomAnnotation()
+                newAnnotation.coordinate = annotation.coordinate
+                newAnnotation.isFinishedMilestone = routePointProgressInfo.isFinished
+                
+                mapView.addAnnotation(newAnnotation)
+            }
+        }
+    }
+    
+    func updateLayers(with routeFragmentProgressInfo: ProgressInfo) {
+        
+    }
     // MARK: - Select Annotation
     
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
@@ -666,7 +698,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     private func getIDOfSelectedRoutePoint() -> String? {
         let selectedAnnotation = mapView.selectedAnnotations.first
         if let annotation = selectedAnnotation {
-            let idOfSelectedRP = annotationsID[annotation as! MGLPointAnnotation]
+            let idOfSelectedRP = annotationsID[annotation as! CustomAnnotation]
             
             return idOfSelectedRP
         }
@@ -716,7 +748,7 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
         guard annotation is MGLPointAnnotation else { return }
         
-        let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
+        let identifierOfSelectedAnnotation = annotationsID[annotation as! CustomAnnotation]
         // Pass optional value if it's nil show error in presenter.
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation, coordinate: annotation.coordinate)
         

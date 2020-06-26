@@ -13,7 +13,30 @@
 import UIKit
 import CoreLocation
 
+enum SubrouteType {
+    case routePoint
+    case routeFragment
+}
+
+protocol ProgressInfo {
+    var type: SubrouteType { get }
+    var id: String { get }
+    var isFinished: Bool { get }
+}
+
 enum ManageRouteMap {
+    struct RoutePointProgressInfo: ProgressInfo {
+        let type: SubrouteType
+        let id: String
+        let orderNumber: Int
+        let isFinished: Bool
+    }
+    
+    struct RouteFragmentProgressInfo: ProgressInfo {
+        let type: SubrouteType
+        let id: String
+        let isFinished: Bool
+    }
 
     // MARK: Use cases
     
@@ -48,10 +71,11 @@ enum ManageRouteMap {
             let routePoint: RoutePoint
         }
         struct Response {
-            let updatedRoutePoints: [RoutePoint]
-            let updatedRouteFragments: [RouteFragment]
+            let routePointProgressInfo: [ProgressInfo]
+            let routeFragmentProgressInfo: [ProgressInfo]
         }
         struct ViewModel {
+            let subroutesProgressInfo: [ProgressInfo]
         }
     }
     

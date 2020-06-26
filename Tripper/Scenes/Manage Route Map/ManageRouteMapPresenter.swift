@@ -72,7 +72,8 @@ class ManageRouteMapPresenter: ManageRouteMapPresentationLogic {
     // MARK: Update Route Progress
     
     func presentUpdatedRouteProgress(response: ManageRouteMap.UpdateRouteProgress.Response) {
-        
+        let subroutesProgressInfo = response.routePointProgressInfo + response.routeFragmentProgressInfo
+        viewController?.displayUpdatedRouteProgress(viewModel: .init(subroutesProgressInfo: subroutesProgressInfo))
     }
     
     // MARK: Select Annotation

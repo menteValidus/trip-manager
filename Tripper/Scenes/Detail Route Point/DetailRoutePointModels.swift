@@ -93,10 +93,10 @@ enum DetailRoutePoint {
             let isFinished: Bool
         }
         struct Response {
-            let isFinished: Bool
+            let routePoint: RoutePoint
         }
         struct ViewModel {
-            let isFinished: Bool
+            let routePoint: RoutePoint
         }
     }
 }

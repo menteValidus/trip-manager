@@ -154,11 +154,70 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     // MARK: Update Route Progress
     
     func updateRouteProgress(request: ManageRouteMap.UpdateRouteProgress.Request) {
+        let routePoint = request.routePoint
         
+        let routePointsProgressInfo = createRoutePointsProgressInfo(with: routePoint)
+        let routeFragmentsProgressInfo = createRouteFragmentsProgressInfo(from: routePointsProgressInfo)
         
+        presenter?.presentUpdatedRouteProgress(response: .init(routePointProgressInfo: routePointsProgressInfo,
+                                                               routeFragmentProgressInfo: routeFragmentsProgressInfo))
     }
     
-    // MARK: Set route point
+    // MARK: Helper Methods
+    
+    private func createRoutePointsProgressInfo(with routePoint: RoutePoint) -> [ManageRouteMap.RoutePointProgressInfo] {
+        var routePointsProgressInfo: [ManageRouteMap.RoutePointProgressInfo] = []
+        
+        if routePoint.isFinished {
+            let previousRoutePointsProgressInfo = annotationsInfo.filter({
+                $0.orderNumber <= routePoint.orderNumber
+            }).map { ManageRouteMap.RoutePointProgressInfo(type: .routePoint, id: $0.id, orderNumber: $0.orderNumber, isFinished: true) }
+            
+            routePointsProgressInfo.append(contentsOf: previousRoutePointsProgressInfo)
+        } else {
+            var nextRoutePointsProgressInfo = annotationsInfo.filter({
+                $0.orderNumber >= routePoint.orderNumber
+            }).map { ManageRouteMap.RoutePointProgressInfo(type: .routePoint, id: $0.id, orderNumber: $0.orderNumber, isFinished: false) }
+            
+            let letfRoutePoint = annotationsInfo.filter({ $0.orderNumber < routePoint.orderNumber }).first
+            
+            if let oddRoutePoint = letfRoutePoint {
+                let leftRoutePointProgressInfo = ManageRouteMap.RoutePointProgressInfo(type: .routePoint, id: oddRoutePoint.id,
+                                                                             orderNumber: oddRoutePoint.orderNumber,
+                                                                             isFinished: oddRoutePoint.isFinished)
+                nextRoutePointsProgressInfo.append(leftRoutePointProgressInfo)
+            }
+            
+            routePointsProgressInfo.append(contentsOf: nextRoutePointsProgressInfo)
+        }
+        
+        return routePointsProgressInfo
+    }
+    
+    private func createRouteFragmentsProgressInfo(from routePointsProgressInfo: [ManageRouteMap.RoutePointProgressInfo]) -> [ManageRouteMap.RouteFragmentProgressInfo] {
+        let routePointsProgressInfo = routePointsProgressInfo.sorted(by: { lhs, rhs in
+            lhs.orderNumber > rhs.orderNumber
+        })
+        
+        if routePointsProgressInfo.count > 0 {
+            var routeFragmentsProgressInfo: [ManageRouteMap.RouteFragmentProgressInfo] = []
+            
+            for index in 0..<(routePointsProgressInfo.count - 1) {
+                let id = format(firstID: routePointsProgressInfo[index].id, secondID: routePointsProgressInfo[index + 1].id)
+                let isFinished = routePointsProgressInfo[index].isFinished && routePointsProgressInfo[index].isFinished
+                let routeFragmentProgressInfo = ManageRouteMap.RouteFragmentProgressInfo(type: .routeFragment,
+                                                                                         id: id, isFinished: isFinished)
+                
+                routeFragmentsProgressInfo.append(routeFragmentProgressInfo)
+            }
+            
+            return routeFragmentsProgressInfo
+        } else {
+            return []
+        }
+    }
+    
+    // MARK: - Set route point
     
     func setRoutePoint(request: ManageRouteMap.SetRoutePoint.Request) {
         let response = ManageRouteMap.SetRoutePoint.Response(annotationInfo: request.annotationInfo)

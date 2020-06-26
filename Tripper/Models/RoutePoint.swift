@@ -14,7 +14,7 @@ protocol AnnotationInfo {
     var orderNumber: Int { get }
     var latitude: Double { get }
     var longitude: Double { get }
-    var isFinished: Bool { get }
+    var isFinished: Bool { get set }
 }
 
 struct RoutePoint: AnnotationInfo {

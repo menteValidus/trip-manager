@@ -103,6 +103,6 @@ class DetailRoutePointInteractor: DetailRoutePointBusinessLogic, DetailRoutePoin
     func finishMilestone(request: DetailRoutePoint.FinishMilestone.Request) {
         routePoint?.isFinished = request.isFinished
         worker?.update(routePoint: routePoint!)
-        presenter?.presentFinishedMilestone(response: .init(isFinished: request.isFinished))
+        presenter?.presentFinishedMilestone(response: .init(routePoint: routePoint!))
     }
 }

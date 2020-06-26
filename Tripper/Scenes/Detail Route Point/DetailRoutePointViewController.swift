@@ -203,8 +203,8 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
     }
     
     func displayFinishedMilestone(viewModel: DetailRoutePoint.FinishMilestone.ViewModel) {
-        isFinishedButton.isSelected = viewModel.isFinished
-//        delegate?.didUpdatedTrackableMap()
+        isFinishedButton.isSelected = viewModel.routePoint.isFinished
+        delegate?.didUpdatedTrackableMap(with: viewModel.routePoint)
     }
 }
 
