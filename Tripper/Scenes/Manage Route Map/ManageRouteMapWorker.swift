@@ -69,6 +69,11 @@ extension ManageRouteMapWorker {
         return (newRoutePoints, deletedRoutePoints)
     }
     
+    func fetchRoutePoints() -> [AnnotationInfo] {
+        lastFetchedRoutePoints = routePointGateway.fetchAll()
+        return lastFetchedRoutePoints
+    }
+    
     func deleteAllEntries() {
         routePointGateway.deleteAll()
     }

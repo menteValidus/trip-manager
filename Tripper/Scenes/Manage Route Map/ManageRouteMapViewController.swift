@@ -277,14 +277,22 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     func updateAnnotations(with routePointProgressInfo: ProgressInfo) {
         for (annotation, id) in annotationsID {
-            if id == routePointProgressInfo.id && annotation.isFinishedMilestone != routePointProgressInfo.isFinished {
-                mapView.removeAnnotation(annotation)
+            if id == routePointProgressInfo.id {
                 
-                let newAnnotation = CustomAnnotation()
-                newAnnotation.coordinate = annotation.coordinate
-                newAnnotation.isFinishedMilestone = routePointProgressInfo.isFinished
+                if annotation.isFinishedMilestone != routePointProgressInfo.isFinished {
+                    mapView.removeAnnotation(annotation)
+                    annotationsID.removeValue(forKey: annotation)
+                    
+                    let newAnnotation = CustomAnnotation()
+                    newAnnotation.coordinate = annotation.coordinate
+                    newAnnotation.isFinishedMilestone = routePointProgressInfo.isFinished
+                    newAnnotation.title = String(newAnnotation.isFinishedMilestone)
+                    
+                    mapView.addAnnotation(newAnnotation)
+                    annotationsID[newAnnotation] = id
+                }
                 
-                mapView.addAnnotation(newAnnotation)
+                return
             }
         }
     }

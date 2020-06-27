@@ -158,6 +158,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
         
         let routePointsProgressInfo = createRoutePointsProgressInfo(with: routePoint)
         worker?.updateProgress(with: routePointsProgressInfo)
+        annotationsInfo = worker!.fetchRoutePoints()
         let routeFragmentsProgressInfo = createRouteFragmentsProgressInfo(from: routePointsProgressInfo)
         
         presenter?.presentUpdatedRouteProgress(response: .init(routePointProgressInfo: routePointsProgressInfo,
@@ -205,7 +206,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             
             for index in 0..<(routePointsProgressInfo.count - 1) {
                 let id = format(firstID: routePointsProgressInfo[index].id, secondID: routePointsProgressInfo[index + 1].id)
-                let isFinished = routePointsProgressInfo[index].isFinished && routePointsProgressInfo[index].isFinished
+                let isFinished = routePointsProgressInfo[index].isFinished && routePointsProgressInfo[index + 1].isFinished
                 let routeFragmentProgressInfo = ManageRouteMap.RouteFragmentProgressInfo(type: .routeFragment,
                                                                                          id: id, isFinished: isFinished)
                 
@@ -215,6 +216,22 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             return routeFragmentsProgressInfo
         } else {
             return []
+        }
+    }
+    
+    private func updateAnnotationInfo(with routePointsProgressInfo: [ProgressInfo]) {
+        var newAnnotationsInfo: [AnnotationInfo] = []
+        
+        for routePointProgressInfo in routePointsProgressInfo {
+            let index = annotationsInfo.firstIndex(where: { $0.id == routePointProgressInfo.id })
+            
+            if let index = index {
+                var annotationInfo = annotationsInfo[index]
+                annotationsInfo.remove(at: index)
+                
+                annotationInfo.isFinished = routePointProgressInfo.isFinished
+                annotationsInfo.append(annotationInfo)
+            }
         }
     }
     
