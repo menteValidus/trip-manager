@@ -2,7 +2,7 @@
 //  RoutePointEntity+CoreDataProperties.swift
 //  
 //
-//  Created by Denis Cherniy on 06.05.2020.
+//  Created by Denis Cherniy on 22.06.2020.
 //
 //
 
@@ -24,7 +24,8 @@ extension RoutePointEntity {
     @NSManaged public var orderNumber: Int32
     @NSManaged public var subtitle: String
     @NSManaged public var title: String
-    @NSManaged public var previousFragment: RouteFragmentEntity?
+    @NSManaged public var isFinished: Bool
     @NSManaged public var nextFragment: RouteFragmentEntity?
+    @NSManaged public var previousFragment: RouteFragmentEntity?
 
 }

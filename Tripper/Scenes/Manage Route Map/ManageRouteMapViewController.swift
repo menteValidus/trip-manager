@@ -17,6 +17,7 @@ import Swinject
 protocol ManageRouteMapDisplayLogic: class {
     func displayDataSetup(viewModel: ManageRouteMap.SetupData.ViewModel)
     func displayFetchDifference(viewModel: ManageRouteMap.FetchDifference.ViewModel)
+    func displayUpdatedRouteProgress(viewModel: ManageRouteMap.UpdateRouteProgress.ViewModel)
     func displayCreateRoutePoint(viewModel: ManageRouteMap.CreateRoutePoint.ViewModel)
     func displaySetRoutePoint(viewModel: ManageRouteMap.SetRoutePoint.ViewModel)
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel)
@@ -42,6 +43,10 @@ protocol ManageRouteMapDisplayLogic: class {
 protocol HasFocusableMap: class {
     func focusableMap(didSelected coordinates: [CLLocationCoordinate2D])
     func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String)
+}
+
+protocol TrackableMapDelegate: class {
+    func didUpdatedTrackableMap(with routePoint: RoutePoint)
 }
 
 class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic {
@@ -70,7 +75,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     
     weak var fastNavigationPopup: SidePopup?
     
-    var annotationsID: Dictionary<MGLPointAnnotation, String> = Dictionary()
+    var annotationsID: Dictionary<CustomAnnotation, String> = Dictionary()
     private var isLoaded: Bool = false
     
     // MARK: Object lifecycle
@@ -223,7 +228,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         setAnnotation(annotationInfo: viewModel.annotationInfo)
     }
     
-    // MARK: Fetch Difference
+    // MARK: - Fetch Difference
     
     func fetchDifference() {
         let request = ManageRouteMap.FetchDifference.Request()
@@ -249,7 +254,74 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         }
     }
     
-    // MARK: Select Annotation
+    // MARK: Update Route Progress
+    
+    func displayUpdatedRouteProgress(viewModel: ManageRouteMap.UpdateRouteProgress.ViewModel) {
+        for subrouteProgressInfo in viewModel.subroutesProgressInfo {
+            updateMap(with: subrouteProgressInfo)
+        }
+    }
+    
+    // MARK: Helper Methods
+    
+    func updateMap(with subrouteProgressInfo: ProgressInfo) {
+        switch subrouteProgressInfo.type {
+        case .routePoint:
+            updateAnnotations(with: subrouteProgressInfo)
+            
+        case .routeFragment:
+            updateLayers(with: subrouteProgressInfo)
+            
+        }
+    }
+    
+    func updateAnnotations(with routePointProgressInfo: ProgressInfo) {
+        for (annotation, id) in annotationsID {
+            if id == routePointProgressInfo.id {
+                
+                if annotation.isFinishedMilestone != routePointProgressInfo.isFinished {
+                    mapView.removeAnnotation(annotation)
+                    annotationsID.removeValue(forKey: annotation)
+                    
+                    let newAnnotation = CustomAnnotation()
+                    newAnnotation.coordinate = annotation.coordinate
+                    newAnnotation.isFinishedMilestone = routePointProgressInfo.isFinished
+                    newAnnotation.title = String(newAnnotation.isFinishedMilestone)
+                    
+                    mapView.addAnnotation(newAnnotation)
+                    annotationsID[newAnnotation] = id
+                }
+                
+                return
+            }
+        }
+    }
+    
+    func updateLayers(with routeFragmentProgressInfo: ProgressInfo) {
+        for lineStyle in mapView.style!.layers {
+            if lineStyle.identifier == routeFragmentProgressInfo.id {
+                let source = mapView.style?.source(withIdentifier: routeFragmentProgressInfo.id)
+                
+                if let lineSource = source {
+                    mapView.style?.removeLayer(lineStyle)
+                    
+                    let newLineStyle = MGLLineStyleLayer(identifier: routeFragmentProgressInfo.id, source: lineSource)
+                    if routeFragmentProgressInfo.isFinished {
+                        newLineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
+                    } else {
+                        newLineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1))
+                    }
+
+                    newLineStyle.lineWidth = NSExpression(forConstantValue: 3)
+                    
+                    mapView.style?.addLayer(newLineStyle)
+                }
+                
+                return
+            }
+        }
+    }
+    // MARK: - Select Annotation
     
     func displaySelectAnnotation(viewModel: ManageRouteMap.SelectAnnotation.ViewModel) {
         if viewModel.identifier != nil {
@@ -332,7 +404,11 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
         
         // Customize the route line color and width
         let lineStyle = MGLLineStyleLayer(identifier: identifier, source: source)
-        lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1))
+        if viewModel.routeFragment.isFinished {
+            lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1))
+        } else {
+            lineStyle.lineColor = NSExpression(forConstantValue: #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1))
+        }
         lineStyle.lineWidth = NSExpression(forConstantValue: 3)
         
         mapView.style?.addSource(source)
@@ -540,7 +616,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     }
     
     private func focusOnUser() {
-        if let userCoordinate = mapView.userLocation?.coordinate {
+        if let userCoordinate = mapView.userLocation?.coordinate, userCoordinate.latitude != -180, userCoordinate.longitude != -180{
             interactor?.focusOnUser(request: .init(userCoordinate: userCoordinate))
         }
     }
@@ -651,7 +727,7 @@ class ManageRouteMapViewController: UIViewController, ManageRouteMapDisplayLogic
     private func getIDOfSelectedRoutePoint() -> String? {
         let selectedAnnotation = mapView.selectedAnnotations.first
         if let annotation = selectedAnnotation {
-            let idOfSelectedRP = annotationsID[annotation as! MGLPointAnnotation]
+            let idOfSelectedRP = annotationsID[annotation as! CustomAnnotation]
             
             return idOfSelectedRP
         }
@@ -699,7 +775,9 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Map View's Delegates
     
     func mapView(_ mapView: MGLMapView, didSelect annotation: MGLAnnotation) {
-        let identifierOfSelectedAnnotation = annotationsID[annotation as! MGLPointAnnotation]
+        guard annotation is MGLPointAnnotation else { return }
+        
+        let identifierOfSelectedAnnotation = annotationsID[annotation as! CustomAnnotation]
         // Pass optional value if it's nil show error in presenter.
         let request = ManageRouteMap.SelectAnnotation.Request(identifier: identifierOfSelectedAnnotation, coordinate: annotation.coordinate)
         
@@ -709,6 +787,22 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         setupData()
         focus()
+    }
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        guard annotation is CustomAnnotation else { return nil }
+        
+        let reuseIdentifier = "\(annotation.coordinate.latitude)"
+        
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? CustomAnnotationView
+        
+        if annotationView == nil {
+            annotationView = CustomAnnotationView(reuseIdentifier: reuseIdentifier)
+            annotationView!.bounds = CGRect(x: 0, y: 0, width: 20, height: 20)
+            annotationView?.setUIAppearance(finished: (annotation as! CustomAnnotation).isFinishedMilestone)
+        }
+        
+        return annotationView
     }
     
     // MARK: Gesture Handlers
@@ -730,9 +824,10 @@ extension ManageRouteMapViewController: MGLMapViewDelegate {
     // MARK: - Helper Methods
     
     private func setAnnotation(annotationInfo: AnnotationInfo) {
-        let annotation = MGLPointAnnotation()
+        let annotation = CustomAnnotation()
         let coordinate = CLLocationCoordinate2D(latitude: annotationInfo.latitude, longitude: annotationInfo.longitude)
         annotation.coordinate = coordinate
+        annotation.isFinishedMilestone = annotationInfo.isFinished
         mapView.addAnnotation(annotation)
         annotationsID[annotation] = annotationInfo.id
     }
@@ -748,5 +843,13 @@ extension ManageRouteMapViewController: HasFocusableMap {
     
     func focusableMap(temporaryCreatedAnnotationAt coordinate: CLLocationCoordinate2D, with title: String) {
         interactor?.createTemporaryPoint(request: .init(coordinate: coordinate, title: title))
+    }
+}
+
+extension ManageRouteMapViewController: TrackableMapDelegate {
+    // MARK: - Trackable Map's Delegate
+    
+    func didUpdatedTrackableMap(with routePoint: RoutePoint) {
+        interactor?.updateRouteProgress(request: .init(routePoint: routePoint))
     }
 }

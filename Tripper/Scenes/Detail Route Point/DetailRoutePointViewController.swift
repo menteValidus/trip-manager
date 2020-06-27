@@ -21,6 +21,7 @@ protocol DetailRoutePointDisplayLogic: class {
     func displayDelete(viewModel: DetailRoutePoint.Delete.ViewModel)
     func displayToggleView(viewModel: DetailRoutePoint.ToggleView.ViewModel)
     func displayLaunchedNavigator(viewModel: DetailRoutePoint.LaunchNavigator.ViewModel)
+    func displayFinishedMilestone(viewModel: DetailRoutePoint.FinishMilestone.ViewModel)
 }
 
 typealias Popup = DismissablePopup & ChangeablePopup
@@ -35,7 +36,7 @@ protocol ChangeablePopup: class {
 }
 
 enum PopupCoverage: Float {
-    case mostPart = 0.75
+    case mostPart = 0.7
     case smallPart = 0.25
     case toDismiss = 0
 }
@@ -43,6 +44,8 @@ enum PopupCoverage: Float {
 class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayLogic {
     var interactor: DetailRoutePointBusinessLogic?
     var router: (NSObjectProtocol & DetailRoutePointRoutingLogic & DetailRoutePointDataPassing)?
+    
+    var delegate: TrackableMapDelegate?
     
     var state: PopupCoverage = .smallPart
     
@@ -122,6 +125,7 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         descriptionTextView.text = viewModel.description
         arrivalDateLabel.text = viewModel.arrivalDateText
         departureDateLabel.text = viewModel.departureDateText
+        isFinishedButton.isSelected = viewModel.isFinished
     }
     
     // MARK: Dismiss
@@ -188,6 +192,19 @@ class DetailRoutePointViewController: UIViewController, DetailRoutePointDisplayL
         let mapItem = MKMapItem(placemark: placemark)
         mapItem.name = viewModel.title
         mapItem.openInMaps(launchOptions: options)
+    }
+    
+    // MARK: Finish Milestone
+    
+    @IBOutlet weak var isFinishedButton: UIButton!
+    
+    @IBAction func isFinishButtonTapped(_ sender: Any) {
+        interactor?.finishMilestone(request: .init(isFinished: !isFinishedButton.isSelected))
+    }
+    
+    func displayFinishedMilestone(viewModel: DetailRoutePoint.FinishMilestone.ViewModel) {
+        isFinishedButton.isSelected = viewModel.routePoint.isFinished
+        delegate?.didUpdatedTrackableMap(with: viewModel.routePoint)
     }
 }
 

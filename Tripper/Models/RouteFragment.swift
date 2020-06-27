@@ -15,6 +15,7 @@ protocol RouteFragment {
     var coordinates: [CLLocationCoordinate2D] { get set }
     var travelTimeInSeconds: Int { get set }
     var travelDistanceInMeters: Int { get set }
+    var isFinished: Bool { get set }
 }
 
 struct ConcreteRouteFragment: RouteFragment {
@@ -23,6 +24,7 @@ struct ConcreteRouteFragment: RouteFragment {
     var coordinates: [CLLocationCoordinate2D]
     var travelTimeInSeconds: Int
     var travelDistanceInMeters: Int
+    var isFinished: Bool
     
     var identifier: String {
         let id = format(firstID: startPointID, secondID: endPointID)

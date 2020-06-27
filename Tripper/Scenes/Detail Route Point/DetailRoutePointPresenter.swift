@@ -19,6 +19,7 @@ protocol DetailRoutePointPresentationLogic {
     func presentDelete(response: DetailRoutePoint.Delete.Response)
     func presentToggleView(response: DetailRoutePoint.ToggleView.Response)
     func presentLaunchedNavigator(response: DetailRoutePoint.LaunchNavigator.Response)
+    func presentFinishedMilestone(response: DetailRoutePoint.FinishMilestone.Response)
 }
 
 class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
@@ -38,7 +39,8 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
         let departureDate = dateFormatter.string(from: response.departureDate)
         let viewModel = DetailRoutePoint.SetupUI.ViewModel(
             title: response.title, description: response.description,
-            arrivalDateText: arrivalDate, departureDateText: departureDate)
+            arrivalDateText: arrivalDate, departureDateText: departureDate,
+            isFinished: response.isFinished)
         viewController?.displaySetupUI(viewModel: viewModel)
     }
     
@@ -75,5 +77,11 @@ class DetailRoutePointPresenter: DetailRoutePointPresentationLogic {
     func presentLaunchedNavigator(response: DetailRoutePoint.LaunchNavigator.Response) {
         viewController?.displayLaunchedNavigator(viewModel: .init(title: response.routePoint.title,
                                                                   coordinate: response.routePoint.coordinate))
+    }
+    
+    // MARK: Finish Milestone
+    
+    func presentFinishedMilestone(response: DetailRoutePoint.FinishMilestone.Response) {
+        viewController?.displayFinishedMilestone(viewModel: .init(routePoint: response.routePoint))
     }
 }

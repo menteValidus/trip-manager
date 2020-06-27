@@ -14,6 +14,7 @@ protocol RoutePointGateway: class {
     func deleteAll()
     func insert(_ point: RoutePoint)
     func update(_ point: RoutePoint)
+    func update(with routePointProgressInfo: ProgressInfo)
     func delete(_ point: RoutePoint)
 }
 
@@ -108,6 +109,18 @@ class RoutePointCoreDataGateway: RoutePointGateway {
         }
     }
     
+    func update(with routePointProgressInfo: ProgressInfo) {
+        let routePointEntity = fetchRoutePointEntity(with: routePointProgressInfo.id)
+        
+        routePointEntity?.isFinished = routePointProgressInfo.isFinished
+        
+        do {
+            try managedObjectContext.save()
+        } catch {
+            fatalError("*** Update Progress Error: \(error)")
+        }
+    }
+    
     func delete(_ point: RoutePoint) {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> =
             NSFetchRequest.init(entityName: DataModelDB.Entities.RoutePointEntity.name)
@@ -146,14 +159,16 @@ class RoutePointCoreDataGateway: RoutePointGateway {
                 id: entity.id, orderNumber: Int(entity.orderNumber),
                 title: entity.title, subtitle: entity.subtitle,
                 latitude: entity.latitude, longitude: entity.longitude,
-                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
+                isFinished: entity.isFinished)
             return point
         } else {
             let point = RoutePoint(
                 id: entity.id, orderNumber: Int(entity.orderNumber),
                 title: entity.title, subtitle: entity.subtitle,
                 latitude: entity.latitude, longitude: entity.longitude,
-                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate)
+                arrivalDate: entity.arrivalDate, departureDate: entity.departureDate,
+                isFinished: entity.isFinished)
             return point
         }
     }
@@ -167,6 +182,7 @@ class RoutePointCoreDataGateway: RoutePointGateway {
         entity.setValue(routePoint.subtitle, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.subtitle)
         entity.setValue(routePoint.arrivalDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.arrivalDate)
         entity.setValue(routePoint.departureDate, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.departureDate)
+        entity.setValue(routePoint.isFinished, forKey: DataModelDB.Entities.RoutePointEntity.KeyPathNames.isFinished)
     }
     
 }

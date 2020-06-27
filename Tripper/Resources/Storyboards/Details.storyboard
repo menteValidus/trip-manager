@@ -141,10 +141,24 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1PH-cG-F5a">
-                                <rect key="frame" x="137.5" y="365.5" width="81" height="30"/>
+                                <rect key="frame" x="126.5" y="365.5" width="122" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="Navigate To"/>
                                 <connections>
                                     <action selector="launchNavigator" destination="mgX-Wc-XJF" eventType="touchUpInside" id="JZp-aZ-y9f"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZpS-2a-Emm">
+                                <rect key="frame" x="122" y="414.5" width="131" height="41"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Not Finished"/>
+                                <state key="selected" title="Finished">
+                                    <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="isFinishButtonTapped:" destination="mgX-Wc-XJF" eventType="touchUpInside" id="8nG-Yd-omc"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -157,12 +171,14 @@
                             <constraint firstItem="Hpl-va-gzr" firstAttribute="trailing" secondItem="Lob-8h-DA7" secondAttribute="trailing" id="PPt-Kk-io3"/>
                             <constraint firstItem="eIP-Ir-GWG" firstAttribute="top" secondItem="t0z-02-4xL" secondAttribute="bottom" id="PU9-7u-W0Q"/>
                             <constraint firstItem="1PH-cG-F5a" firstAttribute="top" secondItem="Hpl-va-gzr" secondAttribute="bottom" constant="16" id="SVK-is-FkQ"/>
+                            <constraint firstItem="1PH-cG-F5a" firstAttribute="centerX" secondItem="Lob-8h-DA7" secondAttribute="centerX" id="Uy8-ek-zKZ"/>
                             <constraint firstItem="Hw4-hd-ts1" firstAttribute="leading" secondItem="Lob-8h-DA7" secondAttribute="leading" id="aAt-ei-mli"/>
                             <constraint firstItem="Hpl-va-gzr" firstAttribute="top" secondItem="Hw4-hd-ts1" secondAttribute="bottom" id="aAw-Gb-vtU"/>
+                            <constraint firstItem="ZpS-2a-Emm" firstAttribute="top" secondItem="1PH-cG-F5a" secondAttribute="bottom" constant="8" id="hFy-rk-xgc"/>
+                            <constraint firstItem="ZpS-2a-Emm" firstAttribute="centerX" secondItem="1PH-cG-F5a" secondAttribute="centerX" id="hQK-xv-uiU"/>
                             <constraint firstItem="Hw4-hd-ts1" firstAttribute="trailing" secondItem="Lob-8h-DA7" secondAttribute="trailing" id="iJ7-Wa-twf"/>
                             <constraint firstItem="t0z-02-4xL" firstAttribute="top" secondItem="Sds-43-SqH" secondAttribute="top" id="kEw-JP-fcw"/>
                             <constraint firstItem="eIP-Ir-GWG" firstAttribute="trailing" secondItem="Lob-8h-DA7" secondAttribute="trailing" id="rDU-6B-keG"/>
-                            <constraint firstItem="1PH-cG-F5a" firstAttribute="centerX" secondItem="Lob-8h-DA7" secondAttribute="centerX" constant="-9.5" id="toa-Tq-G6e"/>
                             <constraint firstItem="Hw4-hd-ts1" firstAttribute="top" secondItem="eIP-Ir-GWG" secondAttribute="bottom" id="wcC-3t-l0i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Lob-8h-DA7"/>
@@ -172,6 +188,7 @@
                         <outlet property="arrivalDateLabel" destination="YY2-Eh-t72" id="bSK-kw-pWI"/>
                         <outlet property="departureDateLabel" destination="PgH-Md-qCx" id="tEf-d1-xtM"/>
                         <outlet property="descriptionTextView" destination="Rdi-IB-vvp" id="Yat-JF-4nd"/>
+                        <outlet property="isFinishedButton" destination="ZpS-2a-Emm" id="BiQ-G2-2Vd"/>
                         <outlet property="titleLabel" destination="Md9-iD-xZt" id="gel-dK-l0Z"/>
                     </connections>
                 </viewController>

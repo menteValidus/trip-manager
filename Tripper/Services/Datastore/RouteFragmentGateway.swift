@@ -103,7 +103,11 @@ class RouteFragmentCoreDataGateway: RouteFragmentGateway {
             }
         }
         
-        let routeFragment = ConcreteRouteFragment(startPointID: previousPointID, endPointID: nextPointID, coordinates: coordinates, travelTimeInSeconds: Int(entity.timeInSeconds), travelDistanceInMeters: Int(entity.distanceInMeters))
+        let routeFragment = ConcreteRouteFragment(startPointID: previousPointID, endPointID: nextPointID,
+                                                  coordinates: coordinates,
+                                                  travelTimeInSeconds: Int(entity.timeInSeconds),
+                                                  travelDistanceInMeters: Int(entity.distanceInMeters),
+                                                  isFinished: entity.nextFragmentOf.isFinished && entity.previousFragmentOf.isFinished)
 
         return routeFragment
     }

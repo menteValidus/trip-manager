@@ -14,6 +14,7 @@ protocol AnnotationInfo {
     var orderNumber: Int { get }
     var latitude: Double { get }
     var longitude: Double { get }
+    var isFinished: Bool { get set }
 }
 
 struct RoutePoint: AnnotationInfo {
@@ -26,6 +27,7 @@ struct RoutePoint: AnnotationInfo {
     var longitude: Double
     var arrivalDate: Date
     var departureDate: Date
+    var isFinished: Bool
     
     var coordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  MapboxApiGateway.swift
 //  Tripper
 //
 //  Created by Denis Cherniy on 17.06.2020.

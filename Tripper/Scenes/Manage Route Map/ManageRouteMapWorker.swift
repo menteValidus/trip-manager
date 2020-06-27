@@ -14,18 +14,21 @@ import UIKit
 
 /// Created and deleted Route Points.
 typealias FetchedDifference = ([AnnotationInfo], [AnnotationInfo])
+typealias FetchedProgress = ([AnnotationInfo], [RouteFragment])
 
 class ManageRouteMapWorker {
     private let routePointGateway: RoutePointGateway
     private let routeFragmentGateway: RouteFragmentGateway
     
     private var lastFetchedRoutePoints: [RoutePoint]
+    private var lastFetchedRouteFragments: [RouteFragment]
     
     init(routePointGateway: RoutePointGateway, routeFragmentGateway: RouteFragmentGateway) {
         self.routePointGateway = routePointGateway
         self.routeFragmentGateway = routeFragmentGateway
         
         lastFetchedRoutePoints = []
+        lastFetchedRouteFragments = []
     }
     
 }
@@ -66,8 +69,19 @@ extension ManageRouteMapWorker {
         return (newRoutePoints, deletedRoutePoints)
     }
     
+    func fetchRoutePoints() -> [AnnotationInfo] {
+        lastFetchedRoutePoints = routePointGateway.fetchAll()
+        return lastFetchedRoutePoints
+    }
+    
     func deleteAllEntries() {
         routePointGateway.deleteAll()
+    }
+    
+    func updateProgress(with routePointsProgressInfo: [ProgressInfo]) {
+        for routePointProgressInfo in routePointsProgressInfo {
+            routePointGateway.update(with: routePointProgressInfo)
+        }
     }
     
     // MARK: - Helper Methods
