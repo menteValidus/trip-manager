@@ -111,7 +111,7 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             
             routeCreator.calculateRoute(from: lastAnnotationCoordinate, to: tappedCoordinate, drawHandler: { routeInfo in
                 if let routeInfo = routeInfo {
-                    self.dataToCreateRoutePoint = SimpleRoutePointInfo(tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: routeInfo.timeInSeconds, distanceToNextPointInMeters: routeInfo.distanceInMeters)
+                    self.dataToCreateRoutePoint = SimpleRoutePointInfo(title: request.title, tappedCoordinate: tappedCoordinate, timeToNextPointInSeconds: routeInfo.timeInSeconds, distanceToNextPointInMeters: routeInfo.distanceInMeters)
                     
                     let response = ManageRouteMap.CreateRoutePoint.Response(isSucceed: true)
                     self.presenter?.presentCreateRoutePoint(response: response)
@@ -300,11 +300,12 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
             if let routeInfo = routeInfo {
                 let startPointID = request.addedSubrouteInfo.startWaypoint.id
                 let endPointID = request.addedSubrouteInfo.endWaypoint.id
+                let isFinished = request.addedSubrouteInfo.startWaypoint.isFinished && request.addedSubrouteInfo.endWaypoint.isFinished
                 let routeFragment = ConcreteRouteFragment(startPointID: startPointID, endPointID: endPointID,
                                                           coordinates: routeInfo.coordinates,
                                                           travelTimeInSeconds: routeInfo.timeInSeconds,
                                                           travelDistanceInMeters: routeInfo.distanceInMeters,
-                                                          isFinished: false)
+                                                          isFinished: isFinished)
                 self.routeFragments.append(routeFragment)
                 
                 self.worker?.insert(routeFragment: routeFragment)
@@ -431,10 +432,12 @@ class ManageRouteMapInteractor: ManageRouteMapBusinessLogic, ManageRouteMapDataS
     private func createSubrouteInfo(start: AnnotationInfo, end: AnnotationInfo) -> ManageRouteMap.MapRoute.SubrouteInfo {
         let startWaypoint = ManageRouteMap.MapRoute.Waypoint(
             id: start.id,
-            latitude: start.latitude, longitude: start.longitude)
+            latitude: start.latitude, longitude: start.longitude,
+            isFinished: start.isFinished)
         let endWaypoint = ManageRouteMap.MapRoute.Waypoint(
             id: end.id,
-            latitude: end.latitude, longitude: end.longitude)
+            latitude: end.latitude, longitude: end.longitude,
+            isFinished: end.isFinished)
         let subrouteInfo = ManageRouteMap.MapRoute.SubrouteInfo(startWaypoint: startWaypoint, endWaypoint: endWaypoint)
         
         return subrouteInfo

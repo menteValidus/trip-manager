@@ -206,6 +206,7 @@ enum ManageRouteMap {
             let id: String
             let latitude: Double
             let longitude: Double
+            let isFinished: Bool
         }
         
         struct Request {
