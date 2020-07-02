@@ -77,6 +77,7 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         
         formRoutePoint()
         titleTextField.becomeFirstResponder()
+        titleTextField.delegate = self
     }
     
     // MARK: - Form Route Point
@@ -379,5 +380,11 @@ class CreateRoutePointViewController: UITableViewController, CreateRoutePointDis
         tableView.reloadRows(at: [indexPathDateRow], with: .none)
         tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
         tableView.endUpdates()
+    }
+}
+
+extension CreateRoutePointViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        descriptionTextView.becomeFirstResponder()
     }
 }
