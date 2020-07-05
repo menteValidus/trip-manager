@@ -86,7 +86,7 @@
 		0BE4A2C72498D11E00B7B0C8 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE4A2C62498D11E00B7B0C8 /* SearchResult.swift */; };
 		0BF2F893247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */; };
 		0BF5E4C62476801000FBF419 /* FastNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */; };
-		B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */; };
+		C7CAFEAC59C896D12AB52842 /* Pods_TripManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7806DBE115708C6B81BC9DB7 /* Pods_TripManager.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,7 +107,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B042A5623E2D02100E9136F /* Tripper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B042A5623E2D02100E9136F /* TripManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TripManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B042A6723E2D02200E9136F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B042A7023E2E1B600E9136F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,7 +171,7 @@
 		0BAD7927246D462300575D4C /* RouteFragmentGateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouteFragmentGateway.swift; sourceTree = "<group>"; };
 		0BAD7928246D462300575D4C /* RoutePointCoreDataGateway.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePointCoreDataGateway.swift; sourceTree = "<group>"; };
 		0BAD792A246D462300575D4C /* MapBoxRouteCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapBoxRouteCreator.swift; sourceTree = "<group>"; };
-		0BAD7963246D55F100575D4C /* TripperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BAD7963246D55F100575D4C /* TripManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BAD7965246D55F100575D4C /* TripperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripperTests.swift; sourceTree = "<group>"; };
 		0BAD7967246D55F100575D4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BAD796F246D5CB700575D4C /* ManageRouteMapViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageRouteMapViewControllerTests.swift; sourceTree = "<group>"; };
@@ -195,8 +195,12 @@
 		0BE4A2C62498D11E00B7B0C8 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		0BF2F88F247D1A0A002FCD6A /* CreateRoutePointViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoutePointViewControllerTests.swift; sourceTree = "<group>"; };
 		0BF5E4C52476801000FBF419 /* FastNavigationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FastNavigationViewController.xib; sourceTree = "<group>"; };
+		5DABC70D854FC8026A473A9F /* Pods-TripManager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripManager.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripManager/Pods-TripManager.release.xcconfig"; sourceTree = "<group>"; };
+		7806DBE115708C6B81BC9DB7 /* Pods_TripManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3893696CFACED47519A4CAD /* Pods-Trip-Manager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-Manager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-Manager/Pods-Trip-Manager.debug.xcconfig"; sourceTree = "<group>"; };
+		B71FD10B7D008DE2474543E0 /* Pods-TripManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripManager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripManager/Pods-TripManager.debug.xcconfig"; sourceTree = "<group>"; };
 		BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.release.xcconfig"; sourceTree = "<group>"; };
-		EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF3ABB53B6E61619A9CB3FEE /* Pods-Trip-Manager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip-Manager.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trip-Manager/Pods-Trip-Manager.release.xcconfig"; sourceTree = "<group>"; };
 		FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripper/Pods-Tripper.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -205,7 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B1674966FC2AF4432D13652E /* Pods_Tripper.framework in Frameworks */,
+				C7CAFEAC59C896D12AB52842 /* Pods_TripManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,9 +233,9 @@
 		0B042A4D23E2D02100E9136F = {
 			isa = PBXGroup;
 			children = (
-				0B042A5823E2D02100E9136F /* Tripper */,
+				0B042A5823E2D02100E9136F /* TripManager */,
 				0B0F4130242A4DCD00C769C9 /* UtilTests */,
-				0BAD7964246D55F100575D4C /* TripperTests */,
+				0BAD7964246D55F100575D4C /* TripManagerTests */,
 				0B042A6F23E2E1B600E9136F /* Frameworks */,
 				0B042A5723E2D02100E9136F /* Products */,
 				C5FAC7082B4FBEA6769A9AF7 /* Pods */,
@@ -241,14 +245,14 @@
 		0B042A5723E2D02100E9136F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0B042A5623E2D02100E9136F /* Tripper.app */,
+				0B042A5623E2D02100E9136F /* TripManager.app */,
 				0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */,
-				0BAD7963246D55F100575D4C /* TripperTests.xctest */,
+				0BAD7963246D55F100575D4C /* TripManagerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0B042A5823E2D02100E9136F /* Tripper */ = {
+		0B042A5823E2D02100E9136F /* TripManager */ = {
 			isa = PBXGroup;
 			children = (
 				0BAD7917246D462300575D4C /* Resources */,
@@ -261,7 +265,7 @@
 				0BAD7916246D462300575D4C /* SceneDelegate.swift */,
 				0B042A6723E2D02200E9136F /* Info.plist */,
 			);
-			path = Tripper;
+			path = TripManager;
 			sourceTree = "<group>";
 		};
 		0B042A6F23E2E1B600E9136F /* Frameworks */ = {
@@ -270,7 +274,7 @@
 				0BCE162B24053B4B0055D652 /* MapboxMobileEvents.framework */,
 				0BCE16292405373D0055D652 /* libMapboxMobileEvents.a */,
 				0B042A7023E2E1B600E9136F /* MapKit.framework */,
-				EEB24A8B9F32BFAF7C384F07 /* Pods_Tripper.framework */,
+				7806DBE115708C6B81BC9DB7 /* Pods_TripManager.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -477,7 +481,7 @@
 			path = Datastore;
 			sourceTree = "<group>";
 		};
-		0BAD7964246D55F100575D4C /* TripperTests */ = {
+		0BAD7964246D55F100575D4C /* TripManagerTests */ = {
 			isa = PBXGroup;
 			children = (
 				0BAD797E246D662100575D4C /* Service Doubles */,
@@ -485,7 +489,7 @@
 				0BAD7965246D55F100575D4C /* TripperTests.swift */,
 				0BAD7967246D55F100575D4C /* Info.plist */,
 			);
-			path = TripperTests;
+			path = TripManagerTests;
 			sourceTree = "<group>";
 		};
 		0BAD796D246D5C4A00575D4C /* Scenes */ = {
@@ -591,6 +595,10 @@
 			children = (
 				FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */,
 				BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */,
+				B3893696CFACED47519A4CAD /* Pods-Trip-Manager.debug.xcconfig */,
+				FF3ABB53B6E61619A9CB3FEE /* Pods-Trip-Manager.release.xcconfig */,
+				B71FD10B7D008DE2474543E0 /* Pods-TripManager.debug.xcconfig */,
+				5DABC70D854FC8026A473A9F /* Pods-TripManager.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -598,9 +606,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0B042A5523E2D02100E9136F /* Tripper */ = {
+		0B042A5523E2D02100E9136F /* TripManager */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0B042A6A23E2D02200E9136F /* Build configuration list for PBXNativeTarget "Tripper" */;
+			buildConfigurationList = 0B042A6A23E2D02200E9136F /* Build configuration list for PBXNativeTarget "TripManager" */;
 			buildPhases = (
 				18C40930BB8EC0BC6D8FBA40 /* [CP] Check Pods Manifest.lock */,
 				0B042A5223E2D02100E9136F /* Sources */,
@@ -612,9 +620,9 @@
 			);
 			dependencies = (
 			);
-			name = Tripper;
+			name = TripManager;
 			productName = Tripper;
-			productReference = 0B042A5623E2D02100E9136F /* Tripper.app */;
+			productReference = 0B042A5623E2D02100E9136F /* TripManager.app */;
 			productType = "com.apple.product-type.application";
 		};
 		0B0F412E242A4DCD00C769C9 /* UtilTests */ = {
@@ -635,9 +643,9 @@
 			productReference = 0B0F412F242A4DCD00C769C9 /* UtilTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0BAD7962246D55F100575D4C /* TripperTests */ = {
+		0BAD7962246D55F100575D4C /* TripManagerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0BAD796A246D55F100575D4C /* Build configuration list for PBXNativeTarget "TripperTests" */;
+			buildConfigurationList = 0BAD796A246D55F100575D4C /* Build configuration list for PBXNativeTarget "TripManagerTests" */;
 			buildPhases = (
 				0BAD795F246D55F100575D4C /* Sources */,
 				0BAD7960246D55F100575D4C /* Frameworks */,
@@ -648,9 +656,9 @@
 			dependencies = (
 				0BAD7969246D55F100575D4C /* PBXTargetDependency */,
 			);
-			name = TripperTests;
+			name = TripManagerTests;
 			productName = TripperTests;
-			productReference = 0BAD7963246D55F100575D4C /* TripperTests.xctest */;
+			productReference = 0BAD7963246D55F100575D4C /* TripManagerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -659,7 +667,7 @@
 		0B042A4E23E2D02100E9136F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1150;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Denis Cherniy";
 				TargetAttributes = {
@@ -677,7 +685,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0B042A5123E2D02100E9136F /* Build configuration list for PBXProject "Tripper" */;
+			buildConfigurationList = 0B042A5123E2D02100E9136F /* Build configuration list for PBXProject "TripManager" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -690,9 +698,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0B042A5523E2D02100E9136F /* Tripper */,
+				0B042A5523E2D02100E9136F /* TripManager */,
 				0B0F412E242A4DCD00C769C9 /* UtilTests */,
-				0BAD7962246D55F100575D4C /* TripperTests */,
+				0BAD7962246D55F100575D4C /* TripManagerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -741,7 +749,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Tripper-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-TripManager-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -754,15 +762,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripManager/Pods-TripManager-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-TripManager/Pods-TripManager-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Tripper/Pods-Tripper-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TripManager/Pods-TripManager-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -865,12 +873,12 @@
 /* Begin PBXTargetDependency section */
 		0B0F4135242A4DCD00C769C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0B042A5523E2D02100E9136F /* Tripper */;
+			target = 0B042A5523E2D02100E9136F /* TripManager */;
 			targetProxy = 0B0F4134242A4DCD00C769C9 /* PBXContainerItemProxy */;
 		};
 		0BAD7969246D55F100575D4C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0B042A5523E2D02100E9136F /* Tripper */;
+			target = 0B042A5523E2D02100E9136F /* TripManager */;
 			targetProxy = 0BAD7968246D55F100575D4C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1011,19 +1019,19 @@
 		};
 		0B042A6B23E2D02200E9136F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FFB1EFF0E4D54ECA5C883FE6 /* Pods-Tripper.debug.xcconfig */;
+			baseConfigurationReference = B71FD10B7D008DE2474543E0 /* Pods-TripManager.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9YM5R94GQF;
-				INFOPLIST_FILE = Tripper/Info.plist;
+				DEVELOPMENT_TEAM = MX9H24GGG2;
+				INFOPLIST_FILE = "$(SRCROOT)/TripManager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.Tripper;
+				PRODUCT_BUNDLE_IDENTIFIER = "storytelling-software.TripManager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1033,19 +1041,19 @@
 		};
 		0B042A6C23E2D02200E9136F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BF89C1A16AF4F9BF362505B6 /* Pods-Tripper.release.xcconfig */;
+			baseConfigurationReference = 5DABC70D854FC8026A473A9F /* Pods-TripManager.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9YM5R94GQF;
-				INFOPLIST_FILE = Tripper/Info.plist;
+				DEVELOPMENT_TEAM = MX9H24GGG2;
+				INFOPLIST_FILE = "$(SRCROOT)/TripManager/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.Tripper;
+				PRODUCT_BUNDLE_IDENTIFIER = "storytelling-software.TripManager";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1058,7 +1066,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9YM5R94GQF;
+				DEVELOPMENT_TEAM = MX9H24GGG2;
 				INFOPLIST_FILE = UtilTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1069,7 +1077,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripper.app/Tripper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripManager.app/TripManager";
 			};
 			name = Debug;
 		};
@@ -1079,7 +1087,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9YM5R94GQF;
+				DEVELOPMENT_TEAM = MX9H24GGG2;
 				INFOPLIST_FILE = UtilTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1090,7 +1098,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripper.app/Tripper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripManager.app/TripManager";
 			};
 			name = Release;
 		};
@@ -1099,19 +1107,19 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9YM5R94GQF;
-				INFOPLIST_FILE = TripperTests/Info.plist;
+				DEVELOPMENT_TEAM = MX9H24GGG2;
+				INFOPLIST_FILE = TripManagerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.TripperTests;
+				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.TripManagerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripper.app/Tripper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripManager.app/TripManager";
 			};
 			name = Debug;
 		};
@@ -1120,26 +1128,26 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9YM5R94GQF;
-				INFOPLIST_FILE = TripperTests/Info.plist;
+				DEVELOPMENT_TEAM = MX9H24GGG2;
+				INFOPLIST_FILE = TripManagerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.TripperTests;
+				PRODUCT_BUNDLE_IDENTIFIER = mente.vali.TripManagerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripper.app/Tripper";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TripManager.app/TripManager";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0B042A5123E2D02100E9136F /* Build configuration list for PBXProject "Tripper" */ = {
+		0B042A5123E2D02100E9136F /* Build configuration list for PBXProject "TripManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B042A6823E2D02200E9136F /* Debug */,
@@ -1148,7 +1156,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0B042A6A23E2D02200E9136F /* Build configuration list for PBXNativeTarget "Tripper" */ = {
+		0B042A6A23E2D02200E9136F /* Build configuration list for PBXNativeTarget "TripManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0B042A6B23E2D02200E9136F /* Debug */,
@@ -1166,7 +1174,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0BAD796A246D55F100575D4C /* Build configuration list for PBXNativeTarget "TripperTests" */ = {
+		0BAD796A246D55F100575D4C /* Build configuration list for PBXNativeTarget "TripManagerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0BAD796B246D55F100575D4C /* Debug */,

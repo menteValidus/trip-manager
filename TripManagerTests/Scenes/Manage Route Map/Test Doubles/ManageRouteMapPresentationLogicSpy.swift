@@ -5,9 +5,21 @@
 //  Created by Denis Cherniy on 14.05.2020.
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
-@testable import Tripper
+@testable import TripManager
 
 class ManageRouteMapPresentationLogicSpy: ManageRouteMapPresentationLogic {
+    func presentUpdatedRouteProgress(response: ManageRouteMap.UpdateRouteProgress.Response) {
+        
+    }
+    
+    func presentTemporaryPoint(response: ManageRouteMap.CreateTemporaryPoint.Response) {
+        
+    }
+    
+    func presentTemporaryPointDeletion(response: ManageRouteMap.RemoveTemporaryPoint.Response) {
+        
+    }
+    
     func presentFocusOnCoordinates(response: ManageRouteMap.FocusOnCoordinates.Response) {
     }
     

@@ -6,9 +6,21 @@
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
 
-@testable import Tripper
+@testable import TripManager
 
 class ManageRouteMapDisplayLogicSpy: ManageRouteMapDisplayLogic {
+    func displayUpdatedRouteProgress(viewModel: ManageRouteMap.UpdateRouteProgress.ViewModel) {
+        
+    }
+    
+    func displayTemporaryPoint(viewModel: ManageRouteMap.CreateTemporaryPoint.ViewModel) {
+        
+    }
+    
+    func displayTemporaryPointDeletion(viewModel: ManageRouteMap.RemoveTemporaryPoint.ViewModel) {
+        
+    }
+    
     func displayFocusOnCoordinates(viewModel: ManageRouteMap.FocusOnCoordinates.ViewModel) {
         
     }

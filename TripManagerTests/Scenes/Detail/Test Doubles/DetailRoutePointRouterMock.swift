@@ -6,7 +6,7 @@
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
 
-@testable import Tripper
+@testable import TripManager
 import UIKit
 
 class DetailRoutePointRouterMock: NSObject, DetailRoutePointRoutingLogic, DetailRoutePointDataPassing {

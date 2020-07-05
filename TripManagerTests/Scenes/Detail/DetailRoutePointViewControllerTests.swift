@@ -10,7 +10,7 @@
 //  see http://clean-swift.com
 //
 
-@testable import Tripper
+@testable import TripManager
 import XCTest
 
 class DetailRoutePointViewControllerTests: XCTestCase {
@@ -37,7 +37,7 @@ class DetailRoutePointViewControllerTests: XCTestCase {
     
     func setupDetailRoutePointViewController(with routePoint: RoutePoint) {
         let bundle = Bundle.main
-        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let storyboard = UIStoryboard(name: "Details", bundle: bundle)
         sut = (storyboard.instantiateViewController(withIdentifier: "DetailRoutePointViewController") as! DetailRoutePointViewController)
         
         let interactor = DetailRoutePointInteractor()
@@ -66,7 +66,7 @@ class DetailRoutePointViewControllerTests: XCTestCase {
     
     func testUISetup() {
         let date = Date()
-        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date)
+        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, isFinished: false)
         setupDetailRoutePointViewController(with: routePoint)
         
         loadView()
@@ -77,7 +77,7 @@ class DetailRoutePointViewControllerTests: XCTestCase {
     
     func testDeleteRoutePoint() {
         let date = Date()
-        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date)
+        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, isFinished: false)
         setupDetailRoutePointViewController(with: routePoint)
         
         loadView()

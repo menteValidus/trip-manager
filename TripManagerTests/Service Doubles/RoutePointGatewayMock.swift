@@ -6,10 +6,14 @@
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
 
-@testable import Tripper
+@testable import TripManager
 import Foundation
 
 class RoutePointGatewayMock: RoutePointGateway {
+    func update(with routePointProgressInfo: ProgressInfo) {
+        
+    }
+    
     
     var storage: [RoutePoint]
     

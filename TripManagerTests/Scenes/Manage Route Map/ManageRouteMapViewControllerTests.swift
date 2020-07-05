@@ -10,7 +10,7 @@
 //  see http://clean-swift.com
 //
 
-@testable import Tripper
+@testable import TripManager
 import XCTest
 import CoreLocation
 
@@ -51,14 +51,14 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     }
     
     func setupGateways() {
-        let startRoutePoint = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date())
+        let startRoutePoint = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date(), isFinished: false)
         let date = Date().addingTimeInterval(TimeInterval(120))
-        let endRoutePoint = RoutePoint(id: "22", orderNumber: 2, title: "Stub #2", subtitle: "S(t)ubtitle", latitude: 1, longitude: 1, arrivalDate: date, departureDate: date)
+        let endRoutePoint = RoutePoint(id: "22", orderNumber: 2, title: "Stub #2", subtitle: "S(t)ubtitle", latitude: 1, longitude: 1, arrivalDate: date, departureDate: date, isFinished: false)
         routePointGateway = RoutePointGatewayMock(initialStorage: [startRoutePoint, endRoutePoint])
         
         let firstCoord = CLLocationCoordinate2D(latitude: startRoutePoint.latitude, longitude: startRoutePoint.longitude)
         let secondCoord = CLLocationCoordinate2D(latitude: endRoutePoint.latitude, longitude: endRoutePoint.longitude)
-        let routeFragment = ConcreteRouteFragment(startPointID: startRoutePoint.id, endPointID: endRoutePoint.id, coordinates: [firstCoord, secondCoord], travelTimeInSeconds: 60, travelDistanceInMeters: 60)
+        let routeFragment = ConcreteRouteFragment(startPointID: startRoutePoint.id, endPointID: endRoutePoint.id, coordinates: [firstCoord, secondCoord], travelTimeInSeconds: 60, travelDistanceInMeters: 60, isFinished: false)
         routeFragmentGateway = RouteFragmentGatewayMock(initialStorage: [routeFragment])
     }
     
@@ -103,7 +103,7 @@ class ManageRouteMapViewControllerTests: XCTestCase {
     func testSetAnnotation() {
         setupEmptyGateways()
         standardSetup()
-        let annotationInfo = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date())
+        let annotationInfo = RoutePoint(id: "11", orderNumber: 1, title: "Stub #1", subtitle: "S(t)ubtitle", latitude: 0, longitude: 0, arrivalDate: Date(), departureDate: Date(), isFinished: false)
         
         loadView()
         sut.interactor?.setRoutePoint(request: .init(annotationInfo: annotationInfo))

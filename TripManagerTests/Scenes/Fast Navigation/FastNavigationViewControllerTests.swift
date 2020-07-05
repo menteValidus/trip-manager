@@ -10,7 +10,7 @@
 //  see http://clean-swift.com
 //
 
-@testable import Tripper
+@testable import TripManager
 import XCTest
 
 class FastNavigationViewControllerTests: XCTestCase {
@@ -38,7 +38,7 @@ class FastNavigationViewControllerTests: XCTestCase {
     
     func setupGateways() {
         let date = Date()
-        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date)
+        let routePoint = RoutePoint(id: "11", orderNumber: 1, title: "San-Francisco", subtitle: "City in style of disco", latitude: 120, longitude: 133, arrivalDate: date, departureDate: date, isFinished: false)
         routePointGateway = RoutePointGatewayMock(initialStorage: [routePoint])
         routeFragmentGateway = RouteFragmentGatewayMock(initialStorage: [])
     }

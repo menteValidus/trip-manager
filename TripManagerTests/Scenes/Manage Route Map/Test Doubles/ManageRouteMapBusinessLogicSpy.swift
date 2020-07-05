@@ -6,9 +6,21 @@
 //  Copyright © 2020 Denis Cherniy. All rights reserved.
 //
 
-@testable import Tripper
+@testable import TripManager
 
-class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {    
+class ManageRouteMapBusinessLogicSpy: ManageRouteMapBusinessLogic {
+    func updateRouteProgress(request: ManageRouteMap.UpdateRouteProgress.Request) {
+        
+    }
+    
+    func createTemporaryPoint(request: ManageRouteMap.CreateTemporaryPoint.Request) {
+        
+    }
+    
+    func removeTemporaryPoint(request: ManageRouteMap.RemoveTemporaryPoint.Request) {
+        
+    }
+    
     var presenter: ManageRouteMapPresentationLogic!
     var worker: ManageRouteMapWorker!
     
