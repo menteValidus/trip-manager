@@ -17,13 +17,15 @@ PODS:
   - MapboxSpeech (0.1.1)
   - Polyline (4.2.1)
   - Solar (2.1.0)
+  - Swinject (2.7.1)
   - Turf (0.3.0)
 
 DEPENDENCIES:
   - MapboxNavigation (~> 0.38.0)
+  - Swinject
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Mapbox-iOS-SDK
     - MapboxCoreNavigation
     - MapboxDirections.swift
@@ -33,6 +35,7 @@ SPEC REPOS:
     - MapboxSpeech
     - Polyline
     - Solar
+    - Swinject
     - Turf
 
 SPEC CHECKSUMS:
@@ -45,8 +48,9 @@ SPEC CHECKSUMS:
   MapboxSpeech: 59b3984d3f433a443d24acf53097f918c5cc70f9
   Polyline: 0e9890790292741c8186201a536b6bb6a78d02dd
   Solar: 2dc6e7cc39186cb0c8228fa08df76fb50c7d8f24
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   Turf: c6bdf62d6a70c647874f295dd1cf4eefc0c3e9e6
 
-PODFILE CHECKSUM: ea2826ebe4506369505f24f34e11781f83e31b49
+PODFILE CHECKSUM: 7b5b7831f506e0f17cba67a9b5b4d1f42e14904d
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.9.1

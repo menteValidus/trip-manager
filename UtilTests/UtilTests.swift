@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Tripper
+@testable import TripManager
 
 class UtilTests: XCTestCase {
 
